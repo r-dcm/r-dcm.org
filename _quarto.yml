@@ -1,0 +1,40 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+  
+  resources:
+    - "assets/img/funding/**"
+
+execute: 
+  freeze: auto
+  keep-md: true
+
+website:
+  title: "r-dcm"
+  navbar:
+    pinned: true
+    right:
+      - icon: github
+        href: https://github.com/r-dcm
+        aria-label: GitHub
+  
+  page-footer:
+    left: |
+      <a href="/funding.qmd">Supported by IES and KU.</a>
+    right: |
+      <a onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" role="button">
+         {{< fa chevron-up >}}
+      </a>
+  repo-url: https://github.com/r-dcm/r-dcm.org
+  repo-actions: [edit, issue]
+
+format:
+  html:
+    quarto-required: ">= 1.5"
+    toc: true
+    
+theme:
+  - cosmo
+  - assets/styles.scss

@@ -22,7 +22,7 @@ website:
   
   page-footer:
     left: |
-      <a href="/funding.qmd">Supported by IES and KU.</a>
+      <a href="/funding.qmd">Supported by IES and ATLAS.</a>
     right: |
       <a onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" role="button">
          {{< fa chevron-up >}}

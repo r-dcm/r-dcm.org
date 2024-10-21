@@ -6,6 +6,7 @@ project:
   
   resources:
     - "assets/img/funding/**"
+    - "CNAME"
 
 execute: 
   freeze: auto

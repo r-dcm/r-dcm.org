@@ -5,6 +5,6 @@
 [![License: CC BY-SA 4.0](https://licensebuttons.net/l/by-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-sa/4.0/)
 <!-- badges: end -->
 
-This repo is the source of <https://r-dcm.github.io/r-dcm.org/>.
+This repo is the source of <https://r-dcm.org/>.
 Both this repo and the resulting webpage are licensed as [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 

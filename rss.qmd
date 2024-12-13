@@ -1,0 +1,15 @@
+---
+title: "r-dcm blog"
+search: false
+listing:
+  sort: "date desc"
+  feed: 
+    title: "r-dcm blog"
+    description: "r-dcm blog"
+    items: 60
+    type: full
+    language: en
+  contents:
+    - "blog/**/index.qmd"
+    - "!blog/index.qmd"
+---

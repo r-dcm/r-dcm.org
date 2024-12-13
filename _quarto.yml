@@ -3,43 +3,57 @@ project:
   output-dir: _site
   render:
     - "*.qmd"
-  
+
   resources:
+    - "files/**"
     - "assets/img/funding/**"
     - "CNAME"
 
-execute: 
-  freeze: auto
-  keep-md: true
+freeze: true
+
+bibliography: files/bib/references.bib
+csl: files/bib/apa.csl
+
+pagetitle: "{{< meta title >}} | r-dcm"
 
 website:
   title: "r-dcm"
+  description: ""
+  site-url: https://r-dcm.org
+  repo-url: https://github.com/r-dcm/r-dcm.org
+
   navbar:
     pinned: true
     right:
+      - text: Blog
+        aria-label: "Blog"
+        href: blog/index.qmd
       - icon: github
-        href: https://github.com/r-dcm
         aria-label: GitHub
-  
+        href: https://github.com/r-dcm
+
+
   page-footer:
     left: |
-      <a href="/funding.qmd">Supported by IES and ATLAS.</a>
+      <span class="faux-block"><a href="/funding.qmd">Supported by IES and ATLAS.</a></span>
+      <span class="faux-block">All content licensed under<br>[{{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}} Creative Commons CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)</span>
+
     right: |
       <a onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" role="button">
          {{< fa chevron-up >}}
       </a>
-  repo-url: https://github.com/r-dcm/r-dcm.org
-  repo-actions: [edit, issue]
+
 
 format:
   html:
     quarto-required: ">= 1.5"
+    theme:
+      - cosmo
+      - assets/styles.scss
+    code-link: true
     toc: true
-    include-in-header: 
+    anchor-sections: true
+    include-in-header:
       - text: |
           <script data-goatcounter="https://r-dcm.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
-    
-theme:
-  - cosmo
-  - assets/styles.scss

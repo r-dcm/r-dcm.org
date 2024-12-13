@@ -1,0 +1,29 @@
+# Date format
+date-format: "MMMM D, YYYY"
+
+# Default for table of contents
+toc: true
+toc-title: Contents
+toc-location: left
+
+reference-location: document
+
+freeze: true
+
+# Default knitr options
+execute:
+  echo: true
+  message: true
+  warning: true
+  collapse: true
+  comment: "#>"
+  fig-align: "center"
+  fig-width: 6
+  fig-asp: 0.618
+  out.width: "80%"
+
+# Default author
+author:
+  - name: Jake Thompson
+    url: https://www.wjakethompson.com
+    orcid: 0000-0001-7339-0300

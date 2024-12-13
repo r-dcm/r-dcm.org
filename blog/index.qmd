@@ -1,0 +1,22 @@
+---
+title: "Blog"
+author: ""
+description: "r-dcm blog"
+listing:
+  - id: posts_standard
+    contents:
+      - "**/index.qmd"
+      - "**/index.markdown"
+    sort: "date desc"
+    categories: true
+page-layout: full
+code-tools: false
+engine: knitr
+toc-location: right
+date-format: "MMMM D, YYYY"
+
+# header-includes: >
+#   <link rel="stylesheet" href="../assets/blog-listing.css">
+# resources:
+#   - ../assets/blog-listing.css 
+---

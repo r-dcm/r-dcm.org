@@ -1,0 +1,18 @@
+[
+  {
+    "listing": "/rss.html",
+    "items": [
+      "/blog/2024-02-measr-1.0.0/index.html",
+      "/blog/2023-06-measr-0.3.1/index.html",
+      "/blog/2023-04-measr-0.2.1/index.html"
+    ]
+  },
+  {
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/2024-02-measr-1.0.0/index.html",
+      "/blog/2023-06-measr-0.3.1/index.html",
+      "/blog/2023-04-measr-0.2.1/index.html"
+    ]
+  }
+]

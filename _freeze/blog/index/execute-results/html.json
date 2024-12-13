@@ -1,8 +1,8 @@
 {
-  "hash": "70a7fc58ad9aacdc514239e42d06d457",
+  "hash": "26168e116de512e3a942e7097838cce8",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Blog\"\nauthor: \"\"\ndescription: \"r-dcm blog\"\nlisting:\n  - id: posts_standard\n    contents:\n      - \"**/index.qmd\"\n      - \"**/index.markdown\"\n    sort: \"date desc\"\n    categories: true\npage-layout: full\ncode-tools: false\nengine: knitr\ntoc-location: right\ndate-format: \"MMMM D, YYYY\"\n\n# header-includes: >\n#   <link rel=\"stylesheet\" href=\"../assets/blog-listing.css\">\n# resources:\n#   - ../assets/blog-listing.css \n---\n",
+    "markdown": "---\ntitle: \"Posts\"\nauthor: \"\"\ndescription: \"\"\nlisting:\n  - id: posts_standard\n    contents:\n      - \"**/index.qmd\"\n    sort: \"date desc\"\n    categories: true\npage-layout: full\ncode-tools: false\nengine: knitr\ntoc-location: right\ndate-format: \"MMMM D, YYYY\"\n---\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"

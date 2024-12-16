@@ -10,6 +10,7 @@ twitter-card:
 open-graph:
   image: "featured.jpg"
 engine: knitr
+doi: 10.59350/mt80h-8pp67
 citation: true
 # one of: "deep-dive", "learn", "package", or "other" + relevant packages
 categories:
@@ -37,7 +38,7 @@ wjake::set_theme(base_family = "Source Sans Pro", d_scale = "wjake",
                  plot_margin = margin(10, 10, 10, 10))
 ```
 
-I'm stoked to announce the release of [measr](https://measr.info) 0.3.1.
+We're stoked to announce the release of [measr](https://measr.info) 0.3.1.
 The goal of measr is to provide applied researchers and psychometricians with a user friendly interface for estimating and evaluating diagnostic classification models (DCMs).
 This update is a minor release to introduce a couple of enhancements to model and prior specifications.
 

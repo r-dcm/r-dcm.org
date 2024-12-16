@@ -11,6 +11,7 @@ twitter-card:
 open-graph:
   image: "featured.jpg"
 engine: knitr
+doi: 10.59350/5f9an-xbn86
 citation: true
 # one of: "deep-dive", "learn", "package", or "other" + relevant packages
 categories:
@@ -18,7 +19,7 @@ categories:
   - measr
 ---
 
-I am thrilled to announce the release of [measr](https://measr.info) 1.0.0.
+We are thrilled to announce the release of [measr](https://measr.info) 1.0.0.
 The goal of measr is to provide a user-friendly interface for estimating and evaluating diagnostic classification models (DCMs; also called cognitive diagnostic models [CDMs]).
 This is a major release to mark the conclusion of the initial development work that was funded by the [Institute of Education Sciences](https://ies.ed.gov).
 Importantly, this does not mean that measr is going dormant!
@@ -71,11 +72,11 @@ For a complete list of changes, check out the [changelog](https://measr.info/new
 
 ## Additional Resources
 
-If you are interested in learing more about measr and diagnostic models, I taught a workshop in June at [StanCon 2023](https://mc-stan.org/events/stancon2023/).
+If you are interested in learing more about measr and diagnostic models, we hosted a workshop in June at [StanCon 2023](https://mc-stan.org/events/stancon2023/).
 The workshop provided an overview of diagnostic models and their use cases and then walked through how to estimate and evaluate different models using measr.
 All of the [workshop materials](https://stancon2023.measr.info/) are available online, including slides, exercises, and solutions.
 
-Finally, if you are interested in attending a workshop in person, I'll be teaching another workshop in April at the 2024 annual meeting of the National Conference on Measurement in Education (NCME).
+Finally, if you are interested in attending a workshop in person, we'll be teaching another workshop in April at the 2024 annual meeting of the National Conference on Measurement in Education (NCME).
 The materials from this workshop will also be made available online for those who are unable to attend.
 For more information on the conference and register, see the [conference website](https://www.ncme.org/event/annual-meeting/upcoming-meeting2024).
 

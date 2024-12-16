@@ -252,6 +252,18 @@ div.quarto-post {
   }
 }
 
+.quarto-title-block, .quarto-title-meta {
+  .quarto-title-meta-contents .doi::before {
+    content: "";
+    background-image: url(/files/doi.svg);
+    background-size: 1.1em;
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    margin-bottom: -3px;
+  }
+}
+
 // Bracketed TOC for get started pages -----------------------------------------
 
 // :not(.toc-active) makes it so only get-started pages are selected

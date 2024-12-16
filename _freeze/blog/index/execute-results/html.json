@@ -1,8 +1,8 @@
 {
-  "hash": "26168e116de512e3a942e7097838cce8",
+  "hash": "d926e36005767a8c4b42fb92aafdf499",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"Posts\"\nauthor: \"\"\ndescription: \"\"\nlisting:\n  - id: posts_standard\n    contents:\n      - \"**/index.qmd\"\n    sort: \"date desc\"\n    categories: true\npage-layout: full\ncode-tools: false\nengine: knitr\ntoc-location: right\ndate-format: \"MMMM D, YYYY\"\n---\n",
+    "markdown": "---\ntitle: \"Posts\"\nauthor: \"\"\ndescription: \"\"\nlisting:\n  - id: posts_standard\n    contents:\n      - \"**/index.qmd\"\n    sort: \"date desc\"\n    template: ../assets/blog-listing.ejs\n    categories: true\npage-layout: full\ncode-tools: false\nengine: knitr\ntoc-location: right\ndate-format: \"MMMM D, YYYY\"\n---\n",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"

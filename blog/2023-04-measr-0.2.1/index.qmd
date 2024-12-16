@@ -10,6 +10,7 @@ twitter-card:
 open-graph:
   image: "featured.jpg"
 engine: knitr
+doi: 10.59350/nyd8q-sh748
 citation: true
 # one of: "deep-dive", "learn", "package", or "other" + relevant packages
 categories:

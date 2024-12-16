@@ -14,7 +14,7 @@
 <lastBuildDate>Mon, 05 Feb 2024 00:00:00 GMT</lastBuildDate>
 <item>
   <title>measr 1.0.0</title>
-  <dc:creator>Jake Thompson</dc:creator>
+  <dc:creator>W. Jake Thompson</dc:creator>
   <link>https://r-dcm.org/blog/2024-02-measr-1.0.0/</link>
   <description><![CDATA[ 
 
@@ -22,7 +22,7 @@
 
 
 
-<p>I am thrilled to announce the release of <a href="https://measr.info">measr</a> 1.0.0. The goal of measr is to provide a user-friendly interface for estimating and evaluating diagnostic classification models (DCMs; also called cognitive diagnostic models [CDMs]). This is a major release to mark the conclusion of the initial development work that was funded by the <a href="https://ies.ed.gov">Institute of Education Sciences</a>. Importantly, this does not mean that measr is going dormant! We are still actively developing measr, so we’ll continue to <a href="https://github.com/wjakethompson/measr/issues">add new features and respond to bug reports</a>.</p>
+<p>We are thrilled to announce the release of <a href="https://measr.info">measr</a> 1.0.0. The goal of measr is to provide a user-friendly interface for estimating and evaluating diagnostic classification models (DCMs; also called cognitive diagnostic models [CDMs]). This is a major release to mark the conclusion of the initial development work that was funded by the <a href="https://ies.ed.gov">Institute of Education Sciences</a>. Importantly, this does not mean that measr is going dormant! We are still actively developing measr, so we’ll continue to <a href="https://github.com/wjakethompson/measr/issues">add new features and respond to bug reports</a>.</p>
 <p>You can install the updated version of measr from CRAN with:</p>
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -54,8 +54,8 @@ font-style: inherit;">library</span>(measr)</span></code></pre></div>
 </section>
 <section id="additional-resources" class="level2">
 <h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
-<p>If you are interested in learing more about measr and diagnostic models, I taught a workshop in June at <a href="https://mc-stan.org/events/stancon2023/">StanCon 2023</a>. The workshop provided an overview of diagnostic models and their use cases and then walked through how to estimate and evaluate different models using measr. All of the <a href="https://stancon2023.measr.info/">workshop materials</a> are available online, including slides, exercises, and solutions.</p>
-<p>Finally, if you are interested in attending a workshop in person, I’ll be teaching another workshop in April at the 2024 annual meeting of the National Conference on Measurement in Education (NCME). The materials from this workshop will also be made available online for those who are unable to attend. For more information on the conference and register, see the <a href="https://www.ncme.org/event/annual-meeting/upcoming-meeting2024">conference website</a>.</p>
+<p>If you are interested in learing more about measr and diagnostic models, we hosted a workshop in June at <a href="https://mc-stan.org/events/stancon2023/">StanCon 2023</a>. The workshop provided an overview of diagnostic models and their use cases and then walked through how to estimate and evaluate different models using measr. All of the <a href="https://stancon2023.measr.info/">workshop materials</a> are available online, including slides, exercises, and solutions.</p>
+<p>Finally, if you are interested in attending a workshop in person, we’ll be teaching another workshop in April at the 2024 annual meeting of the National Conference on Measurement in Education (NCME). The materials from this workshop will also be made available online for those who are unable to attend. For more information on the conference and register, see the <a href="https://www.ncme.org/event/annual-meeting/upcoming-meeting2024">conference website</a>.</p>
 </section>
 
 
@@ -82,15 +82,16 @@ Thompson, W. J. (2019). <em>Bayesian psychometrics for diagnostic assessments: <
 <div id="ref-thompson-joss-2023" class="csl-entry">
 Thompson, W. J. (2023). <span class="nocase">measr</span>: <span>Bayesian</span> psychometric measurement using <span>Stan</span>. <em>Journal of Open Source Software</em>, <em>8</em>(91), 5742. <a href="https://doi.org/10.21105/joss.05742">https://doi.org/10.21105/joss.05742</a>
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2024,
-  author = {Thompson, Jake},
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jake_thompson2024,
+  author = {Jake Thompson, W.},
   title = {Measr 1.0.0},
   date = {2024-02-05},
   url = {https://r-dcm.org/blog/2024-02-measr-1.0.0/},
+  doi = {10.59350/5f9an-xbn86},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2024" class="csl-entry quarto-appendix-citeas">
-Thompson, J. (2024, February 5). <em>measr 1.0.0</em>. <a href="https://r-dcm.org/blog/2024-02-measr-1.0.0/">https://r-dcm.org/blog/2024-02-measr-1.0.0/</a>
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jake_thompson2024" class="csl-entry quarto-appendix-citeas">
+Jake Thompson, W. (2024, February 5). <em>measr 1.0.0</em>. <a href="https://doi.org/10.59350/5f9an-xbn86">https://doi.org/10.59350/5f9an-xbn86</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>measr</category>
@@ -100,7 +101,7 @@ Thompson, J. (2024, February 5). <em>measr 1.0.0</em>. <a href="https://r-dcm.or
 </item>
 <item>
   <title>measr 0.3.1</title>
-  <dc:creator>Jake Thompson</dc:creator>
+  <dc:creator>W. Jake Thompson</dc:creator>
   <link>https://r-dcm.org/blog/2023-06-measr-0.3.1/</link>
   <description><![CDATA[ 
 
@@ -108,7 +109,7 @@ Thompson, J. (2024, February 5). <em>measr 1.0.0</em>. <a href="https://r-dcm.or
 
 
 
-<p>I’m stoked to announce the release of <a href="https://measr.info">measr</a> 0.3.1. The goal of measr is to provide applied researchers and psychometricians with a user friendly interface for estimating and evaluating diagnostic classification models (DCMs). This update is a minor release to introduce a couple of enhancements to model and prior specifications.</p>
+<p>We’re stoked to announce the release of <a href="https://measr.info">measr</a> 0.3.1. The goal of measr is to provide applied researchers and psychometricians with a user friendly interface for estimating and evaluating diagnostic classification models (DCMs). This update is a minor release to introduce a couple of enhancements to model and prior specifications.</p>
 <p>You can install the update version of measr from CRAN with:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
@@ -322,15 +323,16 @@ font-style: inherit;">#&gt; ! Prior for parameter `eta[1]` with class `structura
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2023,
-  author = {Thompson, Jake},
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jake_thompson2023,
+  author = {Jake Thompson, W.},
   title = {Measr 0.3.1},
   date = {2023-06-06},
   url = {https://r-dcm.org/blog/2023-06-measr-0.3.1/},
+  doi = {10.59350/mt80h-8pp67},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2023" class="csl-entry quarto-appendix-citeas">
-Thompson, J. (2023, June 6). <em>measr 0.3.1</em>. <a href="https://r-dcm.org/blog/2023-06-measr-0.3.1/">https://r-dcm.org/blog/2023-06-measr-0.3.1/</a>
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jake_thompson2023" class="csl-entry quarto-appendix-citeas">
+Jake Thompson, W. (2023, June 6). <em>measr 0.3.1</em>. <a href="https://doi.org/10.59350/mt80h-8pp67">https://doi.org/10.59350/mt80h-8pp67</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>measr</category>
@@ -340,7 +342,7 @@ Thompson, J. (2023, June 6). <em>measr 0.3.1</em>. <a href="https://r-dcm.org/bl
 </item>
 <item>
   <title>measr 0.2.1</title>
-  <dc:creator>Jake Thompson</dc:creator>
+  <dc:creator>W. Jake Thompson</dc:creator>
   <link>https://r-dcm.org/blog/2023-04-measr-0.2.1/</link>
   <description><![CDATA[ 
 
@@ -714,15 +716,16 @@ font-style: inherit;">#&gt; 3 fractions         0.936       0.882</span></span><
 <p>Featured photo by <a href="https://unsplash.com/@yer_a_wizard?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Fleur</a> on <a href="https://unsplash.com/photos/drafting-instruments-on-top-of-table-dQf7RZhMOJU?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
 
 
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2023,
-  author = {Thompson, Jake},
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jake_thompson2023,
+  author = {Jake Thompson, W.},
   title = {Measr 0.2.1},
   date = {2023-04-10},
   url = {https://r-dcm.org/blog/2023-04-measr-0.2.1/},
+  doi = {10.59350/nyd8q-sh748},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2023" class="csl-entry quarto-appendix-citeas">
-Thompson, J. (2023, April 10). <em>measr 0.2.1</em>. <a href="https://r-dcm.org/blog/2023-04-measr-0.2.1/">https://r-dcm.org/blog/2023-04-measr-0.2.1/</a>
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jake_thompson2023" class="csl-entry quarto-appendix-citeas">
+Jake Thompson, W. (2023, April 10). <em>measr 0.2.1</em>. <a href="https://doi.org/10.59350/nyd8q-sh748">https://doi.org/10.59350/nyd8q-sh748</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>measr</category>

@@ -11,7 +11,7 @@
     "href": "blog/2024-02-measr-1.0.0/index.html",
     "title": "measr 1.0.0",
     "section": "",
-    "text": "I am thrilled to announce the release of measr 1.0.0. The goal of measr is to provide a user-friendly interface for estimating and evaluating diagnostic classification models (DCMs; also called cognitive diagnostic models [CDMs]). This is a major release to mark the conclusion of the initial development work that was funded by the Institute of Education Sciences. Importantly, this does not mean that measr is going dormant! We are still actively developing measr, so we’ll continue to add new features and respond to bug reports.\nYou can install the updated version of measr from CRAN with:\nThis blog post will highlight the major improvements, including improved documentation and vignettes, as well as a some minor updates.\nlibrary(measr)"
+    "text": "We are thrilled to announce the release of measr 1.0.0. The goal of measr is to provide a user-friendly interface for estimating and evaluating diagnostic classification models (DCMs; also called cognitive diagnostic models [CDMs]). This is a major release to mark the conclusion of the initial development work that was funded by the Institute of Education Sciences. Importantly, this does not mean that measr is going dormant! We are still actively developing measr, so we’ll continue to add new features and respond to bug reports.\nYou can install the updated version of measr from CRAN with:\nThis blog post will highlight the major improvements, including improved documentation and vignettes, as well as a some minor updates.\nlibrary(measr)"
   },
   {
     "objectID": "blog/2024-02-measr-1.0.0/index.html#improved-documentation",
@@ -32,7 +32,7 @@
     "href": "blog/2024-02-measr-1.0.0/index.html#additional-resources",
     "title": "measr 1.0.0",
     "section": "Additional Resources",
-    "text": "Additional Resources\nIf you are interested in learing more about measr and diagnostic models, I taught a workshop in June at StanCon 2023. The workshop provided an overview of diagnostic models and their use cases and then walked through how to estimate and evaluate different models using measr. All of the workshop materials are available online, including slides, exercises, and solutions.\nFinally, if you are interested in attending a workshop in person, I’ll be teaching another workshop in April at the 2024 annual meeting of the National Conference on Measurement in Education (NCME). The materials from this workshop will also be made available online for those who are unable to attend. For more information on the conference and register, see the conference website."
+    "text": "Additional Resources\nIf you are interested in learing more about measr and diagnostic models, we hosted a workshop in June at StanCon 2023. The workshop provided an overview of diagnostic models and their use cases and then walked through how to estimate and evaluate different models using measr. All of the workshop materials are available online, including slides, exercises, and solutions.\nFinally, if you are interested in attending a workshop in person, we’ll be teaching another workshop in April at the 2024 annual meeting of the National Conference on Measurement in Education (NCME). The materials from this workshop will also be made available online for those who are unable to attend. For more information on the conference and register, see the conference website."
   },
   {
     "objectID": "blog/2024-02-measr-1.0.0/index.html#acknowledgments",
@@ -81,7 +81,7 @@
     "href": "blog/2023-06-measr-0.3.1/index.html",
     "title": "measr 0.3.1",
     "section": "",
-    "text": "I’m stoked to announce the release of measr 0.3.1. The goal of measr is to provide applied researchers and psychometricians with a user friendly interface for estimating and evaluating diagnostic classification models (DCMs). This update is a minor release to introduce a couple of enhancements to model and prior specifications.\nYou can install the update version of measr from CRAN with:\ninstall.packages(\"measr\")\nThis blog post will highlight the two enhancements included in the update. For a complete list of changes, check out the changelog.\nlibrary(measr)"
+    "text": "We’re stoked to announce the release of measr 0.3.1. The goal of measr is to provide applied researchers and psychometricians with a user friendly interface for estimating and evaluating diagnostic classification models (DCMs). This update is a minor release to introduce a couple of enhancements to model and prior specifications.\nYou can install the update version of measr from CRAN with:\ninstall.packages(\"measr\")\nThis blog post will highlight the two enhancements included in the update. For a complete list of changes, check out the changelog.\nlibrary(measr)"
   },
   {
     "objectID": "blog/2023-06-measr-0.3.1/index.html#model-specifications",
@@ -102,7 +102,7 @@
     "href": "blog/index.html",
     "title": "Posts",
     "section": "",
-    "text": "measr 1.0.0\n\n\n\n\n\n\npackage\n\n\nmeasr\n\n\n\nA major release to reflect development milestones.\n\n\n\n\n\nFebruary 5, 2024\n\n\nJake Thompson\n\n\n\n\n\n\n\n\n\n\n\n\nmeasr 0.3.1\n\n\n\n\n\n\npackage\n\n\nmeasr\n\n\n\nA few updates for specifying models and priors.\n\n\n\n\n\nJune 6, 2023\n\n\nJake Thompson\n\n\n\n\n\n\n\n\n\n\n\n\nmeasr 0.2.1\n\n\n\n\n\n\npackage\n\n\nmeasr\n\n\n\nInitial release of measr package for estimating and evaluating diagnostic classification models.\n\n\n\n\n\nApril 10, 2023\n\n\nJake Thompson\n\n\n\n\n\n\nNo matching items"
+    "text": "measr 1.0.0\n\n\n\n\n\n\npackage\n\n\nmeasr\n\n\n\nA major release to reflect development milestones.\n\n\n\n\n\nFebruary 5, 2024\n\n\nW. Jake Thompson\n\n\n\n\n\n\n\n\n\n\n\n\nmeasr 0.3.1\n\n\n\n\n\n\npackage\n\n\nmeasr\n\n\n\nA few updates for specifying models and priors.\n\n\n\n\n\nJune 6, 2023\n\n\nW. Jake Thompson\n\n\n\n\n\n\n\n\n\n\n\n\nmeasr 0.2.1\n\n\n\n\n\n\npackage\n\n\nmeasr\n\n\n\nInitial release of measr package for estimating and evaluating diagnostic classification models.\n\n\n\n\n\nApril 10, 2023\n\n\nW. Jake Thompson\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",

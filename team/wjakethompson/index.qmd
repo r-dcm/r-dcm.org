@@ -1,0 +1,30 @@
+---
+title: W. Jake Thompson
+last: Thompson
+description: Principal Investigator
+image: https://github.com/wjakethompson.png
+order: 1
+about:
+  template: ../../assets/team-member.ejs.html
+  links:
+    - text: ORCID
+      icon: fa-brands fa-orcid
+      href: https://orcid.org/0000-0001-7339-0300
+    - text: GitHub
+      icon: fa-brands fa-github
+      href: https://github.com/wjakethompson
+    - text: Bluesky
+      icon: fa-brands fa-bluesky
+      href: https://https://bsky.app/profile/wjakethompson.com
+    - text: Website
+      icon: fa-solid fa-globe
+      href: https://wjakethompson.com
+---
+
+Jake Thompson is the assistant director of psychometrics at [Accessible Teaching, Learning, and Assessment Systems (ATLAS)](https://atlas.ku.edu), a strategic center within the [Achievement and Assessment Institute](https://aai.ku.edu) at the [University of Kansas](https://ku.edu).
+He received a PhD in educational psychology and research from the University of Kansas' [School of Education and Human Sciences](https://soehs.ku.edu/) in 2018.
+
+Jake has been the Principal Investigator for two grants funded by the [Institute of Education Sciences](https://ies.ed.gov) to develop software for the estimation and evaluation of diagnostic classification models:
+
+* Improving Software and Methods for Estimating Diagnostic Classification Models and Evaluating Model Fit ([R305D210045](https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546))
+* Expanding the Functionality and Accessibility of Software for Diagnostic Measurement ([R305D240032](https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075))

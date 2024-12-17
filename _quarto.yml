@@ -28,6 +28,9 @@ website:
       - text: Blog
         aria-label: "Blog"
         href: blog/index.qmd
+      - text: Our Team
+        aria-label: "Team"
+        href: team/index.qmd
       - icon: rss
         aria-label: "RSS"
         href: rss.xml

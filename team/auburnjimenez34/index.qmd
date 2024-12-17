@@ -1,0 +1,18 @@
+---
+title: Auburn Jimenez
+last: Jimenez
+description: Psychometrician
+image: https://github.com/auburnjimenez34.png
+order: 2
+about:
+  template: ../../assets/team-member.ejs.html
+  links:
+    - text: ORCID
+      icon: fa-brands fa-orcid
+      href: https://orcid.org/0000-0002-7072-2960
+    - text: "{{< fa brands github >}} GitHub"
+      icon: "fa-brands fa-github"
+      href: https://github.com/auburnjimenez34
+---
+
+Here is a description...

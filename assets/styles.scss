@@ -70,7 +70,7 @@ h2 {
 .navbar {
   border-bottom: 1px solid;
   border-color: $theme-red;
-  letter-spacing: 2pt;
+  letter-spacing: 1pt;
   font-size: 90%;
   font-weight: 700;
 
@@ -261,6 +261,92 @@ div.quarto-post {
     width: 1.1em;
     height: 1.1em;
     margin-bottom: -3px;
+  }
+}
+
+// Team listing ----------------------------------------------------------------
+.team {
+  .team-entry {
+    display: flex;
+    flex-direction: row;
+    font-family: $headings-font-family;
+    line-height: 1.3;
+    margin-bottom: 1.5em;
+    column-gap: 1em;
+
+    .body {
+      flex: 1 1 auto;
+    }
+
+    .thumbnail {
+      flex: 0 0 10%;
+
+      img {
+        width: 100%;
+        object-fit: contain;
+        max-height: 150px;
+        border-radius: 10%;
+      }
+    }
+
+    .title {
+      font-weight: 500;
+      font-size: 1.3em;
+      margin-bottom: 0.2em;
+      line-height: 1.2;
+
+      a {
+        color: $theme-navy;
+      }
+    }
+
+    .description {
+      font-weight: 300;
+      font-size: 1em;
+      margin-bottom: 0.3em;
+    }
+
+    .about-links {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 0.4em;
+      column-gap: 0.4em;
+      margin: 0.5em 0;
+
+      .about-link {
+        color: $theme-navy;
+        border: 1px solid $theme-navy;
+        border-radius: 0.25rem;
+        font-size: 0.65em;
+        padding: 0.15em 0.5em;
+        cursor: pointer;
+      }
+
+      .about-link:hover {
+        background-color: $theme-navy;
+        border-color: $theme-navy;
+        color: $theme-blue;
+      }
+    }
+  }
+}
+
+div.quarto-about-trestles {
+  .about-entity {
+    .about-link {
+      color: $theme-navy;
+      border-color: $theme-navy;
+    }
+
+    .about-link:hover {
+      background-color: $theme-navy;
+      border-color: $theme-navy;
+      color: $theme-blue;
+    }
+  }
+
+  .about-contents {
+    font-size: 95%;
   }
 }
 

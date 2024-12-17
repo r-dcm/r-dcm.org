@@ -1,0 +1,17 @@
+---
+title: "Meet the team"
+author: ""
+description: ""
+listing:
+  - id: team_standard
+    contents:
+      - "**/index.qmd"
+    sort:
+      - "order"
+      - "last asc"
+    template: ../assets/team-listing.ejs
+page-layout: full
+engine: knitr
+toc-location: right
+date-format: none
+---

@@ -14,5 +14,13 @@
       "/blog/2023-06-measr-0.3.1/index.html",
       "/blog/2023-04-measr-0.2.1/index.html"
     ]
+  },
+  {
+    "listing": "/team/index.html",
+    "items": [
+      "/team/wjakethompson/index.html",
+      "/team/JeffreyCHoover/index.html",
+      "/team/auburnjimenez34/index.html"
+    ]
   }
 ]

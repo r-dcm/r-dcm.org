@@ -18,7 +18,7 @@ pagetitle: "{{< meta title >}} | r-dcm"
 
 website:
   title: "r-dcm"
-  description: ""
+  description: "Applied diagnostic classification models with R"
   site-url: https://r-dcm.org
   repo-url: https://github.com/r-dcm/r-dcm.org
 

@@ -10,7 +10,7 @@
 <atom:link href="https://r-dcm.org/rss.xml" rel="self" type="application/rss+xml"/>
 <description>r-dcm blog</description>
 <language>en</language>
-<generator>quarto-1.6.39</generator>
+<generator>quarto-1.6.40</generator>
 <lastBuildDate>Mon, 05 Feb 2024 00:00:00 GMT</lastBuildDate>
 <item>
   <title>measr 1.0.0</title>

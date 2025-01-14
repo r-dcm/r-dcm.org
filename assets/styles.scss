@@ -333,6 +333,13 @@ div.quarto-post {
 
 div.quarto-about-trestles {
   .about-entity {
+    padding-right: 3em;
+
+    img.about-image {
+      object-fit: contain !important;
+      width: 100% !important;
+    }
+
     .about-link {
       color: $theme-navy;
       border-color: $theme-navy;
@@ -346,6 +353,7 @@ div.quarto-about-trestles {
   }
 
   .about-contents {
+    padding-left: 3em;
     font-size: 95%;
   }
 }

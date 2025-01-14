@@ -8,7 +8,6 @@
     <div class="about-links">
       <% for (const link of about.links) { %>
       <a href="<%= link.href %>" class="about-link" rel="<%= link.rel %>" target="<%= link.target %>">
-        <i class="<%= link.icon %>"></i>
         <span class="about-link-text"><%= link.text %></span>
       </a>
       <% } %>

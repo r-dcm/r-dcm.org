@@ -3,15 +3,16 @@ title: Jeffrey C. Hoover
 last: Hoover
 description: Psychometrician
 image: https://github.com/JeffreyCHoover.png
+page-layout: full
 order: 2
 about:
   template: ../../assets/team-member.ejs.html
   links:
-    - text: ORCID
+    - text: "{{< fa brands orcid >}} ORCID"
       icon: fa-brands fa-orcid
       href: https://orcid.org/0000-0002-0276-0308
-    - text: GitHub
-      icon: "fa-brands fa-github"
+    - text: "{{< fa brands github >}} GitHub"
+      icon: fa-brands fa-github
       href: https://github.com/JeffreyCHoover
 ---
 

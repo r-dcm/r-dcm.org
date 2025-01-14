@@ -3,20 +3,21 @@ title: W. Jake Thompson
 last: Thompson
 description: Principal Investigator
 image: https://github.com/wjakethompson.png
+page-layout: full
 order: 1
 about:
   template: ../../assets/team-member.ejs.html
   links:
-    - text: ORCID
+    - text: "{{< fa brands orcid >}} ORCID"
       icon: fa-brands fa-orcid
       href: https://orcid.org/0000-0001-7339-0300
-    - text: GitHub
+    - text: "{{< fa brands github >}} GitHub"
       icon: fa-brands fa-github
       href: https://github.com/wjakethompson
-    - text: Bluesky
+    - text: "{{< fa brands bluesky >}} Bluesky"
       icon: fa-brands fa-bluesky
       href: https://https://bsky.app/profile/wjakethompson.com
-    - text: Website
+    - text: "{{< fa globe >}} Website"
       icon: fa-solid fa-globe
       href: https://wjakethompson.com
 ---

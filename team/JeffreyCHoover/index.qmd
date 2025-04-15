@@ -16,4 +16,6 @@ about:
       href: https://github.com/JeffreyCHoover
 ---
 
-Here is a description...
+Jeff Hoover is a psychometrician at [Accessible Teaching, Learning, and Assessment Systems (ATLAS)](https://atlas.ku.edu), a strategic center within the [Achievement and Assessment Institute](https://aai.ku.edu) at the [University of Kansas](https://ku.edu).
+He received a PhD in educational psychology and research from the University of Kansas' [School of Education and Human Sciences](https://soehs.ku.edu) in 2022.
+His research interests include diagnostic classification models and the integration of cutting-edge technologies such as process data and artificial intelligence into operational assessments.

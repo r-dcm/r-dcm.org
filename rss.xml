@@ -10,7 +10,7 @@
 <atom:link href="https://r-dcm.org/rss.xml" rel="self" type="application/rss+xml"/>
 <description>r-dcm blog</description>
 <language>en</language>
-<generator>quarto-1.6.40</generator>
+<generator>quarto-1.7.32</generator>
 <lastBuildDate>Mon, 05 Feb 2024 00:00:00 GMT</lastBuildDate>
 <item>
   <title>measr 1.0.0</title>
@@ -82,16 +82,16 @@ Thompson, W. J. (2019). <em>Bayesian psychometrics for diagnostic assessments: <
 <div id="ref-thompson-joss-2023" class="csl-entry">
 Thompson, W. J. (2023). <span class="nocase">measr</span>: <span>Bayesian</span> psychometric measurement using <span>Stan</span>. <em>Journal of Open Source Software</em>, <em>8</em>(91), 5742. <a href="https://doi.org/10.21105/joss.05742">https://doi.org/10.21105/joss.05742</a>
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jake_thompson2024,
-  author = {Jake Thompson, W.},
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2024,
+  author = {Thompson, W. Jake},
   title = {Measr 1.0.0},
   date = {2024-02-05},
   url = {https://r-dcm.org/blog/2024-02-measr-1.0.0/},
   doi = {10.59350/5f9an-xbn86},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jake_thompson2024" class="csl-entry quarto-appendix-citeas">
-Jake Thompson, W. (2024, February 5). <em>measr 1.0.0</em>. <a href="https://doi.org/10.59350/5f9an-xbn86">https://doi.org/10.59350/5f9an-xbn86</a>
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2024" class="csl-entry quarto-appendix-citeas">
+Thompson, W. J. (2024, February 5). <em>measr 1.0.0</em>. <a href="https://doi.org/10.59350/5f9an-xbn86">https://doi.org/10.59350/5f9an-xbn86</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>measr</category>
@@ -323,16 +323,16 @@ font-style: inherit;">#&gt; ! Prior for parameter `eta[1]` with class `structura
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jake_thompson2023,
-  author = {Jake Thompson, W.},
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2023,
+  author = {Thompson, W. Jake},
   title = {Measr 0.3.1},
   date = {2023-06-06},
   url = {https://r-dcm.org/blog/2023-06-measr-0.3.1/},
   doi = {10.59350/mt80h-8pp67},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jake_thompson2023" class="csl-entry quarto-appendix-citeas">
-Jake Thompson, W. (2023, June 6). <em>measr 0.3.1</em>. <a href="https://doi.org/10.59350/mt80h-8pp67">https://doi.org/10.59350/mt80h-8pp67</a>
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2023" class="csl-entry quarto-appendix-citeas">
+Thompson, W. J. (2023, June 6). <em>measr 0.3.1</em>. <a href="https://doi.org/10.59350/mt80h-8pp67">https://doi.org/10.59350/mt80h-8pp67</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>measr</category>
@@ -716,16 +716,16 @@ font-style: inherit;">#&gt; 3 fractions         0.936       0.882</span></span><
 <p>Featured photo by <a href="https://unsplash.com/@yer_a_wizard?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Fleur</a> on <a href="https://unsplash.com/photos/drafting-instruments-on-top-of-table-dQf7RZhMOJU?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
 
 
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{jake_thompson2023,
-  author = {Jake Thompson, W.},
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2023,
+  author = {Thompson, W. Jake},
   title = {Measr 0.2.1},
   date = {2023-04-10},
   url = {https://r-dcm.org/blog/2023-04-measr-0.2.1/},
   doi = {10.59350/nyd8q-sh748},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-jake_thompson2023" class="csl-entry quarto-appendix-citeas">
-Jake Thompson, W. (2023, April 10). <em>measr 0.2.1</em>. <a href="https://doi.org/10.59350/nyd8q-sh748">https://doi.org/10.59350/nyd8q-sh748</a>
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2023" class="csl-entry quarto-appendix-citeas">
+Thompson, W. J. (2023, April 10). <em>measr 0.2.1</em>. <a href="https://doi.org/10.59350/nyd8q-sh748">https://doi.org/10.59350/nyd8q-sh748</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>measr</category>

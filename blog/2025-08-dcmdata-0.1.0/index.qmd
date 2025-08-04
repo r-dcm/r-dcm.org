@@ -1,0 +1,119 @@
+---
+title: "dcmdata 0.1.0"
+date: 2025-08-04
+subtitle: ""
+description: "Initial release dcmdata for accessing data from diagnostic assessments."
+image: "featured.jpg"
+image-alt: "Person taking a test"
+title-block-banner: featured.jpg
+twitter-card:
+  image: "featured.jpg"
+open-graph:
+  image: "featured.jpg"
+engine: knitr
+# doi: 10.59350/5f9an-xbn86
+bibliography: "../bib/references.bib"
+csl: "../bib/apa.csl"
+citation: true
+# one of: "deep-dive", "learn", "package", or "other" + relevant packages
+categories:
+  - package
+  - dcmdata
+---
+
+We are so happy to announce the release of a new package, [dcmdata](https://dcmdata.r-dcm.org).
+The goal of dcmdata is to provide easy access to data sets that can be used for demonstrating and testing diagnostic classification models (DCM; also called cognitive diagnostic models [CDMs]).
+
+You can install dcmdata from CRAN with:
+
+```r
+install.packages("dcmdata")
+```
+
+This blog post will highlight the major features and plans for future development.
+
+```{r}
+library(dcmdata)
+```
+
+## Data sets
+
+dcmdata contains both real and simulated data sets.
+All data sets include both response data and a Q-matrix.
+The real data sets include the MacReady and Dayton [-@mdm] multiplication data (MDM) and the Examination for the certificate of proficiency in English (ECPE), as described by @ecpe.
+
+The MDM data are a small data set of four items that measure a single attribute, multiplication.
+As such, this data is useful for use cases where you are interested in a fairly short estimation time.
+For example, this data could be used to quickly interate while testing model code, or in training workshops where time is limited.
+
+```{r}
+#| label: mdm-data
+
+mdm_data
+
+mdm_qmatrix
+```
+
+In contrast, the ECPE data are perhaps a more representative of data you might gather in practice.
+These data consist of 28 items measuring 3 attributes and taken by 2,922 respondents.
+Because multiple attributes are measured, this data can be used to demonstrate how different attributes interact on a single item when using different compensatory and noncompensatory DCMs.
+Additionally, @hdcm demonstrated that the three attributes follow a linear hierarchy, such that respondents are typically demonstrate proficiency on lexical, cohesive, and morphosyntactic rules, in that order.
+That is, the earlier skills represent precursor knowledge necessary for proficiency on the later skills.
+The hierarchy makes the ECPE data excellent for demonstrating the effect of different structural model specifications in a DCM.
+
+```{r}
+#| label: ecpe-data
+
+ecpe_data
+
+ecpe_qmatrix
+```
+
+Finally, one simulated data set is included.
+This data set is based on the diagnosing teachers' multiplicative reasoning (DTMR) data presented by @dtmr, and consists of 990 responses to 27 items that collectively measure 4 attributes.
+Consistent with the results presented by @dtmr, the data was generated using the loglinear cognitive diagnostic model [LCDM\; @lcdm; @lcdm-handbook], and item and attribute names are included as reported in their Table 1.
+
+```{r}
+#| label: dtmr-data
+
+dtmr_data
+
+dtmr_qmatrix
+```
+
+Because the data is simulated we have access to the "true" values for respondents and items.
+The class probabilities of respondents belonging to a given proficiency pattern are reported in @dtmr-strc.
+Using these probabilities, we generated a class for each of the 990 respondents, which is available in `dtmr_true_profiles`.
+
+```{r}
+#| label: dtmr-true-structural
+
+dtmr_true_structural
+
+dtmr_true_profiles
+```
+
+The item parameters for the LCDM are reported in Table 1 of @dtmr.
+Using the item parameters and the true profiles, we can calculate the probability that each simulated respondent provides a correct response to each item.
+These probabilities are then used to generate the simulated item responses in `dtmr_data`.
+
+```{r}
+#| label: dtmr-true-items
+
+dtmr_true_items
+```
+
+For a complete description of how the data was simulated, see `?dtmr`.
+
+## Future work
+
+
+
+We also plan to continue adding more real data sets (e.g., from the [Item Response Warehouse](https://itemresponsewarehouse.org/)).
+If you know of any data sets that would be a good fit, or have a data set you'd like to contribute yourself, please [open an issue](https://github.com/r-dcm/dcmdata/issues)!
+
+## Acknowledgments {.appendix}
+
+The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants [R305D210045](https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546) and [R305D240032](https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075) to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the the Institute or the U.S. Department of Education.
+
+Featured photo by <a href="https://unsplash.com/@amstram?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Scott Graham</a> on <a href="https://unsplash.com/photos/man-writing-on-paper-OQMZwNd3ThU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>.

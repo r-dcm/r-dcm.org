@@ -10,20 +10,38 @@ reference-location: document
 
 freeze: true
 
-# Default knitr options
+# Default formatting options options
 execute:
   echo: true
   message: true
   warning: true
-  collapse: true
-  comment: "#>"
-  fig-align: "center"
-  fig-width: 6
-  fig-asp: 0.618
-  out.width: "80%"
+
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    out.width: "80%"
+
+format:
+  html:
+    fig-align: "center"
+    fig-width: 6
+    fig-asp: 0.618
+
+include-in-header:
+  - text: |
+      <style>
+      .cell-output-stdout code {
+        word-break: break-wor !important;
+        white-space: pre-wrap !important;
+      }
+      </style>
 
 # Default author
 author:
-  - name: W. Jake Thompson
+  - given: W. Jake
+    family: Thompson
     url: https://www.wjakethompson.com
+    affiliation: ATLAS, University of Kansas
+    affiliation-url: https://atlas.ku.edu
     orcid: 0000-0001-7339-0300

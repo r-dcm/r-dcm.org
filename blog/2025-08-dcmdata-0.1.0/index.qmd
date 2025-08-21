@@ -1,6 +1,6 @@
 ---
 title: "dcmdata 0.1.0"
-date: 2025-08-04
+date: 2025-08-21
 subtitle: ""
 description: "Initial release dcmdata for accessing data from diagnostic assessments."
 image: "featured.jpg"
@@ -107,7 +107,8 @@ For a complete description of how the data was simulated, see `?dtmr`.
 
 ## Future work
 
-
+Future work will focus on providing tools for simulating data from a variety of DCMs.
+The goal is to provide a tool that will make it easier to quickly simulate a large number a data sets, as is often required for simulation studies.
 
 We also plan to continue adding more real data sets (e.g., from the [Item Response Warehouse](https://itemresponsewarehouse.org/)).
 If you know of any data sets that would be a good fit, or have a data set you'd like to contribute yourself, please [open an issue](https://github.com/r-dcm/dcmdata/issues)!

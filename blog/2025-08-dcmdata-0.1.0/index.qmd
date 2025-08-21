@@ -11,7 +11,7 @@ twitter-card:
 open-graph:
   image: "featured.jpg"
 engine: knitr
-# doi: 10.59350/5f9an-xbn86
+doi: 10.59350/gmy4x-20093
 bibliography: "../bib/references.bib"
 csl: "../bib/apa.csl"
 citation: true

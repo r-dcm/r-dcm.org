@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,14 +33,15 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-fb89320e6f4d1a32b3d3fca35e0a11c0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-97518418a90fc88b02415e07228183d3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-44fc5c712a0043922088477c48745c38.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-e4b4e6a6c44ddf943f832bc51ec26689.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -115,7 +116,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -210,7 +211,7 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="cGFja2FnZSUyQ2RjbWRhdGE=" data-listing-date-sort="1755734400000" data-listing-file-modified-sort="1755805020865" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="599">
+<div class="quarto-post image-right" data-index="0" data-categories="cGFja2FnZSUyQ2RjbWRhdGE=" data-listing-date-sort="1755734400000" data-listing-file-modified-sort="1763477537387" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="599">
 <div class="thumbnail"><a href="./blog/2025-08-dcmdata-0.1.0/index.html" class="no-external">
 
 <img loading="lazy" src="./blog/2025-08-dcmdata-0.1.0/featured.jpg" class="thumbnail-image" alt="Person taking a test">
@@ -238,7 +239,7 @@ W. Jake Thompson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1707091200000" data-listing-file-modified-sort="1755805020849" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="677">
+<div class="quarto-post image-right" data-index="1" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1707091200000" data-listing-file-modified-sort="1763477537371" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="677">
 <div class="thumbnail"><a href="./blog/2024-02-measr-1.0.0/index.html" class="no-external">
 
 <img loading="lazy" src="./blog/2024-02-measr-1.0.0/featured.jpg" class="thumbnail-image" alt="Different colored measurement tape">
@@ -266,7 +267,7 @@ W. Jake Thompson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1686009600000" data-listing-file-modified-sort="1755805020847" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="671">
+<div class="quarto-post image-right" data-index="2" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1686009600000" data-listing-file-modified-sort="1763477537369" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="671">
 <div class="thumbnail"><a href="./blog/2023-06-measr-0.3.1/index.html" class="no-external">
 
 <img loading="lazy" src="./blog/2023-06-measr-0.3.1/featured.jpg" class="thumbnail-image" alt="Measurement tools on a desk">
@@ -294,7 +295,7 @@ W. Jake Thompson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1681084800000" data-listing-file-modified-sort="1755805020820" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="941">
+<div class="quarto-post image-right" data-index="3" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1681084800000" data-listing-file-modified-sort="1763477537343" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="941">
 <div class="thumbnail"><a href="./blog/2023-04-measr-0.2.1/index.html" class="no-external">
 
 <img loading="lazy" src="./blog/2023-04-measr-0.2.1/featured.jpg" class="thumbnail-image" alt="Measurement tools on a desk">
@@ -376,13 +377,14 @@ W. Jake Thompson
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

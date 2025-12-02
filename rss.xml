@@ -828,10 +828,11 @@ Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model
   title = {Dcmstan 0.1.0},
   date = {2025-11-26},
   url = {https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/},
+  doi = {10.59350/1kz71-zdj91},
   langid = {en}
 }
 </code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2025" class="csl-entry quarto-appendix-citeas">
-Thompson, W. J. (2025, November 26). <em>dcmstan 0.1.0</em>. <a href="https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/">https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/</a>
+Thompson, W. J. (2025, November 26). <em>dcmstan 0.1.0</em>. <a href="https://doi.org/10.59350/1kz71-zdj91">https://doi.org/10.59350/1kz71-zdj91</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>dcmstan</category>

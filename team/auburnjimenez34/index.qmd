@@ -16,4 +16,6 @@ about:
       href: https://github.com/auburnjimenez34
 ---
 
-Here is a description...
+Auburn Jimenez is a psychometrician at [Accessible Teaching, Learning, and Assessment Systems (ATLAS)](https://atlas.ku.edu), a strategic center within the [Achievement and Assessment Institute](https://aai.ku.edu) at the [University of Kansas](https://ku.edu).
+He received a PhD in quantitative psychology from the [University of Illinois Urbana-Champaign](https://www.uillinois.edu/) in 2023.
+His professional interests include the development and application of diagnostic classification and item response theory models in educational assessment.

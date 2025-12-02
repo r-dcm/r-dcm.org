@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="W. Jake Thompson">
+<meta name="dcterms.date" content="2025-11-26">
+<meta name="description" content="Initial release dcmstan for specifying diagnostic models and generating Stan code.">
+
+<title>dcmstan 0.1.0 | r-dcm – r-dcm</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-97518418a90fc88b02415e07228183d3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-a2c5f3d9085531a1eb56ac8b4c883460.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(featured.jpg);
+background-size: cover;
+      }
+</style>
+<script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+<style>
+.cell-output-stdout code {
+  word-break: break-wor !important;
+  white-space: pre-wrap !important;
+}
+</style>
+
+
+<meta property="og:title" content="dcmstan 0.1.0 | r-dcm">
+<meta property="og:description" content="Initial release dcmstan for specifying diagnostic models and generating Stan code.">
+<meta property="og:image" content="https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/featured.jpg">
+<meta property="og:site_name" content="r-dcm">
+<meta property="og:image:alt" content="Person taking a test">
+<meta name="twitter:title" content="dcmstan 0.1.0 | r-dcm">
+<meta name="twitter:description" content="Initial release dcmstan for specifying diagnostic models and generating Stan code.">
+<meta name="twitter:image" content="https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/featured.jpg">
+<meta name="twitter:image:alt" content="Person taking a test">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">r-dcm</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../team/index.html"> 
+<span class="menu-text">Our Team</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../rss.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/r-dcm"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">dcmstan 0.1.0</h1>
+                  <div>
+        <div class="description">
+          Initial release dcmstan for specifying diagnostic models and generating <em>Stan</em> code.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">package</div>
+                <div class="quarto-category">dcmstan</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://www.wjakethompson.com">W. Jake Thompson</a> <a href="https://orcid.org/0000-0001-7339-0300" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://atlas.ku.edu">
+              ATLAS, University of Kansas
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 26, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#dcm-specification" id="toc-dcm-specification" class="nav-link active" data-scroll-target="#dcm-specification">DCM specification</a></li>
+  <li><a href="#stan-code-and-data" id="toc-stan-code-and-data" class="nav-link" data-scroll-target="#stan-code-and-data"><em>Stan</em> code and data</a></li>
+  <li><a href="#dcmstan-measr" id="toc-dcmstan-measr" class="nav-link" data-scroll-target="#dcmstan-measr">dcmstan + measr</a></li>
+  
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>We are very pleased to announce the release of a new package, <a href="https://dcmstan.r-dcm.org">dcmstan</a>. The goal of dcmstan is to provide users with a friendly interface for creating <a href="https://mc-stan.org"><em>Stan</em></a> scripts necessary for estimating diagnostic classification models (DCMs; also called cognitive diagnostic models [CDMs]). dcmstan is primarily intended to serve as a backend for <code>{measr}</code>, which will interface with <code>{rstan}</code> or <code>{cmdstanr}</code> to actually estimate a DCM. However, dcmstan can also be used independently if you want finer control of the estimation process or would like to customize the <em>Stan</em> script used for estimation.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="dcmstan.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can install dcmstan from CRAN with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dcmstan"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This blog post will highlight the major features and describe how dcmstan fits into the larger universe of r-dcm packages.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dcmstan)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="dcm-specification" class="level2">
+<h2 class="anchored" data-anchor-id="dcm-specification">DCM specification</h2>
+<p>For this example, we’ll create a specification for a DCM that we want to fit to ECPE data, which is available in the <code>{dcmdata}</code> package.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dcmdata)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ecpe_qmatrix</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 28 × 4</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    item_id morphosyntactic cohesive lexical</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 E1                    1        1       0</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 E2                    0        1       0</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 E3                    1        0       1</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 E4                    0        0       1</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 E5                    0        0       1</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 E6                    0        0       1</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 E7                    1        0       1</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 E8                    0        1       0</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 E9                    0        0       1</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 E10                   1        0       0</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 18 more rows</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>ecpe_data</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2,922 × 29</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    resp_id    E1    E2    E3    E4    E5    E6    E7    E8    E9   E10   E11</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       1     1     1     1     0     1     1     1     1     1     1     1</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       2     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       3     1     1     1     1     1     1     0     1     1     1     1</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       4     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       5     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       6     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       7     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       8     0     1     1     1     1     1     0     1     1     1     0</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       9     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10      10     1     1     1     1     0     0     1     1     1     1     1</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2,912 more rows</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 17 more variables: E12 &lt;int&gt;, E13 &lt;int&gt;, E14 &lt;int&gt;, E15 &lt;int&gt;, E16 &lt;int&gt;,</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   E17 &lt;int&gt;, E18 &lt;int&gt;, E19 &lt;int&gt;, E20 &lt;int&gt;, E21 &lt;int&gt;, E22 &lt;int&gt;,</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   E23 &lt;int&gt;, E24 &lt;int&gt;, E25 &lt;int&gt;, E26 &lt;int&gt;, E27 &lt;int&gt;, E28 &lt;int&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can create a DCM specification using <code>dcm_specify()</code>. We must provide our Q-matrix and, if present, the name of the Q-matrix column that contains the item identifiers. We then must choose a measurement and structural model to be used. By default, <code>dcm_specify()</code> will fit a loglinear cognitive diagnostic model <span class="citation" data-cites="lcdm lcdm-handbook">(LCDM; <a href="#ref-lcdm" role="doc-biblioref">Henson et al., 2009</a>; <a href="#ref-lcdm-handbook" role="doc-biblioref">Henson &amp; Templin, 2019</a>)</span> with an unconstrained structural model. These are the measurement models used by <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span> in their examination of the ECPE data, so we will echo those choices here. However, there are many other measurement and structural models we could choose from. For details on the specification options, see <code>vignette("dcmstan", package = "dcmstan")</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ecpe_spec <span class="ot">&lt;-</span> <span class="fu">dcm_specify</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">qmatrix =</span> ecpe_qmatrix,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">identifier =</span> <span class="st">"item_id"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">measurement_model =</span> <span class="fu">lcdm</span>(),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">structural_model =</span> <span class="fu">unconstrained</span>()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>ecpe_spec</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes with 28</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; items.</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Attributes:</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; • "morphosyntactic" (13 items)</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; • "cohesive" (6 items)</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; • "lexical" (18 items)</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Attribute structure:</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Unconstrained</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Prior distributions:</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   intercept ~ normal(0, 2)</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   maineffect ~ lognormal(0, 1)</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   interaction ~ normal(0, 2)</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   `Vc` ~ dirichlet(1, 1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can also specify prior distributions for the model. Reasonable priors are defined by default, but custom priors can be specified for specific parameters or an entire type of parameters (e.g., applies to all intercept parameters). For a list of possible parameters for given specification, see <code>get_parameters()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_parameters</span>(ecpe_spec)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 75 × 4</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    item_id type        attributes                coefficient</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;                     &lt;chr&gt;      </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 E1      intercept   &lt;NA&gt;                      l1_0       </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 E1      maineffect  morphosyntactic           l1_11      </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 E1      maineffect  cohesive                  l1_12      </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 E1      interaction morphosyntactic__cohesive l1_212     </span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 E2      intercept   &lt;NA&gt;                      l2_0       </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 E2      maineffect  cohesive                  l2_12      </span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 E3      intercept   &lt;NA&gt;                      l3_0       </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 E3      maineffect  morphosyntactic           l3_11      </span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 E3      maineffect  lexical                   l3_13      </span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 E3      interaction morphosyntactic__lexical  l3_213     </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 65 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="stan-code-and-data" class="level2">
+<h2 class="anchored" data-anchor-id="stan-code-and-data"><em>Stan</em> code and data</h2>
+<p>Once we have our specification, we can create the <em>Stan</em> code for estimating the model with <code>stan_code()</code>. This code can either be passed directly to the <code>model_code</code> argument of <code>rstan::stan()</code>, or written to a <code>.stan</code> file, which can then be passed to the <code>file</code> argument of <code>rstan::stan()</code> or the <code>stan_file</code> argument of <code>cmdstanr::cmdstan_model()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stan_code</span>(ecpe_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre class="scroll-output"><code>#&gt; data {
+#&gt;   int&lt;lower=1&gt; I;                      // number of items
+#&gt;   int&lt;lower=1&gt; R;                      // number of respondents
+#&gt;   int&lt;lower=1&gt; N;                      // number of observations
+#&gt;   int&lt;lower=1&gt; C;                      // number of classes
+#&gt;   array[N] int&lt;lower=1,upper=I&gt; ii;    // item for observation n
+#&gt;   array[N] int&lt;lower=1,upper=R&gt; rr;    // respondent for observation n
+#&gt;   array[N] int&lt;lower=0,upper=1&gt; y;     // score for observation n
+#&gt;   array[R] int&lt;lower=1,upper=N&gt; start; // starting row for respondent R
+#&gt;   array[R] int&lt;lower=1,upper=I&gt; num;   // number items for respondent R
+#&gt; }
+#&gt; parameters {
+#&gt;   simplex[C] Vc;
+#&gt; 
+#&gt;   ////////////////////////////////// item intercepts
+#&gt;   real l1_0;
+#&gt;   real l2_0;
+#&gt;   real l3_0;
+#&gt;   real l4_0;
+#&gt;   real l5_0;
+#&gt;   real l6_0;
+#&gt;   real l7_0;
+#&gt;   real l8_0;
+#&gt;   real l9_0;
+#&gt;   real l10_0;
+#&gt;   real l11_0;
+#&gt;   real l12_0;
+#&gt;   real l13_0;
+#&gt;   real l14_0;
+#&gt;   real l15_0;
+#&gt;   real l16_0;
+#&gt;   real l17_0;
+#&gt;   real l18_0;
+#&gt;   real l19_0;
+#&gt;   real l20_0;
+#&gt;   real l21_0;
+#&gt;   real l22_0;
+#&gt;   real l23_0;
+#&gt;   real l24_0;
+#&gt;   real l25_0;
+#&gt;   real l26_0;
+#&gt;   real l27_0;
+#&gt;   real l28_0;
+#&gt; 
+#&gt;   ////////////////////////////////// item main effects
+#&gt;   real&lt;lower=0&gt; l1_11;
+#&gt;   real&lt;lower=0&gt; l1_12;
+#&gt;   real&lt;lower=0&gt; l2_12;
+#&gt;   real&lt;lower=0&gt; l3_11;
+#&gt;   real&lt;lower=0&gt; l3_13;
+#&gt;   real&lt;lower=0&gt; l4_13;
+#&gt;   real&lt;lower=0&gt; l5_13;
+#&gt;   real&lt;lower=0&gt; l6_13;
+#&gt;   real&lt;lower=0&gt; l7_11;
+#&gt;   real&lt;lower=0&gt; l7_13;
+#&gt;   real&lt;lower=0&gt; l8_12;
+#&gt;   real&lt;lower=0&gt; l9_13;
+#&gt;   real&lt;lower=0&gt; l10_11;
+#&gt;   real&lt;lower=0&gt; l11_11;
+#&gt;   real&lt;lower=0&gt; l11_13;
+#&gt;   real&lt;lower=0&gt; l12_11;
+#&gt;   real&lt;lower=0&gt; l12_13;
+#&gt;   real&lt;lower=0&gt; l13_11;
+#&gt;   real&lt;lower=0&gt; l14_11;
+#&gt;   real&lt;lower=0&gt; l15_13;
+#&gt;   real&lt;lower=0&gt; l16_11;
+#&gt;   real&lt;lower=0&gt; l16_13;
+#&gt;   real&lt;lower=0&gt; l17_12;
+#&gt;   real&lt;lower=0&gt; l17_13;
+#&gt;   real&lt;lower=0&gt; l18_13;
+#&gt;   real&lt;lower=0&gt; l19_13;
+#&gt;   real&lt;lower=0&gt; l20_11;
+#&gt;   real&lt;lower=0&gt; l20_13;
+#&gt;   real&lt;lower=0&gt; l21_11;
+#&gt;   real&lt;lower=0&gt; l21_13;
+#&gt;   real&lt;lower=0&gt; l22_13;
+#&gt;   real&lt;lower=0&gt; l23_12;
+#&gt;   real&lt;lower=0&gt; l24_12;
+#&gt;   real&lt;lower=0&gt; l25_11;
+#&gt;   real&lt;lower=0&gt; l26_13;
+#&gt;   real&lt;lower=0&gt; l27_11;
+#&gt;   real&lt;lower=0&gt; l28_13;
+#&gt; 
+#&gt;   ////////////////////////////////// item interactions
+#&gt;   real&lt;lower=-1 * min([l1_11,l1_12])&gt; l1_212;
+#&gt;   real&lt;lower=-1 * min([l3_11,l3_13])&gt; l3_213;
+#&gt;   real&lt;lower=-1 * min([l7_11,l7_13])&gt; l7_213;
+#&gt;   real&lt;lower=-1 * min([l11_11,l11_13])&gt; l11_213;
+#&gt;   real&lt;lower=-1 * min([l12_11,l12_13])&gt; l12_213;
+#&gt;   real&lt;lower=-1 * min([l16_11,l16_13])&gt; l16_213;
+#&gt;   real&lt;lower=-1 * min([l17_12,l17_13])&gt; l17_223;
+#&gt;   real&lt;lower=-1 * min([l20_11,l20_13])&gt; l20_213;
+#&gt;   real&lt;lower=-1 * min([l21_11,l21_13])&gt; l21_213;
+#&gt; }
+#&gt; transformed parameters {
+#&gt;   vector[C] log_Vc = log(Vc);
+#&gt;   matrix[I,C] pi;
+#&gt; 
+#&gt;   ////////////////////////////////// probability of correct response
+#&gt;   pi[1,1] = inv_logit(l1_0);
+#&gt;   pi[1,2] = inv_logit(l1_0+l1_11);
+#&gt;   pi[1,3] = inv_logit(l1_0+l1_12);
+#&gt;   pi[1,4] = inv_logit(l1_0);
+#&gt;   pi[1,5] = inv_logit(l1_0+l1_11+l1_12+l1_212);
+#&gt;   pi[1,6] = inv_logit(l1_0+l1_11);
+#&gt;   pi[1,7] = inv_logit(l1_0+l1_12);
+#&gt;   pi[1,8] = inv_logit(l1_0+l1_11+l1_12+l1_212);
+#&gt;   pi[2,1] = inv_logit(l2_0);
+#&gt;   pi[2,2] = inv_logit(l2_0);
+#&gt;   pi[2,3] = inv_logit(l2_0+l2_12);
+#&gt;   pi[2,4] = inv_logit(l2_0);
+#&gt;   pi[2,5] = inv_logit(l2_0+l2_12);
+#&gt;   pi[2,6] = inv_logit(l2_0);
+#&gt;   pi[2,7] = inv_logit(l2_0+l2_12);
+#&gt;   pi[2,8] = inv_logit(l2_0+l2_12);
+#&gt;   pi[3,1] = inv_logit(l3_0);
+#&gt;   pi[3,2] = inv_logit(l3_0+l3_11);
+#&gt;   pi[3,3] = inv_logit(l3_0);
+#&gt;   pi[3,4] = inv_logit(l3_0+l3_13);
+#&gt;   pi[3,5] = inv_logit(l3_0+l3_11);
+#&gt;   pi[3,6] = inv_logit(l3_0+l3_11+l3_13+l3_213);
+#&gt;   pi[3,7] = inv_logit(l3_0+l3_13);
+#&gt;   pi[3,8] = inv_logit(l3_0+l3_11+l3_13+l3_213);
+#&gt;   pi[4,1] = inv_logit(l4_0);
+#&gt;   pi[4,2] = inv_logit(l4_0);
+#&gt;   pi[4,3] = inv_logit(l4_0);
+#&gt;   pi[4,4] = inv_logit(l4_0+l4_13);
+#&gt;   pi[4,5] = inv_logit(l4_0);
+#&gt;   pi[4,6] = inv_logit(l4_0+l4_13);
+#&gt;   pi[4,7] = inv_logit(l4_0+l4_13);
+#&gt;   pi[4,8] = inv_logit(l4_0+l4_13);
+#&gt;   pi[5,1] = inv_logit(l5_0);
+#&gt;   pi[5,2] = inv_logit(l5_0);
+#&gt;   pi[5,3] = inv_logit(l5_0);
+#&gt;   pi[5,4] = inv_logit(l5_0+l5_13);
+#&gt;   pi[5,5] = inv_logit(l5_0);
+#&gt;   pi[5,6] = inv_logit(l5_0+l5_13);
+#&gt;   pi[5,7] = inv_logit(l5_0+l5_13);
+#&gt;   pi[5,8] = inv_logit(l5_0+l5_13);
+#&gt;   pi[6,1] = inv_logit(l6_0);
+#&gt;   pi[6,2] = inv_logit(l6_0);
+#&gt;   pi[6,3] = inv_logit(l6_0);
+#&gt;   pi[6,4] = inv_logit(l6_0+l6_13);
+#&gt;   pi[6,5] = inv_logit(l6_0);
+#&gt;   pi[6,6] = inv_logit(l6_0+l6_13);
+#&gt;   pi[6,7] = inv_logit(l6_0+l6_13);
+#&gt;   pi[6,8] = inv_logit(l6_0+l6_13);
+#&gt;   pi[7,1] = inv_logit(l7_0);
+#&gt;   pi[7,2] = inv_logit(l7_0+l7_11);
+#&gt;   pi[7,3] = inv_logit(l7_0);
+#&gt;   pi[7,4] = inv_logit(l7_0+l7_13);
+#&gt;   pi[7,5] = inv_logit(l7_0+l7_11);
+#&gt;   pi[7,6] = inv_logit(l7_0+l7_11+l7_13+l7_213);
+#&gt;   pi[7,7] = inv_logit(l7_0+l7_13);
+#&gt;   pi[7,8] = inv_logit(l7_0+l7_11+l7_13+l7_213);
+#&gt;   pi[8,1] = inv_logit(l8_0);
+#&gt;   pi[8,2] = inv_logit(l8_0);
+#&gt;   pi[8,3] = inv_logit(l8_0+l8_12);
+#&gt;   pi[8,4] = inv_logit(l8_0);
+#&gt;   pi[8,5] = inv_logit(l8_0+l8_12);
+#&gt;   pi[8,6] = inv_logit(l8_0);
+#&gt;   pi[8,7] = inv_logit(l8_0+l8_12);
+#&gt;   pi[8,8] = inv_logit(l8_0+l8_12);
+#&gt;   pi[9,1] = inv_logit(l9_0);
+#&gt;   pi[9,2] = inv_logit(l9_0);
+#&gt;   pi[9,3] = inv_logit(l9_0);
+#&gt;   pi[9,4] = inv_logit(l9_0+l9_13);
+#&gt;   pi[9,5] = inv_logit(l9_0);
+#&gt;   pi[9,6] = inv_logit(l9_0+l9_13);
+#&gt;   pi[9,7] = inv_logit(l9_0+l9_13);
+#&gt;   pi[9,8] = inv_logit(l9_0+l9_13);
+#&gt;   pi[10,1] = inv_logit(l10_0);
+#&gt;   pi[10,2] = inv_logit(l10_0+l10_11);
+#&gt;   pi[10,3] = inv_logit(l10_0);
+#&gt;   pi[10,4] = inv_logit(l10_0);
+#&gt;   pi[10,5] = inv_logit(l10_0+l10_11);
+#&gt;   pi[10,6] = inv_logit(l10_0+l10_11);
+#&gt;   pi[10,7] = inv_logit(l10_0);
+#&gt;   pi[10,8] = inv_logit(l10_0+l10_11);
+#&gt;   pi[11,1] = inv_logit(l11_0);
+#&gt;   pi[11,2] = inv_logit(l11_0+l11_11);
+#&gt;   pi[11,3] = inv_logit(l11_0);
+#&gt;   pi[11,4] = inv_logit(l11_0+l11_13);
+#&gt;   pi[11,5] = inv_logit(l11_0+l11_11);
+#&gt;   pi[11,6] = inv_logit(l11_0+l11_11+l11_13+l11_213);
+#&gt;   pi[11,7] = inv_logit(l11_0+l11_13);
+#&gt;   pi[11,8] = inv_logit(l11_0+l11_11+l11_13+l11_213);
+#&gt;   pi[12,1] = inv_logit(l12_0);
+#&gt;   pi[12,2] = inv_logit(l12_0+l12_11);
+#&gt;   pi[12,3] = inv_logit(l12_0);
+#&gt;   pi[12,4] = inv_logit(l12_0+l12_13);
+#&gt;   pi[12,5] = inv_logit(l12_0+l12_11);
+#&gt;   pi[12,6] = inv_logit(l12_0+l12_11+l12_13+l12_213);
+#&gt;   pi[12,7] = inv_logit(l12_0+l12_13);
+#&gt;   pi[12,8] = inv_logit(l12_0+l12_11+l12_13+l12_213);
+#&gt;   pi[13,1] = inv_logit(l13_0);
+#&gt;   pi[13,2] = inv_logit(l13_0+l13_11);
+#&gt;   pi[13,3] = inv_logit(l13_0);
+#&gt;   pi[13,4] = inv_logit(l13_0);
+#&gt;   pi[13,5] = inv_logit(l13_0+l13_11);
+#&gt;   pi[13,6] = inv_logit(l13_0+l13_11);
+#&gt;   pi[13,7] = inv_logit(l13_0);
+#&gt;   pi[13,8] = inv_logit(l13_0+l13_11);
+#&gt;   pi[14,1] = inv_logit(l14_0);
+#&gt;   pi[14,2] = inv_logit(l14_0+l14_11);
+#&gt;   pi[14,3] = inv_logit(l14_0);
+#&gt;   pi[14,4] = inv_logit(l14_0);
+#&gt;   pi[14,5] = inv_logit(l14_0+l14_11);
+#&gt;   pi[14,6] = inv_logit(l14_0+l14_11);
+#&gt;   pi[14,7] = inv_logit(l14_0);
+#&gt;   pi[14,8] = inv_logit(l14_0+l14_11);
+#&gt;   pi[15,1] = inv_logit(l15_0);
+#&gt;   pi[15,2] = inv_logit(l15_0);
+#&gt;   pi[15,3] = inv_logit(l15_0);
+#&gt;   pi[15,4] = inv_logit(l15_0+l15_13);
+#&gt;   pi[15,5] = inv_logit(l15_0);
+#&gt;   pi[15,6] = inv_logit(l15_0+l15_13);
+#&gt;   pi[15,7] = inv_logit(l15_0+l15_13);
+#&gt;   pi[15,8] = inv_logit(l15_0+l15_13);
+#&gt;   pi[16,1] = inv_logit(l16_0);
+#&gt;   pi[16,2] = inv_logit(l16_0+l16_11);
+#&gt;   pi[16,3] = inv_logit(l16_0);
+#&gt;   pi[16,4] = inv_logit(l16_0+l16_13);
+#&gt;   pi[16,5] = inv_logit(l16_0+l16_11);
+#&gt;   pi[16,6] = inv_logit(l16_0+l16_11+l16_13+l16_213);
+#&gt;   pi[16,7] = inv_logit(l16_0+l16_13);
+#&gt;   pi[16,8] = inv_logit(l16_0+l16_11+l16_13+l16_213);
+#&gt;   pi[17,1] = inv_logit(l17_0);
+#&gt;   pi[17,2] = inv_logit(l17_0);
+#&gt;   pi[17,3] = inv_logit(l17_0+l17_12);
+#&gt;   pi[17,4] = inv_logit(l17_0+l17_13);
+#&gt;   pi[17,5] = inv_logit(l17_0+l17_12);
+#&gt;   pi[17,6] = inv_logit(l17_0+l17_13);
+#&gt;   pi[17,7] = inv_logit(l17_0+l17_12+l17_13+l17_223);
+#&gt;   pi[17,8] = inv_logit(l17_0+l17_12+l17_13+l17_223);
+#&gt;   pi[18,1] = inv_logit(l18_0);
+#&gt;   pi[18,2] = inv_logit(l18_0);
+#&gt;   pi[18,3] = inv_logit(l18_0);
+#&gt;   pi[18,4] = inv_logit(l18_0+l18_13);
+#&gt;   pi[18,5] = inv_logit(l18_0);
+#&gt;   pi[18,6] = inv_logit(l18_0+l18_13);
+#&gt;   pi[18,7] = inv_logit(l18_0+l18_13);
+#&gt;   pi[18,8] = inv_logit(l18_0+l18_13);
+#&gt;   pi[19,1] = inv_logit(l19_0);
+#&gt;   pi[19,2] = inv_logit(l19_0);
+#&gt;   pi[19,3] = inv_logit(l19_0);
+#&gt;   pi[19,4] = inv_logit(l19_0+l19_13);
+#&gt;   pi[19,5] = inv_logit(l19_0);
+#&gt;   pi[19,6] = inv_logit(l19_0+l19_13);
+#&gt;   pi[19,7] = inv_logit(l19_0+l19_13);
+#&gt;   pi[19,8] = inv_logit(l19_0+l19_13);
+#&gt;   pi[20,1] = inv_logit(l20_0);
+#&gt;   pi[20,2] = inv_logit(l20_0+l20_11);
+#&gt;   pi[20,3] = inv_logit(l20_0);
+#&gt;   pi[20,4] = inv_logit(l20_0+l20_13);
+#&gt;   pi[20,5] = inv_logit(l20_0+l20_11);
+#&gt;   pi[20,6] = inv_logit(l20_0+l20_11+l20_13+l20_213);
+#&gt;   pi[20,7] = inv_logit(l20_0+l20_13);
+#&gt;   pi[20,8] = inv_logit(l20_0+l20_11+l20_13+l20_213);
+#&gt;   pi[21,1] = inv_logit(l21_0);
+#&gt;   pi[21,2] = inv_logit(l21_0+l21_11);
+#&gt;   pi[21,3] = inv_logit(l21_0);
+#&gt;   pi[21,4] = inv_logit(l21_0+l21_13);
+#&gt;   pi[21,5] = inv_logit(l21_0+l21_11);
+#&gt;   pi[21,6] = inv_logit(l21_0+l21_11+l21_13+l21_213);
+#&gt;   pi[21,7] = inv_logit(l21_0+l21_13);
+#&gt;   pi[21,8] = inv_logit(l21_0+l21_11+l21_13+l21_213);
+#&gt;   pi[22,1] = inv_logit(l22_0);
+#&gt;   pi[22,2] = inv_logit(l22_0);
+#&gt;   pi[22,3] = inv_logit(l22_0);
+#&gt;   pi[22,4] = inv_logit(l22_0+l22_13);
+#&gt;   pi[22,5] = inv_logit(l22_0);
+#&gt;   pi[22,6] = inv_logit(l22_0+l22_13);
+#&gt;   pi[22,7] = inv_logit(l22_0+l22_13);
+#&gt;   pi[22,8] = inv_logit(l22_0+l22_13);
+#&gt;   pi[23,1] = inv_logit(l23_0);
+#&gt;   pi[23,2] = inv_logit(l23_0);
+#&gt;   pi[23,3] = inv_logit(l23_0+l23_12);
+#&gt;   pi[23,4] = inv_logit(l23_0);
+#&gt;   pi[23,5] = inv_logit(l23_0+l23_12);
+#&gt;   pi[23,6] = inv_logit(l23_0);
+#&gt;   pi[23,7] = inv_logit(l23_0+l23_12);
+#&gt;   pi[23,8] = inv_logit(l23_0+l23_12);
+#&gt;   pi[24,1] = inv_logit(l24_0);
+#&gt;   pi[24,2] = inv_logit(l24_0);
+#&gt;   pi[24,3] = inv_logit(l24_0+l24_12);
+#&gt;   pi[24,4] = inv_logit(l24_0);
+#&gt;   pi[24,5] = inv_logit(l24_0+l24_12);
+#&gt;   pi[24,6] = inv_logit(l24_0);
+#&gt;   pi[24,7] = inv_logit(l24_0+l24_12);
+#&gt;   pi[24,8] = inv_logit(l24_0+l24_12);
+#&gt;   pi[25,1] = inv_logit(l25_0);
+#&gt;   pi[25,2] = inv_logit(l25_0+l25_11);
+#&gt;   pi[25,3] = inv_logit(l25_0);
+#&gt;   pi[25,4] = inv_logit(l25_0);
+#&gt;   pi[25,5] = inv_logit(l25_0+l25_11);
+#&gt;   pi[25,6] = inv_logit(l25_0+l25_11);
+#&gt;   pi[25,7] = inv_logit(l25_0);
+#&gt;   pi[25,8] = inv_logit(l25_0+l25_11);
+#&gt;   pi[26,1] = inv_logit(l26_0);
+#&gt;   pi[26,2] = inv_logit(l26_0);
+#&gt;   pi[26,3] = inv_logit(l26_0);
+#&gt;   pi[26,4] = inv_logit(l26_0+l26_13);
+#&gt;   pi[26,5] = inv_logit(l26_0);
+#&gt;   pi[26,6] = inv_logit(l26_0+l26_13);
+#&gt;   pi[26,7] = inv_logit(l26_0+l26_13);
+#&gt;   pi[26,8] = inv_logit(l26_0+l26_13);
+#&gt;   pi[27,1] = inv_logit(l27_0);
+#&gt;   pi[27,2] = inv_logit(l27_0+l27_11);
+#&gt;   pi[27,3] = inv_logit(l27_0);
+#&gt;   pi[27,4] = inv_logit(l27_0);
+#&gt;   pi[27,5] = inv_logit(l27_0+l27_11);
+#&gt;   pi[27,6] = inv_logit(l27_0+l27_11);
+#&gt;   pi[27,7] = inv_logit(l27_0);
+#&gt;   pi[27,8] = inv_logit(l27_0+l27_11);
+#&gt;   pi[28,1] = inv_logit(l28_0);
+#&gt;   pi[28,2] = inv_logit(l28_0);
+#&gt;   pi[28,3] = inv_logit(l28_0);
+#&gt;   pi[28,4] = inv_logit(l28_0+l28_13);
+#&gt;   pi[28,5] = inv_logit(l28_0);
+#&gt;   pi[28,6] = inv_logit(l28_0+l28_13);
+#&gt;   pi[28,7] = inv_logit(l28_0+l28_13);
+#&gt;   pi[28,8] = inv_logit(l28_0+l28_13);
+#&gt; }
+#&gt; model {
+#&gt;   ////////////////////////////////// priors
+#&gt;   Vc ~ dirichlet(rep_vector(1, C));
+#&gt;   l1_0 ~ normal(0, 2);
+#&gt;   l1_11 ~ lognormal(0, 1);
+#&gt;   l1_12 ~ lognormal(0, 1);
+#&gt;   l1_212 ~ normal(0, 2);
+#&gt;   l2_0 ~ normal(0, 2);
+#&gt;   l2_12 ~ lognormal(0, 1);
+#&gt;   l3_0 ~ normal(0, 2);
+#&gt;   l3_11 ~ lognormal(0, 1);
+#&gt;   l3_13 ~ lognormal(0, 1);
+#&gt;   l3_213 ~ normal(0, 2);
+#&gt;   l4_0 ~ normal(0, 2);
+#&gt;   l4_13 ~ lognormal(0, 1);
+#&gt;   l5_0 ~ normal(0, 2);
+#&gt;   l5_13 ~ lognormal(0, 1);
+#&gt;   l6_0 ~ normal(0, 2);
+#&gt;   l6_13 ~ lognormal(0, 1);
+#&gt;   l7_0 ~ normal(0, 2);
+#&gt;   l7_11 ~ lognormal(0, 1);
+#&gt;   l7_13 ~ lognormal(0, 1);
+#&gt;   l7_213 ~ normal(0, 2);
+#&gt;   l8_0 ~ normal(0, 2);
+#&gt;   l8_12 ~ lognormal(0, 1);
+#&gt;   l9_0 ~ normal(0, 2);
+#&gt;   l9_13 ~ lognormal(0, 1);
+#&gt;   l10_0 ~ normal(0, 2);
+#&gt;   l10_11 ~ lognormal(0, 1);
+#&gt;   l11_0 ~ normal(0, 2);
+#&gt;   l11_11 ~ lognormal(0, 1);
+#&gt;   l11_13 ~ lognormal(0, 1);
+#&gt;   l11_213 ~ normal(0, 2);
+#&gt;   l12_0 ~ normal(0, 2);
+#&gt;   l12_11 ~ lognormal(0, 1);
+#&gt;   l12_13 ~ lognormal(0, 1);
+#&gt;   l12_213 ~ normal(0, 2);
+#&gt;   l13_0 ~ normal(0, 2);
+#&gt;   l13_11 ~ lognormal(0, 1);
+#&gt;   l14_0 ~ normal(0, 2);
+#&gt;   l14_11 ~ lognormal(0, 1);
+#&gt;   l15_0 ~ normal(0, 2);
+#&gt;   l15_13 ~ lognormal(0, 1);
+#&gt;   l16_0 ~ normal(0, 2);
+#&gt;   l16_11 ~ lognormal(0, 1);
+#&gt;   l16_13 ~ lognormal(0, 1);
+#&gt;   l16_213 ~ normal(0, 2);
+#&gt;   l17_0 ~ normal(0, 2);
+#&gt;   l17_12 ~ lognormal(0, 1);
+#&gt;   l17_13 ~ lognormal(0, 1);
+#&gt;   l17_223 ~ normal(0, 2);
+#&gt;   l18_0 ~ normal(0, 2);
+#&gt;   l18_13 ~ lognormal(0, 1);
+#&gt;   l19_0 ~ normal(0, 2);
+#&gt;   l19_13 ~ lognormal(0, 1);
+#&gt;   l20_0 ~ normal(0, 2);
+#&gt;   l20_11 ~ lognormal(0, 1);
+#&gt;   l20_13 ~ lognormal(0, 1);
+#&gt;   l20_213 ~ normal(0, 2);
+#&gt;   l21_0 ~ normal(0, 2);
+#&gt;   l21_11 ~ lognormal(0, 1);
+#&gt;   l21_13 ~ lognormal(0, 1);
+#&gt;   l21_213 ~ normal(0, 2);
+#&gt;   l22_0 ~ normal(0, 2);
+#&gt;   l22_13 ~ lognormal(0, 1);
+#&gt;   l23_0 ~ normal(0, 2);
+#&gt;   l23_12 ~ lognormal(0, 1);
+#&gt;   l24_0 ~ normal(0, 2);
+#&gt;   l24_12 ~ lognormal(0, 1);
+#&gt;   l25_0 ~ normal(0, 2);
+#&gt;   l25_11 ~ lognormal(0, 1);
+#&gt;   l26_0 ~ normal(0, 2);
+#&gt;   l26_13 ~ lognormal(0, 1);
+#&gt;   l27_0 ~ normal(0, 2);
+#&gt;   l27_11 ~ lognormal(0, 1);
+#&gt;   l28_0 ~ normal(0, 2);
+#&gt;   l28_13 ~ lognormal(0, 1);
+#&gt; 
+#&gt;   ////////////////////////////////// likelihood
+#&gt;   for (r in 1:R) {
+#&gt;     row_vector[C] ps;
+#&gt;     for (c in 1:C) {
+#&gt;       array[num[r]] real log_items;
+#&gt;       for (m in 1:num[r]) {
+#&gt;         int i = ii[start[r] + m - 1];
+#&gt;         log_items[m] = y[start[r] + m - 1] * log(pi[i,c]) +
+#&gt;                        (1 - y[start[r] + m - 1]) * log(1 - pi[i,c]);
+#&gt;       }
+#&gt;       ps[c] = log_Vc[c] + sum(log_items);
+#&gt;     }
+#&gt;     target += log_sum_exp(ps);
+#&gt;   }
+#&gt; }</code></pre>
+</div>
+</div>
+<p>Both rstan and cmdstanr also require a list of data objects that correspond to the <code>data</code> block of the <em>Stan</em> code. This can be created with <code>stan_data()</code>. Note that if you edit the generated <em>Stan</em> code to customize the estimation and add to the <code>data</code> block, you will need to also add corresponding objects to the data list before estimation.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">stan_data</span>(ecpe_spec, <span class="at">data =</span> ecpe_data, <span class="at">identifier =</span> <span class="st">"resp_id"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 9</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ I    : int 28</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ R    : int 2922</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ N    : int 81816</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ C    : int 8</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ ii   : num [1:81816] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ rr   : num [1:81816] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ y    : int [1:81816] 1 1 1 0 1 1 1 1 1 1 ...</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ start: int [1:2922] 1 29 57 85 113 141 169 197 225 253 ...</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ num  : int [1:2922] 28 28 28 28 28 28 28 28 28 28 ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="dcmstan-measr" class="level2">
+<h2 class="anchored" data-anchor-id="dcmstan-measr">dcmstan + measr</h2>
+<p>dcmstan is primarily intended to be a backend to <code>{measr}</code>. Many dcmstan functions are reexported by measr so that if you are using measr to estimate your model, you should not need to directly load or interact with dcmstan. For example, <code>dcm_specify()</code> is reexported by measr, so one can simply create a model specification and pass that directly to <code>measr::dcm_estimate()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(measr)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ecpe_spec <span class="ot">&lt;-</span> <span class="fu">dcm_specify</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">qmatrix =</span> ecpe_qmatrix,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">identifier =</span> <span class="st">"item_id"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">measurement_model =</span> <span class="fu">lcdm</span>(),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">structural_model =</span> <span class="fu">unconstrained</span>()</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">dcm_estimate</span>(</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">dcm_spec =</span> ecpe_spec,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ecpe_data,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">identifier =</span> <span class="st">"resp_id"</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>dcm_estimate()</code> calls <code>stan_code()</code> and <code>stan_data()</code> internally to create the necessary <em>Stan</em> script and data list and then estimates the model using your chosen backend (i.e., rstan or cmdstanr). Thus, a direct interface with dcmstan should only be necessary if you want to modify the <em>Stan</em> code that is generated by default.</p>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
+
+<p>The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546">R305D210045</a> and <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075">R305D240032</a> to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the the Institute or the U.S. Department of Education.</p>
+<p>Featured photo by <a href="https://unsplash.com/@andreas_haslinger?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Andreas Haslinger</a> on <a href="https://unsplash.com/photos/a-close-up-of-a-white-wall-with-a-black-frame-ywikyd-_DJs?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+
+
+
+</div></section><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-lcdm" class="csl-entry" role="listitem">
+Henson, R. A., Templin, J. L., &amp; Willse, J. T. (2009). Defining a family of cognitive diagnosis models using log-linear models with latent variables. <em>Psychometrika</em>, <em>74</em>(2), 191–210. <a href="https://doi.org/10.1007/s11336-008-9089-5">https://doi.org/10.1007/s11336-008-9089-5</a>
+</div>
+<div id="ref-lcdm-handbook" class="csl-entry" role="listitem">
+Henson, R., &amp; Templin, J. L. (2019). Loglinear cognitive diagnostic model (<span>LCDM</span>). In M. von Davier &amp; Y.-S. Lee (Eds.), <em>Handbook of diagnostic classification models</em> (pp. 171–185). Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-05584-4_8">https://doi.org/10.1007/978-3-030-05584-4_8</a>
+</div>
+<div id="ref-ecpe" class="csl-entry" role="listitem">
+Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model estimates using <span>Mplus</span>. <em>Educational Measurement: Issues and Practice</em>, <em>32</em>(2), 37–50. <a href="https://doi.org/10.1111/emip.12010">https://doi.org/10.1111/emip.12010</a>
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2025,
+  author = {Thompson, W. Jake},
+  title = {Dcmstan 0.1.0},
+  date = {2025-11-26},
+  url = {https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Thompson, W. J. (2025, November 26). <em>dcmstan 0.1.0</em>. <a href="https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/">https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/</a>
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/r-dcm\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="faux-block"><a href="../../funding.html">Supported by IES and ATLAS.</a></span> <span class="faux-block">All content licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" role="button"> <i class="fa-solid fa-chevron-up" aria-label="chevron-up"></i> </a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

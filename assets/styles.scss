@@ -5,7 +5,7 @@ $theme-navy: #023047;
 $theme-red: #D7263D;
 $theme-cream: #F3D3BD;
 $theme-white: #FFFFFF;
-$theme-code-bg: rgba(233,236,239,.3);
+$theme-code-bg: rgba(233, 236, 239, .3);
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
@@ -84,7 +84,8 @@ h2 {
     align-items: center;
   }
 
-  .navbar-nav .nav-link:hover,.navbar-dark .navbar-nav .nav-link:focus {
+  .navbar-nav .nav-link:hover,
+  .navbar-dark .navbar-nav .nav-link:focus {
     color: $theme-white;
     text-decoration: underline;
   }
@@ -126,66 +127,66 @@ $footer-bg: rgba($theme-navy, 0.2);
 $footer-fg: $theme-navy;
 
 .nav-footer {
-    align-items: flex-start;  // Align all flex items to the top
-    flex-wrap: wrap;
-    border: 0 !important;
-    min-height: 3em;
-    font-family: $footer-font-family;
-    padding: 10px 5%;
+  align-items: flex-start; // Align all flex items to the top
+  flex-wrap: wrap;
+  border: 0 !important;
+  min-height: 3em;
+  font-family: $footer-font-family;
+  padding: 10px 5%;
 
-    a {
-        color: $theme-navy;
+  a {
+    color: $theme-navy;
+  }
+
+  .faux-block {
+    display: block;
+    padding-bottom: 0.4em;
+  }
+
+  .fingerprint {
+    font-family: $font-family-monospace;
+    font-size: 0.8em;
+  }
+
+  // In the default Quarto template, .nav-footer-center has position: absolute
+  // turned on, which makes the div not be a flex item
+  // This changes that so that it *is* a flex item
+  .nav-footer-center {
+    text-align: center;
+    position: inherit;
+    margin-top: 0;
+
+    @media (max-width: map-get($grid-breakpoints, md)) {
+      margin-top: 0.5em;
+      margin-bottom: 1.5em;
+    }
+  }
+
+  // When the screen is medium or smaller, make each footer chunk be 100% width
+  // and centered; otherwise make them be 33% width and left/right/centerd
+  .nav-footer-left,
+  .nav-footer-right,
+  .nav-footer-center {
+    text-align: center;
+    width: 100%;
+    min-height: 2em;
+  }
+
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    .nav-footer-left {
+      text-align: left;
     }
 
-    .faux-block {
-        display: block;
-        padding-bottom: 0.4em;
+    .nav-footer-right {
+      text-align: right;
     }
 
-    .fingerprint {
-        font-family: $font-family-monospace;
-        font-size: 0.8em;
-    }
-
-    // In the default Quarto template, .nav-footer-center has position: absolute
-    // turned on, which makes the div not be a flex item
-    // This changes that so that it *is* a flex item
-    .nav-footer-center {
-        text-align: center;
-        position: inherit;
-        margin-top: 0;
-
-        @media (max-width: map-get($grid-breakpoints, md)) {
-            margin-top: 0.5em;
-            margin-bottom: 1.5em;
-        }
-    }
-
-    // When the screen is medium or smaller, make each footer chunk be 100% width
-    // and centered; otherwise make them be 33% width and left/right/centerd
     .nav-footer-left,
     .nav-footer-right,
     .nav-footer-center {
-        text-align: center;
-        width: 100%;
-        min-height: 2em;
+      flex: 1 1 33%;
     }
-
-    @media (min-width: map-get($grid-breakpoints, md)) {
-        .nav-footer-left {
-            text-align: left;
-        }
-
-        .nav-footer-right {
-            text-align: right;
-        }
-
-        .nav-footer-left,
-        .nav-footer-right,
-        .nav-footer-center {
-            flex: 1 1 33%;
-        }
-    }
+  }
 }
 
 // Blog ------------------------------------------------------------------------
@@ -217,7 +218,7 @@ div.quarto-post {
 
 //// Posts
 .quarto-title-block .quarto-title-banner {
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255, 255, 255, 0.6);
   background-blend-mode: lighten;
 
   div.quarto-title {
@@ -252,7 +253,8 @@ div.quarto-post {
   }
 }
 
-.quarto-title-block, .quarto-title-meta {
+.quarto-title-block,
+.quarto-title-meta {
   .quarto-title-meta-contents .doi::before {
     content: "";
     background-image: url(/files/doi.svg);
@@ -380,12 +382,13 @@ div.quarto-about-trestles {
       padding-bottom: 0.5em;
 
       &::marker {
-      color: $theme-red;
+        color: $theme-red;
       }
     }
   }
 
-  &:after, &:before {
+  &:after,
+  &:before {
     border: 1pt solid rgba($theme-red, 0.2);
     bottom: 0;
     content: '';
@@ -394,14 +397,16 @@ div.quarto-about-trestles {
     width: 2.5%;
   }
 
-  &:after, &:after {
-      border-left: none;
-      right: 0;
+  &:after,
+  &:after {
+    border-left: none;
+    right: 0;
   }
 
-  &:before, &:before {
-      border-right: none;
-      left: 0;
+  &:before,
+  &:before {
+    border-right: none;
+    left: 0;
   }
 }
 
@@ -409,16 +414,27 @@ div.quarto-about-trestles {
 
 // code chunks
 div.sourceCode {
-    background-color: $theme-code-bg;
-    border: 1px solid $theme-code-bg;
-    border-radius: 0.25rem
+  background-color: $theme-code-bg;
+  border: 1px solid $theme-code-bg;
+  border-radius: 0.25rem
 }
 
 // in-line code
-p code:not(.sourceCode), li code:not(.sourceCode), td code:not(.sourceCode) {
-    color: $theme-navy;
-    background-color: $theme-code-bg;
-    padding: 0.2em;
+p code:not(.sourceCode),
+li code:not(.sourceCode),
+td code:not(.sourceCode) {
+  color: $theme-navy;
+  background-color: $theme-code-bg;
+  padding: 0.2em;
+}
+
+// scrollable code output
+pre.scroll-output {
+  @extend div, .sourceCode;
+
+  max-height: 500px;
+  overflow-y: auto;
+  color: #5E5E5E;
 }
 
 // session information ---------------------------------------------------------
@@ -456,14 +472,14 @@ p code:not(.sourceCode), li code:not(.sourceCode), td code:not(.sourceCode) {
   }
 
   tbody {
-    tr:nth-of-type(even) > * {
+    tr:nth-of-type(even)>* {
       background-color: rgba($theme-red, 0.03);
       --bs-table-accent-bg: rgba($theme-red, 0.03);
     }
 
-    tr:nth-of-type(odd) > * {
+    tr:nth-of-type(odd)>* {
       background-color: $theme-white;
-      --bs-table-accent-bg:  $theme-white;
+      --bs-table-accent-bg: $theme-white;
     }
 
     tr:last-of-type {
@@ -474,7 +490,7 @@ p code:not(.sourceCode), li code:not(.sourceCode), td code:not(.sourceCode) {
       padding: 15px;
     }
 
-    tr td:last-child{
+    tr td:last-child {
       padding: 15px 0;
       padding-right: 15px;
     }

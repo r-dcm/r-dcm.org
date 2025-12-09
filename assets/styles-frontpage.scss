@@ -1,0 +1,90 @@
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+
+div#listing-pkgs {
+  .quarto-listing-cols-3 {
+    gap: 4em
+  }
+
+  .quarto-grid-item p.card-img-top>img {
+    object-fit: contain;
+  }
+
+  h5 {
+    font-weight: bold;
+  }
+
+  .quarto-grid-item.card-center .listing-description {
+    text-align: center;
+  }
+}
+
+
+#FrontPage {
+  .band {
+    position: relative;
+    padding: 0 5%;
+
+    .blurb {
+      font-weight: 300;
+      display: inline-block;
+      min-height: 160px;
+      font-size: 24px;
+      line-height: 40px;
+      max-width: 48%;
+
+    }
+  }
+
+  .band.first {
+    height: 690px;
+
+    span.tagline {
+      text-transform: uppercase;
+      font-size: 1.2rem !important;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .bandContent {
+      max-width: 1100px;
+
+      margin-top: -140px;
+      margin-left: auto;
+      margin-right: auto;
+
+      background-color: #ffffff;
+      padding-top: 220px;
+      height: 100%;
+      background-image: url(images/hex-background-01.svg);
+      background-repeat: no-repeat;
+      background-size: 570px 690px;
+      display: -webkit-flex;
+      -webkit-justify-content: space-between;
+    }
+  }
+
+  /* size & position adjustments */
+  @media screen and (max-width: 1023px) {
+    .band.first {
+      height: auto;
+    }
+
+    .band.first .bandContent {
+      background-image: none;
+      padding-bottom: 100px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .band.first .bandContent {
+      display: block;
+      height: auto;
+    }
+
+    .band.first .bandContent .blurb {
+      max-width: 100%;
+    }
+  }
+}

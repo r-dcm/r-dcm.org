@@ -1,0 +1,155 @@
+---
+title: "dcmstan 0.1.0"
+date: 2025-11-26
+subtitle: ""
+description: "Initial release dcmstan for specifying diagnostic models and generating *Stan* code."
+image: "featured.jpg"
+image-alt: "Person taking a test"
+title-block-banner: featured.jpg
+twitter-card:
+  image: "featured.jpg"
+open-graph:
+  image: "featured.jpg"
+engine: knitr
+doi: 10.59350/1kz71-zdj91
+bibliography: "../bib/references.bib"
+csl: "../bib/apa.csl"
+citation: true
+# one of: "deep-dive", "learn", "package", or "other" + relevant packages
+categories:
+  - package
+  - dcmstan
+---
+
+We are very pleased to announce the release of a new package, [dcmstan](https://dcmstan.r-dcm.org).
+The goal of dcmstan is to provide users with a friendly interface for creating [*Stan*](https://mc-stan.org) scripts necessary for estimating diagnostic classification models (DCMs; also called cognitive diagnostic models [CDMs]).
+dcmstan is primarily intended to serve as a backend for `{measr}`, which will interface with `{rstan}` or `{cmdstanr}` to actually estimate a DCM.
+However, dcmstan can also be used independently if you want finer control of the estimation process or would like to customize the *Stan* script used for estimation.
+
+```{r}
+#| label: dcmstan-logo
+#| echo: false
+#| fig-align: center
+#| out-width: "60%"
+
+knitr::include_graphics("dcmstan.png")
+```
+
+You can install dcmstan from CRAN with:
+
+```r
+install.packages("dcmstan")
+```
+
+This blog post will highlight the major features and describe how dcmstan fits into the larger universe of r-dcm packages.
+
+```{r}
+#| label: load-packages
+
+library(dcmstan)
+```
+
+## DCM specification
+
+For this example, we'll create a specification for a DCM that we want to fit to ECPE data, which is available in the `{dcmdata}` package.
+
+```{r}
+#| label: ecpe
+
+library(dcmdata)
+
+ecpe_qmatrix
+
+ecpe_data
+```
+
+We can create a DCM specification using `dcm_specify()`.
+We must provide our Q-matrix and, if present, the name of the Q-matrix column that contains the item identifiers.
+We then must choose a measurement and structural model to be used.
+By default, `dcm_specify()` will fit a loglinear cognitive diagnostic model [LCDM\; @lcdm; @lcdm-handbook] with an unconstrained structural model.
+These are the measurement models used by @ecpe in their examination of the ECPE data, so we will echo those choices here.
+However, there are many other measurement and structural models we could choose from.
+For details on the specification options, see `vignette("dcmstan", package = "dcmstan")`.
+
+```{r}
+#| label: ecpe-spec
+
+ecpe_spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(),
+  structural_model = unconstrained()
+)
+
+ecpe_spec
+```
+
+We can also specify prior distributions for the model.
+Reasonable priors are defined by default, but custom priors can be specified for specific parameters or an entire type of parameters (e.g., applies to all intercept parameters).
+For a list of possible parameters for given specification, see `get_parameters()`.
+
+```{r}
+#| label: ecpe-parameters
+
+get_parameters(ecpe_spec)
+```
+
+## *Stan* code and data
+
+Once we have our specification, we can create the *Stan* code for estimating the model with `stan_code()`.
+This code can either be passed directly to the `model_code` argument of `rstan::stan()`, or written to a `.stan` file, which can then be passed to the `file` argument of `rstan::stan()` or the `stan_file` argument of `cmdstanr::cmdstan_model()`.
+
+```{r}
+#| label: ecpe-code
+#| collapse: false
+#| class-output: "scroll-output"
+
+stan_code(ecpe_spec)
+```
+
+Both rstan and cmdstanr also require a list of data objects that correspond to the `data` block of the *Stan* code.
+This can be created with `stan_data()`.
+Note that if you edit the generated *Stan* code to customize the estimation and add to the `data` block, you will need to also add corresponding objects to the data list before estimation.
+
+```{r}
+#| label: ecpe-data
+
+dat <- stan_data(ecpe_spec, data = ecpe_data, identifier = "resp_id")
+
+str(dat)
+```
+
+## dcmstan + measr
+
+dcmstan is primarily intended to be a backend to `{measr}`.
+Many dcmstan functions are reexported by measr so that if you are using measr to estimate your model, you should not need to directly load or interact with dcmstan.
+For example, `dcm_specify()` is reexported by measr, so one can simply create a model specification and pass that directly to `measr::dcm_estimate()`.
+
+```{r}
+#| label: measr-example
+#| eval: false
+
+library(measr)
+
+ecpe_spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(),
+  structural_model = unconstrained()
+)
+
+model <- dcm_estimate(
+  dcm_spec = ecpe_spec,
+  data = ecpe_data,
+  identifier = "resp_id"
+)
+```
+
+`measr::dcm_estimate()` calls `stan_code()` and `stan_data()` internally to create the necessary *Stan* script and data list and then estimates the model using your chosen backend (i.e., rstan or cmdstanr).
+Thus, a direct interface with dcmstan should only be necessary if you want to modify the *Stan* code that is generated by default.
+
+## Acknowledgments {.appendix}
+
+The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants [R305D210045](https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546) and [R305D240032](https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075) to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the the Institute or the U.S. Department of Education.
+
+Featured photo by <a href="https://unsplash.com/@andreas_haslinger?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Andreas Haslinger</a> on <a href="https://unsplash.com/photos/a-close-up-of-a-white-wall-with-a-black-frame-ywikyd-_DJs?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>.

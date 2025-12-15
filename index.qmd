@@ -46,11 +46,17 @@ listing:
         Generate *Stan* code for customizing your model.
 ---
 
+::::{#FrontPage}
+
 :::{#hero-heading}
 
 ## Diagnostic psychometrics with R
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The r-dcm suite is a collection of packages for estimating and evaluating diagnostic classification models in [*R*](https://r-project.org) using [tidyverse](https://tidyverse.org) principles.
+
+What do you need to know to start using the r-dcm packages?
+[{{< fa flag-checkered >}} Get started](start/index.qmd) by learning what you need in `r english::words(length(list.dirs("start", recursive = FALSE)))` articles, starting with how to specify a model and ending with a beginning-to-end case study.
+
 :::
 
 <br>
@@ -58,6 +64,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 ## Packages
 
 Some intro text...
+</br>
 
 :::{#pkgs}
 :::
+
+::::

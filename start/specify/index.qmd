@@ -1,0 +1,40 @@
+---
+title: "Specify a diagnostic model"
+weight: 1
+description: |
+  Get started by learning how to specify and estimate a model using measr.
+css: ../styles.css
+link-citations: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(wjake)
+library(showtext)
+library(english)
+
+set_theme(
+  base_family = "Open Sans",
+  plot_margin = ggplot2::margin(10, 10, 10, 10)
+)
+
+font_add_google("Open Sans")
+showtext_auto()
+showtext_opts(dpi = 192)
+
+msr_colors <- c("#8ECAE6", "#023047", "#D7263D")
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7.2916667,
+  fig.align = "center",
+  out.width = "90%"
+)
+
+options(mc.cores = 4, tidyverse.quiet = TRUE)
+```
+
+## Introduction

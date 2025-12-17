@@ -3,9 +3,7 @@
   "result": {
     "engine": "knitr",
     "markdown": "---\ntitle: \"Meet the team\"\nauthor: \"\"\ndescription: \"\"\nlisting:\n  - id: team_standard\n    contents:\n      - \"**/index.qmd\"\n    sort:\n      - \"order\"\n      - \"last asc\"\n    template: ../assets/team-listing.ejs\npage-layout: full\nengine: knitr\ntoc-location: right\ndate-format: none\n---\n",
-    "supporting": [
-      "index_files"
-    ],
+    "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

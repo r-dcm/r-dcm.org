@@ -1,0 +1,17 @@
+reference-location: document
+
+freeze: false
+
+# Default knitr options
+execute:
+  echo: true
+  message: true
+  warning: true
+
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    fig-align: "center"
+    fig-width: 7.2916667
+    out-width: "90%"

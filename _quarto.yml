@@ -9,35 +9,53 @@ project:
     - "assets/img/funding/**"
     - "CNAME"
 
-freeze: true
+freeze: auto
 
 bibliography: files/bib/references.bib
 csl: files/bib/apa.csl
 
-pagetitle: "{{< meta title >}} | r-dcm"
+pagetitle: "{{< meta title >}}"
 
 website:
   title: "r-dcm"
   description: "Applied diagnostic classification models with R"
+  favicon: "assets/img/favicon-96x96.png"
   site-url: https://r-dcm.org
   repo-url: https://github.com/r-dcm/r-dcm.org
 
   navbar:
     pinned: true
     right:
+      - text: Get Started
+        aria-label: "Get Started"
+        href: start/index.qmd
       - text: Blog
         aria-label: "Blog"
         href: blog/index.qmd
       - text: Our Team
         aria-label: "Team"
         href: team/index.qmd
-      - icon: rss
-        aria-label: "RSS"
-        href: rss.xml
+      # - icon: rss
+      #   aria-label: "RSS"
+      #   href: rss.xml
       - icon: github
         aria-label: GitHub
         href: https://github.com/r-dcm
 
+  sidebar:
+  - title: "Get Started"
+    style: "floating"
+    contents:
+      - text: "GET STARTED"
+        href: start/index.qmd
+      - text: "Specify a diagnostic model"
+        href: start/specify/index.qmd
+      - text: "Evaluate model performance"
+        href: start/evaluate/index.qmd
+      - text: "Define attribute relationships"
+        href: start/hierarchies/index.qmd
+      - text: "A diagnostic assessment case study"
+        href: start/case-study/index.qmd
 
   page-footer:
     left: |
@@ -49,17 +67,20 @@ website:
          {{< fa chevron-up >}}
       </a>
 
-
 format:
   html:
     quarto-required: ">= 1.5"
-    theme:
-      - cosmo
-      - assets/styles.scss
     code-link: true
     toc: true
     anchor-sections: true
+    grid:
+      body-width: 840px
     include-in-header:
       - text: |
           <script data-goatcounter="https://r-dcm.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
+
+theme:
+      - cosmo
+      - assets/styles.scss
+      - assets/styles-frontpage.scss

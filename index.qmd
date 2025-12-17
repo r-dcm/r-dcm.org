@@ -1,8 +1,72 @@
 ---
-title: "Under construction"
+pagetitle: "r-dcm"
+image: "https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/r-dcm.svg"
+image-alt: "r-dcm hexagon logo"
+engine: knitr
+toc: false
+format:
+  html:
+    grid:
+      margin-width: 100px
+      sidebar-width: 100px
+      body-width: 1100px
+    link-external-newwindow: true
+
+about:
+  template: trestles
+  id: hero-heading
+
+listing:
+  id: pkgs
+  type: grid
+  grid-columns: 3
+  categories: false
+  sort-ui: false
+  filter-ui: false
+  fields: [title, image, description]
+  image-height: 200px
+  grid-item-border: false
+  grid-item-align: center
+  contents:
+    - title: measr
+      path: https://measr.r-dcm.org/
+      image: https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/measr.svg
+      image-alt: measr hexagon logo
+      description: Estimate and evaluate DCMs with *R* and *Stan*.
+    - title: dcmdata
+      path: https://dcmdata.r-dcm.org/
+      image: https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/dcmdata.svg
+      image-alt: dcmdata hexagon logo
+      description: Example datasets for testing and teaching.
+    - title: dcmstan
+      path: https://dcmstan.r-dcm.org/
+      image: https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/dcmstan.svg
+      image-alt: dcmstan hexagon logo
+      description: |
+        Generate *Stan* code for customizing your model.
 ---
 
-This site is currently under development.
-Thanks for your patience as we continue our work!
+::::{#FrontPage}
 
-![Photo by <a href="https://unsplash.com/@st_lehner?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Stefan Lehner</a> on <a href="https://unsplash.com/photos/a-room-that-has-some-tools-in-it-biRt6RXejuk?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>](assets/img/construction.jpg){fig-alt="Interior of house under construction" out-width="100%"}
+:::{#hero-heading}
+
+## Diagnostic psychometrics with R
+
+The r-dcm suite is a collection of packages for estimating and evaluating diagnostic classification models in [*R*](https://r-project.org) using [tidyverse](https://tidyverse.org) principles.
+
+What do you need to know to start using the r-dcm packages?
+[{{< fa flag-checkered >}} Get started](start/index.qmd) by learning what you need in `r english::words(length(list.dirs("start", recursive = FALSE)))` articles, starting with how to specify a model and ending with a beginning-to-end case study.
+
+:::
+
+<br>
+
+## Packages
+
+Some intro text...
+</br>
+
+:::{#pkgs}
+:::
+
+::::

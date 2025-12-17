@@ -1,0 +1,15 @@
+{
+  "hash": "965402ba6278e502476125b04a3e1aa0",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\npagetitle: \"r-dcm\"\nimage: \"https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/r-dcm.svg\"\nimage-alt: \"r-dcm hexagon logo\"\nengine: knitr\ntoc: false\nformat:\n  html:\n    grid:\n      margin-width: 100px\n      sidebar-width: 100px\n      body-width: 1100px\n    link-external-newwindow: true\n\nabout:\n  template: trestles\n  id: hero-heading\n\nlisting:\n  id: pkgs\n  type: grid\n  grid-columns: 3\n  categories: false\n  sort-ui: false\n  filter-ui: false\n  fields: [title, image, description]\n  image-height: 200px\n  grid-item-border: false\n  grid-item-align: center\n  contents:\n    - title: measr\n      path: https://measr.r-dcm.org/\n      image: https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/measr.svg\n      image-alt: measr hexagon logo\n      description: Estimate and evaluate DCMs with *R* and *Stan*.\n    - title: dcmdata\n      path: https://dcmdata.r-dcm.org/\n      image: https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/dcmdata.svg\n      image-alt: dcmdata hexagon logo\n      description: Example datasets for testing and teaching.\n    - title: dcmstan\n      path: https://dcmstan.r-dcm.org/\n      image: https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/dcmstan.svg\n      image-alt: dcmstan hexagon logo\n      description: |\n        Generate *Stan* code for customizing your model.\n---\n\n::::{#FrontPage}\n\n:::{#hero-heading}\n\n## Diagnostic psychometrics with R\n\nThe r-dcm suite is a collection of packages for estimating and evaluating diagnostic classification models in [*R*](https://r-project.org) using [tidyverse](https://tidyverse.org) principles.\n\nWhat do you need to know to start using the r-dcm packages?\n[{{< fa flag-checkered >}} Get started](start/index.qmd) by learning what you need in four articles, starting with how to specify a model and ending with a beginning-to-end case study.\n\n:::\n\n<br>\n\n## Packages\n\nSome intro text...\n</br>\n\n:::{#pkgs}\n:::\n\n::::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

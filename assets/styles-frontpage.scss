@@ -1,0 +1,40 @@
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+
+#FrontPage {
+  div#listing-pkgs {
+    .quarto-listing-cols-3 {
+      gap: 4em
+    }
+
+    .quarto-grid-item p.card-img-top>img {
+      object-fit: contain;
+    }
+
+    h5 {
+      font-weight: bold;
+    }
+
+    .quarto-grid-item.card-center .listing-description {
+      text-align: center;
+    }
+  }
+
+  div#hero-heading {
+    h2 {
+      font-size: 1.5em;
+    }
+
+    h3 {
+      font-size: 1.3em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: $theme-navy;
+    }
+
+    p {
+      font-size: 1.3em;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+---
+title: "Define attribute relationships"
+weight: 4
+description: |
+  Include information about how your attributes relate to and interact with each other.
+css: ../styles.css
+link-citations: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(wjake)
+library(showtext)
+library(english)
+
+set_theme(
+  base_family = "Open Sans",
+  plot_margin = ggplot2::margin(10, 10, 10, 10)
+)
+
+font_add_google("Open Sans")
+showtext_auto()
+showtext_opts(dpi = 192)
+
+msr_colors <- c("#8ECAE6", "#023047", "#D7263D")
+
+options(mc.cores = 4, tidyverse.quiet = TRUE)
+```
+
+## Introduction
+
+The third article will focus on identifying and estimating attribute relationships.
+We will discuss how to identify when a hierarchy might be present in your data and then how to model that hierarchy using different structural model specifications (e.g., `hdcm()`, `bayes_net()`).
+
+We'll then explore how to compare models with a specified hierarchy to a saturated model to evaluate the impact of the hierarchy on model fit.

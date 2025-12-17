@@ -1,0 +1,28 @@
+---
+title: Welcome!
+description: "What do you need to know to start using r-dcm packages?"
+toc: false
+css: styles.css
+engine: knitr
+---
+
+Learn what you need to get started with measr and other r-dcm packages in `r english::words(length(list.dirs(".", recursive = FALSE)))` articles, starting with how to specify a diagnostic classification model (DCM) and ending with a beginning-to-end case study.
+
+## If you are new to diagnostic models
+
+DCMs are a powerful psychometric tool for analyzing assessment data.
+The r-dcm suite of packages are designed to make the implementation of these models intuitive, and the documentation is focused on how to use the software.
+Before using these models in practice, we recommend that you start by learning the conceptual and statistical foundations of DCMs, then return here for information and tutorials on implementation.
+Here are some resources to start learning:
+
+* [Diagnostic Measurement Checklists](https://ncme.org/resources/professional-learning/items/diagnostic-measurement-checklists/), from the NCME ITEMS portal.
+* [Introduction to Diagnostic Classification Models](https://ncme2024.measr.info/materials/02-dcm-intro), from the r-dcm team.
+
+## If you are new to R
+
+The r-dcm packages are built in [*R*](https://r-project.org) and are designed to be compatible with the [tidyverse](https://tidyverse.org).
+Therefore, in order to get the most of out r-dcm packages, we recommend that you start by learning some basics about R and the tidyverse first, then return here when you feel ready.
+Here are some resources to start learning:
+
+* [Finding Your Way to R](https://education.rstudio.com/learn/), from the RStudio Education team.
+* [Learn the tidyverse](https://tidyverse.org/learn/), from the tidyverse team.

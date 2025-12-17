@@ -54,7 +54,7 @@ To demonstrate how these methods are implemented for measr, a simulated data set
 The existing [model estimation](https://measr.info/articles/model-estimation) vignette was also updated to use this same simulated data set so that we can compare parameter estimates derived from measr to the known parameter values that were used to generate the data.
 
 Because the model estimation and evaluation vignettes now use simulated data, we also added a [case study](https://measr.info/articles/ecpe) to walk through a DCM-based analysis from start to finish using a real data set.
-In this case study, data from the *Examination for the Certificate of Proficiency in English* (ECPE), which has been widely used in the DCM literature [e.g., @templin-emip-2013].
+In this case study, data from the *Examination for the Certificate of Proficiency in English* (ECPE), which has been widely used in the DCM literature [e.g., @ecpe].
 We start with exploratory analyses, then we estimate a DCM, examine parameter estimates, and interpret model fit and reliability analyses. 
 
 Finally, example uses have been added for all functions included in measr.

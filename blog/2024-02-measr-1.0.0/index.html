@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-02-05">
 <meta name="description" content="A major release to reflect development milestones.">
 
-<title>measr 1.0.0 | r-dcm – r-dcm</title>
+<title>measr 1.0.0 – r-dcm</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -87,6 +87,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../assets/img/favicon-96x96.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -97,7 +98,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-97518418a90fc88b02415e07228183d3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a2c5f3d9085531a1eb56ac8b4c883460.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1871c41fb7a6952dd75b1ffe81daf205.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -172,12 +173,12 @@ window.Quarto = {
 };
 </script>
 
-<meta property="og:title" content="measr 1.0.0 | r-dcm">
+<meta property="og:title" content="measr 1.0.0">
 <meta property="og:description" content="A major release to reflect development milestones.">
 <meta property="og:image" content="https://r-dcm.org/blog/2024-02-measr-1.0.0/featured.jpg">
 <meta property="og:site_name" content="r-dcm">
 <meta property="og:image:alt" content="Different colored measurement tape">
-<meta name="twitter:title" content="measr 1.0.0 | r-dcm">
+<meta name="twitter:title" content="measr 1.0.0">
 <meta name="twitter:description" content="A major release to reflect development milestones.">
 <meta name="twitter:image" content="https://r-dcm.org/blog/2024-02-measr-1.0.0/featured.jpg">
 <meta name="twitter:image:alt" content="Different colored measurement tape">
@@ -202,17 +203,16 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
+    <a class="nav-link" href="../../start/index.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../team/index.html"> 
 <span class="menu-text">Our Team</span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="../../rss.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
-</i> 
-<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/r-dcm"> <i class="bi bi-github" role="img" aria-label="GitHub">
@@ -311,14 +311,19 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"measr"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This blog post will highlight the major improvements, including improved documentation and vignettes, as well as a some minor updates.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(measr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(measr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'measr'</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     optim</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="improved-documentation" class="level2">
 <h2 class="anchored" data-anchor-id="improved-documentation">Improved Documentation</h2>
 <p>The focus of recent work on measr has been to improve documentation. To that end, the existing vignettes have been updated, and several new vignettes have been added.</p>
 <p>First, the <a href="https://measr.info/articles/measr">getting started</a> vignette has been updated to include additional installation information. This should help reduce the friction for setting up the components needed for measr, namely, installing <a href="https://mc-stan.org"><em>Stan</em></a>. Because measr interfaces with <em>Stan</em> to estimate DCMs, a working <em>Stan</em> installation is needed for the package to function properly. The updated vignette includes helpful guidance for installing both the <a href="https://mc-stan.org/rstan">rstan</a> and <a href="https://mc-stan.org/cmdstanr">cmdstanr</a> packages for using <em>Stan</em>. Only one of the two is required, but both are supported so you can choose whichever <em>Stan</em> front end you prefer.</p>
-<p>A new vignette on <a href="https://measr.info/articles/model-evaluation">model evaluation</a> has been added to demonstrate different methods for assessing the performance of a DCM after it has been estimated. This includes the <em>M<sub>2</sub></em> statistic <span class="citation" data-cites="liu2016">(<a href="#ref-liu2016" role="doc-biblioref">Liu et al., 2016</a>)</span>, as well as posterior predictive model checks for evaluating both overall and item-level model fit <span class="citation" data-cites="sinharay2007 thompson2019">(<a href="#ref-sinharay2007" role="doc-biblioref">Sinharay &amp; Almond, 2007</a>; <a href="#ref-thompson2019" role="doc-biblioref">Thompson, 2019</a>)</span>. To demonstrate how these methods are implemented for measr, a simulated data set is used where we know how well different types of DCMs should fit. The existing <a href="https://measr.info/articles/model-estimation">model estimation</a> vignette was also updated to use this same simulated data set so that we can compare parameter estimates derived from measr to the known parameter values that were used to generate the data.</p>
-<p>Because the model estimation and evaluation vignettes now use simulated data, we also added a <a href="https://measr.info/articles/ecpe">case study</a> to walk through a DCM-based analysis from start to finish using a real data set. In this case study, data from the <em>Examination for the Certificate of Proficiency in English</em> (ECPE), which has been widely used in the DCM literature <span class="citation" data-cites="templin-emip-2013">(e.g., <a href="#ref-templin-emip-2013" role="doc-biblioref">Templin &amp; Hoffman, 2013</a>)</span>. We start with exploratory analyses, then we estimate a DCM, examine parameter estimates, and interpret model fit and reliability analyses.</p>
+<p>A new vignette on <a href="https://measr.info/articles/model-evaluation">model evaluation</a> has been added to demonstrate different methods for assessing the performance of a DCM after it has been estimated. This includes the <em>M<sub>2</sub></em> statistic <span class="citation" data-cites="liu2016">(<a href="#ref-liu2016" role="doc-biblioref">Liu et al., 2016</a>)</span>, as well as posterior predictive model checks for evaluating both overall and item-level model fit <span class="citation" data-cites="sinharay2007 thompson2019">(<a href="#ref-sinharay2007" role="doc-biblioref">Sinharay &amp; Almond, 2007</a>; <a href="#ref-thompson2019" role="doc-biblioref"><strong>thompson2019?</strong></a>)</span>. To demonstrate how these methods are implemented for measr, a simulated data set is used where we know how well different types of DCMs should fit. The existing <a href="https://measr.info/articles/model-estimation">model estimation</a> vignette was also updated to use this same simulated data set so that we can compare parameter estimates derived from measr to the known parameter values that were used to generate the data.</p>
+<p>Because the model estimation and evaluation vignettes now use simulated data, we also added a <a href="https://measr.info/articles/ecpe">case study</a> to walk through a DCM-based analysis from start to finish using a real data set. In this case study, data from the <em>Examination for the Certificate of Proficiency in English</em> (ECPE), which has been widely used in the DCM literature <span class="citation" data-cites="ecpe">(e.g., <a href="#ref-ecpe" role="doc-biblioref">Templin &amp; Hoffman, 2013</a>)</span>. We start with exploratory analyses, then we estimate a DCM, examine parameter estimates, and interpret model fit and reliability analyses.</p>
 <p>Finally, example uses have been added for all functions included in measr. These examples can be found on the documentation pages for each function. All functions are indexed on the <a href="https://measr.info/reference/">reference page</a>, which has been reorganized to group functions with related functionality.</p>
 </section>
 <section id="minor-changes" class="level2">
@@ -351,11 +356,8 @@ Liu, Y., Tian, W., &amp; Xin, T. (2016). An application of <span><span class="ma
 <div id="ref-sinharay2007" class="csl-entry" role="listitem">
 Sinharay, S., &amp; Almond, R. G. (2007). Assessing fit of cognitive diagnostic models. <em>Educational and Psychological Measurement</em>, <em>67</em>(2), 239–257. <a href="https://doi.org/10.1177/0013164406292025">https://doi.org/10.1177/0013164406292025</a>
 </div>
-<div id="ref-templin-emip-2013" class="csl-entry" role="listitem">
-Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model estimates using Mplus. <em>Educational Measurement: Issues and Practice</em>, <em>32</em>(2), 37–50. <a href="https://doi.org/10.1111/emip.12010">https://doi.org/10.1111/emip.12010</a>
-</div>
-<div id="ref-thompson2019" class="csl-entry" role="listitem">
-Thompson, W. J. (2019). <em>Bayesian psychometrics for diagnostic assessments: <span>A</span> proof of concept</em> (Research Report 19-01). <span>University of Kansas; Accessible Teaching, Learning, and Assessment Systems</span>. <a href="https://doi.org/10.35542/osf.io/jzqs8">https://doi.org/10.35542/osf.io/jzqs8</a>
+<div id="ref-ecpe" class="csl-entry" role="listitem">
+Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model estimates using <span>Mplus</span>. <em>Educational Measurement: Issues and Practice</em>, <em>32</em>(2), 37–50. <a href="https://doi.org/10.1111/emip.12010">https://doi.org/10.1111/emip.12010</a>
 </div>
 <div id="ref-thompson-joss-2023" class="csl-entry" role="listitem">
 Thompson, W. J. (2023). <span class="nocase">measr</span>: <span>Bayesian</span> psychometric measurement using <span>Stan</span>. <em>Journal of Open Source Software</em>, <em>8</em>(91), 5742. <a href="https://doi.org/10.21105/joss.05742">https://doi.org/10.21105/joss.05742</a>

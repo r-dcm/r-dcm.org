@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2025-11-26">
 <meta name="description" content="Initial release dcmstan for specifying diagnostic models and generating Stan code.">
 
-<title>dcmstan 0.1.0 | r-dcm – r-dcm</title>
+<title>dcmstan 0.1.0 – r-dcm</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -87,6 +87,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../assets/img/favicon-96x96.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -97,7 +98,7 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-97518418a90fc88b02415e07228183d3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a2c5f3d9085531a1eb56ac8b4c883460.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-1871c41fb7a6952dd75b1ffe81daf205.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -143,12 +144,12 @@ background-size: cover;
 </style>
 
 
-<meta property="og:title" content="dcmstan 0.1.0 | r-dcm">
+<meta property="og:title" content="dcmstan 0.1.0">
 <meta property="og:description" content="Initial release dcmstan for specifying diagnostic models and generating Stan code.">
 <meta property="og:image" content="https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/featured.jpg">
 <meta property="og:site_name" content="r-dcm">
 <meta property="og:image:alt" content="Person taking a test">
-<meta name="twitter:title" content="dcmstan 0.1.0 | r-dcm">
+<meta name="twitter:title" content="dcmstan 0.1.0">
 <meta name="twitter:description" content="Initial release dcmstan for specifying diagnostic models and generating Stan code.">
 <meta name="twitter:image" content="https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/featured.jpg">
 <meta name="twitter:image:alt" content="Person taking a test">
@@ -173,17 +174,16 @@ background-size: cover;
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
+    <a class="nav-link" href="../../start/index.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../team/index.html"> 
 <span class="menu-text">Our Team</span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="../../rss.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
-</i> 
-<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/r-dcm"> <i class="bi bi-github" role="img" aria-label="GitHub">
@@ -291,7 +291,8 @@ background-size: cover;
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dcmstan"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This blog post will highlight the major features and describe how dcmstan fits into the larger universe of r-dcm packages.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dcmstan)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dcmstan)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: package 'dcmstan' was built under R version 4.5.2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="dcm-specification" class="level2">
 <h2 class="anchored" data-anchor-id="dcm-specification">DCM specification</h2>
@@ -841,7 +842,7 @@ background-size: cover;
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">identifier =</span> <span class="st">"resp_id"</span></span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>dcm_estimate()</code> calls <code>stan_code()</code> and <code>stan_data()</code> internally to create the necessary <em>Stan</em> script and data list and then estimates the model using your chosen backend (i.e., rstan or cmdstanr). Thus, a direct interface with dcmstan should only be necessary if you want to modify the <em>Stan</em> code that is generated by default.</p>
+<p><code>measr::dcm_estimate()</code> calls <code>stan_code()</code> and <code>stan_data()</code> internally to create the necessary <em>Stan</em> script and data list and then estimates the model using your chosen backend (i.e., rstan or cmdstanr). Thus, a direct interface with dcmstan should only be necessary if you want to modify the <em>Stan</em> code that is generated by default.</p>
 </section>
 
 
@@ -853,11 +854,11 @@ background-size: cover;
 
 
 </div></section><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-lcdm-handbook" class="csl-entry" role="listitem">
+Henson, R. A., &amp; Templin, J. L. (2019). Loglinear cognitive diagnostic model (<span>LCDM</span>). In M. von Davier &amp; Y.-S. Lee (Eds.), <em>Handbook of diagnostic classification models</em> (pp. 171–185). Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-05584-4_8">https://doi.org/10.1007/978-3-030-05584-4_8</a>
+</div>
 <div id="ref-lcdm" class="csl-entry" role="listitem">
 Henson, R. A., Templin, J. L., &amp; Willse, J. T. (2009). Defining a family of cognitive diagnosis models using log-linear models with latent variables. <em>Psychometrika</em>, <em>74</em>(2), 191–210. <a href="https://doi.org/10.1007/s11336-008-9089-5">https://doi.org/10.1007/s11336-008-9089-5</a>
-</div>
-<div id="ref-lcdm-handbook" class="csl-entry" role="listitem">
-Henson, R., &amp; Templin, J. L. (2019). Loglinear cognitive diagnostic model (<span>LCDM</span>). In M. von Davier &amp; Y.-S. Lee (Eds.), <em>Handbook of diagnostic classification models</em> (pp. 171–185). Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-05584-4_8">https://doi.org/10.1007/978-3-030-05584-4_8</a>
 </div>
 <div id="ref-ecpe" class="csl-entry" role="listitem">
 Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model estimates using <span>Mplus</span>. <em>Educational Measurement: Issues and Practice</em>, <em>32</em>(2), 37–50. <a href="https://doi.org/10.1111/emip.12010">https://doi.org/10.1111/emip.12010</a>

@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Develop a diagnostic model using best practices.">
+
+<title>A diagnostic assessment case study – r-dcm</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/img/favicon-96x96.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-97518418a90fc88b02415e07228183d3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-1871c41fb7a6952dd75b1ffe81daf205.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">r-dcm</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../start/index.html" aria-current="page"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../team/index.html"> 
+<span class="menu-text">Our Team</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/r-dcm"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../start/case-study/index.html">A diagnostic assessment case study</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../start/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GET STARTED</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../start/specify/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Specify a diagnostic model</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../start/evaluate/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Evaluate model performance</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../start/hierarchies/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Define attribute relationships</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../start/case-study/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">A diagnostic assessment case study</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#explore-the-data" id="toc-explore-the-data" class="nav-link" data-scroll-target="#explore-the-data">Explore the Data</a></li>
+  <li><a href="#dcm-estimation" id="toc-dcm-estimation" class="nav-link" data-scroll-target="#dcm-estimation">DCM Estimation</a>
+  <ul class="collapse">
+  <li><a href="#structural-parameters" id="toc-structural-parameters" class="nav-link" data-scroll-target="#structural-parameters">Structural Parameters</a></li>
+  <li><a href="#item-parameters" id="toc-item-parameters" class="nav-link" data-scroll-target="#item-parameters">Item Parameters</a></li>
+  <li><a href="#respondent-proficiency" id="toc-respondent-proficiency" class="nav-link" data-scroll-target="#respondent-proficiency">Respondent Proficiency</a></li>
+  </ul></li>
+  <li><a href="#dcm-evaluation" id="toc-dcm-evaluation" class="nav-link" data-scroll-target="#dcm-evaluation">DCM Evaluation</a>
+  <ul class="collapse">
+  <li><a href="#absolute-model-fit" id="toc-absolute-model-fit" class="nav-link" data-scroll-target="#absolute-model-fit">Absolute Model Fit</a></li>
+  <li><a href="#classification-reliability" id="toc-classification-reliability" class="nav-link" data-scroll-target="#classification-reliability">Classification Reliability</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">A diagnostic assessment case study</h1>
+</div>
+
+<div>
+  <div class="description">
+    <p>Develop a diagnostic model using best practices.</p>
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The <em>Examination for the Certificate of Proficiency in English</em> (ECPE) is an assessment that measures advanced English skills for individuals for whom English is not the primary language. In this case study, we’ll use data from the grammar section of the ECPE, which uses 28 items to measure 3 skills: morphosyntactic rules, cohesive rules, and lexical rules. This data set has previously been used by <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span> and <span class="citation" data-cites="mcmc-handbook">X. Liu &amp; Johnson (<a href="#ref-mcmc-handbook" role="doc-biblioref">2019</a>)</span> to demonstrate how to estimate diagnostic classification models (DCMs) with Mplus and Markov chain Monte Carlo (MCMC), respectively. Additionally, <span class="citation" data-cites="hdcm">Templin &amp; Bradshaw (<a href="#ref-hdcm" role="doc-biblioref">2014</a>)</span> used this ECPE data as a motivating example for developing a hierarchical DCM, and <span class="citation" data-cites="chen2018">Chen et al. (<a href="#ref-chen2018" role="doc-biblioref">2018</a>)</span> used the ECPE data to evaluate the effectiveness of the <em>M<sub>2</sub></em> statistic for assessing model fit in the presence of attribute hierarchies.</p>
+</section>
+<section id="explore-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="explore-the-data">Explore the Data</h2>
+<p>The ECPE data is built into measr and can be accessed by loading the package. A complete description of the data can be viewed using <code>?ecpe_data</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dcmdata)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ecpe_data</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2,922 × 29</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    resp_id    E1    E2    E3    E4    E5    E6    E7    E8    E9   E10   E11</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       1     1     1     1     0     1     1     1     1     1     1     1</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       2     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       3     1     1     1     1     1     1     0     1     1     1     1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       4     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       5     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       6     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       7     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       8     0     1     1     1     1     1     0     1     1     1     0</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       9     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10      10     1     1     1     1     0     0     1     1     1     1     1</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2,912 more rows</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 17 more variables: E12 &lt;int&gt;, E13 &lt;int&gt;, E14 &lt;int&gt;, E15 &lt;int&gt;, E16 &lt;int&gt;,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   E17 &lt;int&gt;, E18 &lt;int&gt;, E19 &lt;int&gt;, E20 &lt;int&gt;, E21 &lt;int&gt;, E22 &lt;int&gt;,</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   E23 &lt;int&gt;, E24 &lt;int&gt;, E25 &lt;int&gt;, E26 &lt;int&gt;, E27 &lt;int&gt;, E28 &lt;int&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can see that the data set has one row for each respondent, and that 2,922 respondents completed this section of the ECPE. We also see that the data has 29 columns. The first column contains respondent identifiers, and the remaining 28 columns contain dichotomous item responses for each items. The item responses are coded as 0 for an incorrect response and 1 for a correct response.</p>
+<p>In addition to the data, we also have a Q-matrix that define which attributes are measured by each item. The Q-matrix has 28 rows, which corresponds to the total number of items. The first column of the Q-matrix contains item identifiers, which are the same as the column names in <code>ecpe_data</code> that contain item responses. The remaining columns define the attributes measured by the ECPE. A value of 0 indicates that the item does not measure that attribute, whereas a value of 1 indicates that the attribute is measured by that item. For example, item E1 measures both morphosyntactic rules and cohesive rules, and item E4 measures only lexical rules.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ecpe_qmatrix</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 28 × 4</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    item_id morphosyntactic cohesive lexical</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 E1                    1        1       0</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 E2                    0        1       0</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 E3                    1        0       1</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 E4                    0        0       1</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 E5                    0        0       1</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 E6                    0        0       1</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 E7                    1        0       1</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 E8                    0        1       0</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 E9                    0        0       1</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 E10                   1        0       0</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 18 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For a quick summary of the data, we can calculate the proportion of respondents that answered each question correctly (i.e., the item <em>p</em>-values).</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ecpe_data <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="sc">-</span>resp_id, mean)) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"item_id"</span>, <span class="at">values_to =</span> <span class="st">"pvalue"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 28 × 2</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    item_id pvalue</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;dbl&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 E1       0.803</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 E2       0.830</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 E3       0.579</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 E4       0.706</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 E5       0.887</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 E6       0.854</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 E7       0.721</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 E8       0.898</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 E9       0.702</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 E10      0.658</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 18 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can then join the item <em>p</em>-values with the Q-matrix to get a sense of which attributes are the most difficult. Overall, most of the items have relatively high <em>p</em>-values, with most items having a <em>p</em>-value between .6 and .9. Note that in general, items measuring morphosyntactic rules tend to be the most difficult (i.e., lower <em>p</em>-values), followed by items measuring cohesive rules, and finally items measuring lexical rules.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Plot code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ecpe_data <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="sc">-</span>resp_id, mean)) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"item_id"</span>, <span class="at">values_to =</span> <span class="st">"pvalue"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ecpe_qmatrix, <span class="fu">join_by</span>(item_id)) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(morphosyntactic, cohesive, lexical),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"attribute"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"measured"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(measured <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">measures =</span> <span class="fu">paste</span>(<span class="fu">str_to_title</span>(attribute), <span class="at">collapse =</span> <span class="st">"/</span><span class="sc">\n</span><span class="st">"</span>),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(item_id, pvalue)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">measures =</span> <span class="fu">fct_reorder</span>(measures, pvalue, mean)) <span class="sc">|&gt;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pvalue, <span class="at">y =</span> measures)) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">color =</span> measures),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">height =</span> <span class="fl">0.2</span>, <span class="at">width =</span> <span class="dv">0</span>, <span class="at">seed =</span> <span class="dv">1213</span>),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> <span class="cn">FALSE</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#023047"</span>, <span class="st">"#D7263D"</span>, <span class="st">"#8ECAE6"</span>, <span class="st">"#219EBC"</span>, <span class="st">"#F3D3BD"</span>, <span class="st">"#000000"</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Item *p*-value"</span>, <span class="at">y =</span> <span class="st">"Measured attributes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/pvalue-plot-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Scatter plot showing item p-values on the x-axis and attribute combinations from the Q-matrix on the y-axis."></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="dcm-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="dcm-estimation">DCM Estimation</h2>
+<p>Now that we have a feel for our data, we will estimate a DCM. Following the original analysis of the ECPE data by <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span>, we’ll estimate a loglinear cognitive diagnostic model (LCDM). The LCDM is a general diagnostic model that allows for different attribute relationships on items (e.g., compensatory, non-compensatory) and subsumes many other types of DCMs <span class="citation" data-cites="lcdm lcdm-handbook">(<a href="#ref-lcdm" role="doc-biblioref">Henson et al., 2009</a>; <a href="#ref-lcdm-handbook" role="doc-biblioref">Henson &amp; Templin, 2019</a>)</span>.</p>
+<p>The following code will estimate an LCDM. In the first two lines, we specify our data, Q-matrix, and the respondent and item identifiers. We then specify the type of DCM we want to estimate and define how the model should be estimated. In this case, we want to estimate the model using MCMC with the <code>{rstan}</code> package as the estimation engine. Finally, we can customize how the MCMC process is executed. For this example, we specified 4 chains, each with 1,000 warmup iterations and 500 retained iterations for 1,500 iterations total. This results in a total posterior distribution of 2,000 samples for each parameter (i.e., 500 iterations from each of the 4 chains). We also specified a file so that the estimated model will be saved once it is estimated.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(measr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'measr'</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     optim</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>ecpe_spec <span class="ot">&lt;-</span> <span class="fu">dcm_specify</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">qmatrix =</span> ecpe_qmatrix,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">identifier =</span> <span class="st">"item_id"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">measurement_model =</span> <span class="fu">lcdm</span>(),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">structural_model =</span> <span class="fu">unconstrained</span>()</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>ecpe_lcdm <span class="ot">&lt;-</span> <span class="fu">dcm_estimate</span>(</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  ecpe_spec,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ecpe_data,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">identifier =</span> <span class="st">"resp_id"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"mcmc"</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">backend =</span> <span class="st">"rstan"</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">4</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">1500</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">warmup =</span> <span class="dv">1000</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"fits/ecpe-lcdm"</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now that we’ve estimated a model, let’s examine the output. There are three types of information we’ll examine: structural parameters, item parameters, and respondent proficiency.</p>
+<section id="structural-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="structural-parameters">Structural Parameters</h3>
+<p>The structural parameters define the base rate of membership in each of attribute profiles. Because the ECPE data consists of 3 dichotomous attributes, there are a total of 2<sup>3</sup> = 8 possible profiles, or classes. We can view the possible profiles using <code>measr_extract()</code>. This function extracts different aspects of a model estimated with measr. The order of the attributes in the profiles corresponds to the order the attributes were listed in the Q-matrix used to estimate the model. This means that attributes 1, 2, and 3 correspond to morphosyntactic, cohesive, and lexical rules, respectively.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ecpe_classes <span class="ot">&lt;-</span> <span class="fu">measr_extract</span>(ecpe_lcdm, <span class="st">"classes"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ecpe_classes</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 8 × 4</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   class   morphosyntactic cohesive lexical</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 [0,0,0]               0        0       0</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 [1,0,0]               1        0       0</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 [0,1,0]               0        1       0</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 [0,0,1]               0        0       1</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 [1,1,0]               1        1       0</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 [1,0,1]               1        0       1</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 [0,1,1]               0        1       1</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 [1,1,1]               1        1       1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can extract the structural parameters also using <code>measr_extract()</code>. For structural parameters, we see the <code>class</code>, or the attribute profile, and the estimated proportion of respondents in that class with a measure of error (the standard deviation of the posterior). For example, nearly 30% of respondents are estimated to not be proficient on any of the attributes (class 1), and 17% are estimated to proficient on just attributes 2 and 3 (class 7).</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>structural_parameters <span class="ot">&lt;-</span> <span class="fu">measr_extract</span>(ecpe_lcdm, <span class="st">"strc_param"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>structural_parameters</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 8 × 2</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   class           estimate</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;         &lt;rvar[1d]&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 [0,0,0]  0.2987 ± 0.0164</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 [1,0,0]  0.0117 ± 0.0066</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 [0,1,0]  0.0157 ± 0.0106</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 [0,0,1]  0.1287 ± 0.0198</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 [1,1,0]  0.0093 ± 0.0057</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 [1,0,1]  0.0183 ± 0.0102</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 [0,1,1]  0.1727 ± 0.0199</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 [1,1,1]  0.3448 ± 0.0177</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>When looking at the structural parameters, we can see that respondents typically fall into only 4 of the 8 possible profiles. Specifically, respondents are typically proficient on no attributes, only attribute 3 (lexical rules), only attributes 2 and 3 (cohesive and lexical rules), or all attributes. This may indicate the presence of an attribute hierarchy, as suggested by <span class="citation" data-cites="hdcm">Templin &amp; Bradshaw (<a href="#ref-hdcm" role="doc-biblioref">2014</a>)</span>, where respondents must gain proficiency of lexical rules before they can gain proficiency of cohesive rules, and then finally morphosyntactic rules.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Plot code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>structural_parameters <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">fct_inorder</span>(class), <span class="at">prob =</span> <span class="fu">map_dbl</span>(estimate, mean)) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> class, <span class="at">y =</span> prob)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> msr_colors[<span class="dv">2</span>]) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Class"</span>, <span class="at">y =</span> <span class="st">"Base rate"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/strc-plot-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Bar graph showing the estimated proportion of respondents with each attribute profile."></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also collapse across classes to calculate the base rate of proficiency for each individual attribute. Overall, the model estimates that 38% of respondents are proficient on morphosyntactic rules, 54% of respondents are proficient on cohesive rules, and 66% of respondents are proficient on lexical rules.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ecpe_classes <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(structural_parameters, <span class="fu">join_by</span>(class)) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">morphosyntactic =</span> <span class="fu">rvar_sum</span>(estimate[<span class="fu">which</span>(morphosyntactic <span class="sc">==</span> <span class="dv">1</span>)]),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cohesive =</span> <span class="fu">rvar_sum</span>(estimate[<span class="fu">which</span>(cohesive <span class="sc">==</span> <span class="dv">1</span>)]),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lexical =</span> <span class="fu">rvar_sum</span>(estimate[<span class="fu">which</span>(lexical <span class="sc">==</span> <span class="dv">1</span>)])</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 3</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   morphosyntactic      cohesive       lexical</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        &lt;rvar[1d]&gt;    &lt;rvar[1d]&gt;    &lt;rvar[1d]&gt;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    0.38 ± 0.019  0.54 ± 0.029  0.66 ± 0.014</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In summary, both the profile- and attribute-level base rates tell a similar story. Respondents are most likely to be proficient on lexical rules and least likely to be proficient on morphosyntactic rules. This also mirrors our analysis of item <em>p</em>-values when we were exploring the data, which showed that items measuring morphosyntactic rules were more difficult than items measuring lexical or cohesive rules.</p>
+</section>
+<section id="item-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="item-parameters">Item Parameters</h3>
+<p>The item parameters define the log-odds of a respondent in each class providing a correct response. We can again extract our estimated item parameters using <code>measr_extract()</code>. Here, the <code>estimate</code> column reports estimated value for each parameter and a measure of the associated error (i.e., the standard deviation of the posterior distribution). For example, item E1 has four parameters, as it measures two attributes:</p>
+<ol type="1">
+<li>An intercept, which represents the log-odds of providing a correct response for a respondent who is proficient in neither of the attributes this item measures (i.e., morphosyntactic rules and cohesive rules).</li>
+<li>A main effect for morphosyntactic rules, which represents the increase in the log-odds of providing a correct response for a respondent who is proficient in that attribute.</li>
+<li>A main effect for cohesive rules, which represents the increase in the log-odds of providing a correct response for a respondent who is proficient in that attribute.</li>
+<li>An interaction between morphosyntactic and cohesive rules, which is the change in the log-odds for a respondent who is proficient in both attributes.</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>item_parameters <span class="ot">&lt;-</span> <span class="fu">measr_extract</span>(ecpe_lcdm, <span class="at">what =</span> <span class="st">"item_param"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>item_parameters</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 74 × 5</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    item_id type        attributes                coefficient       estimate</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;                     &lt;chr&gt;           &lt;rvar[1d]&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 E1      intercept   &lt;NA&gt;                      l1_0          0.82 ± 0.074</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 E1      maineffect  morphosyntactic           l1_11         0.63 ± 0.395</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 E1      maineffect  cohesive                  l1_12         0.64 ± 0.216</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 E1      interaction morphosyntactic__cohesive l1_212        0.51 ± 0.507</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 E2      intercept   &lt;NA&gt;                      l2_0          1.04 ± 0.077</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 E2      maineffect  cohesive                  l2_12         1.23 ± 0.150</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 E3      intercept   &lt;NA&gt;                      l3_0         -0.35 ± 0.073</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 E3      maineffect  morphosyntactic           l3_11         0.76 ± 0.382</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 E3      maineffect  lexical                   l3_13         0.36 ± 0.118</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 E3      interaction morphosyntactic__lexical  l3_213        0.52 ± 0.397</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 64 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can compare these estimates to those that <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span> reported when using different software to estimate the same model. In the following figure, most parameters fall on or very close to the dashed line, which represents perfect agreement.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Plot code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ecpe_templin <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/mplus-estimates-templin.csv"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_double</span>())</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>param_compare <span class="ot">&lt;-</span> item_parameters <span class="sc">|&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    ecpe_templin <span class="sc">|&gt;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pivot_longer</span>(<span class="sc">-</span>item) <span class="sc">|&gt;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">param =</span> <span class="fu">glue</span>(<span class="st">"l{item}_{name}"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(param, <span class="at">mplus_est =</span> value) <span class="sc">|&gt;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">drop_na</span>(<span class="fu">everything</span>()),</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"coefficient"</span> <span class="ot">=</span> <span class="st">"param"</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">measr_est =</span> <span class="fu">map_dbl</span>(estimate, mean),</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">case_when</span>(</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(coefficient, <span class="st">"_0"</span>) <span class="sc">~</span> <span class="st">"Intercept"</span>,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(coefficient, <span class="st">"_1"</span>) <span class="sc">~</span> <span class="st">"Main Effect"</span>,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(coefficient, <span class="st">"_2"</span>) <span class="sc">~</span> <span class="st">"Interaction"</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">factor</span>(type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="st">"Main Effect"</span>, <span class="st">"Interaction"</span>))</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>param_compare <span class="sc">|&gt;</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> measr_est, <span class="at">y =</span> mplus_est)) <span class="sc">+</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> type, <span class="at">shape =</span> type), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> msr_colors) <span class="sc">+</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"measr"</span>,</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Templin &amp; Hoffman (2013)"</span>,</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Parameter Type"</span>,</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="st">"Parameter Type"</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/lcdm-param-compare-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Figure shows a strong correlation between item parameters, with only a few discrepancies off of the line of perfect agreement."></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There are some parameters that deviate from the line of perfect agreement, but these are expected. For example, take item E7, which measures morphosyntactic and lexical rules. Both measr and <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span> report values of approximately -0.09 for the intercept and 0.94 for the main effect of lexical rules. For the main effect of morphosyntactic rules, measr estimated a value of 1.59, compared to a value of 2.86 reported by <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span>, a difference of -1.26. Similarly, the interaction term estimated by measr is 0.35, compared to a value of -0.95 reported by <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span>, a difference of 1.3. This indicates that the log-odds of providing a correct response for an individual who has mastered both attributes is approximately the same, regardless of software. That is, for measr, we get a log-odds of <code>-0.07 + 1.59 + 0.92 + 0.35 = 2.79</code>, and from <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span>, we get a log-odds of <code>-0.11 + 2.86 + 0.95 + -0.95 = 2.75</code>. This is true for all of the differences in the figure. There is a change to the main effect for morphosyntactic rules and corresponding change to the interaction term that “cancels out” the difference.</p>
+<p>Why is this happening? Let’s revisit the proportion of respondents in each class. There are very few respondents who are proficient in morphosyntactic rules without also being proficient in both of the other attributes (classes 2, 5, and 6; less than 4% of all respondents). Therefore, there is less information for estimating the morphosyntactic main effects, which for items that measure multiple attributes, represent the increase in log-odds for proficiency in morphosyntactic rules <em>conditional on not being proficient</em> on the other attribute.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>structural_parameters</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 8 × 2</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   class           estimate</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;         &lt;rvar[1d]&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 [0,0,0]  0.2987 ± 0.0164</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 [1,0,0]  0.0117 ± 0.0066</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 [0,1,0]  0.0157 ± 0.0106</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 [0,0,1]  0.1287 ± 0.0198</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 [1,1,0]  0.0093 ± 0.0057</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 [1,0,1]  0.0183 ± 0.0102</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 [0,1,1]  0.1727 ± 0.0199</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 [1,1,1]  0.3448 ± 0.0177</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Because there is less information available for the morphosyntactic main effects, the prior will have more influence on these parameters. Note in the above figure that the main effect estimates that are off the diagonal are less extreme when using measr. For example, the triangle at the top right is a main effect that was estimated to be nearly 3 by <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span>, but is just over 1.5 when the model is estimated with measr. Thus, there is a regularizing effect, where the prior is pulling in extreme values, which is an intended outcome. We did not discuss priors when estimating our model and instead used the default priors provided by measr. For more information on prior distributions, including information on how to specify your own prior distributions for the model parameters, see <code>?prior</code> and <code>vignette("model-estimation", package = "measr")</code>.</p>
+</section>
+<section id="respondent-proficiency" class="level3">
+<h3 class="anchored" data-anchor-id="respondent-proficiency">Respondent Proficiency</h3>
+<p>The final piece of output from our model we will examine is the respondent probabilities. There are two types of probabilities that we can calculate, both of which are returned by the <code>score()</code> function.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>resp_probs <span class="ot">&lt;-</span> <span class="fu">score</span>(ecpe_lcdm)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>resp_probs</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $class_probabilities</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 23,376 × 5</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    resp_id class   probability       `2.5%`    `97.5%`</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 1       [0,0,0] 0.00000773  0.00000385   0.0000137 </span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 1       [1,0,0] 0.0000981   0.00000762   0.000314  </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 1       [0,1,0] 0.000000496 0.0000000249 0.00000148</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 1       [0,0,1] 0.00133     0.000728     0.00211   </span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 1       [1,1,0] 0.0000876   0.00000653   0.000259  </span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 1       [1,0,1] 0.0435      0.00367      0.101     </span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 1       [0,1,1] 0.00208     0.00128      0.00311   </span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 1       [1,1,1] 0.953       0.895        0.992     </span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2       [0,0,0] 0.00000588  0.00000286   0.0000108 </span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2       [1,0,0] 0.0000746   0.00000549   0.000223  </span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 23,366 more rows</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $attribute_probabilities</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 8,766 × 5</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    resp_id attribute       probability `2.5%` `97.5%`</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 1       morphosyntactic       0.997  0.995   0.998</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 1       cohesive              0.955  0.897   0.995</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 1       lexical               1.000  1.000   1.000</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2       morphosyntactic       0.995  0.992   0.997</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2       cohesive              0.898  0.765   0.987</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2       lexical               1.000  1.000   1.000</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 3       morphosyntactic       0.983  0.970   0.991</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 3       cohesive              0.988  0.975   0.997</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 3       lexical               1.000  1.000   1.000</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 4       morphosyntactic       0.998  0.996   0.998</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 8,756 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The <code>class_probabilites</code> are the probabilities that the respondent belongs to each of the 8 possible classes (i.e., profiles of proficiency). The <code>attribute_probabilites</code> are the probabilities that the respondent is proficient on each of the individual attributes. To better describe the difference between these two probabilities, let’s look at the results for respondent 73. When looking at the class probabilities, the most likely profile is [1,1,1], meaning that the respondent is proficient on all attributes. However, there is only a 39% chance that the respondent belongs to that class. They also have a greater than 10% chance of belonging to the [0,0,1] and [0,1,1] classes.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>resp_probs<span class="sc">$</span>class_probabilities <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(resp_id <span class="sc">==</span> <span class="dv">73</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 8 × 5</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   resp_id class   probability   `2.5%` `97.5%`</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 73      [0,0,0]     0.0495  0.0243    0.0878</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 73      [1,0,0]     0.00581 0.000360  0.0217</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 73      [0,1,0]     0.00422 0.000207  0.0122</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 73      [0,0,1]     0.172   0.100     0.269 </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 73      [1,1,0]     0.00763 0.000319  0.0282</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 73      [1,0,1]     0.0134  0.00107   0.0337</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 73      [0,1,1]     0.360   0.242     0.484 </span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8 73      [1,1,1]     0.387   0.248     0.537</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The attribute probabilities for respondent 73 show a slightly different story. These probabilities indicate that there is a 41% chance the respondent is proficient on morphosyntactic rules, a 76% chance the respondent is proficient on cohesive rules, and a 93% chance the respondent is proficient on lexical rules. That is, we’re fairly confident respondent 73 is proficient on lexical rules, somewhat confident they are proficient on cohesive rules, and not confident about whether or not the student is proficient on morphosyntactic rules (i.e., the proficiency probability could reasonably be as low as 27% or as high as 57%). These probabilities can be turned into classifications by setting proficiency thresholds. For example, we might decide that probabilities greater than .5 (i.e., more likely than not) indicate proficiency <span class="citation" data-cites="bradshaw2019">(e.g., <a href="#ref-bradshaw2019" role="doc-biblioref">Bradshaw &amp; Levy, 2019</a>)</span>. On the other hand, we might want to be more confident that a respondent is proficient before reporting as such, and therefore might set a higher threshold <span class="citation" data-cites="thompson-ame">(e.g., .8; <a href="#ref-thompson-ame" role="doc-biblioref">Thompson et al., 2019</a>)</span>. For respondent 73, thresholds of .5 and .8 would result in proficiency profiles of [0,1,1] and [0,0,1], respectively. Either way, both profiles differ from the overall most likely profile indicated by the class probabilities. Thus, it is important to give careful consideration to how results are determined before they are reported.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>resp_probs<span class="sc">$</span>attribute_probabilities <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(resp_id <span class="sc">==</span> <span class="dv">73</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 5</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   resp_id attribute       probability `2.5%` `97.5%`</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 73      morphosyntactic       0.413  0.268   0.573</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 73      cohesive              0.759  0.644   0.848</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 73      lexical               0.933  0.882   0.966</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>By default, <code>score()</code> only returns a summary of the posterior distribution for each probability (i.e., the mean and 95% credible interval). There are many class and attribute probabilities, and therefore the object containing the full posterior distributions would be quite large. You can change the percentiles that are returned in the posterior summary by setting the <code>probs</code> argument to quantiles other than the default of <code>probs = c(0.025, 0.975)</code>. Alternatively, if you do want the full posterior distribution for each probability, you can set <code>summary = FALSE</code>. This will return a <code>posterior::rvar()</code> object (the same as the structural and item parameter summaries) that contains all of the posterior draws for each probability, and is displayed as the mean of the posterior ±1 standard deviation. For more information on <code>rvar</code> objects, see the accompanying vignette (<code>vignette("rvar", package = "posterior")</code>).</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">score</span>(ecpe_lcdm, <span class="at">summary =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $class_probabilities</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2,922 × 9</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    resp_id          `[0,0,0]`              `[1,0,0]`          `[0,1,0]`</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;           &lt;rvar[1d]&gt;             &lt;rvar[1d]&gt;         &lt;rvar[1d]&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 1        7.7e-06 ± 2.5e-06  0.0000981 ± 0.0000824  5.0e-07 ± 4.0e-07</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2        5.9e-06 ± 2.0e-06  0.0000746 ± 0.0000644  1.9e-07 ± 1.7e-07</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 3        5.6e-06 ± 2.1e-06  0.0000170 ± 0.0000207  1.7e-06 ± 1.4e-06</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 4        3.2e-07 ± 1.1e-07  0.0000041 ± 0.0000035  9.5e-08 ± 7.6e-08</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 5        1.2e-03 ± 3.7e-04  0.0083757 ± 0.0064401  3.4e-04 ± 2.6e-04</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 6        3.0e-06 ± 1.0e-06  0.0000155 ± 0.0000149  8.8e-07 ± 7.2e-07</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 7        3.0e-06 ± 1.0e-06  0.0000155 ± 0.0000149  8.8e-07 ± 7.2e-07</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 8        3.7e-02 ± 1.2e-02  0.0000850 ± 0.0001022  1.3e-03 ± 1.1e-03</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 9        6.6e-05 ± 2.0e-05  0.0002019 ± 0.0001488  1.9e-05 ± 1.5e-05</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 10       4.1e-01 ± 1.4e-01  0.4056911 ± 0.1803258  3.5e-03 ± 2.9e-03</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2,912 more rows</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 5 more variables: `[0,0,1]` &lt;rvar[1d]&gt;, `[1,1,0]` &lt;rvar[1d]&gt;,</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   `[1,0,1]` &lt;rvar[1d]&gt;, `[0,1,1]` &lt;rvar[1d]&gt;, `[1,1,1]` &lt;rvar[1d]&gt;</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $attribute_probabilities</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2,922 × 4</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    resp_id   morphosyntactic       cohesive          lexical</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;          &lt;rvar[1d]&gt;     &lt;rvar[1d]&gt;       &lt;rvar[1d]&gt;</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 1        0.9966 ± 0.00070  0.96 ± 0.0251  1.00 ± 0.000115</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2        0.9949 ± 0.00137  0.90 ± 0.0586  1.00 ± 0.000075</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 3        0.9827 ± 0.00541  0.99 ± 0.0058  1.00 ± 0.000079</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 4        0.9975 ± 0.00052  0.99 ± 0.0057  1.00 ± 0.000014</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 5        0.9880 ± 0.00244  0.98 ± 0.0086  0.95 ± 0.026761</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 6        0.9924 ± 0.00214  0.99 ± 0.0057  1.00 ± 0.000063</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 7        0.9924 ± 0.00214  0.99 ± 0.0057  1.00 ± 0.000063</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 8        0.0044 ± 0.00201  0.44 ± 0.0802  0.96 ± 0.012098</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 9        0.9453 ± 0.01288  0.98 ± 0.0061  1.00 ± 0.000780</span></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 10       0.5356 ± 0.15668  0.12 ± 0.0611  0.12 ± 0.047149</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2,912 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="dcm-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="dcm-evaluation">DCM Evaluation</h2>
+<p>There are several ways we might evaluate an estimate model. In this case study, we’ll focus on two: absolute model fit and classification reliability.</p>
+<section id="absolute-model-fit" class="level3">
+<h3 class="anchored" data-anchor-id="absolute-model-fit">Absolute Model Fit</h3>
+<p>One of the most common measures of model fit for DCMs is the M<sub>2</sub> statistic. This index is a limited information goodness-of-fit measure originally described by Maydeu-Olivares &amp; Joe <span class="citation" data-cites="m2-2005 m2-2006">(<a href="#ref-m2-2005" role="doc-biblioref">2005</a>, <a href="#ref-m2-2006" role="doc-biblioref">2006</a>)</span> and adapted for DCMs by <span class="citation" data-cites="liu2016">Y. Liu et al. (<a href="#ref-liu2016" role="doc-biblioref">2016</a>)</span>. We can calculate the M<sub>2</sub> for a model estimated with measr with <code>fit_m2()</code>. In addition to the calculated M<sub>2</sub> statistic, <code>fit_m2()</code> also returns the root mean square error of approximation (RMSEA) with an associated confidence interval and the standardized root mean square residual (SRMSR).</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_m2</span>(ecpe_lcdm)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 8</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      m2    df     pval  rmsea ci_lower ci_upper `90% CI`          srmsr</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  513.   325 1.35e-10 0.0141   0.0117   0.0163 [0.0117, 0.0163] 0.0319</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For our estimated LCDM, we see an M<sub>2</sub> value of 512.8, which has a corresponding <em>p</em>-value of &lt;.01. When interpreting the M<sub>2</sub> and its <em>p</em>-value, the null hypothesis is that the model fits. Thus, the <em>p</em>-value represents the probability of observing an M<sub>2</sub> value this large if the model fits. For our estimated LCDM, the <em>p</em>-value is extremely small, indicating that our model has poor fit.</p>
+<p>A fully Bayesian estimation allows us to evaluate model fit using posterior predictive model checks (PPMCs). Specifically, measr supports a PPMC of the overall raw score distribution as described by <span class="citation" data-cites="park2015">Park et al. (<a href="#ref-park2015" role="doc-biblioref">2015</a>)</span> and <span class="citation" data-cites="thompson-bayes">Thompson (<a href="#ref-thompson-bayes" role="doc-biblioref">2019</a>)</span>. For each of the replicated data sets, we calculate the number of students with each raw score (i.e., the number of correct responses). This can be done using <code>fit_ppmc()</code>. Note that we can also calculate item-level PPMCs. However, because in this case study we are only interested in overall model fit, we’ll set <code>item_fit = NULL</code> to save some computation time.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>rawscore_ppmc <span class="ot">&lt;-</span> <span class="fu">fit_ppmc</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  ecpe_lcdm,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">model_fit =</span> <span class="st">"raw_score"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">return_draws =</span> <span class="dv">500</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>rawscore_ppmc</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ppmc_raw_score</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 7</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   obs_chisq ppmc_mean `2.5%` `97.5%` rawscore_samples   chisq_samples    ppp</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;             &lt;list&gt;         &lt;dbl&gt;</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      931.      28.8   12.4    60.1 &lt;tibble [500 × 1]&gt; &lt;dbl [500]&gt;   0.0005</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In the output, the posterior predictive <em>p</em>-value (<em>ppp</em>) is very small, indicating poor fit. To unpack what this really means, let’s visualize the PPMC. In the following figure, the blue bars show the credible intervals for the number of respondents we would expect to see at each raw score point, given our estimated model parameters. The red dots and line indicate the number of respondents that were observed at each raw score point in our observed data (<code>ecpe_data</code>). For example, the model expects there to be between about 110 and 170 respondents with a total score of 14. In the observed data, there were 92 respondents with a total score of 14. In general, the model tends to overestimate the number of respondents with a raw score between 14–16 and 23–25. On the other hand, the model underestimates the number of respondents with a raw score between 6–10 and 27–28.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Plot code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdist)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>obs_scores <span class="ot">&lt;-</span> ecpe_data <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="st">"resp_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">raw_score =</span> <span class="fu">sum</span>(value), <span class="at">.by =</span> resp_id) <span class="sc">|&gt;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(raw_score) <span class="sc">|&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">complete</span>(<span class="at">raw_score =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">28</span>, <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">n =</span> <span class="dv">0</span>L))</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>rawscore_ppmc<span class="sc">$</span>ppmc_raw_score <span class="sc">|&gt;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(rawscore_samples) <span class="sc">|&gt;</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(rawscore_samples) <span class="sc">|&gt;</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(raw_scores) <span class="sc">|&gt;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_interval</span>(</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> raw_score, <span class="at">y =</span> n, <span class="at">color_ramp =</span> <span class="fu">after_stat</span>(level)),</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">point_interval =</span> <span class="st">"mean_qi"</span>,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> msr_colors[<span class="dv">2</span>],</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">5</span>,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> <span class="fu">c</span>(<span class="at">color =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> obs_scores,</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> raw_score, <span class="at">y =</span> n),</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> msr_colors[<span class="dv">3</span>]</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> obs_scores,</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> raw_score, <span class="at">y =</span> n, <span class="at">fill =</span> <span class="st">"Observed Data"</span>),</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> msr_colors[<span class="dv">3</span>],</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_ramp_discrete</span>(</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">from =</span> <span class="st">"white"</span>,</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="dv">1</span>),</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.95</span>),</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="sc">~</span> <span class="fu">sprintf</span>(<span class="st">"%0.2f"</span>, <span class="fu">as.numeric</span>(.x))</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(msr_colors[<span class="dv">3</span>])) <span class="sc">+</span></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">28</span>, <span class="dv">2</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_comma</span>() <span class="sc">+</span></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Raw score"</span>,</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Respondents"</span>,</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">color_ramp =</span> <span class="st">"Credible Interval"</span>,</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="cn">NULL</span></span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">3</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/rawscore-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Line plot showing the observed number of respondents at each raw score point, superimposed over an interval showing the expected number of respondents at each score point according to the estimated model."></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can quantify how different the observed raw score distribution is from the replicated data sets by calculating a χ<sup>2</sup>-like statistic. To do this, we first calculate the expected number of students at each raw score by taking the mean of the posterior distribution for each score point. Then, for each replicated data set, we calculate χ<sup>2</sup>-like statistic as</p>
+<p><span class="math display">\[
+\chi^2_{rep} = \sum_{s=0}^S \frac{[n_s - E(n_s)]^2}{E(n_s)},
+\]</span></p>
+<p>where <em>s</em> represents the raw score, <em>n<sub>s</sub></em> is the number of respondents at score point <em>s</em>, and <em>E(n<sub>s</sub>)</em> is the expected number of respondents at score point <em>s</em> (i.e., the mean of the posterior distribution). This calculation is completed on each of the replicated data sets, creating a posterior distribution of χ<sup>2</sup><sub>rep</sub> that represents the plausible values for the χ<sup>2</sup>-like statistic if our model is correct. This distribution is summarized in the <code>fit_ppmc()</code> output. Specifically, we expect the χ<sup>2</sup>-like statistic for our observed data to be between 12 and 60, as shown in the following figure. However, when we calculate the statistic on our observed data, we get a value of 931, way beyond our expected range. This is represented by the <em>ppp</em> value, which is the proportion of χ<sup>2</sup><sub>rep</sub> values that are larger than our observed value. In this case, no values of χ<sup>2</sup><sub>rep</sub> were larger than our observed value, leading to a <em>ppp</em> of 0.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Plot code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>rawscore_ppmc<span class="sc">$</span>ppmc_raw_score <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(chisq_samples) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(chisq_samples) <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> chisq_samples)) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_dots</span>(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">quantiles =</span> <span class="dv">500</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">layout =</span> <span class="st">"hex"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">stackratio =</span> <span class="fl">0.9</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> msr_colors[<span class="dv">2</span>],</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> msr_colors[<span class="dv">2</span>],</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)) <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">x =</span> <span class="st">"&amp;chi;^2^&lt;sub&gt;rep&lt;/sub&gt;"</span>) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/chisq-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Dot plot showing the distribution of chi-square values from the replicated data sets."></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In summary, both the M<sub>2</sub> and raw score PPMC indicate poor fit of our estimated LCDM to the observed data. This is not unexpected, given that some classes are very small. Recall from our discussion of the estimated structural parameters that there are three classes that combine to include less than 4% of all respondents. When classes are this small, parameter estimates can be unstable, leading to poor model fit <span class="citation" data-cites="hu2020 ma2023 martinez2023 hdcm wang2021">(e.g., <a href="#ref-hu2020" role="doc-biblioref">Hu &amp; Templin, 2020</a>; <a href="#ref-ma2023" role="doc-biblioref">Ma et al., 2023</a>; <a href="#ref-martinez2023" role="doc-biblioref">Martinez &amp; Templin, 2023</a>; <a href="#ref-hdcm" role="doc-biblioref">Templin &amp; Bradshaw, 2014</a>; <a href="#ref-wang2021" role="doc-biblioref">Wang &amp; Lu, 2021</a>)</span>.</p>
+</section>
+<section id="classification-reliability" class="level3">
+<h3 class="anchored" data-anchor-id="classification-reliability">Classification Reliability</h3>
+<p>Depending on the intended uses of our assessment, we may be less concerned with overall model fit and more concerned with the consistency and accuracy of classifications. In other words, we may be focused on the reliability of the classifications produced by our model. There are several ways to evaluate the reliability evidence for DCMs. For a comprehensive summary of methods, see <span class="citation" data-cites="reliability-handbook">Sinharay &amp; Johnson (<a href="#ref-reliability-handbook" role="doc-biblioref">2019</a>)</span>. Using measr, we can easily calculate a wide variety of reliability metrics for our estimated LCDM using <code>reliability()</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ecpe_reliability <span class="ot">&lt;-</span> <span class="fu">reliability</span>(ecpe_lcdm)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ecpe_reliability</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $pattern_reliability</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       p_a       p_c </span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.7393205 0.6637904 </span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $map_reliability</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $map_reliability$accuracy</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 8</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   attribute         acc lambda_a kappa_a youden_a tetra_a  tp_a  tn_a</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 morphosyntactic 0.896    0.729   0.787    0.775   0.942 0.852 0.924</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 cohesive        0.852    0.676   0.704    0.699   0.893 0.876 0.823</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 lexical         0.916    0.750   0.611    0.802   0.959 0.947 0.855</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $map_reliability$consistency</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   attribute       consist lambda_c kappa_c youden_c tetra_c  tp_c  tn_c gammak</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 morphosyntactic   0.834    0.557   0.685    0.646   0.853 0.779 0.868  0.852</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 cohesive          0.807    0.565   0.682    0.609   0.818 0.827 0.783  0.789</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 lexical           0.857    0.554   0.625    0.671   0.876 0.894 0.777  0.880</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: pc_prime &lt;dbl&gt;</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $eap_reliability</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 5</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   attribute       rho_pf rho_bs rho_i rho_tb</span></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 morphosyntactic  0.735  0.687 0.573  0.884</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 cohesive         0.730  0.575 0.506  0.786</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 lexical          0.760  0.730 0.587  0.915</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>By default, <code>reliability()</code> returns several different types of reliability evidence. For all types of evidence, the indices range from 0–1, with values close to 1 indicating high accuracy or consistency. Which information is most relevant will depend on how scores are determined and reported. For example, we could determine each respondent’s scores by choosing the overall profile that is most consistent with their observed responses (i.e., the class probabilities returned by <code>score()</code>). For this type of classification we would want to look at pattern reliability, as we are classifying responding into an overall pattern of proficiency on the attributes.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ecpe_reliability<span class="sc">$</span>pattern_reliability</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       p_a       p_c </span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.7393205 0.6637904</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The values <code>p_a</code> and <code>p_c</code> are described by <span class="citation" data-cites="cui2012">Cui et al. (<a href="#ref-cui2012" role="doc-biblioref">2012</a>)</span>. <em>P<sub>a</sub></em> is the probability classifying a random respondent into the correct class, and <em>P<sub>c</sub></em> is the probability of consistently classifying a random respondent into the same class across two test administrations.</p>
+<p>On the other hand, rather than basing results on the overall most likely profile, we could score each attribute individually (i.e., the attribute probabilities returned by <code>score()</code>). This is accomplished by calculating the probability of proficiency on each attribute and creating classifications based on a given threshold (usually .5). This result is known as the <em>maximum a posteriori</em> (MAP) because it represents the most likely latent state for each respondent on each attribute. As with the pattern-level classifications, attribute level classifications can be evaluated through accuracy and consistency. <span class="citation" data-cites="johnson2018">Johnson &amp; Sinharay (<a href="#ref-johnson2018" role="doc-biblioref">2018</a>)</span> developed accuracy (<code>acc</code>) and consistency (<code>consist</code>) metrics for attribute level classifications, and also examined other agreement measures based on contingency tables such as Goodman &amp; Kruskal’s λ, Cohen’s κ, Youden’s <em>J</em>, the true positive rate, and the true negative rate.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ecpe_reliability<span class="sc">$</span>map_reliability</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $accuracy</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 8</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   attribute         acc lambda_a kappa_a youden_a tetra_a  tp_a  tn_a</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 morphosyntactic 0.896    0.729   0.787    0.775   0.942 0.852 0.924</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 cohesive        0.852    0.676   0.704    0.699   0.893 0.876 0.823</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 lexical         0.916    0.750   0.611    0.802   0.959 0.947 0.855</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $consistency</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 10</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   attribute       consist lambda_c kappa_c youden_c tetra_c  tp_c  tn_c gammak</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 morphosyntactic   0.834    0.557   0.685    0.646   0.853 0.779 0.868  0.852</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 cohesive          0.807    0.565   0.682    0.609   0.818 0.827 0.783  0.789</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 lexical           0.857    0.554   0.625    0.671   0.876 0.894 0.777  0.880</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: pc_prime &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Using the cutoffs recommended by <span class="citation" data-cites="johnson2018">Johnson &amp; Sinharay (<a href="#ref-johnson2018" role="doc-biblioref">2018</a>)</span>, the cohesive rules attribute has <em>fair</em> accuracy while the morphosyntactic and lexical rules attributes have <em>good</em> accuracy. All attributes have <em>fair</em> classification consistency.</p>
+<p>Finally, results could be reported as probabilities of proficiency on each attribute, rather than a categorical classification. In this instance, because the probabilities themselves are reported, we would want to report the reliability or precision of that probability estimate. This type of result is known as the <em>expected a posteriori</em> (EAP) estimate because it is the expected value of the classification. <span class="citation" data-cites="johnson2020">Johnson &amp; Sinharay (<a href="#ref-johnson2020" role="doc-biblioref">2020</a>)</span> described four metrics for evaluating the reliability of the EAP estimates: (1) biserial, (2) informational, (3) parallel forms, and (4) a constrained parallel forms originally proposed by <span class="citation" data-cites="templin2013">Templin &amp; Bradshaw (<a href="#ref-templin2013" role="doc-biblioref">2013</a>)</span>. In their paper, <span class="citation" data-cites="johnson2020">Johnson &amp; Sinharay (<a href="#ref-johnson2020" role="doc-biblioref">2020</a>)</span> note that both types of parallel form reliability tend to over estimate the reliability, and therefore recommend using the biserial or informational reliability metrics. These metrics are available in the reliability output as <code>rho_bs</code> and <code>rho_i</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ecpe_reliability<span class="sc">$</span>eap_reliability</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 5</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   attribute       rho_pf rho_bs rho_i rho_tb</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 morphosyntactic  0.735  0.687 0.573  0.884</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 cohesive         0.730  0.575 0.506  0.786</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 lexical          0.760  0.730 0.587  0.915</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Using the cutoffs suggested by <span class="citation" data-cites="johnson2020">Johnson &amp; Sinharay (<a href="#ref-johnson2020" role="doc-biblioref">2020</a>)</span>, all three attributes have <em>poor</em> EAP reliability. It’s not surprising that the EAP reliability is lower than MAP reliability, as it is harder to place respondents at a specific point on a scale (i.e., the probability scale) than it is to place respondents into a category. For example, let’s return to our example of respondent 73.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>resp_probs<span class="sc">$</span>attribute_probabilities <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(resp_id <span class="sc">==</span> <span class="dv">73</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 5</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   resp_id attribute       probability `2.5%` `97.5%`</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 73      morphosyntactic       0.413  0.268   0.573</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 73      cohesive              0.759  0.644   0.848</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 73      lexical               0.933  0.882   0.966</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We estimated that there is a 93% chance that this respondent was proficient on lexical rules. However, the credible interval tells us this probability could be anywhere from 88% to 97%. There’s a nine percentage point range that is plausible. We don’t have a great deal of certainty for the specific probability that the respondent is proficient in lexical rules; however, the entire plausible range is high, so we would make a classification of “proficient” regardless of where in the range the true probability of proficiency is. That is, we would consistently make the same classification decision, regardless of the uncertainty in the probability itself.</p>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>In this case study, we estimated an LCDM to analyze the ECPE data. From the model estimation, we saw that the estimates provided by measr were highly consistent with previously reported parameters estimates for the ECPE. However, model fit indices indicated that the LCDM does not do a great job of represented the observed data. This is likely due to dependencies among the attributes. To further analyze this data, we might consider a model with a different attribute structure, such as the hierarchical diagnostic classification model <span class="citation" data-cites="hdcm">(<a href="#ref-hdcm" role="doc-biblioref">Templin &amp; Bradshaw, 2014</a>)</span>. Despite the poor model fit, reliability indices showed that classification consistency and accuracy were generally in the fair to good range, and therefore, depending on our intended uses, this model may be sufficient for reporting respondent proficiency of the three attributes.</p>
+</section>
+<section id="references" class="level2">
+
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-bradshaw2019" class="csl-entry" role="listitem">
+Bradshaw, L., &amp; Levy, R. (2019). Interpreting probabilistic classifications from diagnostic psychometric models. <em>Educational Measurement: Issues and Practice</em>, <em>38</em>(2), 79–88. <a href="https://doi.org/10.1111/emip.12247">https://doi.org/10.1111/emip.12247</a>
+</div>
+<div id="ref-chen2018" class="csl-entry" role="listitem">
+Chen, F., Liu, Y., Xin, T., &amp; Cui, Y. (2018). Applying the <span class="math inline">\({M}_2\)</span> statistic to evaluate the fit of diagnostic classification models in the presence of attribute hierarchies. <em>Frontiers in Psychology</em>, <em>9</em>. <a href="https://doi.org/10.3389/fpsyg.2018.01875">https://doi.org/10.3389/fpsyg.2018.01875</a>
+</div>
+<div id="ref-cui2012" class="csl-entry" role="listitem">
+Cui, Y., Gierl, M. J., &amp; Chang, H.-H. (2012). Estimating classification consistency and accuracy for cognitive diagnostic assessment. <em>Journal of Educational Measurement</em>, <em>49</em>(1), 19–38. <a href="https://doi.org/10.1111/j.1745-3984.2011.00158.x">https://doi.org/10.1111/j.1745-3984.2011.00158.x</a>
+</div>
+<div id="ref-lcdm-handbook" class="csl-entry" role="listitem">
+Henson, R. A., &amp; Templin, J. L. (2019). Loglinear cognitive diagnostic model (<span>LCDM</span>). In M. von Davier &amp; Y.-S. Lee (Eds.), <em>Handbook of diagnostic classification models</em> (pp. 171–185). Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-05584-4_8">https://doi.org/10.1007/978-3-030-05584-4_8</a>
+</div>
+<div id="ref-lcdm" class="csl-entry" role="listitem">
+Henson, R. A., Templin, J. L., &amp; Willse, J. T. (2009). Defining a family of cognitive diagnosis models using log-linear models with latent variables. <em>Psychometrika</em>, <em>74</em>(2), 191–210. <a href="https://doi.org/10.1007/s11336-008-9089-5">https://doi.org/10.1007/s11336-008-9089-5</a>
+</div>
+<div id="ref-hu2020" class="csl-entry" role="listitem">
+Hu, B., &amp; Templin, J. (2020). Using diagnostic classification models to validate attribute hierarchies and evaluate model fit in <span>Bayesian</span> networks. <em>Multivariate Behavioral Research</em>, <em>55</em>(2), 300–311. <a href="https://doi.org/10.1080/00273171.2019.1632165">https://doi.org/10.1080/00273171.2019.1632165</a>
+</div>
+<div id="ref-johnson2018" class="csl-entry" role="listitem">
+Johnson, M. S., &amp; Sinharay, S. (2018). Measures of agreement to assess attribute-level classification accuracy and consistency for cognitive diagnostic assessments. <em>Journal of Educational Measurement</em>, <em>55</em>(4), 635–664. <a href="https://doi.org/10.1111/jedm.12196">https://doi.org/10.1111/jedm.12196</a>
+</div>
+<div id="ref-johnson2020" class="csl-entry" role="listitem">
+Johnson, M. S., &amp; Sinharay, S. (2020). The reliability of the posterior probability of skill attainment in diagnostic classification models. <em>Journal of Educational and Behavioral Statistics</em>, <em>45</em>(1), 5–31. <a href="https://doi.org/10.3102/1076998619864550">https://doi.org/10.3102/1076998619864550</a>
+</div>
+<div id="ref-mcmc-handbook" class="csl-entry" role="listitem">
+Liu, X., &amp; Johnson, M. S. (2019). Estimating <span>CDMs</span> using <span>MCMC</span>. In M. von Davier &amp; Y.-S. Lee (Eds.), <em>Handbook of <span>Diagnostic Classification Models</span></em> (pp. 629–646). <span>Springer International Publishing</span>. <a href="https://doi.org/10.1007/978-3-030-05584-4_31">https://doi.org/10.1007/978-3-030-05584-4_31</a>
+</div>
+<div id="ref-liu2016" class="csl-entry" role="listitem">
+Liu, Y., Tian, W., &amp; Xin, T. (2016). An application of <span><span class="math inline">\(M_2\)</span></span> statistic to evaluate the fit of cognitive diagnostic models. <em>Journal of Educational and Behavioral Statistics</em>, <em>41</em>(1), 3–26. <a href="https://doi.org/10.3102/1076998615621293">https://doi.org/10.3102/1076998615621293</a>
+</div>
+<div id="ref-ma2023" class="csl-entry" role="listitem">
+Ma, C., Ouyang, J., &amp; Xu, G. (2023). Learning latent and hierarchical structures in cognitive diagnosis models. <em>Psychometrika</em>, <em>88</em>, 175–207. <a href="https://doi.org/10.1007/s11336-022-09867-5">https://doi.org/10.1007/s11336-022-09867-5</a>
+</div>
+<div id="ref-martinez2023" class="csl-entry" role="listitem">
+Martinez, A. J., &amp; Templin, J. (2023). Approximate invariance testing in diagnostic classification models in the presence of attribute hierarchies: A <span>Bayesian</span> network approach. <em>Psych</em>, <em>5</em>(3), 688–714. <a href="https://doi.org/10.3390/psych5030045">https://doi.org/10.3390/psych5030045</a>
+</div>
+<div id="ref-m2-2005" class="csl-entry" role="listitem">
+Maydeu-Olivares, A., &amp; Joe, H. (2005). Limited- and full-information estimation and goodness-of-fit testing in <span class="math inline">\(2^n\)</span> contingency tables: <span>A</span> unified framework. <em>Journal of the American Statistical Association</em>, <em>100</em>(471), 1009–1020. <a href="https://doi.org/10.1198/016214504000002069">https://doi.org/10.1198/016214504000002069</a>
+</div>
+<div id="ref-m2-2006" class="csl-entry" role="listitem">
+Maydeu-Olivares, A., &amp; Joe, H. (2006). Limited information goodness-of-fit testing in multidimensional contingency tables. <em>Psychometrika</em>, <em>71</em>(4), 713–732. <a href="https://doi.org/10.1007/s11336-005-1295-9">https://doi.org/10.1007/s11336-005-1295-9</a>
+</div>
+<div id="ref-park2015" class="csl-entry" role="listitem">
+Park, J. Y., Johnson, M. S., &amp; Lee, Y.-S. (2015). Posterior predictive model checks for cognitive diagnostic models. <em>International Journal of Quantitative Research in Education</em>, <em>2</em>(3–4), 244–264. <a href="https://doi.org/10.1504/IJQRE.2015.071738">https://doi.org/10.1504/IJQRE.2015.071738</a>
+</div>
+<div id="ref-reliability-handbook" class="csl-entry" role="listitem">
+Sinharay, S., &amp; Johnson, M. S. (2019). Measures of agreement: <span>Reliability</span>, classification accuracy, and classification consistency. In M. von Davier &amp; Y.-S. Lee (Eds.), <em>Handbook of <span>Diagnostic Classification Models</span></em> (pp. 359–377). <span>Springer International Publishing</span>. <a href="https://doi.org/10.1007/978-3-030-05584-4_17">https://doi.org/10.1007/978-3-030-05584-4_17</a>
+</div>
+<div id="ref-templin2013" class="csl-entry" role="listitem">
+Templin, J., &amp; Bradshaw, L. (2013). Measuring the reliability of diagnostic classification model examinee estimates. <em>Journal of Classification</em>, <em>30</em>(2), 251–275. <a href="https://doi.org/10.1007/s00357-013-9129-4">https://doi.org/10.1007/s00357-013-9129-4</a>
+</div>
+<div id="ref-hdcm" class="csl-entry" role="listitem">
+Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification models: A family of models for estimating and testing attribute hierarchies. <em>Psychometrika</em>, <em>79</em>(2), 317–339. <a href="https://doi.org/10.1007/s11336-013-9362-0">https://doi.org/10.1007/s11336-013-9362-0</a>
+</div>
+<div id="ref-ecpe" class="csl-entry" role="listitem">
+Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model estimates using <span>Mplus</span>. <em>Educational Measurement: Issues and Practice</em>, <em>32</em>(2), 37–50. <a href="https://doi.org/10.1111/emip.12010">https://doi.org/10.1111/emip.12010</a>
+</div>
+<div id="ref-thompson-bayes" class="csl-entry" role="listitem">
+Thompson, W. J. (2019). <em>Bayesian psychometrics for diagnostic assessments: <span>A</span> proof of concept</em> (Research Report No. 19-01). <span>University of Kansas; Accessible Teaching, Learning, and Assessment Systems</span>. <a href="https://doi.org/10.35542/osf.io/jzqs8">https://doi.org/10.35542/osf.io/jzqs8</a>
+</div>
+<div id="ref-thompson-ame" class="csl-entry" role="listitem">
+Thompson, W. J., Clark, A. K., &amp; Nash, B. (2019). Measuring the reliability of diagnostic mastery classifications at multiple levels of reporting. <em>Applied Measurment in Education</em>, <em>32</em>(4), 298–309. <a href="https://doi.org/10.1080/08957347.2019.1660345">https://doi.org/10.1080/08957347.2019.1660345</a>
+</div>
+<div id="ref-wang2021" class="csl-entry" role="listitem">
+Wang, C., &amp; Lu, J. (2021). Learning attribute hierarchies form data: Two exploratory approaches. <em>Journal of Educational and Behavioral Statistics</em>, <em>46</em>(1), 58–84. <a href="https://doi.org/10.3102/1076998620931094">https://doi.org/10.3102/1076998620931094</a>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/r-dcm\.org");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="faux-block"><a href="../../funding.html">Supported by IES and ATLAS.</a></span> <span class="faux-block">All content licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" role="button"> <i class="fa-solid fa-chevron-up" aria-label="chevron-up"></i> </a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

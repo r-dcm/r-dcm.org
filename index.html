@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Under construction | r-dcm – r-dcm</title>
+<title>r-dcm</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -29,17 +29,19 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./assets/img/favicon-96x96.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-97518418a90fc88b02415e07228183d3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a2c5f3d9085531a1eb56ac8b4c883460.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-8cc9cff4eeb643f2af192526fe617203.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -69,12 +71,70 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-pkgs .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-image","listing-image-alt","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-pkgs'] = new List('listing-pkgs', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -92,17 +152,16 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
+    <a class="nav-link" href="./start/index.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./team/index.html"> 
 <span class="menu-text">Our Team</span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="./rss.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
-</i> 
-<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/r-dcm"> <i class="bi bi-github" role="img" aria-label="GitHub">
@@ -120,51 +179,96 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Under construction</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
+<div id="FrontPage">
+<div class="quarto-about-trestles">
+  <div class="about-entity">
+    <img src="https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/r-dcm.svg" alt="r-dcm hexagon logo" class="about-image
+  rounded " style="width: 20em;">
+<header id="title-block-header" class="quarto-title-block"></header>
   </div>
-  
-
-
-</header>
-
-
-<p>This site is currently under development. Thanks for your patience as we continue our work!</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="assets/img/construction.jpg" class="img-fluid figure-img" data-out-width="100%" alt="Interior of house under construction"></p>
-<figcaption>Photo by <a href="https://unsplash.com/@st_lehner?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Stefan Lehner</a> on <a href="https://unsplash.com/photos/a-room-that-has-some-tools-in-it-biRt6RXejuk?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a></figcaption>
-</figure>
+  <div class="about-contents"><div id="hero-heading">
+<section id="diagnostic-psychometrics-with-r" class="level2">
+<h2 data-anchor-id="diagnostic-psychometrics-with-r">Diagnostic psychometrics with R</h2>
+<p>The r-dcm suite is a collection of packages for estimating and evaluating diagnostic classification models in <a href="https://r-project.org"><em>R</em></a> using <a href="https://tidyverse.org">tidyverse</a> principles.</p>
+<p>What do you need to know to start using the r-dcm packages? <a href="./start/index.html"><i class="fa-solid fa-flag-checkered" aria-label="flag-checkered"></i> Get started</a> by learning what you need in four articles, starting with how to specify a model and ending with a beginning-to-end case study.</p>
+</section>
+</div></div>
 </div>
+
+<p><br></p>
+<section id="packages" class="level2">
+<h2 data-anchor-id="packages">Packages</h2>
+<p>Some intro text… <br></p>
+<div id="listing-pkgs" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0">
+<a href="https://measr.r-dcm.org/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-center borderless">
+<p class="card-img-top">
+<img loading="lazy" src="https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/measr.svg" class="thumbnail-image card-img" style="height: 200px;" alt="measr hexagon logo">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+measr
+</h5>
+<div class="card-text listing-description delink">
+<p>Estimate and evaluate DCMs with <em>R</em> and <em>Stan</em>.</p>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="1">
+<a href="https://dcmdata.r-dcm.org/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-center borderless">
+<p class="card-img-top">
+<img loading="lazy" src="https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/dcmdata.svg" class="thumbnail-image card-img" style="height: 200px;" alt="dcmdata hexagon logo">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+dcmdata
+</h5>
+<div class="card-text listing-description delink">
+<p>Example datasets for testing and teaching.</p>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="2">
+<a href="https://dcmstan.r-dcm.org/" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-center borderless">
+<p class="card-img-top">
+<img loading="lazy" src="https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/dcmstan.svg" class="thumbnail-image card-img" style="height: 200px;" alt="dcmstan hexagon logo">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+dcmstan
+</h5>
+<div class="card-text listing-description delink">
+<p>Generate <em>Stan</em> code for customizing your model.</p>
+</div>
+</div>
+</div></a>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
+</section>
+</div>
+
+
 
 
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     
@@ -243,6 +347,11 @@ ul.task-list li input[type="checkbox"] {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {

@@ -25,7 +25,7 @@ jobs:
           extra-repositories: https://stan-dev.r-universe.dev
 
       - name: Install R Dependencies
-        uses: r-lib/actions/setup-revn@v2
+        uses: r-lib/actions/setup-renv@v2
         with:
           cache-version: 1
       

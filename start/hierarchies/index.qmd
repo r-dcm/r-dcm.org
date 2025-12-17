@@ -26,15 +26,12 @@ showtext_opts(dpi = 192)
 
 msr_colors <- c("#8ECAE6", "#023047", "#D7263D")
 
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.width = 7.2916667,
-  fig.align = "center",
-  out.width = "90%"
-)
-
 options(mc.cores = 4, tidyverse.quiet = TRUE)
 ```
 
 ## Introduction
+
+The third article will focus on identifying and estimating attribute relationships.
+We will discuss how to identify when a hierarchy might be present in your data and then how to model that hierarchy using different structural model specifications (e.g., `hdcm()`, `bayes_net()`).
+
+We'll then explore how to compare models with a specified hierarchy to a saturated model to evaluate the impact of the hierarchy on model fit.

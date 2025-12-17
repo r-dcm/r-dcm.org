@@ -26,15 +26,16 @@ showtext_opts(dpi = 192)
 
 msr_colors <- c("#8ECAE6", "#023047", "#D7263D")
 
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.width = 7.2916667,
-  fig.align = "center",
-  out.width = "90%"
-)
-
 options(mc.cores = 4, tidyverse.quiet = TRUE)
 ```
 
 ## Introduction
+
+The first article will focus on how to specify a DCM with measr including:
+
+* Choosing a measurement model
+* Choosing a structural model
+* Choosing prior distributions
+* Combining these choices into a DCM specification using `dcm_specify()`
+
+The article will then describe how to estimate the model with MCMC or an optimizer using either `{rstan}` or `{cmdstanr}` with `dcm_estimate()`.

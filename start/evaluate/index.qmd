@@ -30,3 +30,15 @@ options(mc.cores = 4, tidyverse.quiet = TRUE)
 ```
 
 ## Introduction
+
+The second article will focus on tools for evaluating an estimated DCM model.
+This will include tools for calculating:
+
+* Absolute fit (e.g., `fit_ppmc()`, `fit_m2()`)
+* Relative fit for model comparisons (e.g., `waic()`, `loo()`)
+
+We will showcase tools for investigating potential causes of misfit such as:
+
+* Incorrect Q-matrix specifications (`qmatrix_validation()`)
+* Local item dependence (`yens_q3()`)
+* Item and attribute discrimination (`cdi()`)

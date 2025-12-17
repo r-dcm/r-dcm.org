@@ -49,7 +49,7 @@ The updated vignette includes helpful guidance for installing both the [rstan](h
 Only one of the two is required, but both are supported so you can choose whichever *Stan* front end you prefer.
 
 A new vignette on [model evaluation](https://measr.info/articles/model-evaluation) has been added to demonstrate different methods for assessing the performance of a DCM after it has been estimated.
-This includes the *M<sub>2</sub>* statistic [@liu2016], as well as posterior predictive model checks for evaluating both overall and item-level model fit [@sinharay2007; @thompson2019].
+This includes the *M<sub>2</sub>* statistic [@liu2016], as well as posterior predictive model checks for evaluating both overall and item-level model fit [@sinharay2007; @thompson-bayes].
 To demonstrate how these methods are implemented for measr, a simulated data set is used where we know how well different types of DCMs should fit.
 The existing [model estimation](https://measr.info/articles/model-estimation) vignette was also updated to use this same simulated data set so that we can compare parameter estimates derived from measr to the known parameter values that were used to generate the data.
 

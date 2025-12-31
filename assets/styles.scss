@@ -14,6 +14,11 @@ $theme-code-bg: rgba(233, 236, 239, .3);
 
 // Colors ----------------------------------------------------------------------
 $link-color: $theme-red;
+$link-decoration: none;
+
+$link-shade-percentage: 20%;
+$link-hover-color: shift-color($link-color, $link-shade-percentage);
+$link-hover-decoration: underline;
 
 // Fonts -----------------------------------------------------------------------
 $font-family-serif: 'Playfair Display', serif;
@@ -38,8 +43,10 @@ $footer-fg: $theme-navy;
 
 // General ---------------------------------------------------------------------
 
-a {
-  text-decoration: none;
+.citation {
+  a:hover {
+    text-decoration: underline;
+  }
 }
 
 // Headers ---------------------------------------------------------------------

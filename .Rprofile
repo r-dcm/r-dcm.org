@@ -11,7 +11,10 @@ if (interactive()) {
 
 options(
   dplyr.summarise.inform = FALSE,
-  repos = c("https://cran.rstudio.com/", "https://stan-dev.r-universe.dev"),
+  repos = c(
+    CRAN = "https://cran.rstudio.com/",
+    Stan = "https://stan-dev.r-universe.dev"
+  ),
   scipen = 999,
   pillar.bold = TRUE,
   hrbrthemes.loadfonts = TRUE,

@@ -2,7 +2,7 @@
 title: "dcmstan 0.1.0"
 date: 2025-11-26
 subtitle: ""
-description: "Initial release dcmstan for specifying diagnostic models and generating *Stan* code."
+description: "Initial release of dcmstan for specifying diagnostic models and generating *Stan* code."
 image: "featured.jpg"
 image-alt: "Person taking a test"
 title-block-banner: featured.jpg

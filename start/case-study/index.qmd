@@ -235,8 +235,7 @@ structural_parameters |>
 library(knitr)
 library(glue)
 
-att_base_rate <- ecpe_classes |>
-  left_join(structural_parameters, join_by(class)) |>
+att_base_rate <- structural_parameters |>
   summarize(
     morphosyntactic = rvar_sum(estimate[which(morphosyntactic == 1)]),
     cohesive = rvar_sum(estimate[which(cohesive == 1)]),
@@ -258,8 +257,7 @@ Overall, the model estimates that `r att_summary`.
 ```{r}
 #| label: attribute-base-rate
 
-ecpe_classes |>
-  left_join(structural_parameters, join_by(class)) |>
+structural_parameters |>
   summarize(
     morphosyntactic = rvar_sum(estimate[which(morphosyntactic == 1)]),
     cohesive = rvar_sum(estimate[which(cohesive == 1)]),

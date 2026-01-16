@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
-
+<meta name="generator" content="quarto-1.9.16">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="W. Jake Thompson">
 <meta name="dcterms.date" content="2025-11-26">
-<meta name="description" content="Initial release dcmstan for specifying diagnostic models and generating Stan code.">
-
+<meta name="description" content="Initial release of dcmstan for specifying diagnostic models and generating Stan code.">
 <title>dcmstan 0.1.0 – r-dcm</title>
 <style>
 code{white-space: pre-wrap;}
@@ -80,7 +77,6 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -95,13 +91,12 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-97518418a90fc88b02415e07228183d3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-915771a4037e72452fdf8fc80ceaf70b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-1871c41fb7a6952dd75b1ffe81daf205.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-bdf1f4ac84282833e0a4718e4f93ff7f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -127,41 +122,34 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<style>
+}</script><style>
 
       .quarto-title-block .quarto-title-banner {
         background-image: url(featured.jpg);
 background-size: cover;
       }
 </style>
-<script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
-<style>
+<script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><style>
 .cell-output-stdout code {
   word-break: break-wor !important;
   white-space: pre-wrap !important;
 }
 </style>
-
-
 <meta property="og:title" content="dcmstan 0.1.0">
-<meta property="og:description" content="Initial release dcmstan for specifying diagnostic models and generating Stan code.">
+<meta property="og:description" content="Initial release of dcmstan for specifying diagnostic models and generating Stan code.">
 <meta property="og:image" content="https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/featured.jpg">
 <meta property="og:site_name" content="r-dcm">
 <meta property="og:image:alt" content="Person taking a test">
 <meta name="twitter:title" content="dcmstan 0.1.0">
-<meta name="twitter:description" content="Initial release dcmstan for specifying diagnostic models and generating Stan code.">
+<meta name="twitter:description" content="Initial release of dcmstan for specifying diagnostic models and generating Stan code.">
 <meta name="twitter:image" content="https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/featured.jpg">
 <meta name="twitter:image:alt" content="Person taking a test">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-
 <body class="floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">r-dcm</span>
@@ -173,7 +161,7 @@ background-size: cover;
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../start/index.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
@@ -191,20 +179,16 @@ background-size: cover;
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">dcmstan 0.1.0</h1>
                   <div>
         <div class="description">
-          Initial release dcmstan for specifying diagnostic models and generating <em>Stan</em> code.
+          Initial release of dcmstan for specifying diagnostic models and generating <em>Stan</em> code.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -254,138 +238,124 @@ background-size: cover;
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#dcm-specification" id="toc-dcm-specification" class="nav-link active" data-scroll-target="#dcm-specification">DCM specification</a></li>
+<li><a href="#dcm-specification" id="toc-dcm-specification" class="nav-link active" data-scroll-target="#dcm-specification">DCM specification</a></li>
   <li><a href="#stan-code-and-data" id="toc-stan-code-and-data" class="nav-link" data-scroll-target="#stan-code-and-data"><em>Stan</em> code and data</a></li>
   <li><a href="#dcmstan-measr" id="toc-dcmstan-measr" class="nav-link" data-scroll-target="#dcmstan-measr">dcmstan + measr</a></li>
   
-  </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<p>We are very pleased to announce the release of a new package, <a href="https://dcmstan.r-dcm.org">dcmstan</a>. The goal of dcmstan is to provide users with a friendly interface for creating <a href="https://mc-stan.org"><em>Stan</em></a> scripts necessary for estimating diagnostic classification models (DCMs; also called cognitive diagnostic models [CDMs]). dcmstan is primarily intended to serve as a backend for <code>{measr}</code>, which will interface with <code>{rstan}</code> or <code>{cmdstanr}</code> to actually estimate a DCM. However, dcmstan can also be used independently if you want finer control of the estimation process or would like to customize the <em>Stan</em> script used for estimation.</p>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><p>We are very pleased to announce the release of a new package, <a href="https://dcmstan.r-dcm.org">dcmstan</a>. The goal of dcmstan is to provide users with a friendly interface for creating <a href="https://mc-stan.org"><em>Stan</em></a> scripts necessary for estimating diagnostic classification models (DCMs; also called cognitive diagnostic models [CDMs]). dcmstan is primarily intended to serve as a backend for <a href="https://measr.r-dcm.org">measr</a>, which will interface with <a href="https://mc-stan.org/rstan/">rstan</a> or <a href="https://mc-stan.org/cmdstanr/">cmdstanr</a> to actually estimate a DCM. However, dcmstan can also be used independently if you want finer control of the estimation process or would like to customize the <em>Stan</em> script used for estimation.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="dcmstan.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+<figure class="figure"><p><img src="dcmstan.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>You can install dcmstan from CRAN with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dcmstan"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"dcmstan"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This blog post will highlight the major features and describe how dcmstan fits into the larger universe of r-dcm packages.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dcmstan)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: package 'dcmstan' was built under R version 4.5.2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dcmstan.r-dcm.org">dcmstan</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="dcm-specification" class="level2">
-<h2 class="anchored" data-anchor-id="dcm-specification">DCM specification</h2>
-<p>For this example, we’ll create a specification for a DCM that we want to fit to ECPE data, which is available in the <code>{dcmdata}</code> package.</p>
+<section id="dcm-specification" class="level2"><h2 class="anchored" data-anchor-id="dcm-specification">DCM specification</h2>
+<p>For this example, we’ll create a specification for a DCM that we want to fit to ECPE data, which is available in the <a href="https://dcmdata.r-dcm.org">dcmdata</a> package.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dcmdata)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ecpe_qmatrix</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 28 × 4</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    item_id morphosyntactic cohesive lexical</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 E1                    1        1       0</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 E2                    0        1       0</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 E3                    1        0       1</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 E4                    0        0       1</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 E5                    0        0       1</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 E6                    0        0       1</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 E7                    1        0       1</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 E8                    0        1       0</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 E9                    0        0       1</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 E10                   1        0       0</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 18 more rows</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>ecpe_data</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2,922 × 29</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    resp_id    E1    E2    E3    E4    E5    E6    E7    E8    E9   E10   E11</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       1     1     1     1     0     1     1     1     1     1     1     1</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       2     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       3     1     1     1     1     1     1     0     1     1     1     1</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       4     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       5     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       6     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       7     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       8     0     1     1     1     1     1     0     1     1     1     0</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       9     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10      10     1     1     1     1     0     0     1     1     1     1     1</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2,912 more rows</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 17 more variables: E12 &lt;int&gt;, E13 &lt;int&gt;, E14 &lt;int&gt;, E15 &lt;int&gt;, E16 &lt;int&gt;,</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   E17 &lt;int&gt;, E18 &lt;int&gt;, E19 &lt;int&gt;, E20 &lt;int&gt;, E21 &lt;int&gt;, E22 &lt;int&gt;,</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   E23 &lt;int&gt;, E24 &lt;int&gt;, E25 &lt;int&gt;, E26 &lt;int&gt;, E27 &lt;int&gt;, E28 &lt;int&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dcmdata.r-dcm.org">dcmdata</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ecpe_qmatrix</span></span>
+<span><span class="co">#&gt; # A tibble: 28 × 4</span></span>
+<span><span class="co">#&gt;    item_id morphosyntactic cohesive lexical</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 E1                    1        1       0</span></span>
+<span><span class="co">#&gt;  2 E2                    0        1       0</span></span>
+<span><span class="co">#&gt;  3 E3                    1        0       1</span></span>
+<span><span class="co">#&gt;  4 E4                    0        0       1</span></span>
+<span><span class="co">#&gt;  5 E5                    0        0       1</span></span>
+<span><span class="co">#&gt;  6 E6                    0        0       1</span></span>
+<span><span class="co">#&gt;  7 E7                    1        0       1</span></span>
+<span><span class="co">#&gt;  8 E8                    0        1       0</span></span>
+<span><span class="co">#&gt;  9 E9                    0        0       1</span></span>
+<span><span class="co">#&gt; 10 E10                   1        0       0</span></span>
+<span><span class="co">#&gt; # ℹ 18 more rows</span></span>
+<span></span>
+<span><span class="va">ecpe_data</span></span>
+<span><span class="co">#&gt; # A tibble: 2,922 × 29</span></span>
+<span><span class="co">#&gt;    resp_id    E1    E2    E3    E4    E5    E6    E7    E8    E9   E10   E11</span></span>
+<span><span class="co">#&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1       1     1     1     1     0     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  2       2     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  3       3     1     1     1     1     1     1     0     1     1     1     1</span></span>
+<span><span class="co">#&gt;  4       4     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  5       5     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  6       6     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  7       7     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  8       8     0     1     1     1     1     1     0     1     1     1     0</span></span>
+<span><span class="co">#&gt;  9       9     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt; 10      10     1     1     1     1     0     0     1     1     1     1     1</span></span>
+<span><span class="co">#&gt; # ℹ 2,912 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 17 more variables: E12 &lt;int&gt;, E13 &lt;int&gt;, E14 &lt;int&gt;, E15 &lt;int&gt;, E16 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   E17 &lt;int&gt;, E18 &lt;int&gt;, E19 &lt;int&gt;, E20 &lt;int&gt;, E21 &lt;int&gt;, E22 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   E23 &lt;int&gt;, E24 &lt;int&gt;, E25 &lt;int&gt;, E26 &lt;int&gt;, E27 &lt;int&gt;, E28 &lt;int&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We can create a DCM specification using <code>dcm_specify()</code>. We must provide our Q-matrix and, if present, the name of the Q-matrix column that contains the item identifiers. We then must choose a measurement and structural model to be used. By default, <code>dcm_specify()</code> will fit a loglinear cognitive diagnostic model <span class="citation" data-cites="lcdm lcdm-handbook">(LCDM; <a href="#ref-lcdm" role="doc-biblioref">Henson et al., 2009</a>; <a href="#ref-lcdm-handbook" role="doc-biblioref">Henson &amp; Templin, 2019</a>)</span> with an unconstrained structural model. These are the measurement models used by <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span> in their examination of the ECPE data, so we will echo those choices here. However, there are many other measurement and structural models we could choose from. For details on the specification options, see <code>vignette("dcmstan", package = "dcmstan")</code>.</p>
+<p>We can create a DCM specification using <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code>. We must provide our Q-matrix and, if present, the name of the Q-matrix column that contains the item identifiers. We then must choose a measurement and structural model to be used. By default, <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code> will fit a loglinear cognitive diagnostic model <span class="citation" data-cites="lcdm lcdm-handbook">(LCDM; <a href="#ref-lcdm" role="doc-biblioref">Henson et al., 2009</a>; <a href="#ref-lcdm-handbook" role="doc-biblioref">Henson &amp; Templin, 2019</a>)</span> with an unconstrained structural model. These are the measurement models used by <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span> in their examination of the ECPE data, so we will echo those choices here. However, there are many other measurement and structural models we could choose from. For details on the specification options, see <code><a href="https://dcmstan.r-dcm.org/articles/dcmstan.html">vignette("dcmstan", package = "dcmstan")</a></code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ecpe_spec <span class="ot">&lt;-</span> <span class="fu">dcm_specify</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">qmatrix =</span> ecpe_qmatrix,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">identifier =</span> <span class="st">"item_id"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">measurement_model =</span> <span class="fu">lcdm</span>(),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">structural_model =</span> <span class="fu">unconstrained</span>()</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>ecpe_spec</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes with 28</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; items.</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Attributes:</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; • "morphosyntactic" (13 items)</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; • "cohesive" (6 items)</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; • "lexical" (18 items)</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Attribute structure:</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Unconstrained</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Prior distributions:</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   intercept ~ normal(0, 2)</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   maineffect ~ lognormal(0, 1)</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   interaction ~ normal(0, 2)</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   `Vc` ~ dirichlet(1, 1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ecpe_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
+<span>  qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"item_id"</span>,</span>
+<span>  measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">unconstrained</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ecpe_spec</span></span>
+<span><span class="co">#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes with 28</span></span>
+<span><span class="co">#&gt; items.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Attributes:</span></span>
+<span><span class="co">#&gt; • "morphosyntactic" (13 items)</span></span>
+<span><span class="co">#&gt; • "cohesive" (6 items)</span></span>
+<span><span class="co">#&gt; • "lexical" (18 items)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Attribute structure:</span></span>
+<span><span class="co">#&gt;   Unconstrained</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Prior distributions:</span></span>
+<span><span class="co">#&gt;   intercept ~ normal(0, 2)</span></span>
+<span><span class="co">#&gt;   maineffect ~ lognormal(0, 1)</span></span>
+<span><span class="co">#&gt;   interaction ~ normal(0, 2)</span></span>
+<span><span class="co">#&gt;   `Vc` ~ dirichlet(1, 1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We can also specify prior distributions for the model. Reasonable priors are defined by default, but custom priors can be specified for specific parameters or an entire type of parameters (e.g., applies to all intercept parameters). For a list of possible parameters for given specification, see <code>get_parameters()</code>.</p>
+<p>We can also specify prior distributions for the model. Reasonable priors are defined by default, but custom priors can be specified for specific parameters or an entire type of parameters (e.g., applies to all intercept parameters). For a list of possible parameters for given specification, see <code><a href="https://dcmstan.r-dcm.org/reference/get_parameters.html">get_parameters()</a></code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_parameters</span>(ecpe_spec)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 75 × 4</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    item_id type        attributes                coefficient</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;                     &lt;chr&gt;      </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 E1      intercept   &lt;NA&gt;                      l1_0       </span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 E1      maineffect  morphosyntactic           l1_11      </span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 E1      maineffect  cohesive                  l1_12      </span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 E1      interaction morphosyntactic__cohesive l1_212     </span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 E2      intercept   &lt;NA&gt;                      l2_0       </span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 E2      maineffect  cohesive                  l2_12      </span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 E3      intercept   &lt;NA&gt;                      l3_0       </span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 E3      maineffect  morphosyntactic           l3_11      </span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 E3      maineffect  lexical                   l3_13      </span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 E3      interaction morphosyntactic__lexical  l3_213     </span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 65 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="va">ecpe_spec</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 75 × 4</span></span>
+<span><span class="co">#&gt;    item_id type        attributes                coefficient</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;                     &lt;chr&gt;      </span></span>
+<span><span class="co">#&gt;  1 E1      intercept   &lt;NA&gt;                      l1_0       </span></span>
+<span><span class="co">#&gt;  2 E1      maineffect  morphosyntactic           l1_11      </span></span>
+<span><span class="co">#&gt;  3 E1      maineffect  cohesive                  l1_12      </span></span>
+<span><span class="co">#&gt;  4 E1      interaction morphosyntactic__cohesive l1_212     </span></span>
+<span><span class="co">#&gt;  5 E2      intercept   &lt;NA&gt;                      l2_0       </span></span>
+<span><span class="co">#&gt;  6 E2      maineffect  cohesive                  l2_12      </span></span>
+<span><span class="co">#&gt;  7 E3      intercept   &lt;NA&gt;                      l3_0       </span></span>
+<span><span class="co">#&gt;  8 E3      maineffect  morphosyntactic           l3_11      </span></span>
+<span><span class="co">#&gt;  9 E3      maineffect  lexical                   l3_13      </span></span>
+<span><span class="co">#&gt; 10 E3      interaction morphosyntactic__lexical  l3_213     </span></span>
+<span><span class="co">#&gt; # ℹ 65 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="stan-code-and-data" class="level2">
-<h2 class="anchored" data-anchor-id="stan-code-and-data"><em>Stan</em> code and data</h2>
-<p>Once we have our specification, we can create the <em>Stan</em> code for estimating the model with <code>stan_code()</code>. This code can either be passed directly to the <code>model_code</code> argument of <code>rstan::stan()</code>, or written to a <code>.stan</code> file, which can then be passed to the <code>file</code> argument of <code>rstan::stan()</code> or the <code>stan_file</code> argument of <code>cmdstanr::cmdstan_model()</code>.</p>
+</section><section id="stan-code-and-data" class="level2"><h2 class="anchored" data-anchor-id="stan-code-and-data">
+<em>Stan</em> code and data</h2>
+<p>Once we have our specification, we can create the <em>Stan</em> code for estimating the model with <code><a href="https://dcmstan.r-dcm.org/reference/stan_code.html">stan_code()</a></code>. This code can either be passed directly to the <code>model_code</code> argument of <code><a href="https://mc-stan.org/rstan/reference/stan.html">rstan::stan()</a></code>, or written to a <code>.stan</code> file, which can then be passed to the <code>file</code> argument of <code><a href="https://mc-stan.org/rstan/reference/stan.html">rstan::stan()</a></code> or the <code>stan_file</code> argument of <code><a href="https://mc-stan.org/cmdstanr/reference/cmdstan_model.html">cmdstanr::cmdstan_model()</a></code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stan_code</span>(ecpe_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/stan_code.html">stan_code</a></span><span class="op">(</span><span class="va">ecpe_spec</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre class="scroll-output"><code>#&gt; data {
 #&gt;   int&lt;lower=1&gt; I;                      // number of items
@@ -806,48 +776,42 @@ background-size: cover;
 #&gt; }</code></pre>
 </div>
 </div>
-<p>Both rstan and cmdstanr also require a list of data objects that correspond to the <code>data</code> block of the <em>Stan</em> code. This can be created with <code>stan_data()</code>. Note that if you edit the generated <em>Stan</em> code to customize the estimation and add to the <code>data</code> block, you will need to also add corresponding objects to the data list before estimation.</p>
+<p>Both rstan and cmdstanr also require a list of data objects that correspond to the <code>data</code> block of the <em>Stan</em> code. This can be created with <code><a href="https://dcmstan.r-dcm.org/reference/stan_data.html">stan_data()</a></code>. Note that if you edit the generated <em>Stan</em> code to customize the estimation and add to the <code>data</code> block, you will need to also add corresponding objects to the data list before estimation.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">stan_data</span>(ecpe_spec, <span class="at">data =</span> ecpe_data, <span class="at">identifier =</span> <span class="st">"resp_id"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 9</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ I    : int 28</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ R    : int 2922</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ N    : int 81816</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ C    : int 8</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ ii   : num [1:81816] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ rr   : num [1:81816] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ y    : int [1:81816] 1 1 1 0 1 1 1 1 1 1 ...</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ start: int [1:2922] 1 29 57 85 113 141 169 197 225 253 ...</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ num  : int [1:2922] 28 28 28 28 28 28 28 28 28 28 ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/stan_data.html">stan_data</a></span><span class="op">(</span><span class="va">ecpe_spec</span>, data <span class="op">=</span> <span class="va">ecpe_data</span>, identifier <span class="op">=</span> <span class="st">"resp_id"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 9</span></span>
+<span><span class="co">#&gt;  $ I    : int 28</span></span>
+<span><span class="co">#&gt;  $ R    : int 2922</span></span>
+<span><span class="co">#&gt;  $ N    : int 81816</span></span>
+<span><span class="co">#&gt;  $ C    : int 8</span></span>
+<span><span class="co">#&gt;  $ ii   : num [1:81816] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span><span class="co">#&gt;  $ rr   : num [1:81816] 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">#&gt;  $ y    : int [1:81816] 1 1 1 0 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">#&gt;  $ start: int [1:2922] 1 29 57 85 113 141 169 197 225 253 ...</span></span>
+<span><span class="co">#&gt;  $ num  : int [1:2922] 28 28 28 28 28 28 28 28 28 28 ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="dcmstan-measr" class="level2">
-<h2 class="anchored" data-anchor-id="dcmstan-measr">dcmstan + measr</h2>
-<p>dcmstan is primarily intended to be a backend to <code>{measr}</code>. Many dcmstan functions are reexported by measr so that if you are using measr to estimate your model, you should not need to directly load or interact with dcmstan. For example, <code>dcm_specify()</code> is reexported by measr, so one can simply create a model specification and pass that directly to <code>measr::dcm_estimate()</code>.</p>
+</section><section id="dcmstan-measr" class="level2"><h2 class="anchored" data-anchor-id="dcmstan-measr">dcmstan + measr</h2>
+<p>dcmstan is primarily intended to be a backend to <a href="https://measr.r-dcm.org">measr</a>. Many dcmstan functions are reexported by measr so that if you are using measr to estimate your model, you should not need to directly load or interact with dcmstan. For example, <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code> is reexported by measr, so one can simply create a model specification and pass that directly to <code><a href="https://measr.info/reference/dcm_estimate.html">measr::dcm_estimate()</a></code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(measr)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ecpe_spec <span class="ot">&lt;-</span> <span class="fu">dcm_specify</span>(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">qmatrix =</span> ecpe_qmatrix,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">identifier =</span> <span class="st">"item_id"</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">measurement_model =</span> <span class="fu">lcdm</span>(),</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">structural_model =</span> <span class="fu">unconstrained</span>()</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">dcm_estimate</span>(</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">dcm_spec =</span> ecpe_spec,</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ecpe_data,</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">identifier =</span> <span class="st">"resp_id"</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://measr.r-dcm.org">measr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ecpe_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
+<span>  qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"item_id"</span>,</span>
+<span>  measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">unconstrained</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.info/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
+<span>  dcm_spec <span class="op">=</span> <span class="va">ecpe_spec</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">ecpe_data</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"resp_id"</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>measr::dcm_estimate()</code> calls <code>stan_code()</code> and <code>stan_data()</code> internally to create the necessary <em>Stan</em> script and data list and then estimates the model using your chosen backend (i.e., rstan or cmdstanr). Thus, a direct interface with dcmstan should only be necessary if you want to modify the <em>Stan</em> code that is generated by default.</p>
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
-
+<p><code><a href="https://measr.info/reference/dcm_estimate.html">measr::dcm_estimate()</a></code> calls <code><a href="https://dcmstan.r-dcm.org/reference/stan_code.html">stan_code()</a></code> and <code><a href="https://dcmstan.r-dcm.org/reference/stan_data.html">stan_data()</a></code> internally to create the necessary <em>Stan</em> script and data list and then estimates the model using your chosen backend (i.e., rstan or cmdstanr). Thus, a direct interface with dcmstan should only be necessary if you want to modify the <em>Stan</em> code that is generated by default.</p>
+</section><div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
 <p>The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546">R305D210045</a> and <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075">R305D240032</a> to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the the Institute or the U.S. Department of Education.</p>
 <p>Featured photo by <a href="https://unsplash.com/@andreas_haslinger?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Andreas Haslinger</a> on <a href="https://unsplash.com/photos/a-close-up-of-a-white-wall-with-a-black-frame-ywikyd-_DJs?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
 
@@ -873,8 +837,7 @@ Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2025" class="csl-entry quarto-appendix-citeas" role="listitem">
 Thompson, W. J. (2025, November 26). <em>dcmstan 0.1.0</em>. <a href="https://doi.org/10.59350/1kz71-zdj91">https://doi.org/10.59350/1kz71-zdj91</a>
-</div></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -1275,8 +1238,7 @@ Thompson, W. J. (2025, November 26). <em>dcmstan 0.1.0</em>. <a href="https://do
   });
   </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
 <p><span class="faux-block"><a href="../../funding.html">Supported by IES and ATLAS.</a></span> <span class="faux-block">All content licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></p>
 </div>   
@@ -1288,8 +1250,6 @@ Thompson, W. J. (2025, November 26). <em>dcmstan 0.1.0</em>. <a href="https://do
 </div>
   </div>
 </footer>
-
-
 
 
 </body></html>

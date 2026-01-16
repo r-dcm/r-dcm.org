@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
-
+<meta name="generator" content="quarto-1.9.16">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="W. Jake Thompson">
 <meta name="dcterms.date" content="2025-08-21">
 <meta name="description" content="Initial release dcmdata for accessing data from diagnostic assessments.">
-
 <title>dcmdata 0.1.0 – r-dcm</title>
 <style>
 code{white-space: pre-wrap;}
@@ -80,7 +77,6 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -95,13 +91,12 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-97518418a90fc88b02415e07228183d3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-915771a4037e72452fdf8fc80ceaf70b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-1871c41fb7a6952dd75b1ffe81daf205.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-bdf1f4ac84282833e0a4718e4f93ff7f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -127,23 +122,19 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<style>
+}</script><style>
 
       .quarto-title-block .quarto-title-banner {
         background-image: url(featured.jpg);
 background-size: cover;
       }
 </style>
-<script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
-<style>
+<script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><style>
 .cell-output-stdout code {
   word-break: break-wor !important;
   white-space: pre-wrap !important;
 }
 </style>
-
-
 <meta property="og:title" content="dcmdata 0.1.0">
 <meta property="og:description" content="Initial release dcmdata for accessing data from diagnostic assessments.">
 <meta property="og:image" content="https://r-dcm.org/blog/2025-08-dcmdata-0.1.0/featured.jpg">
@@ -155,13 +146,10 @@ background-size: cover;
 <meta name="twitter:image:alt" content="Person taking a test">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-
 <body class="floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">r-dcm</span>
@@ -173,7 +161,7 @@ background-size: cover;
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../start/index.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
@@ -191,15 +179,11 @@ background-size: cover;
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">dcmdata 0.1.0</h1>
                   <div>
@@ -254,213 +238,196 @@ background-size: cover;
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#data-sets" id="toc-data-sets" class="nav-link active" data-scroll-target="#data-sets">Data sets</a></li>
+<li><a href="#data-sets" id="toc-data-sets" class="nav-link active" data-scroll-target="#data-sets">Data sets</a></li>
   <li><a href="#future-work" id="toc-future-work" class="nav-link" data-scroll-target="#future-work">Future work</a></li>
   
-  </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<p>We are so happy to announce the release of a new package, <a href="https://dcmdata.r-dcm.org">dcmdata</a>. The goal of dcmdata is to provide easy access to data sets that can be used for demonstrating and testing diagnostic classification models (DCM; also called cognitive diagnostic models [CDMs]).</p>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><p>We are so happy to announce the release of a new package, <a href="https://dcmdata.r-dcm.org">dcmdata</a>. The goal of dcmdata is to provide easy access to data sets that can be used for demonstrating and testing diagnostic classification models (DCM; also called cognitive diagnostic models [CDMs]).</p>
 <p>You can install dcmdata from CRAN with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dcmdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"dcmdata"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This blog post will highlight the major features and plans for future development.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dcmdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dcmdata.r-dcm.org">dcmdata</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="data-sets" class="level2">
-<h2 class="anchored" data-anchor-id="data-sets">Data sets</h2>
+<section id="data-sets" class="level2"><h2 class="anchored" data-anchor-id="data-sets">Data sets</h2>
 <p>dcmdata contains both real and simulated data sets. All data sets include both response data and a Q-matrix. The real data sets include the MacReady and Dayton <span class="citation" data-cites="mdm">(<a href="#ref-mdm" role="doc-biblioref">1977</a>)</span> multiplication data (MDM) and the Examination for the certificate of proficiency in English (ECPE), as described by <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span>.</p>
 <p>The MDM data are a small data set of four items that measure a single attribute, multiplication. As such, this data is useful for use cases where you are interested in a fairly short estimation time. For example, this data could be used to quickly interate while testing model code, or in training workshops where time is limited.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mdm_data</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 142 × 5</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    respondent  mdm1  mdm2  mdm3  mdm4</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 m8qre          1     1     1     1</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 8wMPc          1     1     1     1</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 xdbT8          1     1     1     1</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 Ee9ob          1     1     1     1</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 0tyTA          1     1     1     1</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 L4bzq          1     1     1     1</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 QTW1v          1     1     1     1</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 w4NOH          1     1     1     1</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 t9sIe          1     1     1     1</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 FDa7I          1     1     1     1</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 132 more rows</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>mdm_qmatrix</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   item  multiplication</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;int&gt;</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 mdm1               1</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 mdm2               1</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 mdm3               1</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 mdm4               1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mdm_data</span></span>
+<span><span class="co">#&gt; # A tibble: 142 × 5</span></span>
+<span><span class="co">#&gt;    respondent  mdm1  mdm2  mdm3  mdm4</span></span>
+<span><span class="co">#&gt;    &lt;fct&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 m8qre          1     1     1     1</span></span>
+<span><span class="co">#&gt;  2 8wMPc          1     1     1     1</span></span>
+<span><span class="co">#&gt;  3 xdbT8          1     1     1     1</span></span>
+<span><span class="co">#&gt;  4 Ee9ob          1     1     1     1</span></span>
+<span><span class="co">#&gt;  5 0tyTA          1     1     1     1</span></span>
+<span><span class="co">#&gt;  6 L4bzq          1     1     1     1</span></span>
+<span><span class="co">#&gt;  7 QTW1v          1     1     1     1</span></span>
+<span><span class="co">#&gt;  8 w4NOH          1     1     1     1</span></span>
+<span><span class="co">#&gt;  9 t9sIe          1     1     1     1</span></span>
+<span><span class="co">#&gt; 10 FDa7I          1     1     1     1</span></span>
+<span><span class="co">#&gt; # ℹ 132 more rows</span></span>
+<span></span>
+<span><span class="va">mdm_qmatrix</span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
+<span><span class="co">#&gt;   item  multiplication</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;          &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 mdm1               1</span></span>
+<span><span class="co">#&gt; 2 mdm2               1</span></span>
+<span><span class="co">#&gt; 3 mdm3               1</span></span>
+<span><span class="co">#&gt; 4 mdm4               1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In contrast, the ECPE data are perhaps a more representative of data you might gather in practice. These data consist of 28 items measuring 3 attributes and taken by 2,922 respondents. Because multiple attributes are measured, this data can be used to demonstrate how different attributes interact on a single item when using different compensatory and noncompensatory DCMs. Additionally, <span class="citation" data-cites="hdcm">Templin &amp; Bradshaw (<a href="#ref-hdcm" role="doc-biblioref">2014</a>)</span> demonstrated that the three attributes follow a linear hierarchy, such that respondents are typically demonstrate proficiency on lexical, cohesive, and morphosyntactic rules, in that order. That is, the earlier skills represent precursor knowledge necessary for proficiency on the later skills. The hierarchy makes the ECPE data excellent for demonstrating the effect of different structural model specifications in a DCM.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ecpe_data</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2,922 × 29</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    resp_id    E1    E2    E3    E4    E5    E6    E7    E8    E9   E10   E11</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1       1     1     1     1     0     1     1     1     1     1     1     1</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2       2     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3       3     1     1     1     1     1     1     0     1     1     1     1</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4       4     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5       5     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6       6     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7       7     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8       8     0     1     1     1     1     1     0     1     1     1     0</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9       9     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10      10     1     1     1     1     0     0     1     1     1     1     1</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2,912 more rows</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 17 more variables: E12 &lt;int&gt;, E13 &lt;int&gt;, E14 &lt;int&gt;, E15 &lt;int&gt;, E16 &lt;int&gt;,</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   E17 &lt;int&gt;, E18 &lt;int&gt;, E19 &lt;int&gt;, E20 &lt;int&gt;, E21 &lt;int&gt;, E22 &lt;int&gt;,</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   E23 &lt;int&gt;, E24 &lt;int&gt;, E25 &lt;int&gt;, E26 &lt;int&gt;, E27 &lt;int&gt;, E28 &lt;int&gt;</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>ecpe_qmatrix</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 28 × 4</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    item_id morphosyntactic cohesive lexical</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 E1                    1        1       0</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 E2                    0        1       0</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 E3                    1        0       1</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 E4                    0        0       1</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 E5                    0        0       1</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 E6                    0        0       1</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 E7                    1        0       1</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 E8                    0        1       0</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 E9                    0        0       1</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 E10                   1        0       0</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 18 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ecpe_data</span></span>
+<span><span class="co">#&gt; # A tibble: 2,922 × 29</span></span>
+<span><span class="co">#&gt;    resp_id    E1    E2    E3    E4    E5    E6    E7    E8    E9   E10   E11</span></span>
+<span><span class="co">#&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1       1     1     1     1     0     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  2       2     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  3       3     1     1     1     1     1     1     0     1     1     1     1</span></span>
+<span><span class="co">#&gt;  4       4     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  5       5     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  6       6     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  7       7     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  8       8     0     1     1     1     1     1     0     1     1     1     0</span></span>
+<span><span class="co">#&gt;  9       9     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt; 10      10     1     1     1     1     0     0     1     1     1     1     1</span></span>
+<span><span class="co">#&gt; # ℹ 2,912 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 17 more variables: E12 &lt;int&gt;, E13 &lt;int&gt;, E14 &lt;int&gt;, E15 &lt;int&gt;, E16 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   E17 &lt;int&gt;, E18 &lt;int&gt;, E19 &lt;int&gt;, E20 &lt;int&gt;, E21 &lt;int&gt;, E22 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   E23 &lt;int&gt;, E24 &lt;int&gt;, E25 &lt;int&gt;, E26 &lt;int&gt;, E27 &lt;int&gt;, E28 &lt;int&gt;</span></span>
+<span></span>
+<span><span class="va">ecpe_qmatrix</span></span>
+<span><span class="co">#&gt; # A tibble: 28 × 4</span></span>
+<span><span class="co">#&gt;    item_id morphosyntactic cohesive lexical</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 E1                    1        1       0</span></span>
+<span><span class="co">#&gt;  2 E2                    0        1       0</span></span>
+<span><span class="co">#&gt;  3 E3                    1        0       1</span></span>
+<span><span class="co">#&gt;  4 E4                    0        0       1</span></span>
+<span><span class="co">#&gt;  5 E5                    0        0       1</span></span>
+<span><span class="co">#&gt;  6 E6                    0        0       1</span></span>
+<span><span class="co">#&gt;  7 E7                    1        0       1</span></span>
+<span><span class="co">#&gt;  8 E8                    0        1       0</span></span>
+<span><span class="co">#&gt;  9 E9                    0        0       1</span></span>
+<span><span class="co">#&gt; 10 E10                   1        0       0</span></span>
+<span><span class="co">#&gt; # ℹ 18 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finally, one simulated data set is included. This data set is based on the diagnosing teachers’ multiplicative reasoning (DTMR) data presented by <span class="citation" data-cites="dtmr">Bradshaw et al. (<a href="#ref-dtmr" role="doc-biblioref">2014</a>)</span>, and consists of 990 responses to 27 items that collectively measure 4 attributes. Consistent with the results presented by <span class="citation" data-cites="dtmr">Bradshaw et al. (<a href="#ref-dtmr" role="doc-biblioref">2014</a>)</span>, the data was generated using the loglinear cognitive diagnostic model <span class="citation" data-cites="lcdm lcdm-handbook">(LCDM; <a href="#ref-lcdm" role="doc-biblioref">Henson et al., 2009</a>; <a href="#ref-lcdm-handbook" role="doc-biblioref">Henson &amp; Templin, 2019</a>)</span>, and item and attribute names are included as reported in their Table 1.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dtmr_data</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 990 × 28</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    id      `1`   `2`   `3`   `4`   `5`   `6`   `7`  `8a`  `8b`  `8c`  `8d`   `9`</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 0008…     1     1     0     1     0     0     1     1     0     1     1     0</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 0009…     0     1     0     0     0     0     0     1     1     1     0     1</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 0024…     0     1     0     0     0     0     1     1     1     1     0     0</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 0031…     0     1     0     0     1     0     1     1     1     0     0     0</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 0061…     0     1     1     0     0     0     0     0     0     1     0     0</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 0087…     0     1     1     1     0     0     0     1     1     1     1     0</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 0092…     0     1     1     1     1     0     0     1     1     1     0     0</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 0097…     0     0     0     1     0     0     0     1     0     1     0     0</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 0111…     0     1     1     0     0     0     0     1     0     1     1     0</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 0121…     0     1     0     0     0     0     0     1     1     1     1     0</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 980 more rows</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 15 more variables: `10a` &lt;int&gt;, `10b` &lt;int&gt;, `10c` &lt;int&gt;, `11` &lt;int&gt;,</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   `12` &lt;int&gt;, `13` &lt;int&gt;, `14` &lt;int&gt;, `15a` &lt;int&gt;, `15b` &lt;int&gt;, `15c` &lt;int&gt;,</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   `16` &lt;int&gt;, `17` &lt;int&gt;, `18` &lt;int&gt;, `21` &lt;int&gt;, `22` &lt;int&gt;</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>dtmr_qmatrix</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 27 × 5</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    item  referent_units partitioning_iterating appropriateness</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;          &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 1                  1                      0               0</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2                  0                      0               1</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 3                  0                      1               0</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 4                  1                      0               0</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 5                  1                      0               0</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 6                  0                      1               0</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 7                  1                      0               0</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 8a                 0                      0               1</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 8b                 0                      0               1</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 8c                 0                      0               1</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 17 more rows</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: multiplicative_comparison &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtmr_data</span></span>
+<span><span class="co">#&gt; # A tibble: 990 × 28</span></span>
+<span><span class="co">#&gt;    id      `1`   `2`   `3`   `4`   `5`   `6`   `7`  `8a`  `8b`  `8c`  `8d`   `9`</span></span>
+<span><span class="co">#&gt;    &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 0008…     1     1     0     1     0     0     1     1     0     1     1     0</span></span>
+<span><span class="co">#&gt;  2 0009…     0     1     0     0     0     0     0     1     1     1     0     1</span></span>
+<span><span class="co">#&gt;  3 0024…     0     1     0     0     0     0     1     1     1     1     0     0</span></span>
+<span><span class="co">#&gt;  4 0031…     0     1     0     0     1     0     1     1     1     0     0     0</span></span>
+<span><span class="co">#&gt;  5 0061…     0     1     1     0     0     0     0     0     0     1     0     0</span></span>
+<span><span class="co">#&gt;  6 0087…     0     1     1     1     0     0     0     1     1     1     1     0</span></span>
+<span><span class="co">#&gt;  7 0092…     0     1     1     1     1     0     0     1     1     1     0     0</span></span>
+<span><span class="co">#&gt;  8 0097…     0     0     0     1     0     0     0     1     0     1     0     0</span></span>
+<span><span class="co">#&gt;  9 0111…     0     1     1     0     0     0     0     1     0     1     1     0</span></span>
+<span><span class="co">#&gt; 10 0121…     0     1     0     0     0     0     0     1     1     1     1     0</span></span>
+<span><span class="co">#&gt; # ℹ 980 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 15 more variables: `10a` &lt;int&gt;, `10b` &lt;int&gt;, `10c` &lt;int&gt;, `11` &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   `12` &lt;int&gt;, `13` &lt;int&gt;, `14` &lt;int&gt;, `15a` &lt;int&gt;, `15b` &lt;int&gt;, `15c` &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   `16` &lt;int&gt;, `17` &lt;int&gt;, `18` &lt;int&gt;, `21` &lt;int&gt;, `22` &lt;int&gt;</span></span>
+<span></span>
+<span><span class="va">dtmr_qmatrix</span></span>
+<span><span class="co">#&gt; # A tibble: 27 × 5</span></span>
+<span><span class="co">#&gt;    item  referent_units partitioning_iterating appropriateness</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;          &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 1                  1                      0               0</span></span>
+<span><span class="co">#&gt;  2 2                  0                      0               1</span></span>
+<span><span class="co">#&gt;  3 3                  0                      1               0</span></span>
+<span><span class="co">#&gt;  4 4                  1                      0               0</span></span>
+<span><span class="co">#&gt;  5 5                  1                      0               0</span></span>
+<span><span class="co">#&gt;  6 6                  0                      1               0</span></span>
+<span><span class="co">#&gt;  7 7                  1                      0               0</span></span>
+<span><span class="co">#&gt;  8 8a                 0                      0               1</span></span>
+<span><span class="co">#&gt;  9 8b                 0                      0               1</span></span>
+<span><span class="co">#&gt; 10 8c                 0                      0               1</span></span>
+<span><span class="co">#&gt; # ℹ 17 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 1 more variable: multiplicative_comparison &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Because the data is simulated we have access to the “true” values for respondents and items. The class probabilities of respondents belonging to a given proficiency pattern are reported in <span class="citation" data-cites="dtmr-strc">Izsák et al. (<a href="#ref-dtmr-strc" role="doc-biblioref">2019</a>)</span>. Using these probabilities, we generated a class for each of the 990 respondents, which is available in <code>dtmr_true_profiles</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dtmr_true_structural</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 16 × 5</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    referent_units partitioning_iterating appropriateness multiplicative_compar…¹</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;                   &lt;dbl&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1              0                      0               0                       0</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2              1                      0               0                       0</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3              0                      1               0                       0</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4              0                      0               1                       0</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5              0                      0               0                       1</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6              1                      1               0                       0</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7              1                      0               1                       0</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8              1                      0               0                       1</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9              0                      1               1                       0</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10              0                      1               0                       1</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11              0                      0               1                       1</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12              1                      1               1                       0</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13              1                      1               0                       1</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14              1                      0               1                       1</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15              0                      1               1                       1</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16              1                      1               1                       1</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ abbreviated name: ¹​multiplicative_comparison</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: class_probability &lt;dbl&gt;</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>dtmr_true_profiles</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 990 × 5</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    id     referent_units partitioning_iterating appropriateness</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;           &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 039517              0                      0               0</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 500170              0                      0               0</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 104795              1                      1               1</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 113558              1                      1               1</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 564266              0                      1               1</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 039726              1                      1               1</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 075968              0                      1               1</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 375846              0                      0               0</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 032129              0                      0               0</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 138501              0                      1               0</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 980 more rows</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: multiplicative_comparison &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtmr_true_structural</span></span>
+<span><span class="co">#&gt; # A tibble: 16 × 5</span></span>
+<span><span class="co">#&gt;    referent_units partitioning_iterating appropriateness multiplicative_compar…¹</span></span>
+<span><span class="co">#&gt;             &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;                   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1              0                      0               0                       0</span></span>
+<span><span class="co">#&gt;  2              1                      0               0                       0</span></span>
+<span><span class="co">#&gt;  3              0                      1               0                       0</span></span>
+<span><span class="co">#&gt;  4              0                      0               1                       0</span></span>
+<span><span class="co">#&gt;  5              0                      0               0                       1</span></span>
+<span><span class="co">#&gt;  6              1                      1               0                       0</span></span>
+<span><span class="co">#&gt;  7              1                      0               1                       0</span></span>
+<span><span class="co">#&gt;  8              1                      0               0                       1</span></span>
+<span><span class="co">#&gt;  9              0                      1               1                       0</span></span>
+<span><span class="co">#&gt; 10              0                      1               0                       1</span></span>
+<span><span class="co">#&gt; 11              0                      0               1                       1</span></span>
+<span><span class="co">#&gt; 12              1                      1               1                       0</span></span>
+<span><span class="co">#&gt; 13              1                      1               0                       1</span></span>
+<span><span class="co">#&gt; 14              1                      0               1                       1</span></span>
+<span><span class="co">#&gt; 15              0                      1               1                       1</span></span>
+<span><span class="co">#&gt; 16              1                      1               1                       1</span></span>
+<span><span class="co">#&gt; # ℹ abbreviated name: ¹​multiplicative_comparison</span></span>
+<span><span class="co">#&gt; # ℹ 1 more variable: class_probability &lt;dbl&gt;</span></span>
+<span></span>
+<span><span class="va">dtmr_true_profiles</span></span>
+<span><span class="co">#&gt; # A tibble: 990 × 5</span></span>
+<span><span class="co">#&gt;    id     referent_units partitioning_iterating appropriateness</span></span>
+<span><span class="co">#&gt;    &lt;fct&gt;           &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 039517              0                      0               0</span></span>
+<span><span class="co">#&gt;  2 500170              0                      0               0</span></span>
+<span><span class="co">#&gt;  3 104795              1                      1               1</span></span>
+<span><span class="co">#&gt;  4 113558              1                      1               1</span></span>
+<span><span class="co">#&gt;  5 564266              0                      1               1</span></span>
+<span><span class="co">#&gt;  6 039726              1                      1               1</span></span>
+<span><span class="co">#&gt;  7 075968              0                      1               1</span></span>
+<span><span class="co">#&gt;  8 375846              0                      0               0</span></span>
+<span><span class="co">#&gt;  9 032129              0                      0               0</span></span>
+<span><span class="co">#&gt; 10 138501              0                      1               0</span></span>
+<span><span class="co">#&gt; # ℹ 980 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 1 more variable: multiplicative_comparison &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The item parameters for the LCDM are reported in Table 1 of <span class="citation" data-cites="dtmr">Bradshaw et al. (<a href="#ref-dtmr" role="doc-biblioref">2014</a>)</span>. Using the item parameters and the true profiles, we can calculate the probability that each simulated respondent provides a correct response to each item. These probabilities are then used to generate the simulated item responses in <code>dtmr_data</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dtmr_true_items</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 27 × 7</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    item  intercept referent_units partitioning_iterating appropriateness</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 1         -1.12           2.24                  NA              NA   </span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2          0.59          NA                     NA               1.27</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 3         -2.07          NA                      1.7            NA   </span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 4         -1.19           0.65                  NA              NA   </span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 5         -1.67           1.52                  NA              NA   </span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 6         -3.81          NA                      2.08           NA   </span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 7         -0.73           1.2                   NA              NA   </span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 8a        -0.62          NA                     NA               4.25</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 8b        -0.09          NA                     NA               2.16</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 8c         0.28          NA                     NA               0.87</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 17 more rows</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 2 more variables: multiplicative_comparison &lt;dbl&gt;,</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   referent_units__partitioning_iterating &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtmr_true_items</span></span>
+<span><span class="co">#&gt; # A tibble: 27 × 7</span></span>
+<span><span class="co">#&gt;    item  intercept referent_units partitioning_iterating appropriateness</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 1         -1.12           2.24                  NA              NA   </span></span>
+<span><span class="co">#&gt;  2 2          0.59          NA                     NA               1.27</span></span>
+<span><span class="co">#&gt;  3 3         -2.07          NA                      1.7            NA   </span></span>
+<span><span class="co">#&gt;  4 4         -1.19           0.65                  NA              NA   </span></span>
+<span><span class="co">#&gt;  5 5         -1.67           1.52                  NA              NA   </span></span>
+<span><span class="co">#&gt;  6 6         -3.81          NA                      2.08           NA   </span></span>
+<span><span class="co">#&gt;  7 7         -0.73           1.2                   NA              NA   </span></span>
+<span><span class="co">#&gt;  8 8a        -0.62          NA                     NA               4.25</span></span>
+<span><span class="co">#&gt;  9 8b        -0.09          NA                     NA               2.16</span></span>
+<span><span class="co">#&gt; 10 8c         0.28          NA                     NA               0.87</span></span>
+<span><span class="co">#&gt; # ℹ 17 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 2 more variables: multiplicative_comparison &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   referent_units__partitioning_iterating &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>For a complete description of how the data was simulated, see <code>?dtmr</code>.</p>
-</section>
-<section id="future-work" class="level2">
-<h2 class="anchored" data-anchor-id="future-work">Future work</h2>
+<p>For a complete description of how the data was simulated, see <code><a href="https://dcmdata.r-dcm.org/reference/dtmr.html">?dtmr</a></code>.</p>
+</section><section id="future-work" class="level2"><h2 class="anchored" data-anchor-id="future-work">Future work</h2>
 <p>Future work will focus on providing tools for simulating data from a variety of DCMs. The goal is to provide a tool that will make it easier to quickly simulate a large number a data sets, as is often required for simulation studies.</p>
 <p>We also plan to continue adding more real data sets (e.g., from the <a href="https://itemresponsewarehouse.org/">Item Response Warehouse</a>). If you know of any data sets that would be a good fit, or have a data set you’d like to contribute yourself, please <a href="https://github.com/r-dcm/dcmdata/issues">open an issue</a>!</p>
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
-
+</section><div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
 <p>The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546">R305D210045</a> and <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075">R305D240032</a> to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the the Institute or the U.S. Department of Education.</p>
 <p>Featured photo by <a href="https://unsplash.com/@amstram?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Scott Graham</a> on <a href="https://unsplash.com/photos/man-writing-on-paper-OQMZwNd3ThU?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
 
@@ -483,7 +450,7 @@ Izsák, A., Jacobson, E., &amp; Bradshaw, L. (2019). Surveying middle-grades tea
 MacReady, G. B., &amp; Dayton, C. M. (1977). The use of probabilistic models in the assessment of mastery. <em>Journal of Educational Statistics</em>, <em>2</em>(2), 99–120. <a href="https://doi.org/10.2307/1164802">https://doi.org/10.2307/1164802</a>
 </div>
 <div id="ref-hdcm" class="csl-entry" role="listitem">
-Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification models: A family of models for estimating and testing attribute hierarchies. <em>Psychometrika</em>, <em>79</em>(2), 317–339. <a href="https://doi.org/10.1007/s11336-013-9362-0">https://doi.org/10.1007/s11336-013-9362-0</a>
+Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification models: <span>A</span> family of models for estimating and testing attribute hierarchies. <em>Psychometrika</em>, <em>79</em>(2), 317–339. <a href="https://doi.org/10.1007/s11336-013-9362-0">https://doi.org/10.1007/s11336-013-9362-0</a>
 </div>
 <div id="ref-ecpe" class="csl-entry" role="listitem">
 Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model estimates using <span>Mplus</span>. <em>Educational Measurement: Issues and Practice</em>, <em>32</em>(2), 37–50. <a href="https://doi.org/10.1111/emip.12010">https://doi.org/10.1111/emip.12010</a>
@@ -498,8 +465,7 @@ Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2025" class="csl-entry quarto-appendix-citeas" role="listitem">
 Thompson, W. J. (2025, August 21). <em>dcmdata 0.1.0</em>. <a href="https://doi.org/10.59350/gmy4x-20093">https://doi.org/10.59350/gmy4x-20093</a>
-</div></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -900,8 +866,7 @@ Thompson, W. J. (2025, August 21). <em>dcmdata 0.1.0</em>. <a href="https://doi.
   });
   </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
 <p><span class="faux-block"><a href="../../funding.html">Supported by IES and ATLAS.</a></span> <span class="faux-block">All content licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></p>
 </div>   
@@ -913,8 +878,6 @@ Thompson, W. J. (2025, August 21). <em>dcmdata 0.1.0</em>. <a href="https://doi.
 </div>
   </div>
 </footer>
-
-
 
 
 </body></html>

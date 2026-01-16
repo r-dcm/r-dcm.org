@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
-
+<meta name="generator" content="quarto-1.9.16">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="W. Jake Thompson">
 <meta name="dcterms.date" content="2023-06-06">
 <meta name="description" content="A few updates for specifying models and priors.">
-
 <title>measr 0.3.1 – r-dcm</title>
 <style>
 code{white-space: pre-wrap;}
@@ -60,7 +57,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -75,13 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-97518418a90fc88b02415e07228183d3.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-915771a4037e72452fdf8fc80ceaf70b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-1871c41fb7a6952dd75b1ffe81daf205.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-bdf1f4ac84282833e0a4718e4f93ff7f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -107,23 +102,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<style>
+}</script><style>
 
       .quarto-title-block .quarto-title-banner {
         background-image: url(featured.jpg);
 background-size: cover;
       }
 </style>
-<script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
-<style>
+<script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><style>
 .cell-output-stdout code {
   word-break: break-wor !important;
   white-space: pre-wrap !important;
 }
 </style>
-
-
 <meta property="og:title" content="measr 0.3.1">
 <meta property="og:description" content="A few updates for specifying models and priors.">
 <meta property="og:image" content="https://r-dcm.org/blog/2023-06-measr-0.3.1/featured.jpg">
@@ -135,13 +126,10 @@ background-size: cover;
 <meta name="twitter:image:alt" content="Measurement tools on a desk">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-
 <body class="floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">r-dcm</span>
@@ -153,7 +141,7 @@ background-size: cover;
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../start/index.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
@@ -171,15 +159,11 @@ background-size: cover;
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">measr 0.3.1</h1>
                   <div>
@@ -234,98 +218,83 @@ background-size: cover;
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#model-specifications" id="toc-model-specifications" class="nav-link active" data-scroll-target="#model-specifications">Model Specifications</a></li>
+<li><a href="#model-specifications" id="toc-model-specifications" class="nav-link active" data-scroll-target="#model-specifications">Model Specifications</a></li>
   <li><a href="#prior-specifications" id="toc-prior-specifications" class="nav-link" data-scroll-target="#prior-specifications">Prior Specifications</a></li>
-  </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+  </ul></nav>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<p>We’re stoked to announce the release of <a href="https://measr.info">measr</a> 0.3.1. The goal of measr is to provide applied researchers and psychometricians with a user friendly interface for estimating and evaluating diagnostic classification models (DCMs). This update is a minor release to introduce a couple of enhancements to model and prior specifications.</p>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><p>We’re stoked to announce the release of <a href="https://measr.info">measr</a> 0.3.1. The goal of measr is to provide applied researchers and psychometricians with a user friendly interface for estimating and evaluating diagnostic classification models (DCMs). This update is a minor release to introduce a couple of enhancements to model and prior specifications.</p>
 <p>You can install the update version of measr from CRAN with:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"measr"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"measr"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This blog post will highlight the two enhancements included in the update. For a complete list of changes, check out the <a href="https://measr.info/news/index.html#measr-031">changelog</a>.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(measr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://measr.r-dcm.org">measr</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="model-specifications" class="level2">
-<h2 class="anchored" data-anchor-id="model-specifications">Model Specifications</h2>
-<p>In this version, support for a new DCM subtype was added. The compensatory reparameterized unified model (C-RUM) model can now be specified in <code>measr_dcm()</code> with <code>type = "crum"</code>. The C-RUM is similar to the log-linear cognitive diagnostic model (LCDM), except the C-RUM estimates only item-level intercepts and main effects (i.e., no interactions when multiple attributes are measured by an item). Because of this, along with the addition of the C-RUM, the LCDM now has additional flexibility through the new <code>max_interaction</code> argument. When using <code>type = "lcdm"</code>, <code>max_interaction</code> specifies the highest level interaction to be estimated. For example, setting <code>max_interaction = 2</code> would estimate the LCDM with only intercepts, main effects, and two-way interactions. If an item measures 3 or more attributes, the 3-way interactions and higher will be excluded. Specifying <code>type = "lcdm"</code> with <code>max_interaction = 1</code> is equivalent to the C-RUM, as 1 indicates that main effects are the highest-level interaction to be estimated.</p>
+<section id="model-specifications" class="level2"><h2 class="anchored" data-anchor-id="model-specifications">Model Specifications</h2>
+<p>In this version, support for a new DCM subtype was added. The compensatory reparameterized unified model (C-RUM) model can now be specified in <code><a href="https://measr.info/reference/measr_dcm.html">measr_dcm()</a></code> with <code>type = "crum"</code>. The C-RUM is similar to the log-linear cognitive diagnostic model (LCDM), except the C-RUM estimates only item-level intercepts and main effects (i.e., no interactions when multiple attributes are measured by an item). Because of this, along with the addition of the C-RUM, the LCDM now has additional flexibility through the new <code>max_interaction</code> argument. When using <code>type = "lcdm"</code>, <code>max_interaction</code> specifies the highest level interaction to be estimated. For example, setting <code>max_interaction = 2</code> would estimate the LCDM with only intercepts, main effects, and two-way interactions. If an item measures 3 or more attributes, the 3-way interactions and higher will be excluded. Specifying <code>type = "lcdm"</code> with <code>max_interaction = 1</code> is equivalent to the C-RUM, as 1 indicates that main effects are the highest-level interaction to be estimated.</p>
 <p>This version also introduces new options for the structural component of the DCMs. Currently two attributes structures are possible, and are defined through the <code>attribute_structure</code> argument. The first is <code>attribute_structure = "unconstrained"</code>. This is the default, which makes no assumptions about the relationships between attributes. Specifying and unconstrained structural model is equivalent to the saturated structural model described by <a href="https://doi.org/10.1080/00273171.2019.1632165">Hu &amp; Templin (2020)</a> and in Chapter 8 of <a href="https://www.amazon.com/Diagnostic-Measurement-Applications-Methodology-Sciences/dp/1606235273">Rupp et al.&nbsp;(2010)</a>. The other option currently supported is <code>attribute_structure = "independent"</code>. When an independent attribute structure is specified, the proficiency or the presence of one attribute is independent of other attributes. Future development will include additional attribute structure specifications such as a reduced loglinear model (e.g., <a href="https://dissertation.wjakethompson.com">Thompson, 2018</a>) or a Bayesian Network (e.g., <a href="https://doi.org/10.1080/00273171.2019.1632165">Hu &amp; Templin, 2020</a>; <a href="https://doi.org/10.31234/osf.io/pjc5f">Martinez &amp; Templin, 2023</a>).</p>
-</section>
-<section id="prior-specifications" class="level2">
-<h2 class="anchored" data-anchor-id="prior-specifications">Prior Specifications</h2>
+</section><section id="prior-specifications" class="level2"><h2 class="anchored" data-anchor-id="prior-specifications">Prior Specifications</h2>
 <p>There are two main improvements to prior specifications included in this release. First, custom prior distributions can be specified for the structural model parameters. We can view the default parameters for each attribute structure specification with:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">default_dcm_priors</span>(<span class="at">type =</span> <span class="st">"lcdm"</span>, <span class="at">attribute_structure =</span> <span class="st">"unconstrained"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 3</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   class       coef  prior_def                  </span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;                      </span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 intercept   &lt;NA&gt;  normal(0, 2)               </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 maineffect  &lt;NA&gt;  lognormal(0, 1)            </span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 interaction &lt;NA&gt;  normal(0, 2)               </span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 structural  Vc    dirichlet(rep_vector(1, C))</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">default_dcm_priors</span>(<span class="at">type =</span> <span class="st">"lcdm"</span>, <span class="at">attribute_structure =</span> <span class="st">"independent"</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 3</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   class       coef  prior_def      </span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;          </span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 intercept   &lt;NA&gt;  normal(0, 2)   </span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 maineffect  &lt;NA&gt;  lognormal(0, 1)</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 interaction &lt;NA&gt;  normal(0, 2)   </span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 structural  &lt;NA&gt;  beta(1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/default_dcm_priors.html">default_dcm_priors</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"lcdm"</span>, attribute_structure <span class="op">=</span> <span class="st">"unconstrained"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 3</span></span>
+<span><span class="co">#&gt;   class       coef  prior_def                  </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;                      </span></span>
+<span><span class="co">#&gt; 1 intercept   &lt;NA&gt;  normal(0, 2)               </span></span>
+<span><span class="co">#&gt; 2 maineffect  &lt;NA&gt;  lognormal(0, 1)            </span></span>
+<span><span class="co">#&gt; 3 interaction &lt;NA&gt;  normal(0, 2)               </span></span>
+<span><span class="co">#&gt; 4 structural  Vc    dirichlet(rep_vector(1, C))</span></span>
+<span></span>
+<span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/default_dcm_priors.html">default_dcm_priors</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"lcdm"</span>, attribute_structure <span class="op">=</span> <span class="st">"independent"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 3</span></span>
+<span><span class="co">#&gt;   class       coef  prior_def      </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;          </span></span>
+<span><span class="co">#&gt; 1 intercept   &lt;NA&gt;  normal(0, 2)   </span></span>
+<span><span class="co">#&gt; 2 maineffect  &lt;NA&gt;  lognormal(0, 1)</span></span>
+<span><span class="co">#&gt; 3 interaction &lt;NA&gt;  normal(0, 2)   </span></span>
+<span><span class="co">#&gt; 4 structural  &lt;NA&gt;  beta(1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We can also view the specific parameters available for a specific model using the <code>get_parameters()</code> function. For example, using the ECPE Q-matrix, we can see the available parameters for each type of model.</p>
+<p>We can also view the specific parameters available for a specific model using the <code><a href="https://dcmstan.r-dcm.org/reference/get_parameters.html">get_parameters()</a></code> function. For example, using the ECPE Q-matrix, we can see the available parameters for each type of model.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">get_parameters</span>(ecpe_qmatrix, <span class="at">attribute_structure =</span> <span class="st">"unconstrained"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">"structural"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 4</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   item_id class      attributes coef  </span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;glue&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      NA structural &lt;NA&gt;       Vc</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">get_parameters</span>(ecpe_qmatrix, <span class="at">attribute_structure =</span> <span class="st">"independent"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">"structural"</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 4</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   item_id class      attributes coef  </span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;glue&gt;</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      NA structural &lt;NA&gt;       eta[1]</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      NA structural &lt;NA&gt;       eta[2]</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3      NA structural &lt;NA&gt;       eta[3]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="va">ecpe_qmatrix</span>, attribute_structure <span class="op">=</span> <span class="st">"unconstrained"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">class</span> <span class="op">==</span> <span class="st">"structural"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 4</span></span>
+<span><span class="co">#&gt;   item_id class      attributes coef  </span></span>
+<span><span class="co">#&gt;     &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;glue&gt;</span></span>
+<span><span class="co">#&gt; 1      NA structural &lt;NA&gt;       Vc</span></span>
+<span></span>
+<span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="va">ecpe_qmatrix</span>, attribute_structure <span class="op">=</span> <span class="st">"independent"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">class</span> <span class="op">==</span> <span class="st">"structural"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 4</span></span>
+<span><span class="co">#&gt;   item_id class      attributes coef  </span></span>
+<span><span class="co">#&gt;     &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;glue&gt;</span></span>
+<span><span class="co">#&gt; 1      NA structural &lt;NA&gt;       eta[1]</span></span>
+<span><span class="co">#&gt; 2      NA structural &lt;NA&gt;       eta[2]</span></span>
+<span><span class="co">#&gt; 3      NA structural &lt;NA&gt;       eta[3]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The second improvement is additional checking of user-specified priors. Specifically, <code>measr_dcm()</code> will now throw and error if we try to specify a prior for a class or coefficient that is inconsistent with our chosen DCM. For example, in the previous example of structural model priors that there are different parameters depending on whether an unconstrained or independent structure is specified. If we try to define a prior for <code>eta[1]</code>, which is only relevant for an independent structure, but an unconstrained structure is specified, we get an error.</p>
+<p>The second improvement is additional checking of user-specified priors. Specifically, <code><a href="https://measr.info/reference/measr_dcm.html">measr_dcm()</a></code> will now throw and error if we try to specify a prior for a class or coefficient that is inconsistent with our chosen DCM. For example, in the previous example of structural model priors that there are different parameters depending on whether an unconstrained or independent structure is specified. If we try to define a prior for <code>eta[1]</code>, which is only relevant for an independent structure, but an unconstrained structure is specified, we get an error.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">measr_dcm</span>(<span class="at">data =</span> ecpe_data, <span class="at">qmatrix =</span> ecpe_qmatrix,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">resp_id =</span> <span class="st">"resp_id"</span>, <span class="at">item_id =</span> <span class="st">"item_id"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">attribute_structure =</span> <span class="st">"unconstrained"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">beta</span>(<span class="dv">5</span>,<span class="dv">17</span>), <span class="at">class =</span> <span class="st">"structural"</span>, <span class="at">coef =</span> <span class="st">"eta[1]"</span>))</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `abort_bad_argument()`:</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! Prior for parameter `eta[1]` with class `structural` is not relevant for the chosen model or specified Q-matrix. See `?get_parameters()` for a list of relevant parameters.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.info/reference/measr_dcm.html">measr_dcm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">ecpe_data</span>, qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
+<span>          resp_id <span class="op">=</span> <span class="st">"resp_id"</span>, item_id <span class="op">=</span> <span class="st">"item_id"</span>,</span>
+<span>          attribute_structure <span class="op">=</span> <span class="st">"unconstrained"</span>,</span>
+<span>          prior <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/prior.html">prior</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">beta</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">17</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"structural"</span>, coef <span class="op">=</span> <span class="st">"eta[1]"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `abort_bad_argument()`:</span></span>
+<span><span class="co">#&gt; ! Prior for parameter `eta[1]` with class `structural` is not relevant for the chosen model or specified Q-matrix. See `?get_parameters()` for a list of relevant parameters.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As always, please <a href="https://github.com/wjakethompson/measr/issues">open an issue</a> with any bugs or feature requests for future development!</p>
 
 
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2023,
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2023,
   author = {Thompson, W. Jake},
   title = {Measr 0.3.1},
   date = {2023-06-06},
@@ -335,8 +304,7 @@ background-size: cover;
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2023" class="csl-entry quarto-appendix-citeas" role="listitem">
 Thompson, W. J. (2023, June 6). <em>measr 0.3.1</em>. <a href="https://doi.org/10.59350/mt80h-8pp67">https://doi.org/10.59350/mt80h-8pp67</a>
-</div></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -737,8 +705,7 @@ Thompson, W. J. (2023, June 6). <em>measr 0.3.1</em>. <a href="https://doi.org/1
   });
   </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
 <p><span class="faux-block"><a href="../../funding.html">Supported by IES and ATLAS.</a></span> <span class="faux-block">All content licensed under<br><a href="https://creativecommons.org/licenses/by/4.0/"><i class="fa-brands fa-creative-commons" aria-label="creative-commons"></i> <i class="fa-brands fa-creative-commons-by" aria-label="creative-commons-by"></i> Creative Commons CC BY 4.0</a></span></p>
 </div>   
@@ -750,8 +717,6 @@ Thompson, W. J. (2023, June 6). <em>measr 0.3.1</em>. <a href="https://doi.org/1
 </div>
   </div>
 </footer>
-
-
 
 
 </body></html>

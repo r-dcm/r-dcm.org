@@ -1,6 +1,6 @@
 ---
 title: "measr 2.0.0"
-date: 2026-01-13
+date: 2026-01-16
 subtitle: ""
 description: "Major release to introduce new model specifications and evaluation methods."
 image: "featured.jpg"

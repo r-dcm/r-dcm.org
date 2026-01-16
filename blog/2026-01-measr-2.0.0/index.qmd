@@ -1,0 +1,393 @@
+---
+title: "measr 2.0.0"
+date: 2026-01-13
+subtitle: ""
+description: "Major release to introduce new model specifications and evaluation methods."
+image: "featured.jpg"
+image-alt: "Sections of rulers and measuring tape."
+title-block-banner: featured.jpg
+twitter-card:
+  image: "featured.jpg"
+open-graph:
+  image: "featured.jpg"
+engine: knitr
+# doi: 10.59350/1kz71-zdj91
+citation: true
+# one of: "deep-dive", "learn", "package", or "other" + relevant packages
+categories:
+  - package
+  - measr
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(measr)
+library(cmdstanr)
+library(dcmdata)
+library(dcmstan)
+```
+
+We are ecstatic to announce the release of `{measr}` 2.0.0.
+measr is an [*R*](https://r-project.org) package for estimating and evaluating diagnostic classification models (DCMs). 
+You can specify a variety of DCMs, choose a [*Stan*](https://mc-stan.org) backend and estimation method, and then evaluate the model using a wide range of model fit analyses.
+
+You can install measr from CRAN with:
+
+```{r}
+#| label: install
+#| eval: false
+
+install.packages("measr")
+```
+
+This blog post highlights the most important changes in this release, including a decoupling of measr's functionality, a new interface for specifying and estimating models, and many new functions for model evaluation.
+You can see a full list of hcanges in the [release notes](https://measr.r-dcm.org/news/index.html#measr-200).
+
+```{r}
+#| label: load-measr
+
+library(measr)
+```
+
+## Introducing r-dcm
+
+A major focus of development work since the previous release has been to modularize the functionality of measr, creating smaller and more focused packages that are easier to maintain quickly update with new features.
+Functionality for model estimation and evaluation remains the purview of measr.
+However, previously, DCMs were specified within the same function call as model estimation using `measr_dcm()`.
+This created confusion and blurred the lines between how the model was defined and how it was estimated.
+
+Therefore, the specification of DCMs, including the creation of Stan scripts, is now handled by the new `{dcmstan}` package.
+This decoupling allows for more flexible model specifications and will also allow us to more quickly add new model types without disrupting model estimation functionality in measr.
+
+Additionally, the example data sets have been split out into their own package, `{dcmdata}`, allowing the data sets to be easily used across both measr and dcmstan (and future packages) without creating troublesome recursive dependencies between packages.
+
+:::{.columns .v-center}
+
+:::{.column width="30%"}
+
+```{r}
+#| label: dcmstan
+#| echo: false
+#| out-width: 85%
+#| fig-align: center
+#| fig-alt: dcmstan hex logo.
+
+knitr::include_graphics(
+  "https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/dcmstan.svg"
+)
+```
+
+:::
+
+:::{.column width="5%"}
+<!-- empty column to create gap -->
+:::
+
+:::{.column width="30%"}
+
+```{r}
+#| label: measr
+#| echo: false
+#| out-width: 100%
+#| fig-align: center
+#| fig-alt: measr hex logo
+
+knitr::include_graphics(
+  "https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/measr.svg"
+)
+```
+
+:::
+
+:::{.column width="5%"}
+<!-- empty column to create gap -->
+:::
+
+:::{.column width="30%"}
+
+```{r}
+#| label: dcmdata
+#| echo: false
+#| out-width: 85%
+#| fig-align: center
+#| fig-alt: dcmdata hex logo
+
+knitr::include_graphics(
+  "https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/dcmdata.svg"
+)
+```
+
+:::
+
+:::
+
+In most cases, you will only need to load measr as relevant functions (e.g., `dcm_specify()` from dcmstan) are reexported by measr.
+So while there are some significant changes on the backend, the transition should be (hopefully) seemless for users.
+
+## Specification and estimation
+
+As part of the decoupling of functionality, we have also decoupled model specification and estimation.
+Conceptually, the model specification is separate from the model estimation.
+That is, the choice of model (e.g., DINA vs. LCDM) should not impact model estimation choices (e.g., MCMC vs. optimization, estimation engine).
+Therefore, decoupling also allows for a more intuitive user interface.
+Using previous versions of measr, you would both specify and estimate a DCM with `measr_dcm()`.
+In the following code, we estimate an LCDM with an unconstrained structural model, but we limit the LCDM to only contain intercepts, main effects, and two-way interactions (`max_interaction = 2`).
+
+```{r}
+#| label: old-ui
+#| eval: false
+
+library(dcmdata)
+
+# old code
+my_model <- measr_dcm(
+  data = ecpe_data,
+  qmatrix = ecpe_qmatrix,
+  resp_id = "resp_id",
+  item_id = "item_id",
+  type = "lcdm",
+  attribute_structure = "unconstrained",
+  max_interaction = 2,
+  method = "mcmc",
+  backend = "cmdstanr"
+)
+```
+
+However, this code is ambiguous.
+Does the `max_interaction` apply to the `type`, the `attribute_structure`, or some other element of the model estimation process?
+This information is currently clarified in the function documentation, but the code itself is not intuitive.
+Under the new specification interface, additional arguments to measurement or structural models are now defined explicitly in the model specification.
+We specify a model with `dcm_specify()`, and arguments that apply to a measurement or structural model are defined within that model's constructor.
+For a list of all supported measurement and structural models and their associated arguments, see `?dcm_specify`.
+
+```{r}
+#| label: new-specify
+
+lcdm_spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(max_interaction = 2),
+  structural_model = unconstrained()
+)
+```
+
+We can then use our model specification and `dcm_estimate()` to estimate the model.
+
+```{r}
+#| label: new-estimate
+
+lcdm <- dcm_estimate(
+  dcm_spec = lcdm_spec,
+  data = ecpe_data,
+  identifier = "resp_id",
+  method = "variational",
+  backend = "rstan",
+  file = "fits/ecpe-lcdm"
+)
+```
+
+`measr_dcm()` has been deprecated, but will continue to work with limited functionality, as new development work will go toward `dcm_specify()` and `dcm_estimate()`.
+Using `measr_dcm()` will result in a warning that you should update your workflow.
+
+```{r}
+#| label: measr-dcm-warning
+#| warning: true
+
+lcdm <- measr_dcm(
+  data = ecpe_data,
+  qmatrix = ecpe_qmatrix,
+  resp_id = "resp_id",
+  item_id = "item_id",
+  type = "lcdm",
+  attribute_structure = "unconstrained",
+  method = "variational",
+  backend = "cmdstanr",
+  file = "fits/ecpe-lcdm"
+)
+```
+
+### New model specifications
+
+Speaking of new development work, we have added support for several new measurement and structural models.
+On the measurement model side, we now support the noisy-input, deterministic "and" gate [`nida()`\; @nida]; noisy-input, deterministic "or" gate [`nido()`\; @nido]; and the noncompensatory reparameterized unified model [`ncrum()`\; @ncrum].
+This means that we now support the specification and estimation of all 6 core DCMs identified by @rupp-dcm in addition to the general LCDM.
+
+We also added support for the loglinear structural model [`loglinear()`\; @loglinear], which allows the user to limit the interactions that are included between the attributes.
+We also added support attribute hierarchies.
+For example, we might theorize that some attributes are dependent on others that represent prerequisite skills, as in the ECPE data set we used earlier.
+This data set measures 3 attributes: morphosyntactic, cohesive, and lexical rules.
+These attributes represent rules of the English language with increasing levels of complexity from lexical, to cohesive, and finally morphosyntactic.
+measr now supports two different ways to specify attribute relationships in a DCM.
+The first is the hierarchical DCM [`hdcm()`\; @hdcm], which enforces a strict hierarchy.
+
+```{r}
+#| label: hdcm-spec
+
+hdcm_spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(),
+  structural_model = hdcm(hierarchy = "lexical -> cohesive -> morphosyntactic")
+)
+```
+
+We specify the `hierarchy` in our structural model using arrows to indicate the dependencies (see `vignette("attribute-hierarchies", package = "dcmstan")` for more examples).
+As we can see, the full model with an unconstrained structural model includes 8 possible attribute patterns.
+However, when we use the HDCM, only patterns that are consistent with the specified hierarchy are included in the model.
+
+```{r}
+#| label: hdcm-profiles
+
+create_profiles(lcdm_spec)
+
+create_profiles(hdcm_spec)
+```
+
+The second structural model that can support a user-defined hierarchy is a Bayesian network [`bayesnet()`\; @bayesnet].
+When using a BayesNet, the hierarchical relationship is specified in the same way using `->` or `<-` to indicate dependencies.
+However, the BayesNet specification does not completely eliminate patterns that are inconsistent with the specified hierarchy.
+Rather, inconsistent patterns are downweighted using conditional probabilities.
+
+```{r}
+#| label: bn-spec
+
+bn_spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(),
+  structural_model = bayesnet(
+    hierarchy = "lexical -> cohesive -> morphosyntactic"
+  )
+)
+```
+
+All measurement and structural models can be mixed and matched in `dcm_specify()` to create a model that meets your needs and matches your conceptual understanding of the items and attributes.
+
+### Estimation improvements
+
+We've also made some improvements to how models are estimated in the form of two new estimation methods for `dcm_estimate()`.
+First we have added support for *Stan's* variational algorithm for approximate posterior sampling (`method = "variational"`).
+This method will wrap `rstan::vb()` when using the rstan backend and `cmdstanr::variational()` when using cmdstanr.
+
+We've also support for *Stan's* pathfinder variational inference algorithm (`method = "pathfinder"`).
+This method is similar to the variational method; however, the pathfinder algorithm is generally faster and more stable than the automatic differentiation algorithm that is used by `rstan::vb()` and `cmdstanr::variational()`.
+Notably, the pathfinder algorithm in not available in rstan, and therefore this method can only be used when using cmdstanr (wrapping `cmdstanr::pathfinder()`).
+
+```{r}
+#| label: hdcm-estimate
+
+hdcm <- dcm_estimate(
+  dcm_spec = hdcm_spec,
+  data = ecpe_data,
+  identifier = "resp_id",
+  method = "pathfinder",
+  backend = "cmdstanr",
+  file = "fits/ecpe-hdcm"
+)
+```
+
+Although we still recommend using full posterior sampling when possible (`method = "mcmc"`), we recognize that this can be very slow for this models, and the variational algorithms should be much quicker.
+
+## Model evaluation updates
+
+We added several new tools for evaluating a model once it is estimated.
+These include updates to how to extract parameter estimates and other information from a model, new functions for evaluating model assumptions, and additional methods for conducting model comparisons.
+
+### Extract information
+
+We've added a few new elements that can be extracted from a model with `measr_extract()`.
+We can extract the base rate of proficiency or presence on each of the attributes with `what = "attribute_base_rate"`.
+We can also now extract the &pi; matrix with `what = "pi_matrix"`, which is the estimated probability that a respondent in each class will provide a correct response to each item.
+
+```{r}
+#| label: new-extract
+
+measr_extract(lcdm, what = "attribute_base_rate")
+
+measr_extract(lcdm, what = "pi_matrix")
+```
+
+We've also simplifed the extract process.
+Previously, many `what` options required that an analysis be added to a model before it could be extracted.
+For example if we tried to extract
+
+```{r}
+#| label: example-error
+#| eval: false
+
+# old code
+measr_extract(lcdm, what = "m2")
+#> Error: Model fit information must be added to a model object before the M2
+#> can be extracted. See add_fit()."
+```
+
+Now, adding elements is no longer required.
+If you request to extract something that has not been added, it will now automatically be calculated for the extract.
+
+```{r}
+#| label: no-error
+
+measr_extract(lcdm, what = "m2")
+```
+
+Note that you can, and in many cases should, add elements to a model with `add_fit()`, `add_criterion()`, `add_reliability()`, and `add_respondent_estimates()`.
+Many of these calculations are time consuming.
+If you plan to extract a particular `what` many times, adding an element first means that the calculation will only happen once, whereas the calculation will need to be conducted every time `measr_extract()` is called if the element has not been added.
+
+### Check assumptions
+
+As with any psychometric model, DCMs make assumptions that we should check.
+This release comes with checks for two key assumptions: local item dependence and the accuracy of the Q-matrix.
+
+Local item dependence refers to the assumption that item response are independent of each other, conditional on the respondents' attribute patterns.
+That is, after we account for the respondents attribute pattern, we should not see any additional or residual relationship among the items.
+This is often checked using the Q~3~ statistic [@yenq3], which can now be calculated with `yens_q3()`.
+`yens_q3()` will calculate the residual correlations between items and optionally flag any item pairs above a critical value.
+A significant number of residual correlations, particularly if the same group of items are involved, may indicate additional dimensions (i.e., attributes) that should be included.
+
+We can evaluate the evaluate the alignment of item to the attributes identified in the Q-matrix.
+`qmatrix_validation()` implements the method described by @delatorre2016 to determine if there are other Q-matrix specifications that would better explain the response data.
+For example, in our ECPE model, item E9 measures only the third attribute (lexical rules) in the Q-matrix used to estimate the model.
+However, the data suggests that this item may also be measuring the first attribute (morphosyntactic rules).
+Note that this method will not evaluate whether the number of attributes is correct, only the item to attribute alignment.
+
+```{r}
+#| label: qmatrix-validation
+
+qmatrix_validation(lcdm)
+```
+
+### Make comparisons
+
+Finally, we've also added a support for Bayes factors for model comparisons.
+`bayes_factor()` will calculate the posterior probability that a model is correct, given our prior probability (specified through the `prior_prob` argument) and the calculated Bayes factor.
+Note the Bayes factors currently depend on the `{bridgesampling}` package, which does not support cmdstanr.
+Therefore, model comparisons with Bayes factors are only available when the models are estimated with full MCMC (`method = "mcmc"`) using rstan (`backend = "rstan"`).
+Support for additional estimation methods and backends will be added as they are made available in bridgesampling.
+
+## Other new features
+
+* Users can now specify a probability classification threshold when calculating reliability metrics with `reliability()`.
+
+* Discrimination methods are now available through `cdi()` to evaluate how well an item or attribute can discern different classes.
+
+* `predict()` has been replaced by `score()` to be more intuitive. The model is estimated by predicting item responses; however, `predict()` return respondent-level class and attribute probabilities. Thus, this function was renamed to better reflect its intended use.
+
+## Acknowledgments {.appendix}
+
+```{r}
+#| label: find-thanks
+#| include: false
+#| eval: false
+
+usethis::use_tidy_thanks("r-dcm/measr")
+```
+
+A big thank you to all the folks who helped make this release happen: [&#x0040;auburnjimenez34](https://github.com/auburnjimenez34), [&#x0040;dgkf](https://github.com/dgkf), [&#x0040;JeffreyCHoover](https://github.com/JeffreyCHoover), [&#x0040;ralmond](https://github.com/ralmond), and [&#x0040;wjakethompson](https://github.com/wjakethompson).
+
+The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants [R305D210045](https://ies.ed.gov/use-work/awards/improving-software-and-methods-estimating-diagnostic-classification-models-and-evaluating-model-fit?ID=4546) and [R305D240032](https://ies.ed.gov/use-work/awards/expanding-functionality-and-accessibility-software-diagnostic-measurement?ID=6075) to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the the Institute or the U.S. Department of Education.
+
+Featured photo by <a href="https://unsplash.com/@wwarby?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">William Warby</a> on <a href="https://unsplash.com/photos/gray-and-yellow-measures-WahfNoqbYnM?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>.

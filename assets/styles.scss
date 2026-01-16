@@ -282,6 +282,11 @@ div.quarto-post {
   }
 }
 
+div.columns.v-center {
+  display: flex;
+  align-items: center;
+}
+
 // Team listing ----------------------------------------------------------------
 .team {
   .team-entry {

@@ -12,5 +12,13 @@
     "titleBar.inactiveBackground": "#d7263d99",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#d7263d"
+  "peacock.color": "#d7263d",
+  "[r]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Posit.air-vscode"
+  },
+  "[quarto]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "quarto.quarto"
+  }
 }

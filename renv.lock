@@ -1340,18 +1340,17 @@
     },
     "cmdstanr": {
       "Package": "cmdstanr",
-      "Version": "0.9.0.9000",
-      "Source": "GitHub",
+      "Version": "0.9.0",
+      "Source": "Repository",
       "Title": "R Interface to 'CmdStan'",
       "Date": "2025-03-30",
-      "Authors@R": "c(person(given = \"Jonah\", family = \"Gabry\", role = \"aut\", email = \"jgabry@gmail.com\"), person(given = \"Rok\", family = \"Češnovar\", role = \"aut\", email = \"rok.cesnovar@fri.uni-lj.si\"), person(given = \"Andrew\", family = \"Johnson\", role = c(\"aut\", \"cre\"), email = \"andrew.johnson@arjohnsonau.com\", comment = c(ORCID = \"0000-0001-7000-8065\")), person(given = \"Steve\", family = \"Bronder\", role = \"aut\"), person(given = \"Ben\", family = \"Bales\", role = \"ctb\"), person(given = \"Mitzi\", family = \"Morris\", role = \"ctb\"), person(given = \"Mikhail\", family = \"Popov\", role = \"ctb\"), person(given = \"Mike\", family = \"Lawrence\", role = \"ctb\"), person(given = c(\"William\", \"Michael\"), family = \"Landau\", role = \"ctb\", email = \"will.landau@gmail.com\", comment = c(ORCID = \"0000-0003-1878-3253\")), person(given = \"Jacob\", family = \"Socolar\", role = \"ctb\"), person(given = \"Martin\", family = \"Modrák\", role = \"ctb\"), person(given = \"Ven\", family = \"Popov\", role = \"ctb\") )",
+      "Authors@R": "c(person(given = \"Jonah\", family = \"Gabry\", role = \"aut\", email = \"jsg2201@columbia.edu\"), person(given = \"Rok\", family = \"Češnovar\", role = \"aut\", email = \"rok.cesnovar@fri.uni-lj.si\"), person(given = \"Andrew\", family = \"Johnson\", role = c(\"aut\", \"cre\"), email = \"andrew.johnson@arjohnsonau.com\", comment = c(ORCID = \"0000-0001-7000-8065\")), person(given = \"Steve\", family = \"Bronder\", role = \"aut\"), person(given = \"Ben\", family = \"Bales\", role = \"ctb\"), person(given = \"Mitzi\", family = \"Morris\", role = \"ctb\"), person(given = \"Mikhail\", family = \"Popov\", role = \"ctb\"), person(given = \"Mike\", family = \"Lawrence\", role = \"ctb\"), person(given = c(\"William\", \"Michael\"), family = \"Landau\", role = \"ctb\", email = \"will.landau@gmail.com\", comment = c(ORCID = \"0000-0003-1878-3253\")), person(given = \"Jacob\", family = \"Socolar\", role = \"ctb\"), person(given = \"Martin\", family = \"Modrák\", role = \"ctb\"), person(given = \"Ven\", family = \"Popov\", role = \"ctb\") )",
       "Description": "A lightweight interface to 'Stan' <https://mc-stan.org>. The 'CmdStanR' interface is an alternative to 'RStan' that calls the command line interface for compilation and running algorithms instead of interfacing with C++ via 'Rcpp'. This has many benefits including always being compatible with the latest version of Stan, fewer installation errors, fewer unexpected crashes in RStudio, and a more permissive license.",
       "License": "BSD_3_clause + file LICENSE",
       "URL": "https://mc-stan.org/cmdstanr/, https://discourse.mc-stan.org",
       "BugReports": "https://github.com/stan-dev/cmdstanr/issues",
       "Encoding": "UTF-8",
-      "LazyData": "true",
-      "RoxygenNote": "7.3.3",
+      "RoxygenNote": "7.3.2",
       "Roxygen": "list(markdown = TRUE, r6 = FALSE)",
       "SystemRequirements": "CmdStan (https://mc-stan.org/users/interfaces/cmdstan)",
       "Depends": [
@@ -1369,24 +1368,21 @@
       ],
       "Suggests": [
         "bayesplot",
-        "fs",
         "ggplot2",
         "knitr (>= 1.37)",
         "loo (>= 2.0.0)",
-        "qs2",
         "rmarkdown",
         "testthat (>= 2.1.0)",
         "Rcpp"
       ],
       "VignetteBuilder": "knitr",
+      "Repository": "https://stan-dev.r-universe.dev",
+      "RemoteUrl": "https://github.com/stan-dev/cmdstanr",
+      "RemoteRef": "v0.9.0",
+      "RemoteSha": "da99e2ba954658bdad63bffb738c4444c33a4e0e",
+      "NeedsCompilation": "no",
       "Author": "Jonah Gabry [aut], Rok Češnovar [aut], Andrew Johnson [aut, cre] (ORCID: <https://orcid.org/0000-0001-7000-8065>), Steve Bronder [aut], Ben Bales [ctb], Mitzi Morris [ctb], Mikhail Popov [ctb], Mike Lawrence [ctb], William Michael Landau [ctb] (ORCID: <https://orcid.org/0000-0003-1878-3253>), Jacob Socolar [ctb], Martin Modrák [ctb], Ven Popov [ctb]",
-      "Maintainer": "Andrew Johnson <andrew.johnson@arjohnsonau.com>",
-      "RemoteType": "github",
-      "RemoteUsername": "stan-dev",
-      "RemoteRepo": "cmdstanr",
-      "RemoteRef": "master",
-      "RemoteSha": "c062d6c7b5a239090720030984a56328941a7991",
-      "RemoteHost": "api.github.com"
+      "Maintainer": "Andrew Johnson <andrew.johnson@arjohnsonau.com>"
     },
     "coda": {
       "Package": "coda",
@@ -1856,8 +1852,8 @@
     },
     "dcmdata": {
       "Package": "dcmdata",
-      "Version": "0.1.0",
-      "Source": "Repository",
+      "Version": "0.1.0.9000",
+      "Source": "GitHub",
       "Title": "Data Sets for Diagnostic Classification Modeling",
       "Authors@R": "c( person(\"W. Jake\", \"Thompson\", , \"wjakethompson@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0001-7339-0300\")), person(\"University of Kansas\", role = \"cph\"), person(\"Institute of Education Sciences\", role = \"fnd\") )",
       "Description": "Access data sets for demonstrating or testing diagnostic classification models. Simulated data sets can be used to compare estimated model output to true data-generating values. Real data sets can be used to demonstrate real-world applications of diagnostic models.",
@@ -1865,7 +1861,7 @@
       "URL": "https://dcmdata.r-dcm.org, https://github.com/r-dcm/dcmdata",
       "BugReports": "https://github.com/r-dcm/dcmdata/issues",
       "Depends": [
-        "R (>= 2.10)"
+        "R (>= 3.5)"
       ],
       "Imports": [
         "cli",
@@ -1879,15 +1875,20 @@
       "Encoding": "UTF-8",
       "Language": "en-US",
       "LazyData": "true",
-      "RoxygenNote": "7.3.2",
+      "Roxygen": "list(markdown = TRUE, roclets = c(\"namespace\", \"rd\", \"roxylint::roxylint\"))",
+      "RoxygenNote": "7.3.3",
       "Suggests": [
         "spelling",
         "testthat (>= 3.0.0)"
       ],
-      "NeedsCompilation": "no",
       "Author": "W. Jake Thompson [aut, cre] (ORCID: <https://orcid.org/0000-0001-7339-0300>), University of Kansas [cph], Institute of Education Sciences [fnd]",
       "Maintainer": "W. Jake Thompson <wjakethompson@gmail.com>",
-      "Repository": "CRAN"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "r-dcm",
+      "RemoteRepo": "dcmdata",
+      "RemoteRef": "main",
+      "RemoteSha": "52c375d3ba84ee75b849a5ac216ba21cbd502519"
     },
     "dcmstan": {
       "Package": "dcmstan",
@@ -3533,6 +3534,44 @@
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "CRAN"
     },
+    "here": {
+      "Package": "here",
+      "Version": "1.0.2",
+      "Source": "Repository",
+      "Title": "A Simpler Way to Find Your Files",
+      "Date": "2025-09-06",
+      "Authors@R": "c(person(given = \"Kirill\", family = \"M\\u00fcller\", role = c(\"aut\", \"cre\"), email = \"kirill@cynkra.com\", comment = c(ORCID = \"0000-0002-1416-3412\")), person(given = \"Jennifer\", family = \"Bryan\", role = \"ctb\", email = \"jenny@rstudio.com\", comment = c(ORCID = \"0000-0002-6983-2759\")))",
+      "Description": "Constructs paths to your project's files. Declare the relative path of a file within your project with 'i_am()'. Use the 'here()' function as a drop-in replacement for 'file.path()', it will always locate the files relative to your project root.",
+      "License": "MIT + file LICENSE",
+      "URL": "https://here.r-lib.org/, https://github.com/r-lib/here",
+      "BugReports": "https://github.com/r-lib/here/issues",
+      "Imports": [
+        "rprojroot (>= 2.1.0)"
+      ],
+      "Suggests": [
+        "conflicted",
+        "covr",
+        "fs",
+        "knitr",
+        "palmerpenguins",
+        "plyr",
+        "readr",
+        "rlang",
+        "rmarkdown",
+        "testthat",
+        "uuid",
+        "withr"
+      ],
+      "VignetteBuilder": "knitr",
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.3.3.9000",
+      "Config/testthat/edition": "3",
+      "Config/Needs/website": "tidyverse/tidytemplate",
+      "NeedsCompilation": "no",
+      "Author": "Kirill Müller [aut, cre] (ORCID: <https://orcid.org/0000-0002-1416-3412>), Jennifer Bryan [ctb] (ORCID: <https://orcid.org/0000-0002-6983-2759>)",
+      "Maintainer": "Kirill Müller <kirill@cynkra.com>",
+      "Repository": "CRAN"
+    },
     "highr": {
       "Package": "highr",
       "Version": "0.11",
@@ -4569,8 +4608,8 @@
     },
     "measr": {
       "Package": "measr",
-      "Version": "2.0.0",
-      "Source": "Repository",
+      "Version": "2.0.0.9000",
+      "Source": "GitHub",
       "Title": "Bayesian Psychometric Measurement Using 'Stan'",
       "Authors@R": "c( person(\"W. Jake\", \"Thompson\", , \"wjakethompson@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0001-7339-0300\")), person(\"Jeffrey\", \"Hoover\", , \"jeffrey.c.hoover@gmail.com\", role = \"aut\", comment = c(ORCID = \"0000-0002-0276-0308\")), person(\"Auburn\", \"Jimenez\", , \"auburn.jimenez34@gmail.com\", role = \"ctb\", comment = c(ORCID = \"0000-0002-7072-2960\")), person(\"Nathan\", \"Jones\", , \"jonesnateb@gmail.com\", role = \"ctb\", comment = c(ORCID = \"0000-0001-6177-7161\")), person(\"Matthew\", \"Johnson\", , , role = \"cph\", comment = \"Authored code adapted for measrdcm method for `reliability()`\"), person(\"University of Kansas\", role = \"cph\"), person(\"Institute of Education Sciences\", role = \"fnd\") )",
       "Description": "Estimate diagnostic classification models (also called cognitive diagnostic models) with 'Stan'. Diagnostic classification models are  confirmatory latent class models, as described by Rupp et al. (2010, ISBN: 978-1-60623-527-0). Automatically generate 'Stan' code for the general loglinear cognitive diagnostic diagnostic model proposed by Henson et al. (2009) <doi:10.1007/s11336-008-9089-5> and other subtypes that introduce additional model constraints. Using the generated 'Stan' code, estimate the model evaluate the model's performance using model fit indices, information criteria, and reliability metrics.",
@@ -4596,7 +4635,7 @@
         "psych",
         "Rcpp (>= 0.12.0)",
         "RcppParallel (>= 5.0.1)",
-        "rdcmchecks",
+        "rdcmchecks (>= 0.1.0.9000)",
         "rlang (>= 1.1.0)",
         "rstan (>= 2.26.0)",
         "rstantools (>= 2.6.0)",
@@ -4630,14 +4669,21 @@
       "Config/roxylint": "list(linters = roxylint::tidy)",
       "Encoding": "UTF-8",
       "Language": "en-US",
+      "LazyData": "true",
+      "Roxygen": "list(markdown = TRUE, roclets = c(\"namespace\", \"rd\", \"roxylint::roxylint\"))",
       "RoxygenNote": "7.3.3",
       "Biarch": "true",
       "SystemRequirements": "GNU make",
       "VignetteBuilder": "knitr",
-      "NeedsCompilation": "yes",
       "Author": "W. Jake Thompson [aut, cre] (ORCID: <https://orcid.org/0000-0001-7339-0300>), Jeffrey Hoover [aut] (ORCID: <https://orcid.org/0000-0002-0276-0308>), Auburn Jimenez [ctb] (ORCID: <https://orcid.org/0000-0002-7072-2960>), Nathan Jones [ctb] (ORCID: <https://orcid.org/0000-0001-6177-7161>), Matthew Johnson [cph] (Authored code adapted for measrdcm method for `reliability()`), University of Kansas [cph], Institute of Education Sciences [fnd]",
       "Maintainer": "W. Jake Thompson <wjakethompson@gmail.com>",
-      "Repository": "CRAN"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "r-dcm",
+      "RemoteRepo": "measr",
+      "RemoteRef": "main",
+      "RemoteSha": "84b9b1feb9ccf71a5469e5376ad9e6d666664d7d",
+      "Remotes": "r-dcm/rdcmchecks"
     },
     "memoise": {
       "Package": "memoise",
@@ -5789,8 +5835,8 @@
     },
     "rdcmchecks": {
       "Package": "rdcmchecks",
-      "Version": "0.1.0",
-      "Source": "Repository",
+      "Version": "0.1.0.9000",
+      "Source": "GitHub",
       "Title": "Common Argument Checks for 'r-dcm' Packages",
       "Authors@R": "c( person(\"W. Jake\", \"Thompson\", , \"wjakethompson@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0001-7339-0300\")), person(\"University of Kansas\", role = \"cph\"), person(\"Institute of Education Sciences\", role = \"fnd\"), person(\"Accessible Teaching, Learning, and Assessment Systems\", role = \"fnd\") )",
       "Description": "Many packages in the 'r-dcm' family take similar arguments, which are checked for expected structures and values. Rather than duplicating code across several packages, commonly used check functions are included here.  This package can then be imported to access the check functions in other packages.",
@@ -5809,7 +5855,7 @@
         "tidyr"
       ],
       "Suggests": [
-        "dcmdata",
+        "dcmdata (>= 0.1.0.9000)",
         "spelling",
         "testthat (>= 3.0.0)"
       ],
@@ -5819,11 +5865,17 @@
       "Config/roxylint": "list(linters = roxylint::tidy)",
       "Encoding": "UTF-8",
       "Language": "en-US",
-      "RoxygenNote": "7.3.2",
-      "NeedsCompilation": "no",
+      "Roxygen": "list(markdown = TRUE, roclets = c(\"namespace\", \"rd\", \"roxylint::roxylint\"))",
+      "RoxygenNote": "7.3.3",
       "Author": "W. Jake Thompson [aut, cre] (ORCID: <https://orcid.org/0000-0001-7339-0300>), University of Kansas [cph], Institute of Education Sciences [fnd], Accessible Teaching, Learning, and Assessment Systems [fnd]",
       "Maintainer": "W. Jake Thompson <wjakethompson@gmail.com>",
-      "Repository": "CRAN"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "r-dcm",
+      "RemoteRepo": "rdcmchecks",
+      "RemoteRef": "main",
+      "RemoteSha": "23b79103234ecbf8ec9a50a0d4540d0f38c1f19d",
+      "Remotes": "r-dcm/dcmdata"
     },
     "reactR": {
       "Package": "reactR",
@@ -6706,6 +6758,43 @@
       "NeedsCompilation": "no",
       "Author": "Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>), Carson Sievert [ctb], Jesse Anderson [ctb], Ramnath Vaidyanathan [ctb], Romain Lesur [ctb], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Yihui Xie <xie@yihui.name>",
+      "Repository": "CRAN"
+    },
+    "sessioninfo": {
+      "Package": "sessioninfo",
+      "Version": "1.2.3",
+      "Source": "Repository",
+      "Title": "R Session Information",
+      "Authors@R": "c( person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = \"cre\"), person(\"Hadley\", \"Wickham\", role = \"aut\"), person(\"Winston\", \"Chang\", role = \"aut\"), person(\"Robert\", \"Flight\", role = \"aut\"), person(\"Kirill\", \"Müller\", role = \"aut\"), person(\"Jim\", \"Hester\", role = \"aut\"), person(\"R Core team\", role = \"ctb\"), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")) )",
+      "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+      "Description": "Query and print information about the current R session.  It is similar to 'utils::sessionInfo()', but includes more information about packages, and where they were installed from.",
+      "License": "GPL-2",
+      "URL": "https://github.com/r-lib/sessioninfo#readme, https://sessioninfo.r-lib.org",
+      "BugReports": "https://github.com/r-lib/sessioninfo/issues",
+      "Depends": [
+        "R (>= 3.4)"
+      ],
+      "Imports": [
+        "cli (>= 3.1.0)",
+        "tools",
+        "utils"
+      ],
+      "Suggests": [
+        "callr",
+        "covr",
+        "gh",
+        "reticulate",
+        "rmarkdown",
+        "testthat (>= 3.2.0)",
+        "withr"
+      ],
+      "Config/Needs/website": "pkgdown, tidyverse/tidytemplate",
+      "Config/testthat/edition": "3",
+      "Config/testthat/parallel": "true",
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.3.2",
+      "NeedsCompilation": "no",
+      "Author": "Gábor Csárdi [cre], Hadley Wickham [aut], Winston Chang [aut], Robert Flight [aut], Kirill Müller [aut], Jim Hester [aut], R Core team [ctb], Posit Software, PBC [cph, fnd]",
       "Repository": "CRAN"
     },
     "showtext": {

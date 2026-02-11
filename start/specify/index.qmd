@@ -10,26 +10,227 @@ link-citations: true
 ```{r}
 #| label: setup
 #| include: false
+#| message: false
+#| warning: false
 
-library(wjake)
-library(showtext)
-library(english)
+source(here::here("common.R"))
+```
 
-set_theme(
-  base_family = "Open Sans",
-  plot_margin = ggplot2::margin(10, 10, 10, 10)
-)
+```{r}
+#| label: load
+#| include: false
+#| message: false
+#| warning: false
 
-font_add_google("Open Sans")
-showtext_auto()
-showtext_opts(dpi = 192)
-
-msr_colors <- c("#8ECAE6", "#023047", "#D7263D")
-
-options(mc.cores = 4, tidyverse.quiet = TRUE)
+library(dcmdata)
+library(dcmstan)
+library(measr)
+pkgs <- c("dcmdata", "measr", "rstan")
 ```
 
 ## Introduction
+
+How do you specify and estimate a diagnostic classification model (DCM) using measr?
+In this article, we will walk you through the steps.
+We start with data for building the model, learn how to specify DCMs that make different assumptions about the data, and explore how to estimate the model with [*Stan*](https://mc-stan.org).
+
+`r article_req_pkgs(pkgs)`
+
+```{r}
+#| label: user-load
+#| message: false
+
+library(measr)     # for model specification and estimation
+
+# Helper packages
+library(dcmdata)   # for example data set
+library(rstan)     # for estimation backend
+```
+
+## Rapid Online Assessment of Reading and Phonological Awareness (ROAR-PA) data
+
+Let's use data from the ROAR-PA [@roarpa] to learn how to specify and estimate a DCM with measr.
+The ROAR-PA data is available in the dcmdata package, and contains responses to `r ncol(roarpa_data) - 1` items from `r fmt_count(nrow(roarpa_data))` respondents.
+
+```{r}
+#| label: roarpa-data
+
+roarpa_data
+```
+
+In addition to our response data, a DCM also requires a Q-matrix.
+A Q-matrix contains one row per item, and one column per attribute (plus an optional column of item identifiers).
+A value of 1 indicates that the item measures the attribute, and a value of 0 indicates the item does not measure the attribute.
+In our Q-matrix, we can see that the item identifiers in the in the rows (`item`) correspond to the column names of the data.
+Additionally, we see that there are three attributes measured by this assessment: `lsm`, `del`, and `fsm`.
+These refer to the first sound made (`fsm`), last sound made (`lsm`), and deletion (`del`) elements of phonological awareness.
+
+```{r}
+#| label: roarpa-qmatrix
+
+roarpa_qmatrix
+```
+
+Our task is to determine which attributes each respondent is proficient on, given their item responses.
+For more information on the data set, see `?roarpa` and @roarpa.
+
+## Specify a DCM
+
+A DCM model specification has three primary components: the Q-matrix, a measurement model, and a structural model.
+Given these three components, we can create a model specification with `dcm_specify()`.
+
+```{r}
+#| label: roarpa-spec
+
+roarpa_spec <- dcm_specify(
+  qmatrix = roarpa_qmatrix,
+  identifier = "item",
+  measurement_model = lcdm(),
+  structural_model = unconstrained()
+)
+
+roarpa_spec
+```
+
+The Q-matrix, as we described, defines which items measure each attribute.
+In addition the the Q-matrix itself, we must also tell `dcm_specify()` which column within the Q-matrix contains the item identifiers.
+If there is no item identifier, then `identifier` can be left as `NULL` (the default).
+In our ROAR-PA specification, we can see that each of our three attributes is measured by 19 items.
+The ROAR-PA Q-matrix is a simple structure, meaning that each item measures only one attribute.
+
+At a high level, the measurement model describes how attributes interact with each other on specific items.
+If an item measures two attributes, how do we expect a respondent to perform if they possess only one of the attributes?
+Are the attributes compensatory, meaning that proficiency on either is sufficient to answer the item correctly, or noncompensatory, and proficiency on both attributes is required in order to provide a correct response?
+The choice of measurement model dictates these relationships.
+
+The structural model describes relationships between proficiency on the attributes.
+Is proficiency on one attribute independent of proficiency on another, or is proficiency correlated?
+It's also possible that some attributes may represent prerequisite knowledge such that respondents must demonstrate proficiency before they can demonstrate proficiency of other attributes.
+The structural model is used to define these relationships.
+
+We'll explore both measurement and structural models in more detail in the next sections.
+
+### Measurement models
+
+measr provides functionality for seven DCM measurement models: the six core models identified by @rupp-dcm and a general model that subsumes the other models.
+A full description of these models is beyond the scope of what we are covering here.
+However, we will provide a high-level overview the types of models and offer referenes for further details on each.
+
+The general DCM supported by the measr is the loglinear cognitive diagnostic model [LCDM\; @lcdm; @lcdm-handbook].
+This is the most flexible model that allows each item to have unique interactions between attributes, estimating separate main effects and interaction effects for all possible attribute combinations.
+You can think of the LCDM as the "saturated model" that all other DCMs are constrained versions of.
+That is, by placing constraints on the LCDM parameters, you can achieve models equivalent to the other core models.
+
+Under the umbrella of the LCDM are the six core DCMs, which generally fall into two categories: non-compensatory (also called conjunctive) and compensatory (disjunctive).
+When using a non-compensatory model, attributes function like prerequisites or requirements, and missing an attribute creates a specific deficit that other attributes cannot overcome.
+In other words, with non-compensatory models, performance is constrained by the weakest link.
+In this category, measr supports the deterministic input, noisy "and" gate model [DINA\; @dina]; the noisy-input, deterministic "and" gate model [NIDA\; @nida]; and the non-compensatory reparameterized unified model [NC-RUM\; @ncrum].
+On the other hand, when compensatory models, attributes function like independent skills that accumulate, and having more attributes can partially or fully compensate for missing others.
+Thus, performance improves as you gain more attributes.
+In the compensatory category, measr supports the deterministic input, noisy "or" gate model [DINO\; @dino]; the noisy-input, deterministic "or" gate model [NIDO\; @nido]; and the compensatory reparameterized unified model [C-RUM\; @crum].
+
+Each of these measurement models can be estimated with measurement by supplying the respective measurement model function, as shown in @tbl-meas-models, to the `measurement_model` argument of `dcm_specify()`.
+
+```{r}
+#| label: tbl-meas-models
+#| tbl-cap: Measurement models supported by measr
+#| echo: false
+
+library(tidyverse)
+library(gt)
+
+tibble(
+  model = c("LCDM", "DINA", "NIDA", "NC-RUM", "DINO", "NIDO", "C-RUM"),
+  description = c(
+    "General and flexible, subsumes other models",
+    "All attributes must be present",
+    "Attributes have multiplicative penalties equal across items",
+    "Attributes have multiplicative penalites that vary across items",
+    "Any one attribute must be present",
+    "Attributes are additive and equal across items",
+    "Attributes are additive and vary across items"
+  ),
+  measr = c(
+    "`lcdm()`",
+    "`dina()`",
+    "`nida()`",
+    "`ncrum()`",
+    "`dino()`",
+    "`nido()`",
+    "`crum()`"
+  )
+) |> 
+  gt() |> 
+  fmt_markdown(columns = c(measr)) |> 
+  cols_width(
+    model ~ px(155),
+    description ~ px(500),
+    measr ~ px(80)
+  ) |> 
+  tab_row_group(
+    label = "Non-compensatory",
+    rows = 2:4
+  ) |> 
+  tab_row_group(
+    label = "Compensatory",
+    rows = 5:7
+  ) |> 
+  row_group_order(groups = c(NA, "Non-compensatory", "Compensatory")) |> 
+  gt_theme_rdcm() |> 
+  tab_style(
+    style = list(
+      cell_fill(color = msr_colors[2]),
+      cell_text(color = "white"),
+      cell_borders(weight = px(0))
+    ),
+    locations = cells_row_groups()
+  )
+```
+
+### Structural models
+
+measr provides functionality for five structural models.
+
+### Prior distributions
+
+
+
+## Estimate a model specification
+
+```{r}
+#| label: estimate-roarpa
+
+roarpa_lcdm <- dcm_estimate(
+  dcm_spec = roarpa_spec,
+  data = roarpa_data,
+  identifier = "id",
+  method = "optim",
+  backend = "rstan",
+  file = here::here("start", "fits", "roarpa-lcdm-uncst-rstn")
+)
+```
+
+### Respondent proficiency estimates
+
+```{r}
+#| label: score-roarpa
+
+roarpa_scores <- score(roarpa_lcdm) 
+roarpa_scores
+```
+
+```{r}
+#| label: classify-roarpa
+#| message: false
+
+library(tidyverse)
+
+roarpa_scores$attribute_probabilities |> 
+  mutate(probability = as.integer(probability > .5)) |> 
+  pivot_wider(names_from = attribute, values_from = probability)
+```
+
+## Outline
 
 The first article will focus on how to specify a DCM with measr including:
 
@@ -39,3 +240,12 @@ The first article will focus on how to specify a DCM with measr including:
 * Combining these choices into a DCM specification using `dcm_specify()`
 
 The article will then describe how to estimate the model with MCMC or an optimizer using either `{rstan}` or `{cmdstanr}` with `dcm_estimate()`.
+
+## Session information {#session-info}
+
+```{r}
+#| label: "si"
+#| echo: false
+
+small_session(pkgs)
+```

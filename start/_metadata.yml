@@ -5,6 +5,7 @@ freeze: false
 format:
   html:
     code-link: true
+    html-table-processing: none
 
 engine: knitr
 
@@ -16,8 +17,10 @@ execute:
 
 knitr:
   opts_chunk:
-    collapse: true
+    digits: 3
     comment: "#>"
+    dev: "ragg_png"
     fig-align: "center"
     fig-width: 7.2916667
     out-width: "90%"
+    collapse: true

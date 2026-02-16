@@ -129,7 +129,7 @@ On the other hand, when compensatory models, attributes function like independen
 Thus, performance improves as you gain more attributes.
 In the compensatory category, measr supports the deterministic input, noisy "or" gate model [DINO\; @dino]; the noisy-input, deterministic "or" gate model [NIDO\; @nido]; and the compensatory reparameterized unified model [C-RUM\; @crum].
 
-Each of these measurement models can be estimated with measurement by supplying the respective measurement model function, as shown in @tbl-meas-models, to the `measurement_model` argument of `dcm_specify()`.
+Each of these measurement models can be estimated with measr by supplying the respective measurement model function, as shown in @tbl-meas-models, to the `measurement_model` argument of `dcm_specify()`.
 
 ```{r}
 #| label: tbl-meas-models
@@ -190,6 +190,44 @@ tibble(
 ### Structural models
 
 measr provides functionality for five structural models.
+
+
+Each of these structural models can be estimated with measr by supplying the respective structural model function, as shown in @tbl-strc-models, to the `structural_model` argument of `dcm_specify()`.
+
+```{r}
+#| label: tbl-strc-models
+#| tbl-cap: Structural models supported by measr
+#| echo: false
+
+library(tidyverse)
+library(gt)
+
+tibble(
+  model = c("Unconstrained", "Independent", "Loglinear", "HDCM", "BayesNet"),
+  description = c(
+    "General and flexible, subsumes other models",
+    "Attributes are independent of each other",
+    "Can be constrained to only include certain interaction levels",
+    "Hard constraints on profiles based on attribute dependencies",
+    "Soft constraints on profiles based on attribute dependencies"
+  ),
+  measr = c(
+    "`unconstrained()`",
+    "`independent()`",
+    "`loglinear()`",
+    "`hdcm()`",
+    "`bayesnet()`"
+  )
+) |> 
+  gt() |> 
+  fmt_markdown(columns = c(measr)) |> 
+  cols_width(
+    model ~ px(130),
+    description ~ px(475),
+    measr ~ px(150)
+  ) |> 
+  gt_theme_rdcm()
+```
 
 ### Prior distributions
 

@@ -190,7 +190,32 @@ tibble(
 ### Structural models
 
 measr provides functionality for five structural models.
+The structural model describes the joint distribution of attribute profiles in the population.
+Different structural models make different assumptions about how attributes relate to each other.
 
+The most general option is the unconstrained model [@rupp-dcm].
+This model places no constraints on the relationships between attributes.
+Each of the 2^*A*^ possible attribute profiles (where *A* is the number of attributes) has its own freely estimated base rate parameter.
+Because all profiles are freely estimated, this is a saturated structural model.
+
+The independent model [@independent] assumes that attributes are completely unrelated.
+Proficiency on one attribute tells you nothing about proficiency on another.
+Under this model, each attribute has its own proficiency base rate, and the probability of any profile is simply the product of the individual attribute base rates (or their complements for non-proficiency).
+
+The loglinear model [@loglinear] uses a log-linear parameterization with main effects and interactions.
+When specifying a loglinear model, we can use the `max_interaction` argument to control the high-level interactions to include.
+When `max_interaction` is set to the number of attributes (the default), the loglinear model is equivalent to the unconstrained model.
+When `max_interaction = 1`, only main effects are included, which is equivalent to the independent model.
+Intermediate values allow you to model some degree of attribute dependence without fully saturating the structural model.
+
+The remaining two structural models incorporate attribute hierarchies.
+In these models, proficiency on some attributes may be a prerequisite for proficiency on others.
+The hierarchical DCM [HDCM\; @hdcm] enforces strict attribute prerequisites.
+Attribute profiles that violate the specified hierarchy are excluded entirely from the model, meaning their base rates are fixed to zero.
+In contrast, the Bayesian network model [@bayesnet] implements a softer version of the hierarchy.
+All attribute profiles remain possible, but profiles that are inconsistent with the hierarchy are estimated to be less likely.
+Both models require a `hierarchy` argument that defines the attribute relationships using dagitty-style syntax, such as `"att1 -> att2 -> att3"`.
+For more details on specifying attribute hierarchies, see the [Define Attribute Relationships](/start/hierarchies/) article.
 
 Each of these structural models can be estimated with measr by supplying the respective structural model function, as shown in @tbl-strc-models, to the `structural_model` argument of `dcm_specify()`.
 
@@ -231,9 +256,89 @@ tibble(
 
 ### Prior distributions
 
+A final aspect of the DCM specification that we have not yet talked about is the definition of the model priors.
+Take another look at our specifciation object.
+We can see that there are prior distribution defined for each type of parameter in our model.
 
+```{r}
+#| label: print-roarpa
+
+roarpa_spec
+```
+
+Every parameter in a DCM specification is assigned a prior distribution that encodes our beliefs about plausible parameter values before observing any data.
+measr provides sensible defaults, but you can also customize priors to reflect domain knowledge or to implement more informative constraints.
+
+To view the default priors for a given measurement and structural model combination, use `default_dcm_priors()`.
+In our example, we have specified an LCDM with an unconstrained structural model.
+Plugging those two components in, we see the same priors that we saw in our specification object.
+
+```{r}
+#| label: default-priors
+
+default_dcm_priors(
+  measurement_model = lcdm(),
+  structural_model = unconstrained()
+)
+```
+
+However, different choices of measurement and structural models will result in different parameters being included, and therefore different prior distributions.
+For example, specifying a DINA measurement model with and independent structural model has a completely different set of parameters.
+
+```{r}
+#| label: dina-params
+
+default_dcm_priors(
+  measurement_model = dina(),
+  structural_model = independent()
+)
+```
+
+You can see which parameter types and specific coefficients are available for your model using `get_parameters()`.
+
+```{r}
+#| label: get-params
+
+get_parameters(lcdm(), qmatrix = roarpa_qmatrix, identifier = "item")
+```
+
+To customize priors, use the `prior()` function.
+The `type` argument specifies which parameter type the prior applies to, and the optional `coefficient` argument can target a specific parameter within that type.
+Custom priors can be passed to `dcm_specify()` via the `priors` argument.
+Any parameter types not covered by a custom prior will retain their default values.
+
+```{r}
+#| label: custom-priors
+
+my_priors <- c(
+  prior(normal(0, 1), type = "intercept"),
+  prior(lognormal(0, 0.5), type = "maineffect", coefficient = "l1_13")
+)
+
+dcm_specify(
+  qmatrix = roarpa_qmatrix,
+  identifier = "item",
+  measurement_model = lcdm(),
+  structural_model = unconstrained(),
+  priors = my_priors
+)
+```
 
 ## Estimate a model specification
+
+Once we have a model specification, we can estimate it using `dcm_estimate()`.
+This function takes a specification object (created by `dcm_specify()`), along with the response data and the name of the column in the data that contains respondent identifiers.
+
+The `method` argument controls how the model is estimated.
+Options include `"optim"` for point estimation using Stan's optimizer, `"mcmc"` for full Markov chain Monte Carlo sampling, `"variational"` for variational inference, and `"pathfinder"` (available only when using the cmdstanr backend).
+Full MCMC provides the most complete picture of the posterior distribution, but takes the longest to run.
+The optimizer is the fastest option and is useful for quick analyses, but does not provide a full posterior distribution.
+
+The `backend` argument specifies which Stan interface to use for estimation: `"rstan"` or `"cmdstanr"` to use the `{rstan}` or `{cmdstanr}` package, respetively.
+The `file` argument allows you to save the estimated model to disk so that it does not need to be re-estimated if you re-run the script.
+Any additional arguments are passed directly to the backend's estimation function (e.g., `chains`, `iter`, and `warmup` for MCMC estimation when using the `"rstan"` backend).
+
+For this example, we use the optimizer with rstan, which provides fast point estimates of the model parameters.
 
 ```{r}
 #| label: estimate-roarpa
@@ -250,12 +355,20 @@ roarpa_lcdm <- dcm_estimate(
 
 ### Respondent proficiency estimates
 
+After estimating a model, we typically want to know which attributes each respondent has mastered.
+The `score()` function calculates respondent proficiency estimates from a fitted model.
+It returns a list with two elements: `class_probabilities`, which contains the probability that each respondent belongs to each possible attribute profile, and `attribute_probabilities`, which contains the marginal probability that each respondent is proficient on each individual attribute.
+
 ```{r}
 #| label: score-roarpa
 
-roarpa_scores <- score(roarpa_lcdm) 
+roarpa_scores <- score(roarpa_lcdm)
 roarpa_scores
 ```
+
+In practice, we often want to convert these probabilities into binary proficiency classifications.
+A common approach is to use a threshold of .5, classifying a respondent as proficient on an attribute if their estimated probability of proficiency exceeds .5.
+The choice of threshold matters and can be adjusted based on the intended use of the results.
 
 ```{r}
 #| label: classify-roarpa
@@ -268,16 +381,10 @@ roarpa_scores$attribute_probabilities |>
   pivot_wider(names_from = attribute, values_from = probability)
 ```
 
-## Outline
-
-The first article will focus on how to specify a DCM with measr including:
-
-* Choosing a measurement model
-* Choosing a structural model
-* Choosing prior distributions
-* Combining these choices into a DCM specification using `dcm_specify()`
-
-The article will then describe how to estimate the model with MCMC or an optimizer using either `{rstan}` or `{cmdstanr}` with `dcm_estimate()`.
+We now have an estimate of proficiency for each respondent on each of the attribute measured by the ROAR-PA.
+However, before we report these result it's important to evaluate the quality of the model.
+We need to ensure that the model fits well and provides accurate classifications.
+That is the focus of the [Evaluate model performance](/start/evaluate/) article.
 
 ## Session information {#session-info}
 

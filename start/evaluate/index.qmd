@@ -10,35 +10,524 @@ link-citations: true
 ```{r}
 #| label: setup
 #| include: false
+#| message: false
+#| warning: false
 
-library(wjake)
-library(showtext)
-library(english)
+source(here::here("common.R"))
+```
 
-set_theme(
-  base_family = "Open Sans",
-  plot_margin = ggplot2::margin(10, 10, 10, 10)
-)
+```{r}
+#| label: load
+#| include: false
+#| message: false
+#| warning: false
 
-font_add_google("Open Sans")
-showtext_auto()
-showtext_opts(dpi = 192)
-
-msr_colors <- c("#8ECAE6", "#023047", "#D7263D")
-
-options(mc.cores = 4, tidyverse.quiet = TRUE)
+library(dcmdata)
+library(measr)
+library(rstan)
+pkgs <- c("dcmdata", "measr", "rstan")
 ```
 
 ## Introduction
 
-The second article will focus on tools for evaluating an estimated DCM model.
-This will include tools for calculating:
+Once you've estimated a DCM, the natural next question is: *does this model actually work?*
+Before reporting results or making decisions based on proficiency classifications, we want evidence that the model is doing a good job of representing the data. In this article, we'll walk through four complementary approaches to evaluating a DCM:
 
-* Absolute fit (e.g., `fit_ppmc()`, `fit_m2()`)
-* Relative fit for model comparisons (e.g., `waic()`, `loo()`)
+* Absolute fit: Does the model fit the observed data?
+* Relative fit: When comparing competing models, which one fits better?
+* Classification reliability: How consistent and accurate are the proficiency classifications?
+* Misfit diagnostics: If something seems off, where is the problem?
 
-We will showcase tools for investigating potential causes of misfit such as:
+To use code in this article, you will need to install the following packages: `r article_req_pkgs(pkgs)`
 
-* Incorrect Q-matrix specifications (`qmatrix_validation()`)
-* Local item dependence (`yens_q3()`)
-* Item and attribute discrimination (`cdi()`)
+```{r}
+#| label: user-load
+#| message: false
+
+library(measr)    # for model evaluation
+
+# Helper packages
+library(dcmdata)  # for example data set
+library(rstan)    # for estimation backend
+```
+
+## Diagnosing Teachers' Multiplicative Reasoning (DTMR) Data
+
+We'll use data from the DTMR project to demonstrate each of these evaluation tools.
+The DTMR assessment measures four attributes related to multiplicative reasoning in mathematics teachers.
+In total, the DTMR data contains responses to `r ncol(dtmr_data) - 1` items from `r fmt_count(nrow(dtmr_data))` respondents.
+
+```{r}
+#| label: dtmr-data
+
+dtmr_data
+```
+
+Alongside the response data, we also have a Q-matrix that maps items to the `r ncol(dtmr_qmatrix) - 1` attributes measured by the assessment.
+These attributes represent aspects of multiplicative reasoning including and understanding of referent units, partitioning and iterating, appropriateness, and multiplicative comparison.
+
+```{r}
+#| label: dtmr-qmatrix
+
+dtmr_qmatrix
+```
+
+One particularly useful feature of the DTMR data for learning purposes is that it was simulated from known parameters.
+The actual data set is not publicly available.
+However, dcmdata provides an artificial data set with the same number of items and respondents, using the parameter estimates reported by @dtmr and @dtmr-strc.
+This means that the data set we are using will match the characterisitics of the real data, but we know what the true model parameters should be.
+For example, because this data was simulated from a loglinear cognitive diagnostic model [LCDM\; @lcdm], we know that we should see good model performance when estimating an LCDM to this data.
+Conversely, we should see poor performance if we estimate a more restrictive model, such as the deterministic input, noisy "and" gate model [DINA\; @dina].
+And that's exactly what makes this dataset a great learning example.
+We'll see what both good and bad fit look like and learn how to recognize it.
+
+Some of the evaluation tools we'll use require the full Bayesian posterior distribution, which means we need to estimate the model using MCMC.
+Let's specify and estimate two models now.
+First, we'll estimate and LCDM that we know should show good fit and performance.
+
+```{r}
+#| label: estimate-lcdm
+
+lcdm_spec <- dcm_specify(
+  qmatrix = dtmr_qmatrix,
+  identifier = "item",
+  measurement_model = lcdm(),
+  structural_model = unconstrained()
+)
+
+dtmr_lcdm <- dcm_estimate(
+  lcdm_spec,
+  data = dtmr_data,
+  identifier = "id",
+  method = "mcmc",
+  backend = "rstan",
+  chains = 4,
+  iter = 1500,
+  warmup = 1000,
+  file = here::here("start", "fits", "dtmr-lcdm-mcmc-rstn")
+)
+```
+
+Next, we'll estimate a DINA model.
+The DINA model puts constraints on the LCDM, so this model should show worse performance than our LCDM.
+
+```{r}
+#| label: estimate-dina
+
+dina_spec <- dcm_specify(
+  qmatrix = dtmr_qmatrix,
+  identifier = "item",
+  measurement_model = dina(),
+  structural_model = unconstrained()
+)
+
+dtmr_dina <- dcm_estimate(
+  dina_spec,
+  data = dtmr_data,
+  identifier = "id",
+  method = "mcmc",
+  backend = "rstan",
+  chains = 4,
+  iter = 2500,
+  warmup = 2000,
+  control = list(adapt_delta = .99),
+  file = here::here("start", "fits", "dtmr-dina-mcmc-rstn")
+)
+```
+
+```{r}
+#| label: add-fit
+#| include: false
+
+dtmr_lcdm <- add_fit(
+  dtmr_lcdm,
+  method = c("m2", "ppmc"),
+  model_fit = "raw_score",
+  return_draws = 1000
+)
+dtmr_lcdm <- add_reliability(dtmr_lcdm)
+dtmr_lcdm <- add_criterion(dtmr_lcdm, criterion = "loo")
+
+dtmr_dina <- add_fit(
+  dtmr_dina,
+  method = c("m2", "ppmc"),
+  model_fit = "raw_score",
+  return_draws = 1000
+)
+dtmr_dina <- add_reliability(dtmr_dina)
+dtmr_dina <- add_criterion(dtmr_dina, criterion = "loo")
+```
+
+## Absolute model fit
+
+Absolute fit asks a direct question: does the model fit the data?
+We have two tools for answering it with measr: the M~2~ statistic, which works with any estimation method, and posterior predictive model checks (PPMCs), which require a full posterior from either MCMC estimation or a variational inference algorithm.
+
+### M~2~ statistic
+
+The M~2~ statistic is a limited-information goodness-of-fit measure originally developed by Maydeu-Olivares & Joe [-@m2-2005; -@m2-2006] and adapted for DCMs by @liu2016.
+"Limited-information" means the statistic summarizes fit using item-pair statistics rather than the full multivariate response pattern, making it practical for assessments with many items.
+
+The null hypothesis is that the model fits the data.
+A large M~2~ (relative to the degrees of freedom, `df`) with a small *p*-value suggests the model does not adequately reproduce the observed data patterns.
+We can calculate the M~2~ for any measr model with `fit_m2()`.
+In addition to the M~2~ statistic and its *p*-value, the function also returns the root mean square error of approximation (RMSEA) with a 90% confidence interval and the standardized root mean square residual (SRMSR) as supplementary fit indices.
+
+```{r}
+#| label: lcdm-m2
+
+fit_m2(dtmr_lcdm)
+```
+
+Since the DTMR data was generated from an LCDM, we expect good fit here.
+A non-significant *p*-value means we cannot reject the null hypothesis that the model fits, and small RMSEA and SRMSR values indicate the model closely reproduces the observed item-pair statistics.
+
+Contrast that with the fit results for the DINA model.
+The M~2~ is quite large with a very small *p*-value, and both the RMSEA and SRMSR are more elevated.
+This is expected in this example, because we know that the DINA model has more constraints than the model that was used to generate this data set.
+
+```{r}
+#| label: dina-m2
+
+fit_m2(dtmr_dina)
+```
+
+### Posterior predictive model checks
+
+Posterior predictive model checks (PPMCs) are a Bayesian approach to evaluating model fit [@park2015].
+The idea is to simulate many replicated datasets from the estimated model posterior, then ask: does our observed data look like data the model would generate?
+If the model is well-specified, the observed data should be indistinguishable from the replicated data.
+
+`fit_ppmc()` performs a PPMC based on the raw score distribution.
+It simulates replicated datasets from the posterior, calculates the distribution of raw scores for each, and compares this distribution to our observed data.
+Because PPMCs require draws from the full posterior distribution, they only work with model estimated by a method that produces a posterior (i.e., MCMC, variational inference).
+
+```{r}
+#| label: dtmr-ppmc
+
+lcdm_ppmc <- fit_ppmc(
+  dtmr_lcdm,
+  model_fit = "raw_score",
+  return_draws = 1000
+)
+lcdm_ppmc
+```
+
+```{r}
+#| label: calc-dina-ppmc
+#| include: false
+
+dina_ppmc <- fit_ppmc(
+  dtmr_dina,
+  model_fit = "raw_score",
+  return_draws = 1000
+)
+```
+
+The key output is the posterior predictive *p*-value (*ppp*), which is the proportion of replicated datasets that produced a larger fit statistic than our observed data.
+For a well-fitting model, the observed data should fall in the middle of the replicated distribution, giving a *ppp* near 0.5.
+Values near 0 indicate that the observed data produces a fit statistic with a much larger value than expected by replicated datasets; values near 1 would indicate the opposite.
+In this case, our *ppp* values is `r fmt_digits(lcdm_ppmc$ppmc_raw_score$ppp, digits = 3)`, indicating that `r fmt_digits(lcdm_ppmc$ppmc_raw_score$ppp * 100, digits = 1)`% of replicated data sets had a larger fit statistic than our observed data.
+
+Let's visualize the PPMC to see how the observed raw score distribution compares to the replicated data.
+
+```{r}
+#| label: rawscore-dist
+#| code-fold: true
+#| code-summary: "Plot code"
+#| fig-asp: 0.618
+#| fig-alt: >
+#|   Line plot showing the observed number of respondents at each raw score
+#|   point, superimposed over an interval showing the expected number of
+#|   respondents at each score point from model-replicated data. The observed
+#|   line runs through the middle of the credible interval bands, indicating
+#|   good model fit.
+
+library(tidyverse)
+library(ggdist)
+
+obs_scores <- dtmr_data |>
+  pivot_longer(cols = -"id") |>
+  summarize(raw_score = sum(value), .by = id) |>
+  count(raw_score) |>
+  complete(raw_score = 0:(ncol(dtmr_data) - 1), fill = list(n = 0L))
+
+lcdm_ppmc$ppmc_raw_score |>
+  dplyr::select(rawscore_samples) |>
+  unnest(rawscore_samples) |>
+  unnest(raw_scores) |>
+  ggplot() +
+  stat_interval(
+    aes(x = raw_score, y = n, color_ramp = after_stat(level)),
+    point_interval = "mean_qi",
+    color = msr_colors[2],
+    linewidth = 5,
+    show.legend = c(color = FALSE)
+  ) +
+  geom_line(
+    data = obs_scores,
+    aes(x = raw_score, y = n),
+    color = msr_colors[3]
+  ) +
+  geom_point(
+    data = obs_scores,
+    aes(x = raw_score, y = n, fill = "Observed Data"),
+    shape = 21,
+    color = msr_colors[3],
+    size = 2
+  ) +
+  scale_color_ramp_discrete(
+    from = "white",
+    range = c(0.2, 1),
+    breaks = c(0.5, 0.8, 0.95),
+    labels = ~ paste0(as.numeric(.x) * 100, "%")
+  ) +
+  scale_fill_manual(values = c(msr_colors[3])) +
+  scale_x_continuous(breaks = seq(0, 27, 3), expand = c(0, 0)) +
+  scale_y_comma() +
+  labs(
+    x = "Raw score",
+    y = "Respondents",
+    color_ramp = "Credible Interval",
+    fill = NULL
+  ) +
+  guides(fill = guide_legend(override.aes = list(size = 3)))
+```
+
+The blue bars show the 50%, 80%, and 95% credible intervals for the expected number of respondents at each score point, based on the model (i.e., the distribution across the replicated data sets).
+The red line and points show the counts from our observed data set.
+When the model fits well, the red line threads through the middle of the blue intervals rather than wandering outside them.
+
+We can also examine the distribution of &chi;^2^-like statistics calculated from the replicated datasets [@thompson-bayes].
+For each replicated dataset, we compute how much it differs from the expected raw score distribution.
+This creates a distribution of plausible &chi;^2^ values under the model.
+The &chi;^2^ is our fit statistic in this PPMC, and the *ppp* value is the proportion of replicated &chi;^2^ values that exceed the observed value (as indicated by the red line).
+In this example, we see that the observed value is toward the middle, which is exactly what we would expect from a well-fitting model.
+
+```{r}
+#| label: chisq-dist
+#| code-fold: true
+#| code-summary: "Plot code"
+#| fig-asp: 0.618
+#| fig-alt: >
+#|   Dot plot showing the distribution of chi-square statistics from
+#|   replicated datasets. A vertical line marks the observed chi-square
+#|   statistic, which falls near the center of the distribution, indicating
+#|   good model fit.
+
+lcdm_ppmc$ppmc_raw_score |>
+  dplyr::select(chisq_samples) |>
+  unnest(chisq_samples) |>
+  ggplot(aes(x = chisq_samples)) +
+  stat_dots(
+    quantiles = 500,
+    layout = "hex",
+    stackratio = 0.9,
+    color = msr_colors[2],
+    fill = msr_colors[2],
+    na.rm = TRUE
+  ) +
+  geom_vline(
+    xintercept = dtmr_lcdm@fit$ppmc_raw_score$obs_chisq,
+    color = msr_colors[3],
+    linewidth = 1
+  ) +
+  labs(y = NULL, x = "&chi;^2^<sub>rep</sub>") +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+```
+
+Compare this to the same &chi;^2^ plot for the DINA model.
+For this model, the observed value is further out in the tail of the distribution of expected values.
+Accordingly, our *ppp* value is only `r fmt_digits(dina_ppmc$ppmc_raw_score$ppp, digits = 3)`.
+
+```{r}
+#| label: dina-chisq-dist
+#| code-fold: true
+#| code-summary: "Plot code"
+#| fig-asp: 0.618
+#| fig-alt: >
+#|   Dot plot showing the distribution of chi-square statistics from
+#|   replicated datasets. A vertical line marks the observed chi-square
+#|   statistic, which falls near the center of the distribution, indicating
+#|   good model fit.
+
+dina_ppmc <- fit_ppmc(
+  dtmr_dina,
+  model_fit = "raw_score",
+  return_draws = 1000
+)
+
+dina_ppmc$ppmc_raw_score |>
+  dplyr::select(chisq_samples) |>
+  unnest(chisq_samples) |>
+  ggplot(aes(x = chisq_samples)) +
+  stat_dots(
+    quantiles = 500,
+    layout = "hex",
+    stackratio = 0.9,
+    color = msr_colors[2],
+    fill = msr_colors[2],
+    na.rm = TRUE
+  ) +
+  geom_vline(
+    xintercept = dtmr_lcdm@fit$ppmc_raw_score$obs_chisq,
+    color = msr_colors[3],
+    linewidth = 1
+  ) +
+  scale_x_continuous(limits = c(0, 250)) +
+  labs(y = NULL, x = "&chi;^2^<sub>rep</sub>") +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+```
+
+## Relative model fit
+
+Absolute fit asks whether the model fits the data.
+Relative fit asks a different question: Among several candidate models, which fits better?
+This distinction matters because sometimes multiple models may show adequate absolute model fit, and we need to choose the best model to implement.
+In our example, we have one model that fits well and one that doesn't so we don't really need an evaluation of relative model fit to determine which is better.
+However, we'll run comparison to illustrate idea.
+
+We recommend using leave-one-out cross-validation (LOO) estimates for model comparisons.
+LOO approximates how well the model would predict new, unseen data.
+Higher expected log predictive density (ELPD) values indicate better out-of-sample predictive performance.
+`loo_compare()` directly compares the models, ranking them by ELPD and reporting the difference along with its standard error.
+
+```{r}
+#| label: loo-compare
+
+loo_compare(dtmr_lcdm, dtmr_dina)
+```
+
+The model with the higher ELPD is listed first.
+A difference in ELPD that is large relative to its standard error (roughly more than 2.5 times) provides strong evidence that one model genuinely fits better.
+Since the data was simulated from an LCDM, the LCDM should show a substantially higher ELPD than the DINA, reflecting that the LCDM is a better match for the true data-generating process.
+
+## Classification reliability
+
+Even after examining fit, it's worth asking a separate question.
+Regardless of how well the model fits the data at an overall level, how reliable are the individual classifications it produces?
+For practical applications of DCMs,like providing feedback to teachers about specific competencies, the reliability of those classifications matters as much as overall model fit.
+
+`reliability()` calculates several types of reliability evidence from our estimated model.
+
+```{r}
+#| label: dtmr-reliability
+
+lcdm_reliability <- reliability(dtmr_lcdm)
+lcdm_reliability
+```
+
+measr returns three categories of reliability: pattern reliability, MAP (maximum a posteriori) reliability, and EAP (expected a posteriori) reliability.
+Each reflects a different way of reporting results, and the most relevant indices depend on how proficiency scores are determined and used.
+For a comprehensive review of reliability methods for DCMs, see @reliability-handbook.
+
+### Pattern reliability
+
+Pattern reliability evaluates the consistency and accuracy of classifying respondents into an overall profile---the complete pattern of proficiency across all attributes simultaneously.
+@cui2012 describe two indices, `p_a` and `p_c`:
+
+- p~a~ is the probability of classifying a random respondent into the correct class.
+- p~c~ is the probability of consistently classifying a random respondent into the same class across two test administrations.
+
+These indices range from 0 to 1, with 1 indicating perfect accuracy or consistency, and 0 indicating the opposite.
+
+```{r}
+#| label: dtmr-pattern
+
+lcdm_reliability$pattern_reliability
+```
+
+### MAP reliability
+
+MAP reliability evaluates accuracy and consistency at the attribute level, where each attribute is classified separately using a threshold (typically .5) applied to the estimated proficiency probability.
+@johnson2018 describe two primary indices, P~ak~ (`acc`) and P~ck~ (`consist`):
+
+- P~ak~ is the accuracy of the attribute classification, or how often the classification matches the true latent state.
+- P~ck~ is the consistency of the classification across parallel test administrations.
+
+In addition, @johnson2018 demonstrate how other agreement indices, such as Goodman and Kruskal's &lambda; and Cohen's &kappa;, can be used to evaluate accuracy and consistency at the attribute level.
+All indices are returned by `reliability()`.
+
+```{r}
+#| label: dtmr-map
+
+lcdm_reliability$map_reliability
+```
+
+### EAP reliability
+
+EAP reliability evaluates the precision of the probability of proficiency itself, rather than a binary classification.
+@johnson2020 describe four reliability metrics for this purpose and recommend using the biserial (`rho_bs`) and informational (`rho_i`) indices, as the parallel form estimates tend to overestimate reliability.
+
+```{r}
+#| label: dtmr-eap
+
+lcdm_reliability$eap_reliability
+```
+
+EAP reliability is typically lower than MAP reliability, because placing a respondent at a specific probability (a continuous scale) is harder than placing them into a binary category.
+That said, both MAP and EAP reliability can be adequate even when overall model fit is not perfect, which is one reason it's important to evaluate both fit and reliability.
+
+## Investigating model fit
+
+Even when overall fit looks good, diagnostic tools can help confirm that nothing is amiss — or pinpoint specific problems if something looks off.
+measr provides three such tools: Q-matrix validation, local item dependence, and discrimination indices.
+
+### Q-matrix validation
+
+The Q-matrix defines which items measure which attributes, and it is a fundamental input to any DCM.
+If the Q-matrix is wrong — for example, if an item is assigned to the wrong attribute — the model's classifications will be affected in ways that aggregate fit statistics might not catch.
+
+`qmatrix_validation()` provides an empirical check by asking whether the data would be better explained by modifying any Q-matrix entry [@delatorre2016].
+For each item, it tests whether switching any Q-matrix entry from 0 to 1 (or from 1 to 0) would improve model fit.
+
+```{r}
+#| label: dtmr-qmatrix-validation
+
+qmatrix_validation(dtmr_lcdm)
+```
+
+Because the DTMR data was generated using the provided Q-matrix, we don't expect any Q-matrix misspecification.
+When working with real data, flagged items deserve closer inspection: the flag suggests the data is not consistent with the specified item-attribute mapping, and the output will indicate which change would improve fit.
+
+### Local item dependence
+
+DCMs assume that, conditional on the latent attribute profile, item responses are statistically independent of each other.
+When this assumption is violated, we observe *local item dependence* (LID): items sharing content overlap, reading passages, or sequential dependencies tend to co-vary in ways the model cannot explain.
+LID can indicate missing attributes or nuisance factors not captured in the current specification [@yenq3].
+
+`yens_q3()` detects LID by computing residual correlations between every pair of items after accounting for the estimated attribute profiles.
+Pairs with correlations above a critical value may indicate a violation of local independence.
+
+```{r}
+#| label: dtmr-yensq3
+
+yens_q3(dtmr_lcdm)
+```
+
+Large positive residual correlations suggest that two items share something beyond what the Q-matrix captures.
+Since the DTMR data was simulated with locally independent items, we expect most pairs to have small residual correlations and few (if any) flagged pairs.
+
+### Item and attribute discrimination
+
+Finally, it's useful to examine how well individual items and overall attributes discriminate between proficient and non-proficient respondents.
+The classification discrimination index (CDI) provides this summary.
+
+```{r}
+#| label: dtmr-cdi
+
+cdi(dtmr_lcdm)
+```
+
+Items with low CDI values contribute less to respondent classification — they do a poor job of separating those who are proficient from those who are not.
+At the attribute level, the CDI tells us how well the full set of items measuring each attribute does its job collectively.
+This information can be used to evaluate assessment quality and guide future item development or revision.
+
+## Session information {#session-info}
+
+```{r}
+#| label: si
+#| echo: false
+
+small_session(pkgs)
+```

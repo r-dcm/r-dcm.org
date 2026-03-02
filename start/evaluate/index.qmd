@@ -143,6 +143,7 @@ dtmr_lcdm <- add_fit(
   dtmr_lcdm,
   method = c("m2", "ppmc"),
   model_fit = "raw_score",
+  item_fit = "pvalue",
   return_draws = 1000
 )
 dtmr_lcdm <- add_reliability(dtmr_lcdm)
@@ -152,6 +153,7 @@ dtmr_dina <- add_fit(
   dtmr_dina,
   method = c("m2", "ppmc"),
   model_fit = "raw_score",
+  item_fit = "pvalue",
   return_draws = 1000
 )
 dtmr_dina <- add_reliability(dtmr_dina)
@@ -468,60 +470,12 @@ lcdm_reliability$eap_reliability
 EAP reliability is typically lower than MAP reliability, because placing a respondent at a specific probability (a continuous scale) is harder than placing them into a binary category.
 That said, both MAP and EAP reliability can be adequate even when overall model fit is not perfect, which is one reason it's important to evaluate both fit and reliability.
 
-## Investigating model fit
+## Wrapping up
 
-Even when overall fit looks good, diagnostic tools can help confirm that nothing is amiss — or pinpoint specific problems if something looks off.
-measr provides three such tools: Q-matrix validation, local item dependence, and discrimination indices.
-
-### Q-matrix validation
-
-The Q-matrix defines which items measure which attributes, and it is a fundamental input to any DCM.
-If the Q-matrix is wrong — for example, if an item is assigned to the wrong attribute — the model's classifications will be affected in ways that aggregate fit statistics might not catch.
-
-`qmatrix_validation()` provides an empirical check by asking whether the data would be better explained by modifying any Q-matrix entry [@delatorre2016].
-For each item, it tests whether switching any Q-matrix entry from 0 to 1 (or from 1 to 0) would improve model fit.
-
-```{r}
-#| label: dtmr-qmatrix-validation
-
-qmatrix_validation(dtmr_lcdm)
-```
-
-Because the DTMR data was generated using the provided Q-matrix, we don't expect any Q-matrix misspecification.
-When working with real data, flagged items deserve closer inspection: the flag suggests the data is not consistent with the specified item-attribute mapping, and the output will indicate which change would improve fit.
-
-### Local item dependence
-
-DCMs assume that, conditional on the latent attribute profile, item responses are statistically independent of each other.
-When this assumption is violated, we observe *local item dependence* (LID): items sharing content overlap, reading passages, or sequential dependencies tend to co-vary in ways the model cannot explain.
-LID can indicate missing attributes or nuisance factors not captured in the current specification [@yenq3].
-
-`yens_q3()` detects LID by computing residual correlations between every pair of items after accounting for the estimated attribute profiles.
-Pairs with correlations above a critical value may indicate a violation of local independence.
-
-```{r}
-#| label: dtmr-yensq3
-
-yens_q3(dtmr_lcdm)
-```
-
-Large positive residual correlations suggest that two items share something beyond what the Q-matrix captures.
-Since the DTMR data was simulated with locally independent items, we expect most pairs to have small residual correlations and few (if any) flagged pairs.
-
-### Item and attribute discrimination
-
-Finally, it's useful to examine how well individual items and overall attributes discriminate between proficient and non-proficient respondents.
-The classification discrimination index (CDI) provides this summary.
-
-```{r}
-#| label: dtmr-cdi
-
-cdi(dtmr_lcdm)
-```
-
-Items with low CDI values contribute less to respondent classification — they do a poor job of separating those who are proficient from those who are not.
-At the attribute level, the CDI tells us how well the full set of items measuring each attribute does its job collectively.
-This information can be used to evaluate assessment quality and guide future item development or revision.
+So far we've discussed various ways we can evaluate whether our model has good fit and provides accurate and reliable results.
+But what do we do if the answer is "no"?
+A good place to start is often examining your structural model and ensuring that attribute relationships are appropriately included.
+That is the focus of the [Define Attribute Relationships](/start/hierarchies/) article.
 
 ## Session information {#session-info}
 

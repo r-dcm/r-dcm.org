@@ -381,6 +381,8 @@ roarpa_scores$attribute_probabilities |>
   pivot_wider(names_from = attribute, values_from = probability)
 ```
 
+## Wrapping up
+
 We now have an estimate of proficiency for each respondent on each of the attribute measured by the ROAR-PA.
 However, before we report these result it's important to evaluate the quality of the model.
 We need to ensure that the model fits well and provides accurate classifications.

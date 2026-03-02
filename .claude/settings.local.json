@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(R -e:*)"
+      "Bash(R -e:*)",
+      "Bash(ls:*)",
+      "Bash(R --slave:*)",
+      "Read(//Users/jakethompson/Documents/GIT/r-dcm/**)",
+      "Read(//Users/jakethompson/**)",
+      "Bash(Rscript -e \":*)"
     ]
   }
 }

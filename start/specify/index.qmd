@@ -384,7 +384,7 @@ roarpa_scores$attribute_probabilities |>
 We now have an estimate of proficiency for each respondent on each of the attribute measured by the ROAR-PA.
 However, before we report these result it's important to evaluate the quality of the model.
 We need to ensure that the model fits well and provides accurate classifications.
-That is the focus of the [Evaluate model performance](/start/evaluate/) article.
+That is the focus of the [Evaluate Model Performance](/start/evaluate/) article.
 
 ## Session information {#session-info}
 

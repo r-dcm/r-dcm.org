@@ -17,7 +17,7 @@
             <% if (post.about.links) { %>
               <div class="about-links listing-links">
                 <% for (const link of post.about.links) { %>
-                  <a href="'<%= link.href %>'" class="about-link" rel target>
+                  <a href="<%= link.href %>" class="about-link" rel target>
                     <i class="<%= link.icon %>"></i>
                     <span class="about-link-text"><%= link.text %></span>
                   </a>

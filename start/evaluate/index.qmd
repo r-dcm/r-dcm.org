@@ -38,7 +38,7 @@ Before reporting results or making decisions based on proficiency classification
 * Classification reliability: How consistent and accurate are the proficiency classifications?
 * Misfit diagnostics: If something seems off, where is the problem?
 
-To use code in this article, you will need to install the following packages: `r article_req_pkgs(pkgs)`
+`r article_req_pkgs(pkgs)`
 
 ```{r}
 #| label: user-load
@@ -51,7 +51,7 @@ library(dcmdata)  # for example data set
 library(rstan)    # for estimation backend
 ```
 
-## Diagnosing Teachers' Multiplicative Reasoning (DTMR) Data
+## Diagnosing Teachers' Multiplicative Reasoning (DTMR) data
 
 We'll use data from the DTMR project to demonstrate each of these evaluation tools.
 The DTMR assessment measures four attributes related to multiplicative reasoning in mathematics teachers.
@@ -143,7 +143,6 @@ dtmr_lcdm <- add_fit(
   dtmr_lcdm,
   method = c("m2", "ppmc"),
   model_fit = "raw_score",
-  item_fit = "pvalue",
   return_draws = 1000
 )
 dtmr_lcdm <- add_reliability(dtmr_lcdm)
@@ -153,7 +152,6 @@ dtmr_dina <- add_fit(
   dtmr_dina,
   method = c("m2", "ppmc"),
   model_fit = "raw_score",
-  item_fit = "pvalue",
   return_draws = 1000
 )
 dtmr_dina <- add_reliability(dtmr_dina)

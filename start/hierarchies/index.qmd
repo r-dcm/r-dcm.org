@@ -1,6 +1,6 @@
 ---
 title: "Define attribute relationships"
-weight: 4
+weight: 3
 description: |
   Include information about how your attributes relate to and interact with each other.
 css: ../styles.css
@@ -10,28 +10,437 @@ link-citations: true
 ```{r}
 #| label: setup
 #| include: false
+#| message: false
+#| warning: false
 
-library(wjake)
-library(showtext)
-library(english)
+source(here::here("common.R"))
+```
 
-set_theme(
-  base_family = "Open Sans",
-  plot_margin = ggplot2::margin(10, 10, 10, 10)
-)
+```{r}
+#| label: load
+#| include: false
+#| message: false
+#| warning: false
 
-font_add_google("Open Sans")
-showtext_auto()
-showtext_opts(dpi = 192)
-
-msr_colors <- c("#8ECAE6", "#023047", "#D7263D")
-
-options(mc.cores = 4, tidyverse.quiet = TRUE)
+library(dcmdata)
+library(dcmstan)
+library(measr)
+library(cmdstanr)
+pkgs <- c("dcmdata", "measr", "cmdstanr")
 ```
 
 ## Introduction
 
-The third article will focus on identifying and estimating attribute relationships.
-We will discuss how to identify when a hierarchy might be present in your data and then how to model that hierarchy using different structural model specifications (e.g., `hdcm()`, `bayes_net()`).
+We've seen how to specify and estimate a model, and what it looks like when a model doesn't perform well.
+One of the most productive places to start when something seems off is the structural model.
+The structural model controls the assumptions your DCM makes about how attributes relate to each other.
+By default, the unconstrained model makes no assumptions at all and every possible attribute profile is freely estimated.
+That flexibility is a virtue when you have no prior theory about attribute relationships.
+But when you do have theory---when the nature of the domain suggests that proficiency on one skill is required before another can develop---you can encode, and test, that theory directly in the model.
+In this article we'll learn how to do exactly that with attribute hierarchies.
 
-We'll then explore how to compare models with a specified hierarchy to a saturated model to evaluate the impact of the hierarchy on model fit.
+`r article_req_pkgs(pkgs)`
+
+```{r}
+#| label: user-load
+#| message: false
+
+library(measr)     # for model estimation and evaluation
+
+# Helper packages
+library(dcmdata)   # for example data set
+library(cmdstanr)  # for estimation backend
+```
+
+## Pathways for Instructionally Embedded Assessment (PIE) data
+
+We'll use data from the Pathways for Instructionally Embedded Assessment [PIE\; @atlas-pie-ft] field test to explore attribute hierarchies.
+The PIE field test data is available in dcmdata, and contains responses to `r ncol(pie_ft_data) - 1` items from `r fmt_count(nrow(pie_ft_data))` respondents.
+
+```{r}
+#| label: pie-data
+
+pie_ft_data
+```
+
+The corresponding Q-matrix maps each item to one or more of three attributes.
+
+```{r}
+#| label: pie-qmatrix
+
+pie_ft_qmatrix
+```
+
+The three attributes represent successive levels along a Grade 5 mathematics learning pathway for repeating and numeric patterns [@pie-pathways].
+L1 (emerging) is the ability to recognize the order of elements in a repeating pattern.
+L2 (approaching) is the ability to organize two numeric patterns in a table.
+L3 (target) is the ability to translate two numeric patterns into ordered pairs.
+
+These skills develop in a natural order: you need to recognize pattern structure before you can organize patterns in a table, and organizing them in a table precedes translating them into coordinate pairs.
+This gives us a clear linear progression: `L1 -> L2 -> L3`.
+
+## When attributes have order
+
+Without any hierarchy, the number of possible attribute profiles grows exponentially with the number of attributes.
+With three attributes, there are 2^3^ = 8 possible profiles—every combination of proficiency and non-proficiency across the three attributes.
+
+```{r}
+#| label: tbl-unconstrained-profiles
+#| tbl-cap: All possible attribute profiles under an unconstrained structural model
+#| echo: false
+
+library(tidyverse)
+library(gt)
+
+create_profiles(
+  dcm_specify(
+    qmatrix = pie_ft_qmatrix,
+    identifier = "task",
+    measurement_model = lcdm(),
+    structural_model = unconstrained()
+  )
+) |>
+  mutate(across(everything(), as.integer)) |>
+  gt() |>
+  gt_theme_rdcm()
+```
+
+Some of these profiles may be theoretically impossible given what we know about the domain.
+Consider a respondent who is proficient at L3 but not L1 skills.
+Under the theory that L1 is foundational, this profile shouldn't exist—a person cannot translate numeric patterns into ordered pairs without first being able to recognize pattern order.
+
+A hierarchy lets us encode this constraint.
+When we specify `"L1 -> L2 -> L3"`, only profiles that respect the ordering are considered valid.
+We can see the effect directly using `create_profiles()`.
+
+```{r}
+#| label: tbl-hdcm-profiles
+#| tbl-cap: Valid attribute profiles under the HDCM hierarchy `"L1 -> L2 -> L3"`
+#| echo: false
+
+create_profiles(
+  dcm_specify(
+    qmatrix = pie_ft_qmatrix,
+    identifier = "task",
+    measurement_model = lcdm(),
+    structural_model = hdcm("L1 -> L2 -> L3")
+  )
+) |>
+  mutate(across(everything(), as.integer)) |>
+  gt() |>
+  gt_theme_rdcm()
+```
+
+The hierarchy reduces the eight unconstrained profiles down to four valid ones: (0, 0, 0), (1, 0, 0), (1, 1, 0), and (1, 1, 1).
+Each valid profile represents a step along a developmental ladder—no one skips a rung.
+
+We can visualize this structure as a directed acyclic graph (DAG), where an arrow from attribute A to attribute B means that proficiency on A is required before proficiency on B.
+
+```{r}
+#| label: fig-hierarchy-dag
+#| fig-cap: >
+#|   The PIE learning pathway hierarchy as a directed acyclic graph. An arrow from
+#|   one attribute level to another indicates that the source level is a prerequisite.
+#| fig-asp: 0.35
+#| code-fold: true
+#| code-summary: "Plot code"
+#| fig-alt: >
+#|   A directed acyclic graph showing three nodes: L1, L2, and L3, connected
+#|   left to right by arrows indicating the prerequisite ordering of the PIE
+#|   math learning pathway.
+
+library(ggplot2)
+
+dag_data <- tibble(
+  x = c(1, 2, 3),
+  y = c(0, 0, 0),
+  label = c("L1", "L2", "L3")
+)
+
+dag_edges <- tibble(
+  x_start = c(1.1, 2.1),
+  x_end   = c(1.9, 2.9),
+  y_start = c(0, 0),
+  y_end   = c(0, 0)
+)
+
+ggplot() +
+  geom_segment(
+    data = dag_edges,
+    aes(x = x_start, y = y_start, xend = x_end, yend = y_end),
+    arrow = arrow(length = unit(0.25, "cm"), type = "closed"),
+    color = msr_colors[2],
+    linewidth = 0.8
+  ) +
+  geom_label(
+    data = dag_data,
+    aes(x = x, y = y, label = label),
+    color = msr_colors[2],
+    fill = msr_colors[1],
+    fontface = "bold",
+    label.size = 0.5,
+    size = 4,
+    label.r = unit(0.3, "lines")
+  ) +
+  scale_x_continuous(limits = c(0.5, 3.7)) +
+  scale_y_continuous(limits = c(-0.4, 0.4)) +
+  theme_void()
+```
+
+## Specifying a hierarchy
+
+The `->` operator defines parent-child relationships in the hierarchy string.
+Parent attributes are prerequisites for child attributes—you must master the parent before you can master the child.
+
+The chain syntax `"L1 -> L2 -> L3"` is equivalent to writing the two relationships separately: `"L1 -> L2; L1 -> {L2, L3}"`.
+For a simple linear hierarchy, the chain is the most readable form.
+
+The hierarchy must be a directed *acyclic* graph: you cannot have a cycle where attribute A is a prerequisite for B, and B is also a prerequisite for A.
+If you specify a cycle, measr throws an informative error.
+
+```{r}
+#| label: cycle-error
+#| error: true
+
+# A cycle: L1 requires L2, L2 requires L1
+dcm_specify(
+  qmatrix = pie_ft_qmatrix,
+  identifier = "task",
+  measurement_model = lcdm(),
+  structural_model = hdcm("L1 -> L2 -> L1")
+)
+```
+
+### HDCM versus BayesNet
+
+Two structural models implement attribute hierarchies, and they differ in how strictly they enforce it.
+
+The hierarchical DCM [HDCM\; @hdcm] is strict.
+Profiles that violate the hierarchy are excluded from the model entirely—their base rates are fixed to zero.
+This is a hard constraint: if a respondent's true profile is theoretically impossible, the model cannot assign them to it.
+Instead, they will be assigned to the nearest valid profile.
+
+The Bayesian network model [@bayesnet] is softer.
+All eight profiles remain possible, but profiles that are inconsistent with the hierarchy are estimated to be less likely.
+Rather than fixing probabilities to zero, the BayesNet structural model uses the hierarchy to inform the prior distribution over profiles.
+A respondent whose responses look most consistent with an "impossible" profile will still be assigned a non-zero probability for that profile, but the model will push that probability down.
+
+The choice between them depends on how much you trust your theory.
+If you're confident the hierarchy is real and complete, HDCM gives you a parsimonious model that's easy to interpret.
+If you want to test the hierarchy rather than assume it, BayesNet lets the data push back.
+
+## Estimating hierarchical models
+
+We'll estimate three models on the PIE field test data and compare them.
+The unconstrained LCDM serves as a baseline: no assumptions about attribute relationships, all eight profiles freely estimated.
+The HDCM and BayesNet models both encode the hypothesized linear hierarchy.
+
+```{r}
+#| label: estimate-lcdm
+#| eval: false
+
+pie_lcdm <- dcm_estimate(
+  dcm_specify(
+    qmatrix = pie_ft_qmatrix,
+    identifier = "task",
+    measurement_model = lcdm(),
+    structural_model = unconstrained()
+  ),
+  data = pie_ft_data,
+  identifier = "student",
+  method = "pathfinder",
+  backend = "cmdstanr",
+  file = here::here("start", "fits", "pie-ft-lcdm-pf-cmds")
+)
+```
+
+```{r}
+#| label: estimate-hdcm
+#| eval: false
+
+pie_hdcm <- dcm_estimate(
+  dcm_specify(
+    qmatrix = pie_ft_qmatrix,
+    identifier = "task",
+    measurement_model = lcdm(),
+    structural_model = hdcm("L1 -> L2 -> L3")
+  ),
+  data = pie_ft_data,
+  identifier = "student",
+  method = "pathfinder",
+  backend = "cmdstanr",
+  file = here::here("start", "fits", "pie-ft-hdcm-pf-cmds")
+)
+```
+
+```{r}
+#| label: estimate-bayesnet
+#| eval: false
+
+pie_bayesnet <- dcm_estimate(
+  dcm_specify(
+    qmatrix = pie_ft_qmatrix,
+    identifier = "task",
+    measurement_model = lcdm(),
+    structural_model = bayesnet("L1 -> L2 -> L3")
+  ),
+  data = pie_ft_data,
+  identifier = "student",
+  method = "pathfinder",
+  backend = "cmdstanr",
+  file = here::here("start", "fits", "pie-ft-bayesnet-pf-cmds")
+)
+```
+
+```{r}
+#| label: add-loo
+#| include: false
+#| eval: false
+
+pie_lcdm    <- add_criterion(pie_lcdm,    criterion = "loo")
+pie_hdcm    <- add_criterion(pie_hdcm,    criterion = "loo")
+pie_bayesnet <- add_criterion(pie_bayesnet, criterion = "loo")
+```
+
+## Comparing models
+
+With LOO estimates in hand, we can compare the three models directly.
+
+```{r}
+#| label: loo-compare
+#| eval: false
+
+loo_compare(pie_lcdm, pie_hdcm, pie_bayesnet)
+```
+
+The model with the highest expected log predictive density (ELPD) is listed first.
+A difference that is large relative to its standard error—roughly more than 2.5 times—provides strong evidence for preferring one model over another.
+
+If the hierarchical models show comparable ELPD to the unconstrained model, the hierarchy is consistent with the data: the simpler, theoretically motivated model fits as well as the fully flexible one.
+This is the ideal outcome when you have good domain theory.
+The hierarchy reduces model complexity—from eight freely estimated profile base rates to just four—without sacrificing predictive accuracy.
+
+If the unconstrained model dominates clearly, the hierarchy may be too restrictive, and some theoretically "impossible" profiles may actually be present in the data.
+In that case, BayesNet is worth examining: it accommodates that uncertainty while still reflecting the theoretical ordering.
+
+## Proficiency estimates under hierarchical models
+
+Hierarchical constraints change not just which model fits the data, but which proficiency profiles respondents can be assigned to.
+We can use `score()` to examine how classifications shift across models.
+
+```{r}
+#| label: score-models
+#| message: false
+#| eval: false
+
+library(tidyverse)
+
+lcdm_scores <- score(pie_lcdm)$attribute_probabilities |>
+  mutate(model = "Unconstrained LCDM")
+
+hdcm_scores <- score(pie_hdcm)$attribute_probabilities |>
+  mutate(model = "HDCM")
+
+bayesnet_scores <- score(pie_bayesnet)$attribute_probabilities |>
+  mutate(model = "BayesNet")
+
+all_scores <- bind_rows(lcdm_scores, hdcm_scores, bayesnet_scores)
+```
+
+```{r}
+#| label: fig-proficiency-dist
+#| fig-cap: >
+#|   Distribution of attribute proficiency probabilities across models. Each
+#|   column shows one attribute; each row shows one model. Bimodal
+#|   distributions (concentrated near 0 and 1) indicate clear classifications.
+#| fig-asp: 0.9
+#| code-fold: true
+#| code-summary: "Plot code"
+#| fig-alt: >
+#|   A 3x3 panel of density plots showing the distribution of proficiency
+#|   probabilities for L1, L2, and L3 under each structural model. The
+#|   hierarchical models show more concentrated distributions.
+#| eval: false
+
+all_scores |>
+  mutate(
+    model = factor(
+      model,
+      levels = c("Unconstrained LCDM", "HDCM", "BayesNet")
+    )
+  ) |>
+  ggplot(aes(x = probability)) +
+  geom_histogram(
+    fill = msr_colors[2],
+    color = "white",
+    binwidth = 0.05,
+    boundary = 0
+  ) +
+  facet_grid(
+    rows = vars(model),
+    cols = vars(attribute),
+    scales = "free_y"
+  ) +
+  scale_x_continuous(breaks = c(0, 0.5, 1), labels = c("0", ".5", "1")) +
+  scale_y_comma() +
+  labs(
+    x = "Probability of proficiency",
+    y = "Respondents"
+  )
+```
+
+Two patterns are worth noting.
+
+First, for the HDCM, respondents who would have been classified into theoretically impossible profiles under the unconstrained model are reassigned to the nearest valid profile.
+A respondent who looked proficient at L3 but not L1, for example, cannot be assigned that profile under HDCM—they'll be moved to the all-proficient or all-non-proficient profile depending on which is more consistent with their responses overall.
+
+Second, the BayesNet model falls between the two extremes.
+Impossible profiles remain possible but receive lower probability mass.
+This means classifications will generally align with the hierarchy, but the model doesn't force them to.
+
+```{r}
+#| label: tbl-classification-rates
+#| tbl-cap: Attribute level classification rates (probability > .5 threshold) across models
+#| echo: false
+#| eval: false
+
+all_scores |>
+  mutate(
+    proficient = probability > 0.5,
+    model = factor(
+      model,
+      levels = c("Unconstrained LCDM", "HDCM", "BayesNet")
+    )
+  ) |>
+  summarize(
+    pct_proficient = mean(proficient),
+    .by = c(model, attribute)
+  ) |>
+  pivot_wider(names_from = attribute, values_from = pct_proficient) |>
+  gt() |>
+  cols_label(model = "Model") |>
+  fmt_percent(columns = -model, decimals = 1) |>
+  gt_theme_rdcm()
+```
+
+Compare the classification rates across models.
+The overall pattern of which attributes respondents are proficient on should remain similar—the hierarchy constrains the structural model, not the measurement model—but the exact rates will shift as impossible profiles are redistributed.
+
+## Wrapping up
+
+Attribute hierarchies let you incorporate domain theory directly into the structural model.
+Rather than leaving the model to estimate all possible profile base rates freely, you can encode what you know about the order in which skills develop.
+The HDCM enforces that order as a hard constraint; BayesNet encodes it as a prior that the data can weigh against.
+Comparing hierarchical models to an unconstrained baseline tells you whether your theory is consistent with the data.
+
+The next article puts all of this together in a complete analysis from start to finish.
+See [A Diagnostic Assessment Case Study](/start/case-study/).
+
+## Session information {#session-info}
+
+```{r}
+#| label: si
+#| echo: false
+
+small_session(pkgs)
+```

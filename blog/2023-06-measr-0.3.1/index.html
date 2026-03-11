@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.16">
+<meta name="generator" content="quarto-1.9.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="W. Jake Thompson">
 <meta name="dcterms.date" content="2023-06-06">
 <meta name="description" content="A few updates for specifying models and priors.">
 <title>measr 0.3.1 – r-dcm</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -71,10 +74,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-915771a4037e72452fdf8fc80ceaf70b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b3aaa6997641482631754dbbac2f39fc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-bdf1f4ac84282833e0a4718e4f93ff7f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0f96150053b5d64986f732095ddb08ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -239,7 +242,7 @@ background-size: cover;
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://measr.r-dcm.org">measr</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="model-specifications" class="level2"><h2 class="anchored" data-anchor-id="model-specifications">Model Specifications</h2>
-<p>In this version, support for a new DCM subtype was added. The compensatory reparameterized unified model (C-RUM) model can now be specified in <code><a href="https://measr.info/reference/measr_dcm.html">measr_dcm()</a></code> with <code>type = "crum"</code>. The C-RUM is similar to the log-linear cognitive diagnostic model (LCDM), except the C-RUM estimates only item-level intercepts and main effects (i.e., no interactions when multiple attributes are measured by an item). Because of this, along with the addition of the C-RUM, the LCDM now has additional flexibility through the new <code>max_interaction</code> argument. When using <code>type = "lcdm"</code>, <code>max_interaction</code> specifies the highest level interaction to be estimated. For example, setting <code>max_interaction = 2</code> would estimate the LCDM with only intercepts, main effects, and two-way interactions. If an item measures 3 or more attributes, the 3-way interactions and higher will be excluded. Specifying <code>type = "lcdm"</code> with <code>max_interaction = 1</code> is equivalent to the C-RUM, as 1 indicates that main effects are the highest-level interaction to be estimated.</p>
+<p>In this version, support for a new DCM subtype was added. The compensatory reparameterized unified model (C-RUM) model can now be specified in <code><a href="https://measr.r-dcm.org/reference/measr_dcm.html">measr_dcm()</a></code> with <code>type = "crum"</code>. The C-RUM is similar to the log-linear cognitive diagnostic model (LCDM), except the C-RUM estimates only item-level intercepts and main effects (i.e., no interactions when multiple attributes are measured by an item). Because of this, along with the addition of the C-RUM, the LCDM now has additional flexibility through the new <code>max_interaction</code> argument. When using <code>type = "lcdm"</code>, <code>max_interaction</code> specifies the highest level interaction to be estimated. For example, setting <code>max_interaction = 2</code> would estimate the LCDM with only intercepts, main effects, and two-way interactions. If an item measures 3 or more attributes, the 3-way interactions and higher will be excluded. Specifying <code>type = "lcdm"</code> with <code>max_interaction = 1</code> is equivalent to the C-RUM, as 1 indicates that main effects are the highest-level interaction to be estimated.</p>
 <p>This version also introduces new options for the structural component of the DCMs. Currently two attributes structures are possible, and are defined through the <code>attribute_structure</code> argument. The first is <code>attribute_structure = "unconstrained"</code>. This is the default, which makes no assumptions about the relationships between attributes. Specifying and unconstrained structural model is equivalent to the saturated structural model described by <a href="https://doi.org/10.1080/00273171.2019.1632165">Hu &amp; Templin (2020)</a> and in Chapter 8 of <a href="https://www.amazon.com/Diagnostic-Measurement-Applications-Methodology-Sciences/dp/1606235273">Rupp et al.&nbsp;(2010)</a>. The other option currently supported is <code>attribute_structure = "independent"</code>. When an independent attribute structure is specified, the proficiency or the presence of one attribute is independent of other attributes. Future development will include additional attribute structure specifications such as a reduced loglinear model (e.g., <a href="https://dissertation.wjakethompson.com">Thompson, 2018</a>) or a Bayesian Network (e.g., <a href="https://doi.org/10.1080/00273171.2019.1632165">Hu &amp; Templin, 2020</a>; <a href="https://doi.org/10.31234/osf.io/pjc5f">Martinez &amp; Templin, 2023</a>).</p>
 </section><section id="prior-specifications" class="level2"><h2 class="anchored" data-anchor-id="prior-specifications">Prior Specifications</h2>
 <p>There are two main improvements to prior specifications included in this release. First, custom prior distributions can be specified for the structural model parameters. We can view the default parameters for each attribute structure specification with:</p>
@@ -282,9 +285,9 @@ background-size: cover;
 <span><span class="co">#&gt; 2      NA structural &lt;NA&gt;       eta[2]</span></span>
 <span><span class="co">#&gt; 3      NA structural &lt;NA&gt;       eta[3]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The second improvement is additional checking of user-specified priors. Specifically, <code><a href="https://measr.info/reference/measr_dcm.html">measr_dcm()</a></code> will now throw and error if we try to specify a prior for a class or coefficient that is inconsistent with our chosen DCM. For example, in the previous example of structural model priors that there are different parameters depending on whether an unconstrained or independent structure is specified. If we try to define a prior for <code>eta[1]</code>, which is only relevant for an independent structure, but an unconstrained structure is specified, we get an error.</p>
+<p>The second improvement is additional checking of user-specified priors. Specifically, <code><a href="https://measr.r-dcm.org/reference/measr_dcm.html">measr_dcm()</a></code> will now throw and error if we try to specify a prior for a class or coefficient that is inconsistent with our chosen DCM. For example, in the previous example of structural model priors that there are different parameters depending on whether an unconstrained or independent structure is specified. If we try to define a prior for <code>eta[1]</code>, which is only relevant for an independent structure, but an unconstrained structure is specified, we get an error.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.info/reference/measr_dcm.html">measr_dcm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">ecpe_data</span>, qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.r-dcm.org/reference/measr_dcm.html">measr_dcm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">ecpe_data</span>, qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
 <span>          resp_id <span class="op">=</span> <span class="st">"resp_id"</span>, item_id <span class="op">=</span> <span class="st">"item_id"</span>,</span>
 <span>          attribute_structure <span class="op">=</span> <span class="st">"unconstrained"</span>,</span>
 <span>          prior <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/prior.html">prior</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">beta</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">17</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"structural"</span>, coef <span class="op">=</span> <span class="st">"eta[1]"</span><span class="op">)</span><span class="op">)</span></span>

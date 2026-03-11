@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.16">
+<meta name="generator" content="quarto-1.9.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="W. Jake Thompson">
-<meta name="dcterms.date" content="2026-01-13">
+<meta name="dcterms.date" content="2026-01-16">
 <meta name="description" content="Major release to introduce new model specifications and evaluation methods.">
 <title>measr 2.0.0 – r-dcm</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -91,10 +94,10 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-915771a4037e72452fdf8fc80ceaf70b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b3aaa6997641482631754dbbac2f39fc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-bdf1f4ac84282833e0a4718e4f93ff7f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0f96150053b5d64986f732095ddb08ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -220,11 +223,19 @@ background-size: cover;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 13, 2026</p>
+        <p class="date">January 16, 2026</p>
       </div>
     </div>
     
       
+      <div>
+      <div class="quarto-title-meta-heading">Doi</div>
+      <div class="quarto-title-meta-contents">
+        <p class="doi">
+          <a href="https://doi.org/10.59350/ffe0r-arj02">10.59350/ffe0r-arj02</a>
+        </p>
+      </div>
+    </div>
     </div>
     
   
@@ -267,7 +278,7 @@ background-size: cover;
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://measr.r-dcm.org">measr</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="introducing-r-dcm" class="level2"><h2 class="anchored" data-anchor-id="introducing-r-dcm">Introducing r-dcm</h2>
-<p>A major focus of development work since the previous release has been to modularize the functionality of measr, creating smaller and more focused packages that are easier to maintain and quickly update with new features. Functionality for model estimation and evaluation remains the purview of measr. However, previously, DCMs were specified within the same function call as model estimation using <code><a href="https://measr.info/reference/measr_dcm.html">measr_dcm()</a></code>. This created confusion and blurred the lines between how the model was defined and how it was estimated.</p>
+<p>A major focus of development work since the previous release has been to modularize the functionality of measr, creating smaller and more focused packages that are easier to maintain and quickly update with new features. Functionality for model estimation and evaluation remains the purview of measr. However, previously, DCMs were specified within the same function call as model estimation using <code><a href="https://measr.r-dcm.org/reference/measr_dcm.html">measr_dcm()</a></code>. This created confusion and blurred the lines between how the model was defined and how it was estimated.</p>
 <p>Therefore, the specification of DCMs, including the creation of Stan scripts, is now handled by the new <a href="https://dcmstan.r-dcm.org">dcmstan</a> package. This decoupling allows for more flexible model specifications and will also allow us to more quickly add new model types without disrupting model estimation functionality in measr.</p>
 <p>Additionally, the example data sets have been split out into their own package, <a href="https://dcmdata.r-dcm.org">dcmdata</a>, allowing the data sets to be easily used across both measr and dcmstan (and future packages) without creating troublesome recursive dependencies between packages.</p>
 <div class="columns v-center">
@@ -306,12 +317,12 @@ background-size: cover;
 </div>
 <p>In most cases, you will only need to load measr as relevant functions (e.g., <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code> from dcmstan) are reexported by measr. So while there are some significant changes on the backend, the transition should be (hopefully) seamless for users.</p>
 </section><section id="specification-and-estimation" class="level2"><h2 class="anchored" data-anchor-id="specification-and-estimation">Specification and estimation</h2>
-<p>As part of the decoupling of functionality, we have also decoupled model specification and estimation. Conceptually, the model specification is separate from model estimation. That is, the choice of model (e.g., DINA vs.&nbsp;LCDM) should not impact model estimation choices (e.g., MCMC vs.&nbsp;optimization, estimation engine). Therefore, decoupling also allows for a more intuitive user interface. Using previous versions of measr, you would both specify and estimate a DCM with <code><a href="https://measr.info/reference/measr_dcm.html">measr_dcm()</a></code>. In the following code, we estimate an LCDM with an unconstrained structural model, but we limit the LCDM to only contain intercepts, main effects, and two-way interactions (<code>max_interaction = 2</code>).</p>
+<p>As part of the decoupling of functionality, we have also decoupled model specification and estimation. Conceptually, the model specification is separate from model estimation. That is, the choice of model (e.g., DINA vs.&nbsp;LCDM) should not impact model estimation choices (e.g., MCMC vs.&nbsp;optimization, estimation engine). Therefore, decoupling also allows for a more intuitive user interface. Using previous versions of measr, you would both specify and estimate a DCM with <code><a href="https://measr.r-dcm.org/reference/measr_dcm.html">measr_dcm()</a></code>. In the following code, we estimate an LCDM with an unconstrained structural model, but we limit the LCDM to only contain intercepts, main effects, and two-way interactions (<code>max_interaction = 2</code>).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dcmdata.r-dcm.org">dcmdata</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># old code</span></span>
-<span><span class="va">my_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.info/reference/measr_dcm.html">measr_dcm</a></span><span class="op">(</span></span>
+<span><span class="va">my_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/measr_dcm.html">measr_dcm</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">ecpe_data</span>,</span>
 <span>  qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
 <span>  resp_id <span class="op">=</span> <span class="st">"resp_id"</span>,</span>
@@ -332,9 +343,9 @@ background-size: cover;
 <span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">unconstrained</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We can then use our model specification and <code><a href="https://measr.info/reference/dcm_estimate.html">dcm_estimate()</a></code> to estimate the model.</p>
+<p>We can then use our model specification and <code><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate()</a></code> to estimate the model.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lcdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.info/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lcdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
 <span>  dcm_spec <span class="op">=</span> <span class="va">lcdm_spec</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">ecpe_data</span>,</span>
 <span>  identifier <span class="op">=</span> <span class="st">"resp_id"</span>,</span>
@@ -343,9 +354,9 @@ background-size: cover;
 <span>  file <span class="op">=</span> <span class="st">"fits/ecpe-lcdm"</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code><a href="https://measr.info/reference/measr_dcm.html">measr_dcm()</a></code> has been deprecated, but will continue to work with limited functionality, as new development work will go toward <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code> and <code><a href="https://measr.info/reference/dcm_estimate.html">dcm_estimate()</a></code>. Using <code><a href="https://measr.info/reference/measr_dcm.html">measr_dcm()</a></code> will result in a warning that you should update your workflow.</p>
+<p><code><a href="https://measr.r-dcm.org/reference/measr_dcm.html">measr_dcm()</a></code> has been deprecated, but will continue to work with limited functionality, as new development work will go toward <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code> and <code><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate()</a></code>. Using <code><a href="https://measr.r-dcm.org/reference/measr_dcm.html">measr_dcm()</a></code> will result in a warning that you should update your workflow.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lcdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.info/reference/measr_dcm.html">measr_dcm</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lcdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/measr_dcm.html">measr_dcm</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">ecpe_data</span>,</span>
 <span>  qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
 <span>  resp_id <span class="op">=</span> <span class="st">"resp_id"</span>,</span>
@@ -361,7 +372,7 @@ background-size: cover;
 </div>
 <section id="new-model-specifications" class="level3"><h3 class="anchored" data-anchor-id="new-model-specifications">New model specifications</h3>
 <p>Speaking of new development work, we have added support for several new measurement and structural models. On the measurement model side, we now support the noisy-input, deterministic “and” gate <span class="citation" data-cites="nida">(<code><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">nida()</a></code>; <a href="#ref-nida" role="doc-biblioref">Junker &amp; Sijtsma, 2001</a>)</span>; the noisy-input, deterministic “or” gate <span class="citation" data-cites="nido">(<code><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">nido()</a></code>; <a href="#ref-nido" role="doc-biblioref">Templin, 2006</a>)</span>; and the noncompensatory reparameterized unified model <span class="citation" data-cites="ncrum">(<code><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">ncrum()</a></code>; <a href="#ref-ncrum" role="doc-biblioref">DiBello et al., 1995</a>)</span>. This means that we now support the specification and estimation of all 6 core DCMs identified by <span class="citation" data-cites="rupp-dcm">Rupp et al. (<a href="#ref-rupp-dcm" role="doc-biblioref">2010</a>)</span> in addition to the general LCDM.</p>
-<p>We also added support for the loglinear structural model <span class="citation" data-cites="loglinear">(<code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">loglinear()</a></code>; <a href="#ref-loglinear" role="doc-biblioref">Xu &amp; von Davier, 2008</a>)</span>, which allows the user to limit the interactions included between the attributes. We also added support for attribute hierarchies. For example, we might theorize that some attributes are dependent on others that represent prerequisite skills, as in the ECPE data set we used earlier. This data set measures 3 attributes: morphosyntactic, cohesive, and lexical rules. These attributes represent rules of the English language with increasing levels of complexity from lexical, to cohesive, and finally morphosyntactic. measr now supports two different ways to specify attribute relationships in a DCM. The first is the hierarchical DCM <span class="citation" data-cites="hdcm">(<code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">hdcm()</a></code>; <a href="#ref-hdcm" role="doc-biblioref">Templin &amp; Bradshaw, 2014</a>)</span>, which enforces a strict hierarchy.</p>
+<p>We also added support for the loglinear structural model <span class="citation" data-cites="loglinear">(<code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">loglinear()</a></code>; <a href="#ref-loglinear" role="doc-biblioref"><span class="nocase">Xu &amp; von Davier</span>, 2008</a>)</span>, which allows the user to limit the interactions included between the attributes. We also added support for attribute hierarchies. For example, we might theorize that some attributes are dependent on others that represent prerequisite skills, as in the ECPE data set we used earlier. This data set measures 3 attributes: morphosyntactic, cohesive, and lexical rules. These attributes represent rules of the English language with increasing levels of complexity from lexical, to cohesive, and finally morphosyntactic. measr now supports two different ways to specify attribute relationships in a DCM. The first is the hierarchical DCM <span class="citation" data-cites="hdcm">(<code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">hdcm()</a></code>; <a href="#ref-hdcm" role="doc-biblioref">Templin &amp; Bradshaw, 2014</a>)</span>, which enforces a strict hierarchy.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hdcm_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
 <span>  qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
@@ -407,10 +418,10 @@ background-size: cover;
 </div>
 <p>All measurement and structural models can be mixed and matched in <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code> to create a model that meets your needs and matches your conceptual understanding of the items and attributes.</p>
 </section><section id="estimation-improvements" class="level3"><h3 class="anchored" data-anchor-id="estimation-improvements">Estimation improvements</h3>
-<p>We’ve also made some improvements to how models are estimated in the form of two new estimation methods for <code><a href="https://measr.info/reference/dcm_estimate.html">dcm_estimate()</a></code>. First, we have added support for <em>Stan’s</em> variational algorithm for approximate posterior sampling (<code>method = "variational"</code>). This method will wrap <code><a href="https://mc-stan.org/rstan/reference/stanmodel-method-vb.html">rstan::vb()</a></code> when using the rstan backend and <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-variational.html">cmdstanr::variational()</a></code> when using cmdstanr.</p>
+<p>We’ve also made some improvements to how models are estimated in the form of two new estimation methods for <code><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate()</a></code>. First, we have added support for <em>Stan’s</em> variational algorithm for approximate posterior sampling (<code>method = "variational"</code>). This method will wrap <code><a href="https://mc-stan.org/rstan/reference/stanmodel-method-vb.html">rstan::vb()</a></code> when using the rstan backend and <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-variational.html">cmdstanr::variational()</a></code> when using cmdstanr.</p>
 <p>We’ve also added support for <em>Stan’s</em> pathfinder variational inference algorithm (<code>method = "pathfinder"</code>). This method is similar to the variational method; however, the pathfinder algorithm is generally faster and more stable than the automatic differentiation algorithm that is used by <code><a href="https://mc-stan.org/rstan/reference/stanmodel-method-vb.html">rstan::vb()</a></code> and <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-variational.html">cmdstanr::variational()</a></code>. Notably, the pathfinder algorithm is not available in rstan, and therefore this method can only be used when using cmdstanr (wrapping <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-pathfinder.html">cmdstanr::pathfinder()</a></code>).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hdcm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.info/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hdcm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
 <span>  dcm_spec <span class="op">=</span> <span class="va">hdcm_spec</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">ecpe_data</span>,</span>
 <span>  identifier <span class="op">=</span> <span class="st">"resp_id"</span>,</span>
@@ -423,15 +434,15 @@ background-size: cover;
 </section></section><section id="model-evaluation-updates" class="level2"><h2 class="anchored" data-anchor-id="model-evaluation-updates">Model evaluation updates</h2>
 <p>We added several new tools for evaluating a model once it is estimated. These include updates to how to extract parameter estimates and other information from a model, new functions for evaluating model assumptions, and additional methods for conducting model comparisons.</p>
 <section id="extract-information" class="level3"><h3 class="anchored" data-anchor-id="extract-information">Extract information</h3>
-<p>We’ve added a few new elements that can be extracted from a model with <code><a href="https://measr.info/reference/measr_extract.html">measr_extract()</a></code>. We can extract the base rate of proficiency or presence on each of the attributes with <code>what = "attribute_base_rate"</code>. We can also now extract the π matrix with <code>what = "pi_matrix"</code>, which is the estimated probability that a respondent in each class will provide a correct response to each item.</p>
+<p>We’ve added a few new elements that can be extracted from a model with <code><a href="https://measr.r-dcm.org/reference/measr_extract.html">measr_extract()</a></code>. We can extract the base rate of proficiency or presence on each of the attributes with <code>what = "attribute_base_rate"</code>. We can also now extract the π matrix with <code>what = "pi_matrix"</code>, which is the estimated probability that a respondent in each class will provide a correct response to each item.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.info/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">lcdm</span>, what <span class="op">=</span> <span class="st">"attribute_base_rate"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.r-dcm.org/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">lcdm</span>, what <span class="op">=</span> <span class="st">"attribute_base_rate"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span><span class="co">#&gt;   morphosyntactic     cohesive       lexical</span></span>
 <span><span class="co">#&gt;        &lt;rvar[1d]&gt;   &lt;rvar[1d]&gt;    &lt;rvar[1d]&gt;</span></span>
 <span><span class="co">#&gt; 1    0.38 ± 0.016  0.55 ± 0.02  0.67 ± 0.019</span></span>
 <span></span>
-<span><span class="fu"><a href="https://measr.info/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">lcdm</span>, what <span class="op">=</span> <span class="st">"pi_matrix"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://measr.r-dcm.org/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">lcdm</span>, what <span class="op">=</span> <span class="st">"pi_matrix"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 28 × 9</span></span>
 <span><span class="co">#&gt;    item_id     `[0,0,0]`     `[1,0,0]`      `[0,1,0]`      `[0,0,1]`</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;      &lt;rvar[1d]&gt;    &lt;rvar[1d]&gt;     &lt;rvar[1d]&gt;     &lt;rvar[1d]&gt;</span></span>
@@ -452,22 +463,22 @@ background-size: cover;
 <p>We’ve also simplified the extract process. Previously, many <code>what</code> options required that an analysis be added to a model before it could be extracted. For example, if we tried to extract model fit information from a model, we would get an error telling us that model fit information need to first be added to the model.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># old code</span></span>
-<span><span class="fu"><a href="https://measr.info/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">lcdm</span>, what <span class="op">=</span> <span class="st">"m2"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://measr.r-dcm.org/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">lcdm</span>, what <span class="op">=</span> <span class="st">"m2"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error: Model fit information must be added to a model object before the M2</span></span>
 <span><span class="co">#&gt; can be extracted. See add_fit()."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now, adding elements is no longer required. If you request to extract something that has not been added, it will now automatically be calculated for the extract.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.info/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">lcdm</span>, what <span class="op">=</span> <span class="st">"m2"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.r-dcm.org/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">lcdm</span>, what <span class="op">=</span> <span class="st">"m2"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span><span class="co">#&gt;      m2    df     pval</span></span>
 <span><span class="co">#&gt;   &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1  531.   325 3.90e-12</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note that you can, and in many cases should, still add elements to a model with <code><a href="https://measr.info/reference/model_evaluation.html">add_fit()</a></code>, <code><a href="https://measr.info/reference/model_evaluation.html">add_criterion()</a></code>, <code><a href="https://measr.info/reference/model_evaluation.html">add_reliability()</a></code>, and <code><a href="https://measr.info/reference/model_evaluation.html">add_respondent_estimates()</a></code>. Many of these calculations are time consuming. If you plan to extract a particular <code>what</code> many times, adding an element first means that the calculation will only happen once, whereas the calculation will need to be conducted every time <code><a href="https://measr.info/reference/measr_extract.html">measr_extract()</a></code> is called if the element has not been added.</p>
+<p>Note that you can, and in many cases should, still add elements to a model with <code><a href="https://measr.r-dcm.org/reference/model_evaluation.html">add_fit()</a></code>, <code><a href="https://measr.r-dcm.org/reference/model_evaluation.html">add_criterion()</a></code>, <code><a href="https://measr.r-dcm.org/reference/model_evaluation.html">add_reliability()</a></code>, and <code><a href="https://measr.r-dcm.org/reference/model_evaluation.html">add_respondent_estimates()</a></code>. Many of these calculations are time consuming. If you plan to extract a particular <code>what</code> many times, adding an element first means that the calculation will only happen once, whereas the calculation will need to be conducted every time <code><a href="https://measr.r-dcm.org/reference/measr_extract.html">measr_extract()</a></code> is called if the element has not been added.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lcdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.info/reference/model_evaluation.html">add_fit</a></span><span class="op">(</span><span class="va">lcdm</span>, method <span class="op">=</span> <span class="st">"m2"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://measr.info/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">lcdm</span>, <span class="st">"m2"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lcdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/model_evaluation.html">add_fit</a></span><span class="op">(</span><span class="va">lcdm</span>, method <span class="op">=</span> <span class="st">"m2"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://measr.r-dcm.org/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">lcdm</span>, <span class="st">"m2"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span><span class="co">#&gt;      m2    df     pval</span></span>
 <span><span class="co">#&gt;   &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;</span></span>
@@ -475,10 +486,10 @@ background-size: cover;
 </div>
 </section><section id="check-assumptions" class="level3"><h3 class="anchored" data-anchor-id="check-assumptions">Check assumptions</h3>
 <p>As with any psychometric model, DCMs make assumptions that we should check. This release comes with checks for two key assumptions: local item dependence and the accuracy of the Q-matrix.</p>
-<p>Local item dependence refers to the assumption that item responses are independent of each other, conditional on the respondents’ attribute patterns. That is, after we account for the respondents attribute pattern, we should not see any additional or residual relationship among the items. This is often checked using the Q<sub>3</sub> statistic <span class="citation" data-cites="yenq3">(<a href="#ref-yenq3" role="doc-biblioref">Yen, 1984</a>)</span>, which can now be calculated with <code><a href="https://measr.info/reference/yens_q3.html">yens_q3()</a></code>. <code><a href="https://measr.info/reference/yens_q3.html">yens_q3()</a></code> will calculate the residual correlations between items and optionally flag any item pairs above a critical value. A significant number of residual correlations, particularly if the same group of items are involved, may indicate additional dimensions (i.e., attributes) that should be included.</p>
-<p>We can also evaluate the alignment of items to the attributes identified in the Q-matrix. <code><a href="https://measr.info/reference/qmatrix_validation.html">qmatrix_validation()</a></code> implements the method described by <span class="citation" data-cites="delatorre2016">de la Torre &amp; Chiu (<a href="#ref-delatorre2016" role="doc-biblioref">2016</a>)</span> to determine if there are other Q-matrix specifications that would better explain the response data. For example, in our ECPE model, item E9 measures only the third attribute (lexical rules) in the Q-matrix used to estimate the model. However, the data suggests that this item may also be measuring the first attribute (morphosyntactic rules). Note that this method will not evaluate whether the number of attributes is correct, only the item to attribute alignment.</p>
+<p>Local item dependence refers to the assumption that item responses are independent of each other, conditional on the respondents’ attribute patterns. That is, after we account for the respondents attribute pattern, we should not see any additional or residual relationship among the items. This is often checked using the Q<sub>3</sub> statistic <span class="citation" data-cites="yenq3">(<a href="#ref-yenq3" role="doc-biblioref">Yen, 1984</a>)</span>, which can now be calculated with <code><a href="https://measr.r-dcm.org/reference/yens_q3.html">yens_q3()</a></code>. <code><a href="https://measr.r-dcm.org/reference/yens_q3.html">yens_q3()</a></code> will calculate the residual correlations between items and optionally flag any item pairs above a critical value. A significant number of residual correlations, particularly if the same group of items are involved, may indicate additional dimensions (i.e., attributes) that should be included.</p>
+<p>We can also evaluate the alignment of items to the attributes identified in the Q-matrix. <code><a href="https://measr.r-dcm.org/reference/qmatrix_validation.html">qmatrix_validation()</a></code> implements the method described by <span class="citation" data-cites="delatorre2016"><span class="nocase">de la Torre &amp; Chiu</span> (<a href="#ref-delatorre2016" role="doc-biblioref">2016</a>)</span> to determine if there are other Q-matrix specifications that would better explain the response data. For example, in our ECPE model, item E9 measures only the third attribute (lexical rules) in the Q-matrix used to estimate the model. However, the data suggests that this item may also be measuring the first attribute (morphosyntactic rules). Note that this method will not evaluate whether the number of attributes is correct, only the item to attribute alignment.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.info/reference/qmatrix_validation.html">qmatrix_validation</a></span><span class="op">(</span><span class="va">lcdm</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.r-dcm.org/reference/qmatrix_validation.html">qmatrix_validation</a></span><span class="op">(</span><span class="va">lcdm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 28 × 5</span></span>
 <span><span class="co">#&gt;    item_id original_specification original_pvaf empirical_specification</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;                  </span></span>
@@ -496,12 +507,12 @@ background-size: cover;
 <span><span class="co">#&gt; # ℹ 1 more variable: empirical_pvaf &lt;chr&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="make-comparisons" class="level3"><h3 class="anchored" data-anchor-id="make-comparisons">Make comparisons</h3>
-<p>Finally, we’ve also added support for Bayes factors for model comparisons. <code><a href="https://measr.info/reference/bayes_factor.html">bayes_factor()</a></code> will calculate the posterior probability that a model is correct, given our prior probability (specified through the <code>prior_prob</code> argument) and the calculated Bayes factor. Note the Bayes factors currently depend on the <a href="https://github.com/quentingronau/bridgesampling">bridgesampling</a> package, which does not support cmdstanr. Therefore, model comparisons with Bayes factors are only available when the models are estimated with full MCMC (<code>method = "mcmc"</code>) using rstan (<code>backend = "rstan"</code>). Support for additional estimation methods and backends will be added as they are made available in bridgesampling.</p>
+<p>Finally, we’ve also added support for Bayes factors for model comparisons. <code><a href="https://measr.r-dcm.org/reference/bayes_factor.html">bayes_factor()</a></code> will calculate the posterior probability that a model is correct, given our prior probability (specified through the <code>prior_prob</code> argument) and the calculated Bayes factor. Note the Bayes factors currently depend on the <a href="https://github.com/quentingronau/bridgesampling">bridgesampling</a> package, which does not support cmdstanr. Therefore, model comparisons with Bayes factors are only available when the models are estimated with full MCMC (<code>method = "mcmc"</code>) using rstan (<code>backend = "rstan"</code>). Support for additional estimation methods and backends will be added as they are made available in bridgesampling.</p>
 </section></section><section id="other-new-features" class="level2"><h2 class="anchored" data-anchor-id="other-new-features">Other new features</h2>
 <ul>
-<li><p>Users can now specify a probability classification threshold when calculating reliability metrics with <code><a href="https://measr.info/reference/reliability.html">reliability()</a></code>.</p></li>
-<li><p>Discrimination methods are now available through <code><a href="https://measr.info/reference/cdi.html">cdi()</a></code> to evaluate how well an item or attribute can discern different classes.</p></li>
-<li><p><code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> has been replaced by <code><a href="https://measr.info/reference/score.html">score()</a></code> to be more intuitive. The model is estimated by predicting item responses; however, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> returned respondent-level class and attribute probabilities. Thus, this function was renamed to better reflect its intended use.</p></li>
+<li><p>Users can now specify a probability classification threshold when calculating reliability metrics with <code><a href="https://measr.r-dcm.org/reference/reliability.html">reliability()</a></code>.</p></li>
+<li><p>Discrimination methods are now available through <code><a href="https://measr.r-dcm.org/reference/cdi.html">cdi()</a></code> to evaluate how well an item or attribute can discern different classes.</p></li>
+<li><p><code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> has been replaced by <code><a href="https://measr.r-dcm.org/reference/score.html">score()</a></code> to be more intuitive. The model is estimated by predicting item responses; however, <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> returned respondent-level class and attribute probabilities. Thus, this function was renamed to better reflect its intended use.</p></li>
 </ul></section><div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
 <p>A big thank you to all the folks who helped make this release happen: <a href="https://github.com/auburnjimenez34">@auburnjimenez34</a>, <a href="https://github.com/dgkf">@dgkf</a>, <a href="https://github.com/JeffreyCHoover">@JeffreyCHoover</a>, <a href="https://github.com/ralmond">@ralmond</a>, and <a href="https://github.com/wjakethompson">@wjakethompson</a>.</p>
 <p>The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants <a href="https://ies.ed.gov/use-work/awards/improving-software-and-methods-estimating-diagnostic-classification-models-and-evaluating-model-fit?ID=4546">R305D210045</a> and <a href="https://ies.ed.gov/use-work/awards/expanding-functionality-and-accessibility-software-diagnostic-measurement?ID=6075">R305D240032</a> to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the Institute or the U.S. Department of Education.</p>
@@ -511,7 +522,7 @@ background-size: cover;
 
 </div></section><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-delatorre2016" class="csl-entry" role="listitem">
-de la Torre, J., &amp; Chiu, C.-Y. (2016). A general method of empirical <span>Q</span>-matrix validation. <em>Psychometrika</em>, <em>81</em>(2), 253–273. <a href="https://doi.org/10.1007/s11336-015-9467-8">https://doi.org/10.1007/s11336-015-9467-8</a>
+<span class="nocase">de la Torre, J., &amp; Chiu, C.-Y.</span> (2016). A general method of empirical <span>Q</span>-matrix validation. <em>Psychometrika</em>, <em>81</em>(2), 253–273. <a href="https://doi.org/10.1007/s11336-015-9467-8">https://doi.org/10.1007/s11336-015-9467-8</a>
 </div>
 <div id="ref-ncrum" class="csl-entry" role="listitem">
 DiBello, L. V., Stout, W. F., &amp; Roussos, L. (1995). Unified cognitive psychometric assessment likelihood-based classification techniques. In P. D. Nichols, S. F. Chipman, &amp; R. L. Brennan (Eds.), <em>Cognitively diagnostic assessment</em> (pp. 361–390). Erlbaum.
@@ -532,7 +543,7 @@ Templin, J. (2006). <em><span>CDM</span> user’s guide</em> [Unpublished manusc
 Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification models: <span>A</span> family of models for estimating and testing attribute hierarchies. <em>Psychometrika</em>, <em>79</em>(2), 317–339. <a href="https://doi.org/10.1007/s11336-013-9362-0">https://doi.org/10.1007/s11336-013-9362-0</a>
 </div>
 <div id="ref-loglinear" class="csl-entry" role="listitem">
-Xu, X., &amp; von Davier, M. (2008). <em>Fitting the structured general diagnostic model to <span>NAEP</span> data</em> (RR-08-27). Educational Testing Service. <a href="https://files.eric.ed.gov/fulltext/EJ1111272.pdf">https://files.eric.ed.gov/fulltext/EJ1111272.pdf</a>
+<span class="nocase">Xu, X., &amp; von Davier, M.</span> (2008). <em>Fitting the structured general diagnostic model to <span>NAEP</span> data</em> (Nos. RR-08-27). Educational Testing Service. <a href="https://files.eric.ed.gov/fulltext/EJ1111272.pdf">https://files.eric.ed.gov/fulltext/EJ1111272.pdf</a>
 </div>
 <div id="ref-yenq3" class="csl-entry" role="listitem">
 Yen, W. M. (1984). Effects of local item dependence on the fit and equating performance of the three-parameter logistic model. <em>Applied Psychological Measurement</em>, <em>8</em>(2), 125–145. <a href="https://doi.org/10.1177/014662168400800201">https://doi.org/10.1177/014662168400800201</a>
@@ -540,12 +551,13 @@ Yen, W. M. (1984). Effects of local item dependence on the fit and equating perf
 </div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2026,
   author = {Thompson, W. Jake},
   title = {Measr 2.0.0},
-  date = {2026-01-13},
+  date = {2026-01-16},
   url = {https://r-dcm.org/blog/2026-01-measr-2.0.0/},
+  doi = {10.59350/ffe0r-arj02},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2026" class="csl-entry quarto-appendix-citeas" role="listitem">
-Thompson, W. J. (2026, January 13). <em>measr 2.0.0</em>. <a href="https://r-dcm.org/blog/2026-01-measr-2.0.0/">https://r-dcm.org/blog/2026-01-measr-2.0.0/</a>
+Thompson, W. J. (2026, January 16). <em>measr 2.0.0</em>. <a href="https://doi.org/10.59350/ffe0r-arj02">https://doi.org/10.59350/ffe0r-arj02</a>
 </div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

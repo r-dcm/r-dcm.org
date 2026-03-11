@@ -2,11 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.16">
+<meta name="generator" content="quarto-1.9.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Get started by learning how to specify and estimate a model using measr.">
 <title>Specify a diagnostic model – r-dcm</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -18,7 +21,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -34,10 +92,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-915771a4037e72452fdf8fc80ceaf70b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b3aaa6997641482631754dbbac2f39fc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-bdf1f4ac84282833e0a4718e4f93ff7f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0f96150053b5d64986f732095ddb08ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -155,6 +213,23 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
 <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#rapid-online-assessment-of-reading-and-phonological-awareness-roar-pa-data" id="toc-rapid-online-assessment-of-reading-and-phonological-awareness-roar-pa-data" class="nav-link" data-scroll-target="#rapid-online-assessment-of-reading-and-phonological-awareness-roar-pa-data">Rapid Online Assessment of Reading and Phonological Awareness (ROAR-PA) data</a></li>
+  <li>
+<a href="#specify-a-dcm" id="toc-specify-a-dcm" class="nav-link" data-scroll-target="#specify-a-dcm">Specify a DCM</a>
+  <ul class="collapse">
+<li><a href="#measurement-models" id="toc-measurement-models" class="nav-link" data-scroll-target="#measurement-models">Measurement models</a></li>
+  <li><a href="#structural-models" id="toc-structural-models" class="nav-link" data-scroll-target="#structural-models">Structural models</a></li>
+  <li><a href="#prior-distributions" id="toc-prior-distributions" class="nav-link" data-scroll-target="#prior-distributions">Prior distributions</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#estimate-a-model-specification" id="toc-estimate-a-model-specification" class="nav-link" data-scroll-target="#estimate-a-model-specification">Estimate a model specification</a>
+  <ul class="collapse">
+<li><a href="#respondent-proficiency-estimates" id="toc-respondent-proficiency-estimates" class="nav-link" data-scroll-target="#respondent-proficiency-estimates">Respondent proficiency estimates</a></li>
+  </ul>
+</li>
+  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping up</a></li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info">Session information</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -179,18 +254,1375 @@ ul.task-list li input[type="checkbox"] {
 
 
 </header><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The first article will focus on how to specify a DCM with measr including:</p>
-<ul>
-<li>Choosing a measurement model</li>
-<li>Choosing a structural model</li>
-<li>Choosing prior distributions</li>
-<li>Combining these choices into a DCM specification using <code>dcm_specify()</code>
-</li>
-</ul>
-<p>The article will then describe how to estimate the model with MCMC or an optimizer using either <a href="https://mc-stan.org/rstan/">rstan</a> or <a href="https://mc-stan.org/cmdstanr/">cmdstanr</a> with <code>dcm_estimate()</code>.</p>
+<p>How do you specify and estimate a diagnostic classification model (DCM) using measr? In this article, we will walk you through the steps. We start with data for building the model, learn how to specify DCMs that make different assumptions about the data, and explore how to estimate the model with <a href="https://mc-stan.org"><em>Stan</em></a>.</p>
+<p>To use code in this article, you will need to install the following packages: <a href="https://dcmdata.r-dcm.org">dcmdata</a>, <a href="https://measr.r-dcm.org">measr</a>, and <a href="https://mc-stan.org/rstan/">rstan</a>.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://measr.r-dcm.org">measr</a></span><span class="op">)</span>     <span class="co"># for model specification and estimation</span></span>
+<span></span>
+<span><span class="co"># Helper packages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dcmdata.r-dcm.org">dcmdata</a></span><span class="op">)</span>   <span class="co"># for example data set</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstan/">rstan</a></span><span class="op">)</span>     <span class="co"># for estimation backend</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section><section id="rapid-online-assessment-of-reading-and-phonological-awareness-roar-pa-data" class="level2"><h2 class="anchored" data-anchor-id="rapid-online-assessment-of-reading-and-phonological-awareness-roar-pa-data">Rapid Online Assessment of Reading and Phonological Awareness (ROAR-PA) data</h2>
+<p>Let’s use data from the ROAR-PA <span class="citation" data-cites="roarpa">(<a href="#ref-roarpa" role="doc-biblioref">Gijbels et al., 2024</a>)</span> to learn how to specify and estimate a DCM with measr. The ROAR-PA data is available in the dcmdata package, and contains responses to 57 items from 272 respondents.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">roarpa_data</span></span>
+<span><span class="co">#&gt; # A tibble: 272 × 58</span></span>
+<span><span class="co">#&gt;       id fsm_01 fsm_04 fsm_05 fsm_06 fsm_07 fsm_08 fsm_10 fsm_11 fsm_12 fsm_14</span></span>
+<span><span class="co">#&gt;    &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1   161      0      1      1      1      1      0      0      1      1      1</span></span>
+<span><span class="co">#&gt;  2   226      0      1      0      1      0      0      1      0      1      0</span></span>
+<span><span class="co">#&gt;  3   103      0      1      0      1      0      0      0      0      0      0</span></span>
+<span><span class="co">#&gt;  4     7      1      1      0      0      1      0      0      0      1      1</span></span>
+<span><span class="co">#&gt;  5   185      1      1      1      1      1      1      1      1      1      1</span></span>
+<span><span class="co">#&gt;  6   129      1      1      1      0      1      1      0      0      1      1</span></span>
+<span><span class="co">#&gt;  7   181      1      1      1      1      1      1      1      1      1      1</span></span>
+<span><span class="co">#&gt;  8    36      1      1      1      1      1      1      1      1      1      1</span></span>
+<span><span class="co">#&gt;  9   206      1      1      1      1      1      1      1      1      1      1</span></span>
+<span><span class="co">#&gt; 10   257      1      1      1      1      1      1      1      1      1      1</span></span>
+<span><span class="co">#&gt; # ℹ 262 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 47 more variables: fsm_15 &lt;int&gt;, fsm_16 &lt;int&gt;, fsm_17 &lt;int&gt;, fsm_18 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   fsm_21 &lt;int&gt;, fsm_22 &lt;int&gt;, fsm_23 &lt;int&gt;, fsm_24 &lt;int&gt;, fsm_25 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   lsm_01 &lt;int&gt;, lsm_02 &lt;int&gt;, lsm_04 &lt;int&gt;, lsm_05 &lt;int&gt;, lsm_06 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   lsm_07 &lt;int&gt;, lsm_08 &lt;int&gt;, lsm_10 &lt;int&gt;, lsm_11 &lt;int&gt;, lsm_13 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   lsm_15 &lt;int&gt;, lsm_16 &lt;int&gt;, lsm_17 &lt;int&gt;, lsm_18 &lt;int&gt;, lsm_19 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   lsm_20 &lt;int&gt;, lsm_21 &lt;int&gt;, lsm_22 &lt;int&gt;, lsm_24 &lt;int&gt;, del_01 &lt;int&gt;, …</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In addition to our response data, a DCM also requires a Q-matrix. A Q-matrix contains one row per item, and one column per attribute (plus an optional column of item identifiers). A value of 1 indicates that the item measures the attribute, and a value of 0 indicates the item does not measure the attribute. In our Q-matrix, we can see that the item identifiers in the in the rows (<code>item</code>) correspond to the column names of the data. Additionally, we see that there are three attributes measured by this assessment: <code>lsm</code>, <code>del</code>, and <code>fsm</code>. These refer to the first sound made (<code>fsm</code>), last sound made (<code>lsm</code>), and deletion (<code>del</code>) elements of phonological awareness.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">roarpa_qmatrix</span></span>
+<span><span class="co">#&gt; # A tibble: 57 × 4</span></span>
+<span><span class="co">#&gt;    item     lsm   del   fsm</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 fsm_01     0     0     1</span></span>
+<span><span class="co">#&gt;  2 fsm_04     0     0     1</span></span>
+<span><span class="co">#&gt;  3 fsm_05     0     0     1</span></span>
+<span><span class="co">#&gt;  4 fsm_06     0     0     1</span></span>
+<span><span class="co">#&gt;  5 fsm_07     0     0     1</span></span>
+<span><span class="co">#&gt;  6 fsm_08     0     0     1</span></span>
+<span><span class="co">#&gt;  7 fsm_10     0     0     1</span></span>
+<span><span class="co">#&gt;  8 fsm_11     0     0     1</span></span>
+<span><span class="co">#&gt;  9 fsm_12     0     0     1</span></span>
+<span><span class="co">#&gt; 10 fsm_14     0     0     1</span></span>
+<span><span class="co">#&gt; # ℹ 47 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Our task is to determine which attributes each respondent is proficient on, given their item responses. For more information on the data set, see <code><a href="https://dcmdata.r-dcm.org/reference/roarpa.html">?roarpa</a></code> and <span class="citation" data-cites="roarpa">Gijbels et al. (<a href="#ref-roarpa" role="doc-biblioref">2024</a>)</span>.</p>
+</section><section id="specify-a-dcm" class="level2"><h2 class="anchored" data-anchor-id="specify-a-dcm">Specify a DCM</h2>
+<p>A DCM model specification has three primary components: the Q-matrix, a measurement model, and a structural model. Given these three components, we can create a model specification with <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">roarpa_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
+<span>  qmatrix <span class="op">=</span> <span class="va">roarpa_qmatrix</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"item"</span>,</span>
+<span>  measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">unconstrained</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">roarpa_spec</span></span>
+<span><span class="co">#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes</span></span>
+<span><span class="co">#&gt; with 57 items.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Attributes:</span></span>
+<span><span class="co">#&gt; • "lsm" (19 items)</span></span>
+<span><span class="co">#&gt; • "del" (19 items)</span></span>
+<span><span class="co">#&gt; • "fsm" (19 items)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Attribute structure:</span></span>
+<span><span class="co">#&gt;   Unconstrained</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Prior distributions:</span></span>
+<span><span class="co">#&gt;   intercept ~ normal(0, 2)</span></span>
+<span><span class="co">#&gt;   maineffect ~ lognormal(0, 1)</span></span>
+<span><span class="co">#&gt;   `Vc` ~ dirichlet(1, 1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The Q-matrix, as we described, defines which items measure each attribute. In addition the the Q-matrix itself, we must also tell <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code> which column within the Q-matrix contains the item identifiers. If there is no item identifier, then <code>identifier</code> can be left as <code>NULL</code> (the default). In our ROAR-PA specification, we can see that each of our three attributes is measured by 19 items. The ROAR-PA Q-matrix is a simple structure, meaning that each item measures only one attribute.</p>
+<p>At a high level, the measurement model describes how attributes interact with each other on specific items. If an item measures two attributes, how do we expect a respondent to perform if they possess only one of the attributes? Are the attributes compensatory, meaning that proficiency on either is sufficient to answer the item correctly, or noncompensatory, and proficiency on both attributes is required in order to provide a correct response? The choice of measurement model dictates these relationships.</p>
+<p>The structural model describes relationships between proficiency on the attributes. Is proficiency on one attribute independent of proficiency on another, or is proficiency correlated? It’s also possible that some attributes may represent prerequisite knowledge such that respondents must demonstrate proficiency before they can demonstrate proficiency of other attributes. The structural model is used to define these relationships.</p>
+<p>We’ll explore both measurement and structural models in more detail in the next sections.</p>
+<section id="measurement-models" class="level3"><h3 class="anchored" data-anchor-id="measurement-models">Measurement models</h3>
+<p>measr provides functionality for seven DCM measurement models: the six core models identified by <span class="citation" data-cites="rupp-dcm">Rupp et al. (<a href="#ref-rupp-dcm" role="doc-biblioref">2010</a>)</span> and a general model that subsumes the other models. A full description of these models is beyond the scope of what we are covering here. However, we will provide a high-level overview the types of models and offer referenes for further details on each.</p>
+<p>The general DCM supported by the measr is the loglinear cognitive diagnostic model <span class="citation" data-cites="lcdm lcdm-handbook">(LCDM; <a href="#ref-lcdm" role="doc-biblioref">Henson et al., 2009</a>; <a href="#ref-lcdm-handbook" role="doc-biblioref">Henson &amp; Templin, 2019</a>)</span>. This is the most flexible model that allows each item to have unique interactions between attributes, estimating separate main effects and interaction effects for all possible attribute combinations. You can think of the LCDM as the “saturated model” that all other DCMs are constrained versions of. That is, by placing constraints on the LCDM parameters, you can achieve models equivalent to the other core models.</p>
+<p>Under the umbrella of the LCDM are the six core DCMs, which generally fall into two categories: non-compensatory (also called conjunctive) and compensatory (disjunctive). When using a non-compensatory model, attributes function like prerequisites or requirements, and missing an attribute creates a specific deficit that other attributes cannot overcome. In other words, with non-compensatory models, performance is constrained by the weakest link. In this category, measr supports the deterministic input, noisy “and” gate model <span class="citation" data-cites="dina">(DINA; <a href="#ref-dina" role="doc-biblioref"><span class="nocase">de la Torre &amp; Douglas</span>, 2004</a>)</span>; the noisy-input, deterministic “and” gate model <span class="citation" data-cites="nida">(NIDA; <a href="#ref-nida" role="doc-biblioref">Junker &amp; Sijtsma, 2001</a>)</span>; and the non-compensatory reparameterized unified model <span class="citation" data-cites="ncrum">(NC-RUM; <a href="#ref-ncrum" role="doc-biblioref">DiBello et al., 1995</a>)</span>. On the other hand, when compensatory models, attributes function like independent skills that accumulate, and having more attributes can partially or fully compensate for missing others. Thus, performance improves as you gain more attributes. In the compensatory category, measr supports the deterministic input, noisy “or” gate model <span class="citation" data-cites="dino">(DINO; <a href="#ref-dino" role="doc-biblioref">Templin &amp; Henson, 2006</a>)</span>; the noisy-input, deterministic “or” gate model <span class="citation" data-cites="nido">(NIDO; <a href="#ref-nido" role="doc-biblioref">Templin, 2006</a>)</span>; and the compensatory reparameterized unified model <span class="citation" data-cites="crum">(C-RUM; <a href="#ref-crum" role="doc-biblioref">Hartz, 2002</a>)</span>.</p>
+<p>Each of these measurement models can be estimated with measr by supplying the respective measurement model function, as shown in <a href="#tbl-meas-models" class="quarto-xref">Table&nbsp;1</a>, to the <code>measurement_model</code> argument of <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-meas-models" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-meas-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Measurement models supported by measr
+</figcaption><div aria-describedby="tbl-meas-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="zsubcfhbxr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#zsubcfhbxr table {
+  font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#zsubcfhbxr thead, #zsubcfhbxr tbody, #zsubcfhbxr tfoot, #zsubcfhbxr tr, #zsubcfhbxr td, #zsubcfhbxr th {
+  border-style: none;
+}
+
+#zsubcfhbxr p {
+  margin: 0;
+  padding: 0;
+}
+
+#zsubcfhbxr .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#zsubcfhbxr .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#zsubcfhbxr .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#zsubcfhbxr .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: #FFFFFF;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#zsubcfhbxr .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#zsubcfhbxr .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#zsubcfhbxr .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#zsubcfhbxr .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#zsubcfhbxr .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#zsubcfhbxr .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#zsubcfhbxr .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#zsubcfhbxr .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#zsubcfhbxr .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#zsubcfhbxr .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#zsubcfhbxr .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zsubcfhbxr .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#zsubcfhbxr .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#zsubcfhbxr .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#zsubcfhbxr .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zsubcfhbxr .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#zsubcfhbxr .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zsubcfhbxr .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#zsubcfhbxr .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zsubcfhbxr .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 0px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 0px;
+  border-right-color: #D3D3D3;
+}
+
+#zsubcfhbxr .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zsubcfhbxr .gt_left {
+  text-align: left;
+}
+
+#zsubcfhbxr .gt_center {
+  text-align: center;
+}
+
+#zsubcfhbxr .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#zsubcfhbxr .gt_font_normal {
+  font-weight: normal;
+}
+
+#zsubcfhbxr .gt_font_bold {
+  font-weight: bold;
+}
+
+#zsubcfhbxr .gt_font_italic {
+  font-style: italic;
+}
+
+#zsubcfhbxr .gt_super {
+  font-size: 65%;
+}
+
+#zsubcfhbxr .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#zsubcfhbxr .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#zsubcfhbxr .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#zsubcfhbxr .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#zsubcfhbxr .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#zsubcfhbxr .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#zsubcfhbxr .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#zsubcfhbxr .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#zsubcfhbxr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" style="table-layout:fixed;width:0px;" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width:155px;">
+<col style="width:500px;">
+<col style="width:80px;">
+</colgroup>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="model">model</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="description">description</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="measr">measr</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr class="gt_group_heading_row">
+<th colspan="3" class="gt_empty_group_heading" style="background-color: #023047; color: #FFFFFF; border-left-width: 0px; border-left-style: solid; border-left-color: #000000; border-right-width: 0px; border-right-style: solid; border-right-color: #000000; border-top-width: 0px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: #000000;" scope="colgroup"></th>
+    </tr>
+<tr class="gt_row_group_first">
+<td headers="NA  model" class="gt_row gt_left" style="background-color: #FFFFFF;">LCDM</td>
+<td headers="NA  description" class="gt_row gt_left" style="background-color: #FFFFFF;">General and flexible, subsumes other models</td>
+<td headers="NA  measr" class="gt_row gt_left" style="background-color: #FFFFFF;"><span data-qmd-base64="YGxjZG0oKWA="><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm()</a></code></span></span></td>
+</tr>
+<tr class="gt_group_heading_row">
+<th colspan="3" class="gt_group_heading" style="background-color: #023047; color: #FFFFFF; border-left-width: 0px; border-left-style: solid; border-left-color: #000000; border-right-width: 0px; border-right-style: solid; border-right-color: #000000; border-top-width: 0px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: #000000;" scope="colgroup" id="Non-compensatory">Non-compensatory</th>
+    </tr>
+<tr class="gt_row_group_first">
+<td headers="Non-compensatory  model" class="gt_row gt_left" style="background-color: #FFFFFF;">DINA</td>
+<td headers="Non-compensatory  description" class="gt_row gt_left" style="background-color: #FFFFFF;">All attributes must be present</td>
+<td headers="Non-compensatory  measr" class="gt_row gt_left" style="background-color: #FFFFFF;"><span data-qmd-base64="YGRpbmEoKWA="><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">dina()</a></code></span></span></td>
+</tr>
+<tr>
+<td headers="Non-compensatory  model" class="gt_row gt_left" style="background-color: #FFFFFF;">NIDA</td>
+<td headers="Non-compensatory  description" class="gt_row gt_left" style="background-color: #FFFFFF;">Attributes have multiplicative penalties equal across items</td>
+<td headers="Non-compensatory  measr" class="gt_row gt_left" style="background-color: #FFFFFF;"><span data-qmd-base64="YG5pZGEoKWA="><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">nida()</a></code></span></span></td>
+</tr>
+<tr>
+<td headers="Non-compensatory  model" class="gt_row gt_left" style="background-color: #FFFFFF;">NC-RUM</td>
+<td headers="Non-compensatory  description" class="gt_row gt_left" style="background-color: #FFFFFF;">Attributes have multiplicative penalites that vary across items</td>
+<td headers="Non-compensatory  measr" class="gt_row gt_left" style="background-color: #FFFFFF;"><span data-qmd-base64="YG5jcnVtKClg"><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">ncrum()</a></code></span></span></td>
+</tr>
+<tr class="gt_group_heading_row">
+<th colspan="3" class="gt_group_heading" style="background-color: #023047; color: #FFFFFF; border-left-width: 0px; border-left-style: solid; border-left-color: #000000; border-right-width: 0px; border-right-style: solid; border-right-color: #000000; border-top-width: 0px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: #000000;" scope="colgroup" id="Compensatory">Compensatory</th>
+    </tr>
+<tr class="gt_row_group_first">
+<td headers="Compensatory  model" class="gt_row gt_left" style="background-color: #FFFFFF;">DINO</td>
+<td headers="Compensatory  description" class="gt_row gt_left" style="background-color: #FFFFFF;">Any one attribute must be present</td>
+<td headers="Compensatory  measr" class="gt_row gt_left" style="background-color: #FFFFFF;"><span data-qmd-base64="YGRpbm8oKWA="><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">dino()</a></code></span></span></td>
+</tr>
+<tr>
+<td headers="Compensatory  model" class="gt_row gt_left" style="background-color: #FFFFFF;">NIDO</td>
+<td headers="Compensatory  description" class="gt_row gt_left" style="background-color: #FFFFFF;">Attributes are additive and equal across items</td>
+<td headers="Compensatory  measr" class="gt_row gt_left" style="background-color: #FFFFFF;"><span data-qmd-base64="YG5pZG8oKWA="><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">nido()</a></code></span></span></td>
+</tr>
+<tr>
+<td headers="Compensatory  model" class="gt_row gt_left" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">C-RUM</td>
+<td headers="Compensatory  description" class="gt_row gt_left" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">Attributes are additive and vary across items</td>
+<td headers="Compensatory  measr" class="gt_row gt_left" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;"><span data-qmd-base64="YGNydW0oKWA="><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">crum()</a></code></span></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section><section id="structural-models" class="level3"><h3 class="anchored" data-anchor-id="structural-models">Structural models</h3>
+<p>measr provides functionality for five structural models. The structural model describes the joint distribution of attribute profiles in the population. Different structural models make different assumptions about how attributes relate to each other.</p>
+<p>The most general option is the unconstrained model <span class="citation" data-cites="rupp-dcm">(<a href="#ref-rupp-dcm" role="doc-biblioref">Rupp et al., 2010</a>)</span>. This model places no constraints on the relationships between attributes. Each of the 2<sup><em>A</em></sup> possible attribute profiles (where <em>A</em> is the number of attributes) has its own freely estimated base rate parameter. Because all profiles are freely estimated, this is a saturated structural model.</p>
+<p>The independent model <span class="citation" data-cites="independent">(<a href="#ref-independent" role="doc-biblioref">Lee, 2017</a>)</span> assumes that attributes are completely unrelated. Proficiency on one attribute tells you nothing about proficiency on another. Under this model, each attribute has its own proficiency base rate, and the probability of any profile is simply the product of the individual attribute base rates (or their complements for non-proficiency).</p>
+<p>The loglinear model <span class="citation" data-cites="loglinear">(<a href="#ref-loglinear" role="doc-biblioref"><span class="nocase">Xu &amp; von Davier</span>, 2008</a>)</span> uses a log-linear parameterization with main effects and interactions. When specifying a loglinear model, we can use the <code>max_interaction</code> argument to control the high-level interactions to include. When <code>max_interaction</code> is set to the number of attributes (the default), the loglinear model is equivalent to the unconstrained model. When <code>max_interaction = 1</code>, only main effects are included, which is equivalent to the independent model. Intermediate values allow you to model some degree of attribute dependence without fully saturating the structural model.</p>
+<p>The remaining two structural models incorporate attribute hierarchies. In these models, proficiency on some attributes may be a prerequisite for proficiency on others. The hierarchical DCM <span class="citation" data-cites="hdcm">(HDCM; <a href="#ref-hdcm" role="doc-biblioref">Templin &amp; Bradshaw, 2014</a>)</span> enforces strict attribute prerequisites. Attribute profiles that violate the specified hierarchy are excluded entirely from the model, meaning their base rates are fixed to zero. In contrast, the Bayesian network model <span class="citation" data-cites="bayesnet">(<a href="#ref-bayesnet" role="doc-biblioref">Hu &amp; Templin, 2020</a>)</span> implements a softer version of the hierarchy. All attribute profiles remain possible, but profiles that are inconsistent with the hierarchy are estimated to be less likely. Both models require a <code>hierarchy</code> argument that defines the attribute relationships using dagitty-style syntax, such as <code>"att1 -&gt; att2 -&gt; att3"</code>. For more details on specifying attribute hierarchies, see the <a href="../../start/hierarchies/">Define Attribute Relationships</a> article.</p>
+<p>Each of these structural models can be estimated with measr by supplying the respective structural model function, as shown in <a href="#tbl-strc-models" class="quarto-xref">Table&nbsp;2</a>, to the <code>structural_model</code> argument of <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-strc-models" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-strc-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Structural models supported by measr
+</figcaption><div aria-describedby="tbl-strc-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="qaeglaiblr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#qaeglaiblr table {
+  font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#qaeglaiblr thead, #qaeglaiblr tbody, #qaeglaiblr tfoot, #qaeglaiblr tr, #qaeglaiblr td, #qaeglaiblr th {
+  border-style: none;
+}
+
+#qaeglaiblr p {
+  margin: 0;
+  padding: 0;
+}
+
+#qaeglaiblr .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#qaeglaiblr .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#qaeglaiblr .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#qaeglaiblr .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: #FFFFFF;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#qaeglaiblr .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#qaeglaiblr .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#qaeglaiblr .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#qaeglaiblr .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#qaeglaiblr .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#qaeglaiblr .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#qaeglaiblr .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#qaeglaiblr .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#qaeglaiblr .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#qaeglaiblr .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#qaeglaiblr .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qaeglaiblr .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#qaeglaiblr .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#qaeglaiblr .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#qaeglaiblr .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qaeglaiblr .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#qaeglaiblr .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qaeglaiblr .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#qaeglaiblr .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qaeglaiblr .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 0px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 0px;
+  border-right-color: #D3D3D3;
+}
+
+#qaeglaiblr .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qaeglaiblr .gt_left {
+  text-align: left;
+}
+
+#qaeglaiblr .gt_center {
+  text-align: center;
+}
+
+#qaeglaiblr .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#qaeglaiblr .gt_font_normal {
+  font-weight: normal;
+}
+
+#qaeglaiblr .gt_font_bold {
+  font-weight: bold;
+}
+
+#qaeglaiblr .gt_font_italic {
+  font-style: italic;
+}
+
+#qaeglaiblr .gt_super {
+  font-size: 65%;
+}
+
+#qaeglaiblr .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#qaeglaiblr .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#qaeglaiblr .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#qaeglaiblr .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#qaeglaiblr .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#qaeglaiblr .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#qaeglaiblr .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#qaeglaiblr .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#qaeglaiblr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" style="table-layout:fixed;width:0px;" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width:130px;">
+<col style="width:475px;">
+<col style="width:150px;">
+</colgroup>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="model">model</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="description">description</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="measr">measr</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="model" class="gt_row gt_left" style="background-color: #FFFFFF;">Unconstrained</td>
+<td headers="description" class="gt_row gt_left" style="background-color: #FFFFFF;">General and flexible, subsumes other models</td>
+<td headers="measr" class="gt_row gt_left" style="background-color: #FFFFFF;"><span data-qmd-base64="YHVuY29uc3RyYWluZWQoKWA="><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">unconstrained()</a></code></span></span></td>
+</tr>
+<tr>
+<td headers="model" class="gt_row gt_left" style="background-color: #FFFFFF;">Independent</td>
+<td headers="description" class="gt_row gt_left" style="background-color: #FFFFFF;">Attributes are independent of each other</td>
+<td headers="measr" class="gt_row gt_left" style="background-color: #FFFFFF;"><span data-qmd-base64="YGluZGVwZW5kZW50KClg"><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">independent()</a></code></span></span></td>
+</tr>
+<tr>
+<td headers="model" class="gt_row gt_left" style="background-color: #FFFFFF;">Loglinear</td>
+<td headers="description" class="gt_row gt_left" style="background-color: #FFFFFF;">Can be constrained to only include certain interaction levels</td>
+<td headers="measr" class="gt_row gt_left" style="background-color: #FFFFFF;"><span data-qmd-base64="YGxvZ2xpbmVhcigpYA=="><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">loglinear()</a></code></span></span></td>
+</tr>
+<tr>
+<td headers="model" class="gt_row gt_left" style="background-color: #FFFFFF;">HDCM</td>
+<td headers="description" class="gt_row gt_left" style="background-color: #FFFFFF;">Hard constraints on profiles based on attribute dependencies</td>
+<td headers="measr" class="gt_row gt_left" style="background-color: #FFFFFF;"><span data-qmd-base64="YGhkY20oKWA="><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">hdcm()</a></code></span></span></td>
+</tr>
+<tr>
+<td headers="model" class="gt_row gt_left" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">BayesNet</td>
+<td headers="description" class="gt_row gt_left" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">Soft constraints on profiles based on attribute dependencies</td>
+<td headers="measr" class="gt_row gt_left" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;"><span data-qmd-base64="YGJheWVzbmV0KClg"><span class="gt_from_md"><code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">bayesnet()</a></code></span></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section><section id="prior-distributions" class="level3"><h3 class="anchored" data-anchor-id="prior-distributions">Prior distributions</h3>
+<p>A final aspect of the DCM specification that we have not yet talked about is the definition of the model priors. Take another look at our specifciation object. We can see that there are prior distribution defined for each type of parameter in our model.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">roarpa_spec</span></span>
+<span><span class="co">#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes</span></span>
+<span><span class="co">#&gt; with 57 items.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Attributes:</span></span>
+<span><span class="co">#&gt; • "lsm" (19 items)</span></span>
+<span><span class="co">#&gt; • "del" (19 items)</span></span>
+<span><span class="co">#&gt; • "fsm" (19 items)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Attribute structure:</span></span>
+<span><span class="co">#&gt;   Unconstrained</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Prior distributions:</span></span>
+<span><span class="co">#&gt;   intercept ~ normal(0, 2)</span></span>
+<span><span class="co">#&gt;   maineffect ~ lognormal(0, 1)</span></span>
+<span><span class="co">#&gt;   `Vc` ~ dirichlet(1, 1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Every parameter in a DCM specification is assigned a prior distribution that encodes our beliefs about plausible parameter values before observing any data. measr provides sensible defaults, but you can also customize priors to reflect domain knowledge or to implement more informative constraints.</p>
+<p>To view the default priors for a given measurement and structural model combination, use <code><a href="https://dcmstan.r-dcm.org/reference/default_dcm_priors.html">default_dcm_priors()</a></code>. In our example, we have specified an LCDM with an unconstrained structural model. Plugging those two components in, we see the same priors that we saw in our specification object.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/default_dcm_priors.html">default_dcm_priors</a></span><span class="op">(</span></span>
+<span>  measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">unconstrained</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 3</span></span>
+<span><span class="co">#&gt;   type        coefficient prior                      </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;                      </span></span>
+<span><span class="co">#&gt; 1 intercept   &lt;NA&gt;        normal(0, 2)               </span></span>
+<span><span class="co">#&gt; 2 maineffect  &lt;NA&gt;        lognormal(0, 1)            </span></span>
+<span><span class="co">#&gt; 3 interaction &lt;NA&gt;        normal(0, 2)               </span></span>
+<span><span class="co">#&gt; 4 structural  Vc          dirichlet(rep_vector(1, C))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>However, different choices of measurement and structural models will result in different parameters being included, and therefore different prior distributions. For example, specifying a DINA measurement model with and independent structural model has a completely different set of parameters.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/default_dcm_priors.html">default_dcm_priors</a></span><span class="op">(</span></span>
+<span>  measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">dina</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">independent</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 3</span></span>
+<span><span class="co">#&gt;   type       coefficient prior      </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;      </span></span>
+<span><span class="co">#&gt; 1 slip       &lt;NA&gt;        beta(5, 25)</span></span>
+<span><span class="co">#&gt; 2 guess      &lt;NA&gt;        beta(5, 25)</span></span>
+<span><span class="co">#&gt; 3 structural &lt;NA&gt;        beta(1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You can see which parameter types and specific coefficients are available for your model using <code><a href="https://dcmstan.r-dcm.org/reference/get_parameters.html">get_parameters()</a></code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>, qmatrix <span class="op">=</span> <span class="va">roarpa_qmatrix</span>, identifier <span class="op">=</span> <span class="st">"item"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 114 × 4</span></span>
+<span><span class="co">#&gt;    item   type       attributes coefficient</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;      </span></span>
+<span><span class="co">#&gt;  1 fsm_01 intercept  &lt;NA&gt;       l1_0       </span></span>
+<span><span class="co">#&gt;  2 fsm_01 maineffect fsm        l1_13      </span></span>
+<span><span class="co">#&gt;  3 fsm_04 intercept  &lt;NA&gt;       l2_0       </span></span>
+<span><span class="co">#&gt;  4 fsm_04 maineffect fsm        l2_13      </span></span>
+<span><span class="co">#&gt;  5 fsm_05 intercept  &lt;NA&gt;       l3_0       </span></span>
+<span><span class="co">#&gt;  6 fsm_05 maineffect fsm        l3_13      </span></span>
+<span><span class="co">#&gt;  7 fsm_06 intercept  &lt;NA&gt;       l4_0       </span></span>
+<span><span class="co">#&gt;  8 fsm_06 maineffect fsm        l4_13      </span></span>
+<span><span class="co">#&gt;  9 fsm_07 intercept  &lt;NA&gt;       l5_0       </span></span>
+<span><span class="co">#&gt; 10 fsm_07 maineffect fsm        l5_13      </span></span>
+<span><span class="co">#&gt; # ℹ 104 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To customize priors, use the <code><a href="https://dcmstan.r-dcm.org/reference/prior.html">prior()</a></code> function. The <code>type</code> argument specifies which parameter type the prior applies to, and the optional <code>coefficient</code> argument can target a specific parameter within that type. Custom priors can be passed to <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code> via the <code>priors</code> argument. Any parameter types not covered by a custom prior will retain their default values.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_priors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/prior.html">prior</a></span><span class="op">(</span><span class="fu">normal</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"intercept"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/prior.html">prior</a></span><span class="op">(</span><span class="fu">lognormal</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"maineffect"</span>, coefficient <span class="op">=</span> <span class="st">"l1_13"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
+<span>  qmatrix <span class="op">=</span> <span class="va">roarpa_qmatrix</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"item"</span>,</span>
+<span>  measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">unconstrained</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  priors <span class="op">=</span> <span class="va">my_priors</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes</span></span>
+<span><span class="co">#&gt; with 57 items.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Attributes:</span></span>
+<span><span class="co">#&gt; • "lsm" (19 items)</span></span>
+<span><span class="co">#&gt; • "del" (19 items)</span></span>
+<span><span class="co">#&gt; • "fsm" (19 items)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Attribute structure:</span></span>
+<span><span class="co">#&gt;   Unconstrained</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Prior distributions:</span></span>
+<span><span class="co">#&gt;   `l1_13` ~ lognormal(0, 0.5)</span></span>
+<span><span class="co">#&gt;   intercept ~ normal(0, 1)</span></span>
+<span><span class="co">#&gt;   maineffect ~ lognormal(0, 1)</span></span>
+<span><span class="co">#&gt;   `Vc` ~ dirichlet(1, 1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section></section><section id="estimate-a-model-specification" class="level2"><h2 class="anchored" data-anchor-id="estimate-a-model-specification">Estimate a model specification</h2>
+<p>Once we have a model specification, we can estimate it using <code><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate()</a></code>. This function takes a specification object (created by <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code>), along with the response data and the name of the column in the data that contains respondent identifiers.</p>
+<p>The <code>method</code> argument controls how the model is estimated. Options include <code>"optim"</code> for point estimation using Stan’s optimizer, <code>"mcmc"</code> for full Markov chain Monte Carlo sampling, <code>"variational"</code> for variational inference, and <code>"pathfinder"</code> (available only when using the cmdstanr backend). Full MCMC provides the most complete picture of the posterior distribution, but takes the longest to run. The optimizer is the fastest option and is useful for quick analyses, but does not provide a full posterior distribution.</p>
+<p>The <code>backend</code> argument specifies which Stan interface to use for estimation: <code>"rstan"</code> or <code>"cmdstanr"</code> to use the <a href="https://mc-stan.org/rstan/">rstan</a> or <a href="https://mc-stan.org/cmdstanr/">cmdstanr</a> package, respetively. The <code>file</code> argument allows you to save the estimated model to disk so that it does not need to be re-estimated if you re-run the script. Any additional arguments are passed directly to the backend’s estimation function (e.g., <code>chains</code>, <code>iter</code>, and <code>warmup</code> for MCMC estimation when using the <code>"rstan"</code> backend).</p>
+<p>For this example, we use the optimizer with rstan, which provides fast point estimates of the model parameters.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">roarpa_lcdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
+<span>  dcm_spec <span class="op">=</span> <span class="va">roarpa_spec</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">roarpa_data</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"optim"</span>,</span>
+<span>  backend <span class="op">=</span> <span class="st">"rstan"</span>,</span>
+<span>  file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"fits"</span>, <span class="st">"roarpa-lcdm-uncst-rstn"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="respondent-proficiency-estimates" class="level3"><h3 class="anchored" data-anchor-id="respondent-proficiency-estimates">Respondent proficiency estimates</h3>
+<p>After estimating a model, we typically want to know which attributes each respondent has mastered. The <code><a href="https://measr.r-dcm.org/reference/score.html">score()</a></code> function calculates respondent proficiency estimates from a fitted model. It returns a list with two elements: <code>class_probabilities</code>, which contains the probability that each respondent belongs to each possible attribute profile, and <code>attribute_probabilities</code>, which contains the marginal probability that each respondent is proficient on each individual attribute.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">roarpa_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/score.html">score</a></span><span class="op">(</span><span class="va">roarpa_lcdm</span><span class="op">)</span></span>
+<span><span class="va">roarpa_scores</span></span>
+<span><span class="co">#&gt; $class_probabilities</span></span>
+<span><span class="co">#&gt; # A tibble: 2,176 × 3</span></span>
+<span><span class="co">#&gt;    id    class   probability</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;         &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 161   [0,0,0]   2.59 e- 1</span></span>
+<span><span class="co">#&gt;  2 161   [1,0,0]   2.24 e-10</span></span>
+<span><span class="co">#&gt;  3 161   [0,1,0]   7.41 e- 1</span></span>
+<span><span class="co">#&gt;  4 161   [0,0,1]   1.10 e- 7</span></span>
+<span><span class="co">#&gt;  5 161   [1,1,0]   7.97 e- 9</span></span>
+<span><span class="co">#&gt;  6 161   [1,0,1]   1.29 e-15</span></span>
+<span><span class="co">#&gt;  7 161   [0,1,1]   2.35 e- 6</span></span>
+<span><span class="co">#&gt;  8 161   [1,1,1]   2.14 e-13</span></span>
+<span><span class="co">#&gt;  9 226   [0,0,0]   1.000e+ 0</span></span>
+<span><span class="co">#&gt; 10 226   [1,0,0]   6.65 e-11</span></span>
+<span><span class="co">#&gt; # ℹ 2,166 more rows</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $attribute_probabilities</span></span>
+<span><span class="co">#&gt; # A tibble: 816 × 3</span></span>
+<span><span class="co">#&gt;    id    attribute probability</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 161   lsm          8.19e- 9</span></span>
+<span><span class="co">#&gt;  2 161   del          7.41e- 1</span></span>
+<span><span class="co">#&gt;  3 161   fsm          2.46e- 6</span></span>
+<span><span class="co">#&gt;  4 226   lsm          6.65e-11</span></span>
+<span><span class="co">#&gt;  5 226   del          5.07e-10</span></span>
+<span><span class="co">#&gt;  6 226   fsm          1.19e- 7</span></span>
+<span><span class="co">#&gt;  7 103   lsm          2.41e-13</span></span>
+<span><span class="co">#&gt;  8 103   del          3.79e- 6</span></span>
+<span><span class="co">#&gt;  9 103   fsm          2.62e-14</span></span>
+<span><span class="co">#&gt; 10 7     lsm          2.14e-15</span></span>
+<span><span class="co">#&gt; # ℹ 806 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In practice, we often want to convert these probabilities into binary proficiency classifications. A common approach is to use a threshold of .5, classifying a respondent as proficient on an attribute if their estimated probability of proficiency exceeds .5. The choice of threshold matters and can be adjusted based on the intended use of the results.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">roarpa_scores</span><span class="op">$</span><span class="va">attribute_probabilities</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>probability <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">probability</span> <span class="op">&gt;</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">attribute</span>, values_from <span class="op">=</span> <span class="va">probability</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 272 × 4</span></span>
+<span><span class="co">#&gt;    id      lsm   del   fsm</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 161       0     1     0</span></span>
+<span><span class="co">#&gt;  2 226       0     0     0</span></span>
+<span><span class="co">#&gt;  3 103       0     0     0</span></span>
+<span><span class="co">#&gt;  4 7         0     0     0</span></span>
+<span><span class="co">#&gt;  5 185       1     0     1</span></span>
+<span><span class="co">#&gt;  6 129       0     0     0</span></span>
+<span><span class="co">#&gt;  7 181       1     1     1</span></span>
+<span><span class="co">#&gt;  8 36        1     1     1</span></span>
+<span><span class="co">#&gt;  9 206       1     1     1</span></span>
+<span><span class="co">#&gt; 10 257       1     1     1</span></span>
+<span><span class="co">#&gt; # ℹ 262 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section></section><section id="wrapping-up" class="level2"><h2 class="anchored" data-anchor-id="wrapping-up">Wrapping up</h2>
+<p>We now have an estimate of proficiency for each respondent on each of the attribute measured by the ROAR-PA. However, before we report these result it’s important to evaluate the quality of the model. We need to ensure that the model fits well and provides accurate classifications. That is the focus of the <a href="../../start/evaluate/">Evaluate Model Performance</a> article.</p>
+</section><section id="session-info" class="level2"><h2 class="anchored" data-anchor-id="session-info">Session information</h2>
+<div class="cell" data-layout-align="center">
+<pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
+#&gt;  version      R version 4.5.2 (2025-10-31)
+#&gt;  language     (EN)
+#&gt;  date         2026-03-11
+#&gt;  pandoc       3.9
+#&gt;  quarto       1.9.24
+#&gt;  Stan (rstan) 2.37.0
+#&gt; 
+#&gt; ─ Packages ─────────────────────────────────────────────────────────
+#&gt;  package          version     date (UTC) source
+#&gt;  bridgesampling   1.2-1       2025-11-19 CRAN (R 4.5.2)
+#&gt;  dcmdata          0.2.0       2026-03-10 CRAN (R 4.5.2)
+#&gt;  dcmstan          0.1.0       2025-11-24 CRAN (R 4.5.2)
+#&gt;  dplyr            1.2.0       2026-02-03 CRAN (R 4.5.2)
+#&gt;  forcats          1.0.1       2025-09-25 CRAN (R 4.5.0)
+#&gt;  ggplot2          4.0.2       2026-02-03 CRAN (R 4.5.2)
+#&gt;  loo              2.9.0.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
+#&gt;  lubridate        1.9.5       2026-02-04 CRAN (R 4.5.2)
+#&gt;  measr            2.0.0.9000  2026-03-04 Github (r-dcm/measr@f033603)
+#&gt;  posterior        1.6.1.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
+#&gt;  purrr            1.2.1       2026-01-09 CRAN (R 4.5.2)
+#&gt;  readr            2.2.0       2026-02-19 CRAN (R 4.5.2)
+#&gt;  rlang            1.1.7       2026-01-09 CRAN (R 4.5.2)
+#&gt;  rstan            2.36.0.9000 2025-09-26 https://stan-dev.r-universe.dev (R 4.5.1)
+#&gt;  stringr          1.6.0       2025-11-04 CRAN (R 4.5.0)
+#&gt;  tibble           3.3.1       2026-01-11 CRAN (R 4.5.2)
+#&gt;  tidyr            1.3.2       2025-12-19 CRAN (R 4.5.2)
+#&gt; 
+#&gt; ────────────────────────────────────────────────────────────────────</code></pre>
+</div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-dina" class="csl-entry" role="listitem">
+<span class="nocase">de la Torre, J., &amp; Douglas, J. A.</span> (2004). Higher-order latent trait models for cognitive diagnosis. <em>Psychometrika</em>, <em>69</em>(3), 333–353. <a href="https://doi.org/10.1007/BF02295640">https://doi.org/10.1007/BF02295640</a>
+</div>
+<div id="ref-ncrum" class="csl-entry" role="listitem">
+DiBello, L. V., Stout, W. F., &amp; Roussos, L. (1995). Unified cognitive psychometric assessment likelihood-based classification techniques. In P. D. Nichols, S. F. Chipman, &amp; R. L. Brennan (Eds.), <em>Cognitively diagnostic assessment</em> (pp. 361–390). Erlbaum.
+</div>
+<div id="ref-roarpa" class="csl-entry" role="listitem">
+Gijbels, L., Burkhardt, A., Ma, W. A., &amp; Yeatman, J. D. (2024). Rapid online assessment of reading and phonological awareness <span>(ROAR-PA)</span>. <em>Scientific Reports</em>, <em>14</em>, Article 10249. <a href="https://doi.org/10.1038/s41598-024-60834-9">https://doi.org/10.1038/s41598-024-60834-9</a>
+</div>
+<div id="ref-crum" class="csl-entry" role="listitem">
+Hartz, S. M. (2002). <em>A <span>Bayesian</span> framework for the unified model for assessing cognitive abilities: <span>Blending</span> theory with practicality</em> (Publication No. 3044108). <span>[Doctoral thesis, University of Illinois at Urbana-Champaign]. ProQuest Dissertations and Theses Global</span>.
+</div>
+<div id="ref-lcdm-handbook" class="csl-entry" role="listitem">
+Henson, R. A., &amp; Templin, J. L. (2019). Loglinear cognitive diagnostic model (<span>LCDM</span>). In <span class="nocase">M. von Davier &amp; Y.-S. Lee (Eds.)</span>, <em>Handbook of diagnostic classification models</em> (pp. 171–185). Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-05584-4_8">https://doi.org/10.1007/978-3-030-05584-4_8</a>
+</div>
+<div id="ref-lcdm" class="csl-entry" role="listitem">
+Henson, R. A., Templin, J. L., &amp; Willse, J. T. (2009). Defining a family of cognitive diagnosis models using log-linear models with latent variables. <em>Psychometrika</em>, <em>74</em>(2), 191–210. <a href="https://doi.org/10.1007/s11336-008-9089-5">https://doi.org/10.1007/s11336-008-9089-5</a>
+</div>
+<div id="ref-bayesnet" class="csl-entry" role="listitem">
+Hu, B., &amp; Templin, J. (2020). Using diagnostic classification models to validate attribute hierarchies and evaluate model fit in <span>Bayesian</span> networks. <em>Multivariate Behavioral Research</em>, <em>55</em>(2), 300–311. <a href="https://doi.org/10.1080/00273171.2019.1632165">https://doi.org/10.1080/00273171.2019.1632165</a>
+</div>
+<div id="ref-nida" class="csl-entry" role="listitem">
+Junker, B. W., &amp; Sijtsma, K. (2001). Cognitive assessment models with few assumptions, and connections with nonparametric item response theory. <em>Applied Psychological Measurement</em>, <em>25</em>(3), 258–272. <a href="https://doi.org/10.1177/01466210122032064">https://doi.org/10.1177/01466210122032064</a>
+</div>
+<div id="ref-independent" class="csl-entry" role="listitem">
+Lee, S. Y. (2017, June 27). <em>Cognitive diagnosis model: <span>DINA</span> model with independent attributes</em>. Stan. <a href="https://mc-stan.org/learn-stan/case-studies/dina_independent.html">https://mc-stan.org/learn-stan/case-studies/dina_independent.html</a>
+</div>
+<div id="ref-rupp-dcm" class="csl-entry" role="listitem">
+Rupp, A. A., Templin, J., &amp; Henson, R. A. (2010). <em>Diagnostic measurement: <span>Theory</span>, methods, and applications</em>. <span>Guilford Press</span>.
+</div>
+<div id="ref-nido" class="csl-entry" role="listitem">
+Templin, J. (2006). <em><span>CDM</span> user’s guide</em> [Unpublished manuscript]. Department of Psychology, University of Kansas.
+</div>
+<div id="ref-hdcm" class="csl-entry" role="listitem">
+Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification models: <span>A</span> family of models for estimating and testing attribute hierarchies. <em>Psychometrika</em>, <em>79</em>(2), 317–339. <a href="https://doi.org/10.1007/s11336-013-9362-0">https://doi.org/10.1007/s11336-013-9362-0</a>
+</div>
+<div id="ref-dino" class="csl-entry" role="listitem">
+Templin, J., &amp; Henson, R. A. (2006). Measurement of psychological disorders using cognitive diagnosis models. <em>Psychological Methods</em>, <em>11</em>(3), 287–305. <a href="https://doi.org/10.1037/1082-989X.11.3.287">https://doi.org/10.1037/1082-989X.11.3.287</a>
+</div>
+<div id="ref-loglinear" class="csl-entry" role="listitem">
+<span class="nocase">Xu, X., &amp; von Davier, M.</span> (2008). <em>Fitting the structured general diagnostic model to <span>NAEP</span> data</em> (Nos. RR-08-27). Educational Testing Service. <a href="https://files.eric.ed.gov/fulltext/EJ1111272.pdf">https://files.eric.ed.gov/fulltext/EJ1111272.pdf</a>
+</div>
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();

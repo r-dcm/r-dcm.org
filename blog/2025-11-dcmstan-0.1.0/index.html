@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.16">
+<meta name="generator" content="quarto-1.9.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="W. Jake Thompson">
 <meta name="dcterms.date" content="2025-11-26">
 <meta name="description" content="Initial release of dcmstan for specifying diagnostic models and generating Stan code.">
 <title>dcmstan 0.1.0 – r-dcm</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -91,10 +94,10 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-915771a4037e72452fdf8fc80ceaf70b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b3aaa6997641482631754dbbac2f39fc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-bdf1f4ac84282833e0a4718e4f93ff7f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-0f96150053b5d64986f732095ddb08ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -793,7 +796,7 @@ background-size: cover;
 <span><span class="co">#&gt;  $ num  : int [1:2922] 28 28 28 28 28 28 28 28 28 28 ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="dcmstan-measr" class="level2"><h2 class="anchored" data-anchor-id="dcmstan-measr">dcmstan + measr</h2>
-<p>dcmstan is primarily intended to be a backend to <a href="https://measr.r-dcm.org">measr</a>. Many dcmstan functions are reexported by measr so that if you are using measr to estimate your model, you should not need to directly load or interact with dcmstan. For example, <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code> is reexported by measr, so one can simply create a model specification and pass that directly to <code><a href="https://measr.info/reference/dcm_estimate.html">measr::dcm_estimate()</a></code>.</p>
+<p>dcmstan is primarily intended to be a backend to <a href="https://measr.r-dcm.org">measr</a>. Many dcmstan functions are reexported by measr so that if you are using measr to estimate your model, you should not need to directly load or interact with dcmstan. For example, <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code> is reexported by measr, so one can simply create a model specification and pass that directly to <code><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">measr::dcm_estimate()</a></code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://measr.r-dcm.org">measr</a></span><span class="op">)</span></span>
 <span></span>
@@ -804,13 +807,13 @@ background-size: cover;
 <span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">unconstrained</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.info/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
 <span>  dcm_spec <span class="op">=</span> <span class="va">ecpe_spec</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">ecpe_data</span>,</span>
 <span>  identifier <span class="op">=</span> <span class="st">"resp_id"</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code><a href="https://measr.info/reference/dcm_estimate.html">measr::dcm_estimate()</a></code> calls <code><a href="https://dcmstan.r-dcm.org/reference/stan_code.html">stan_code()</a></code> and <code><a href="https://dcmstan.r-dcm.org/reference/stan_data.html">stan_data()</a></code> internally to create the necessary <em>Stan</em> script and data list and then estimates the model using your chosen backend (i.e., rstan or cmdstanr). Thus, a direct interface with dcmstan should only be necessary if you want to modify the <em>Stan</em> code that is generated by default.</p>
+<p><code><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">measr::dcm_estimate()</a></code> calls <code><a href="https://dcmstan.r-dcm.org/reference/stan_code.html">stan_code()</a></code> and <code><a href="https://dcmstan.r-dcm.org/reference/stan_data.html">stan_data()</a></code> internally to create the necessary <em>Stan</em> script and data list and then estimates the model using your chosen backend (i.e., rstan or cmdstanr). Thus, a direct interface with dcmstan should only be necessary if you want to modify the <em>Stan</em> code that is generated by default.</p>
 </section><div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
 <p>The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546">R305D210045</a> and <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075">R305D240032</a> to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the the Institute or the U.S. Department of Education.</p>
 <p>Featured photo by <a href="https://unsplash.com/@andreas_haslinger?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Andreas Haslinger</a> on <a href="https://unsplash.com/photos/a-close-up-of-a-white-wall-with-a-black-frame-ywikyd-_DJs?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
@@ -819,7 +822,7 @@ background-size: cover;
 
 </div></section><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-lcdm-handbook" class="csl-entry" role="listitem">
-Henson, R. A., &amp; Templin, J. L. (2019). Loglinear cognitive diagnostic model (<span>LCDM</span>). In M. von Davier &amp; Y.-S. Lee (Eds.), <em>Handbook of diagnostic classification models</em> (pp. 171–185). Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-05584-4_8">https://doi.org/10.1007/978-3-030-05584-4_8</a>
+Henson, R. A., &amp; Templin, J. L. (2019). Loglinear cognitive diagnostic model (<span>LCDM</span>). In <span class="nocase">M. von Davier &amp; Y.-S. Lee (Eds.)</span>, <em>Handbook of diagnostic classification models</em> (pp. 171–185). Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-05584-4_8">https://doi.org/10.1007/978-3-030-05584-4_8</a>
 </div>
 <div id="ref-lcdm" class="csl-entry" role="listitem">
 Henson, R. A., Templin, J. L., &amp; Willse, J. T. (2009). Defining a family of cognitive diagnosis models using log-linear models with latent variables. <em>Psychometrika</em>, <em>74</em>(2), 191–210. <a href="https://doi.org/10.1007/s11336-008-9089-5">https://doi.org/10.1007/s11336-008-9089-5</a>

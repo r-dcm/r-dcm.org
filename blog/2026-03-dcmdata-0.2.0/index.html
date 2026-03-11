@@ -5,9 +5,9 @@
 <meta name="generator" content="quarto-1.9.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="W. Jake Thompson">
-<meta name="dcterms.date" content="2025-08-21">
-<meta name="description" content="Initial release dcmdata for accessing data from diagnostic assessments.">
-<title>dcmdata 0.1.0 – r-dcm</title>
+<meta name="dcterms.date" content="2026-03-11">
+<meta name="description" content="Several new data sets, including data from the PIE through-year assessment project.">
+<title>dcmdata 0.2.0 – r-dcm</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -138,15 +138,15 @@ background-size: cover;
   white-space: pre-wrap !important;
 }
 </style>
-<meta property="og:title" content="dcmdata 0.1.0">
-<meta property="og:description" content="Initial release dcmdata for accessing data from diagnostic assessments.">
-<meta property="og:image" content="https://r-dcm.org/blog/2025-08-dcmdata-0.1.0/featured.jpg">
+<meta property="og:title" content="dcmdata 0.2.0">
+<meta property="og:description" content="Several new data sets, including data from the PIE through-year assessment project.">
+<meta property="og:image" content="https://r-dcm.org/blog/2026-03-dcmdata-0.2.0/featured.jpg">
 <meta property="og:site_name" content="r-dcm">
-<meta property="og:image:alt" content="Person taking a test">
-<meta name="twitter:title" content="dcmdata 0.1.0">
-<meta name="twitter:description" content="Initial release dcmdata for accessing data from diagnostic assessments.">
-<meta name="twitter:image" content="https://r-dcm.org/blog/2025-08-dcmdata-0.1.0/featured.jpg">
-<meta name="twitter:image:alt" content="Person taking a test">
+<meta property="og:image:alt" content="Series of filing cabinets">
+<meta name="twitter:title" content="dcmdata 0.2.0">
+<meta name="twitter:description" content="Several new data sets, including data from the PIE through-year assessment project.">
+<meta name="twitter:image" content="https://r-dcm.org/blog/2026-03-dcmdata-0.2.0/featured.jpg">
+<meta name="twitter:image:alt" content="Series of filing cabinets">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="floating nav-fixed quarto-light">
@@ -188,10 +188,10 @@ background-size: cover;
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">dcmdata 0.1.0</h1>
+      <h1 class="title">dcmdata 0.2.0</h1>
                   <div>
         <div class="description">
-          Initial release dcmdata for accessing data from diagnostic assessments.
+          Several new data sets, including data from the PIE through-year assessment project.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -223,19 +223,11 @@ background-size: cover;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 21, 2025</p>
+        <p class="date">March 11, 2026</p>
       </div>
     </div>
     
       
-      <div>
-      <div class="quarto-title-meta-heading">Doi</div>
-      <div class="quarto-title-meta-contents">
-        <p class="doi">
-          <a href="https://doi.org/10.59350/gmy4x-20093">10.59350/gmy4x-20093</a>
-        </p>
-      </div>
-    </div>
     </div>
     
   
@@ -244,8 +236,8 @@ background-size: cover;
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul>
-<li><a href="#data-sets" id="toc-data-sets" class="nav-link active" data-scroll-target="#data-sets">Data sets</a></li>
-  <li><a href="#future-work" id="toc-future-work" class="nav-link" data-scroll-target="#future-work">Future work</a></li>
+<li><a href="#pathways-for-instructionally-embedded-assessment" id="toc-pathways-for-instructionally-embedded-assessment" class="nav-link active" data-scroll-target="#pathways-for-instructionally-embedded-assessment">Pathways for Instructionally Embedded Assessment</a></li>
+  <li><a href="#item-response-warehouse" id="toc-item-response-warehouse" class="nav-link" data-scroll-target="#item-response-warehouse">Item Response Warehouse</a></li>
   
   </ul></nav>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -253,221 +245,151 @@ background-size: cover;
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><p>We are so happy to announce the release of a new package, <a href="https://dcmdata.r-dcm.org">dcmdata</a>. The goal of dcmdata is to provide easy access to data sets that can be used for demonstrating and testing diagnostic classification models (DCM; also called cognitive diagnostic models [CDMs]).</p>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><p>We are excited to announce the release of <a href="https://dcmdata.r-dcm.org">dcmdata</a> 0.2.0. The goal of dcmdata is to provide easy access to data sets that can be used for demonstrating and testing diagnostic classification models (DCM; also called cognitive diagnostic models [CDMs]).</p>
 <p>You can install dcmdata from CRAN with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"dcmdata"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This blog post will highlight the major features and plans for future development.</p>
+<p>This blog post highlights the major changes in this release, which is mainly focused on the addition of several new data sets. You can see a full list of changes in the <a href="https://dcmdata.r-dcm.org/news/index.html#dcmdata-020">release notes</a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dcmdata.r-dcm.org">dcmdata</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="data-sets" class="level2"><h2 class="anchored" data-anchor-id="data-sets">Data sets</h2>
-<p>dcmdata contains both real and simulated data sets. All data sets include both response data and a Q-matrix. The real data sets include the MacReady and Dayton <span class="citation" data-cites="mdm">(<a href="#ref-mdm" role="doc-biblioref">1977</a>)</span> multiplication data (MDM) and the Examination for the certificate of proficiency in English (ECPE), as described by <span class="citation" data-cites="ecpe">Templin &amp; Hoffman (<a href="#ref-ecpe" role="doc-biblioref">2013</a>)</span>.</p>
-<p>The MDM data are a small data set of four items that measure a single attribute, multiplication. As such, this data is useful for use cases where you are interested in a fairly short estimation time. For example, this data could be used to quickly interate while testing model code, or in training workshops where time is limited.</p>
+<section id="pathways-for-instructionally-embedded-assessment" class="level2"><h2 class="anchored" data-anchor-id="pathways-for-instructionally-embedded-assessment">Pathways for Instructionally Embedded Assessment</h2>
+<p>The Pathways for Instructionally Embedded Assessment (PIE) project was a proof-of-concept partnership between <a href="https://atlas.ku.edu">ATLAS</a> at the University of Kansas and the <a href="https://dese.mo.gov">Missouri Department of Elementary and Secondary Education</a>. The project explored whether through-year instructionally embedded assessments can be used to both inform instructional decisions and support summative reporting requirements.</p>
+<p>The PIE system is built on learning maps, which describe different ways for students to acquire knowledge, skills, and understandings around a learning target <span class="citation" data-cites="atlas-maps">(<a href="#ref-atlas-maps" role="doc-biblioref">Swinburne Romine et al., 2025</a>)</span>. For PIE, a small map was built around each of the Missouri learning standards included in the project, and a three-level learning pathway that summarizes critical junctures in the learning map that serve as assessment targets. The PIE data included in dcmdata comes from a learning pathway aligned to the 5.RA.A.1b learning standard, a grade 5 mathematics standard covering patterns and relationships. The three levels of the learning pathway are:</p>
+<ul>
+<li>Level 1: Recognize the order of elements in a repeating pattern.</li>
+<li>Level 2: Organize two numeric patterns in a table.</li>
+<li>Level 3: Translate two numeric patterns into ordered pairs.</li>
+</ul>
+<p>There are two PIE data sets representing different phases of the project:</p>
+<ul>
+<li><p><code>pie_ft_data</code> and <code>pie_ft_qmatrix</code> contain data from the Spring 2024 field test, where each student responded to items measuring all three levels at a single time point.</p></li>
+<li><p><code>pie_pilot_data</code> and <code>pie_pilot_qmatrix</code> contain data from the 2024–2025 pilot administration, where assessments were spread across three time points: <code>baseline</code> (before instruction, measuring Level 1 only), <code>midway</code> (measuring Level 2, and re-assessing Level 1 for students who hadn’t yet demonstrated mastery), and <code>end_of_unit</code> (measuring Level 3, and re-assessing Level 2 as needed).</p></li>
+</ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mdm_data</span></span>
-<span><span class="co">#&gt; # A tibble: 142 × 5</span></span>
-<span><span class="co">#&gt;    respondent  mdm1  mdm2  mdm3  mdm4</span></span>
-<span><span class="co">#&gt;    &lt;fct&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 m8qre          1     1     1     1</span></span>
-<span><span class="co">#&gt;  2 8wMPc          1     1     1     1</span></span>
-<span><span class="co">#&gt;  3 xdbT8          1     1     1     1</span></span>
-<span><span class="co">#&gt;  4 Ee9ob          1     1     1     1</span></span>
-<span><span class="co">#&gt;  5 0tyTA          1     1     1     1</span></span>
-<span><span class="co">#&gt;  6 L4bzq          1     1     1     1</span></span>
-<span><span class="co">#&gt;  7 QTW1v          1     1     1     1</span></span>
-<span><span class="co">#&gt;  8 w4NOH          1     1     1     1</span></span>
-<span><span class="co">#&gt;  9 t9sIe          1     1     1     1</span></span>
-<span><span class="co">#&gt; 10 FDa7I          1     1     1     1</span></span>
-<span><span class="co">#&gt; # ℹ 132 more rows</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pie_ft_data</span></span>
+<span><span class="co">#&gt; # A tibble: 172 × 16</span></span>
+<span><span class="co">#&gt;    student `00592` `14415` `56400` `64967` `06238` `10231` `54596` `96748`</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 8978593       1       1       1       1       1       0       1       1</span></span>
+<span><span class="co">#&gt;  2 5231294       1       1       1       1       1       1       1       1</span></span>
+<span><span class="co">#&gt;  3 3681220       1       1       1       1       1       1       1       1</span></span>
+<span><span class="co">#&gt;  4 7763384       1       0       1       1       1       1       1       1</span></span>
+<span><span class="co">#&gt;  5 1913897       1       1       1       1       1       1       1       1</span></span>
+<span><span class="co">#&gt;  6 0692477       1       1       1       1       1       1       1       1</span></span>
+<span><span class="co">#&gt;  7 6961042       1       1       0       1       1       1       1       1</span></span>
+<span><span class="co">#&gt;  8 4241777       1       1       1       1       1       1       1       1</span></span>
+<span><span class="co">#&gt;  9 3068583       1       1       1       1       1       1       1       1</span></span>
+<span><span class="co">#&gt; 10 6607413       1       1       1       1       1       1       1       1</span></span>
+<span><span class="co">#&gt; # ℹ 162 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 7 more variables: `97634` &lt;int&gt;, `13080` &lt;int&gt;, `27971` &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   `56741` &lt;int&gt;, `63088` &lt;int&gt;, `81175` &lt;int&gt;, `88063` &lt;int&gt;</span></span>
 <span></span>
-<span><span class="va">mdm_qmatrix</span></span>
-<span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
-<span><span class="co">#&gt;   item  multiplication</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;          &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 mdm1               1</span></span>
-<span><span class="co">#&gt; 2 mdm2               1</span></span>
-<span><span class="co">#&gt; 3 mdm3               1</span></span>
-<span><span class="co">#&gt; 4 mdm4               1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="va">pie_ft_qmatrix</span></span>
+<span><span class="co">#&gt; # A tibble: 15 × 4</span></span>
+<span><span class="co">#&gt;    task     L1    L2    L3</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 00592     1     0     0</span></span>
+<span><span class="co">#&gt;  2 14415     1     0     0</span></span>
+<span><span class="co">#&gt;  3 56400     1     0     0</span></span>
+<span><span class="co">#&gt;  4 64967     1     0     0</span></span>
+<span><span class="co">#&gt;  5 06238     0     1     0</span></span>
+<span><span class="co">#&gt;  6 10231     0     1     0</span></span>
+<span><span class="co">#&gt;  7 54596     0     1     0</span></span>
+<span><span class="co">#&gt;  8 96748     0     1     0</span></span>
+<span><span class="co">#&gt;  9 97634     0     1     0</span></span>
+<span><span class="co">#&gt; 10 13080     0     0     1</span></span>
+<span><span class="co">#&gt; 11 27971     0     0     1</span></span>
+<span><span class="co">#&gt; 12 56741     0     0     1</span></span>
+<span><span class="co">#&gt; 13 63088     0     0     1</span></span>
+<span><span class="co">#&gt; 14 81175     0     0     1</span></span>
+<span><span class="co">#&gt; 15 88063     0     0     1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>In contrast, the ECPE data are perhaps a more representative of data you might gather in practice. These data consist of 28 items measuring 3 attributes and taken by 2,922 respondents. Because multiple attributes are measured, this data can be used to demonstrate how different attributes interact on a single item when using different compensatory and noncompensatory DCMs. Additionally, <span class="citation" data-cites="hdcm">Templin &amp; Bradshaw (<a href="#ref-hdcm" role="doc-biblioref">2014</a>)</span> demonstrated that the three attributes follow a linear hierarchy, such that respondents are typically demonstrate proficiency on lexical, cohesive, and morphosyntactic rules, in that order. That is, the earlier skills represent precursor knowledge necessary for proficiency on the later skills. The hierarchy makes the ECPE data excellent for demonstrating the effect of different structural model specifications in a DCM.</p>
+<p>The pilot data includes a <code>time</code> column, which makes it straightforward to filter to a particular assessment window:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ecpe_data</span></span>
-<span><span class="co">#&gt; # A tibble: 2,922 × 29</span></span>
-<span><span class="co">#&gt;    resp_id    E1    E2    E3    E4    E5    E6    E7    E8    E9   E10   E11</span></span>
-<span><span class="co">#&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1       1     1     1     1     0     1     1     1     1     1     1     1</span></span>
-<span><span class="co">#&gt;  2       2     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span><span class="co">#&gt;  3       3     1     1     1     1     1     1     0     1     1     1     1</span></span>
-<span><span class="co">#&gt;  4       4     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span><span class="co">#&gt;  5       5     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span><span class="co">#&gt;  6       6     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span><span class="co">#&gt;  7       7     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span><span class="co">#&gt;  8       8     0     1     1     1     1     1     0     1     1     1     0</span></span>
-<span><span class="co">#&gt;  9       9     1     1     1     1     1     1     1     1     1     1     1</span></span>
-<span><span class="co">#&gt; 10      10     1     1     1     1     0     0     1     1     1     1     1</span></span>
-<span><span class="co">#&gt; # ℹ 2,912 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 17 more variables: E12 &lt;int&gt;, E13 &lt;int&gt;, E14 &lt;int&gt;, E15 &lt;int&gt;, E16 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   E17 &lt;int&gt;, E18 &lt;int&gt;, E19 &lt;int&gt;, E20 &lt;int&gt;, E21 &lt;int&gt;, E22 &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   E23 &lt;int&gt;, E24 &lt;int&gt;, E25 &lt;int&gt;, E26 &lt;int&gt;, E27 &lt;int&gt;, E28 &lt;int&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pie_pilot_data</span></span>
+<span><span class="co">#&gt; # A tibble: 2,370 × 19</span></span>
+<span><span class="co">#&gt;    student time  `00592` `14415` `56400` `33008` `49531` `96568` `06238` `54596`</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 9774034 base…       1       1       1      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt;  2 3719616 base…       1       1       1      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt;  3 6300607 base…       1       1       0      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt;  4 9006170 base…       1       1       1      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt;  5 3852370 base…       1       1       1      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt;  6 7020068 base…       1       1       1      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt;  7 7347730 base…       1       1       1      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt;  8 7115840 base…       1       0       0      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt;  9 3483273 base…       1       0       0      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt; 10 8994582 base…       1       1       1      NA      NA      NA      NA      NA</span></span>
+<span><span class="co">#&gt; # ℹ 2,360 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 9 more variables: `96748` &lt;dbl&gt;, `97634` &lt;dbl&gt;, `10231` &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   `38641` &lt;dbl&gt;, `97673` &lt;dbl&gt;, `13080` &lt;dbl&gt;, `27971` &lt;dbl&gt;, `56741` &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   `63088` &lt;dbl&gt;</span></span>
 <span></span>
-<span><span class="va">ecpe_qmatrix</span></span>
-<span><span class="co">#&gt; # A tibble: 28 × 4</span></span>
-<span><span class="co">#&gt;    item_id morphosyntactic cohesive lexical</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 E1                    1        1       0</span></span>
-<span><span class="co">#&gt;  2 E2                    0        1       0</span></span>
-<span><span class="co">#&gt;  3 E3                    1        0       1</span></span>
-<span><span class="co">#&gt;  4 E4                    0        0       1</span></span>
-<span><span class="co">#&gt;  5 E5                    0        0       1</span></span>
-<span><span class="co">#&gt;  6 E6                    0        0       1</span></span>
-<span><span class="co">#&gt;  7 E7                    1        0       1</span></span>
-<span><span class="co">#&gt;  8 E8                    0        1       0</span></span>
-<span><span class="co">#&gt;  9 E9                    0        0       1</span></span>
-<span><span class="co">#&gt; 10 E10                   1        0       0</span></span>
-<span><span class="co">#&gt; # ℹ 18 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="va">pie_pilot_qmatrix</span></span>
+<span><span class="co">#&gt; # A tibble: 17 × 4</span></span>
+<span><span class="co">#&gt;    task     L1    L2    L3</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 00592     1     0     0</span></span>
+<span><span class="co">#&gt;  2 14415     1     0     0</span></span>
+<span><span class="co">#&gt;  3 56400     1     0     0</span></span>
+<span><span class="co">#&gt;  4 33008     1     0     0</span></span>
+<span><span class="co">#&gt;  5 49531     1     0     0</span></span>
+<span><span class="co">#&gt;  6 96568     1     0     0</span></span>
+<span><span class="co">#&gt;  7 06238     0     1     0</span></span>
+<span><span class="co">#&gt;  8 54596     0     1     0</span></span>
+<span><span class="co">#&gt;  9 96748     0     1     0</span></span>
+<span><span class="co">#&gt; 10 97634     0     1     0</span></span>
+<span><span class="co">#&gt; 11 10231     0     1     0</span></span>
+<span><span class="co">#&gt; 12 38641     0     1     0</span></span>
+<span><span class="co">#&gt; 13 97673     0     1     0</span></span>
+<span><span class="co">#&gt; 14 13080     0     0     1</span></span>
+<span><span class="co">#&gt; 15 27971     0     0     1</span></span>
+<span><span class="co">#&gt; 16 56741     0     0     1</span></span>
+<span><span class="co">#&gt; 17 63088     0     0     1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Finally, one simulated data set is included. This data set is based on the diagnosing teachers’ multiplicative reasoning (DTMR) data presented by <span class="citation" data-cites="dtmr">Bradshaw et al. (<a href="#ref-dtmr" role="doc-biblioref">2014</a>)</span>, and consists of 990 responses to 27 items that collectively measure 4 attributes. Consistent with the results presented by <span class="citation" data-cites="dtmr">Bradshaw et al. (<a href="#ref-dtmr" role="doc-biblioref">2014</a>)</span>, the data was generated using the loglinear cognitive diagnostic model <span class="citation" data-cites="lcdm lcdm-handbook">(LCDM; <a href="#ref-lcdm" role="doc-biblioref">Henson et al., 2009</a>; <a href="#ref-lcdm-handbook" role="doc-biblioref">Henson &amp; Templin, 2019</a>)</span>, and item and attribute names are included as reported in their Table 1.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtmr_data</span></span>
-<span><span class="co">#&gt; # A tibble: 990 × 28</span></span>
-<span><span class="co">#&gt;    id      `1`   `2`   `3`   `4`   `5`   `6`   `7`  `8a`  `8b`  `8c`  `8d`   `9`</span></span>
-<span><span class="co">#&gt;    &lt;fct&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 0008…     1     1     0     1     0     0     1     1     0     1     1     0</span></span>
-<span><span class="co">#&gt;  2 0009…     0     1     0     0     0     0     0     1     1     1     0     1</span></span>
-<span><span class="co">#&gt;  3 0024…     0     1     0     0     0     0     1     1     1     1     0     0</span></span>
-<span><span class="co">#&gt;  4 0031…     0     1     0     0     1     0     1     1     1     0     0     0</span></span>
-<span><span class="co">#&gt;  5 0061…     0     1     1     0     0     0     0     0     0     1     0     0</span></span>
-<span><span class="co">#&gt;  6 0087…     0     1     1     1     0     0     0     1     1     1     1     0</span></span>
-<span><span class="co">#&gt;  7 0092…     0     1     1     1     1     0     0     1     1     1     0     0</span></span>
-<span><span class="co">#&gt;  8 0097…     0     0     0     1     0     0     0     1     0     1     0     0</span></span>
-<span><span class="co">#&gt;  9 0111…     0     1     1     0     0     0     0     1     0     1     1     0</span></span>
-<span><span class="co">#&gt; 10 0121…     0     1     0     0     0     0     0     1     1     1     1     0</span></span>
-<span><span class="co">#&gt; # ℹ 980 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 15 more variables: `10a` &lt;int&gt;, `10b` &lt;int&gt;, `10c` &lt;int&gt;, `11` &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   `12` &lt;int&gt;, `13` &lt;int&gt;, `14` &lt;int&gt;, `15a` &lt;int&gt;, `15b` &lt;int&gt;, `15c` &lt;int&gt;,</span></span>
-<span><span class="co">#&gt; #   `16` &lt;int&gt;, `17` &lt;int&gt;, `18` &lt;int&gt;, `21` &lt;int&gt;, `22` &lt;int&gt;</span></span>
-<span></span>
-<span><span class="va">dtmr_qmatrix</span></span>
-<span><span class="co">#&gt; # A tibble: 27 × 5</span></span>
-<span><span class="co">#&gt;    item  referent_units partitioning_iterating appropriateness</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;          &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 1                  1                      0               0</span></span>
-<span><span class="co">#&gt;  2 2                  0                      0               1</span></span>
-<span><span class="co">#&gt;  3 3                  0                      1               0</span></span>
-<span><span class="co">#&gt;  4 4                  1                      0               0</span></span>
-<span><span class="co">#&gt;  5 5                  1                      0               0</span></span>
-<span><span class="co">#&gt;  6 6                  0                      1               0</span></span>
-<span><span class="co">#&gt;  7 7                  1                      0               0</span></span>
-<span><span class="co">#&gt;  8 8a                 0                      0               1</span></span>
-<span><span class="co">#&gt;  9 8b                 0                      0               1</span></span>
-<span><span class="co">#&gt; 10 8c                 0                      0               1</span></span>
-<span><span class="co">#&gt; # ℹ 17 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 1 more variable: multiplicative_comparison &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Because the data is simulated we have access to the “true” values for respondents and items. The class probabilities of respondents belonging to a given proficiency pattern are reported in <span class="citation" data-cites="dtmr-strc">Izsák et al. (<a href="#ref-dtmr-strc" role="doc-biblioref">2019</a>)</span>. Using these probabilities, we generated a class for each of the 990 respondents, which is available in <code>dtmr_true_profiles</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtmr_true_structural</span></span>
-<span><span class="co">#&gt; # A tibble: 16 × 5</span></span>
-<span><span class="co">#&gt;    referent_units partitioning_iterating appropriateness multiplicative_compar…¹</span></span>
-<span><span class="co">#&gt;             &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;                   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1              0                      0               0                       0</span></span>
-<span><span class="co">#&gt;  2              1                      0               0                       0</span></span>
-<span><span class="co">#&gt;  3              0                      1               0                       0</span></span>
-<span><span class="co">#&gt;  4              0                      0               1                       0</span></span>
-<span><span class="co">#&gt;  5              0                      0               0                       1</span></span>
-<span><span class="co">#&gt;  6              1                      1               0                       0</span></span>
-<span><span class="co">#&gt;  7              1                      0               1                       0</span></span>
-<span><span class="co">#&gt;  8              1                      0               0                       1</span></span>
-<span><span class="co">#&gt;  9              0                      1               1                       0</span></span>
-<span><span class="co">#&gt; 10              0                      1               0                       1</span></span>
-<span><span class="co">#&gt; 11              0                      0               1                       1</span></span>
-<span><span class="co">#&gt; 12              1                      1               1                       0</span></span>
-<span><span class="co">#&gt; 13              1                      1               0                       1</span></span>
-<span><span class="co">#&gt; 14              1                      0               1                       1</span></span>
-<span><span class="co">#&gt; 15              0                      1               1                       1</span></span>
-<span><span class="co">#&gt; 16              1                      1               1                       1</span></span>
-<span><span class="co">#&gt; # ℹ abbreviated name: ¹​multiplicative_comparison</span></span>
-<span><span class="co">#&gt; # ℹ 1 more variable: class_probability &lt;dbl&gt;</span></span>
-<span></span>
-<span><span class="va">dtmr_true_profiles</span></span>
-<span><span class="co">#&gt; # A tibble: 990 × 5</span></span>
-<span><span class="co">#&gt;    id     referent_units partitioning_iterating appropriateness</span></span>
-<span><span class="co">#&gt;    &lt;fct&gt;           &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 039517              0                      0               0</span></span>
-<span><span class="co">#&gt;  2 500170              0                      0               0</span></span>
-<span><span class="co">#&gt;  3 104795              1                      1               1</span></span>
-<span><span class="co">#&gt;  4 113558              1                      1               1</span></span>
-<span><span class="co">#&gt;  5 564266              0                      1               1</span></span>
-<span><span class="co">#&gt;  6 039726              1                      1               1</span></span>
-<span><span class="co">#&gt;  7 075968              0                      1               1</span></span>
-<span><span class="co">#&gt;  8 375846              0                      0               0</span></span>
-<span><span class="co">#&gt;  9 032129              0                      0               0</span></span>
-<span><span class="co">#&gt; 10 138501              0                      1               0</span></span>
-<span><span class="co">#&gt; # ℹ 980 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 1 more variable: multiplicative_comparison &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>The item parameters for the LCDM are reported in Table 1 of <span class="citation" data-cites="dtmr">Bradshaw et al. (<a href="#ref-dtmr" role="doc-biblioref">2014</a>)</span>. Using the item parameters and the true profiles, we can calculate the probability that each simulated respondent provides a correct response to each item. These probabilities are then used to generate the simulated item responses in <code>dtmr_data</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtmr_true_items</span></span>
-<span><span class="co">#&gt; # A tibble: 27 × 7</span></span>
-<span><span class="co">#&gt;    item  intercept referent_units partitioning_iterating appropriateness</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 1         -1.12           2.24                  NA              NA   </span></span>
-<span><span class="co">#&gt;  2 2          0.59          NA                     NA               1.27</span></span>
-<span><span class="co">#&gt;  3 3         -2.07          NA                      1.7            NA   </span></span>
-<span><span class="co">#&gt;  4 4         -1.19           0.65                  NA              NA   </span></span>
-<span><span class="co">#&gt;  5 5         -1.67           1.52                  NA              NA   </span></span>
-<span><span class="co">#&gt;  6 6         -3.81          NA                      2.08           NA   </span></span>
-<span><span class="co">#&gt;  7 7         -0.73           1.2                   NA              NA   </span></span>
-<span><span class="co">#&gt;  8 8a        -0.62          NA                     NA               4.25</span></span>
-<span><span class="co">#&gt;  9 8b        -0.09          NA                     NA               2.16</span></span>
-<span><span class="co">#&gt; 10 8c         0.28          NA                     NA               0.87</span></span>
-<span><span class="co">#&gt; # ℹ 17 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 2 more variables: multiplicative_comparison &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   referent_units__partitioning_iterating &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>For a complete description of how the data was simulated, see <code><a href="https://dcmdata.r-dcm.org/reference/dtmr.html">?dtmr</a></code>.</p>
-</section><section id="future-work" class="level2"><h2 class="anchored" data-anchor-id="future-work">Future work</h2>
-<p>Future work will focus on providing tools for simulating data from a variety of DCMs. The goal is to provide a tool that will make it easier to quickly simulate a large number a data sets, as is often required for simulation studies.</p>
-<p>We also plan to continue adding more real data sets (e.g., from the <a href="https://itemresponsewarehouse.org/">Item Response Warehouse</a>). If you know of any data sets that would be a good fit, or have a data set you’d like to contribute yourself, please <a href="https://github.com/r-dcm/dcmdata/issues">open an issue</a>!</p>
-</section><div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
-<p>The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546">R305D210045</a> and <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075">R305D240032</a> to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the the Institute or the U.S. Department of Education.</p>
-<p>Featured photo by <a href="https://unsplash.com/@amstram?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Scott Graham</a> on <a href="https://unsplash.com/photos/man-writing-on-paper-OQMZwNd3ThU?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
+<p>Because the learning pathway is designed with a hierarchical structure (i.e., Level 1 skills are prerequisite to Level 2, which in turn are prerequisite to Level 3), the PIE data is especially useful for demonstrating attribute hierarchy models such as the hierarchical DCM <span class="citation" data-cites="hdcm">(<a href="#ref-hdcm" role="doc-biblioref">Templin &amp; Bradshaw, 2014</a>)</span>.</p>
+</section><section id="item-response-warehouse" class="level2"><h2 class="anchored" data-anchor-id="item-response-warehouse">Item Response Warehouse</h2>
+<p>We’ve also added five new data sets from the <a href="https://itemresponsewarehouse.org/">Item Response Warehouse</a> <span class="citation" data-cites="irw">(<a href="#ref-irw" role="doc-biblioref">Domingue et al., 2025</a>)</span>, a repository of publicly available item response data sets. This release adds data sets spanning educational measurement, clinical psychology, and early reading assessment, reformatted for easy use with r-dcm packages like <a href="https://measr.r-dcm.org">measr</a>.</p>
+<ul>
+<li>Fraction subtraction (<code>fraction_data</code>, <code>fraction_qmatrix</code>): An assessment measuring skills related to fraction subtraction like finding a common denominator, borrowing from a whole number, and reducing answers to simplest form. Originally described by <span class="citation" data-cites="fraction">Tatsuoka (<a href="#ref-fraction" role="doc-biblioref">1990</a>)</span>, this data has been widely used in the literature to demonstrate the uses of DCMs.</li>
+<li>Millon Clinical Multiaxial Inventory-III (MCMI-III; <code>mcmi_data</code>, <code>mcmi_qmatrix</code>): A psychological and clinical assessment measuring four attributes: anxiety disorder, somatoform disorder, thought disorder, and major depression. The data was originally collected by <span class="citation" data-cites="mcmi">Rossi et al. (<a href="#ref-mcmi" role="doc-biblioref">2010</a>)</span>.</li>
+<li>Rapid Online Assessment of Reading and Phonological Awareness (ROAR-PA; <code>roarpa_data</code>, <code>roarpa_qmatrix</code>): An online assessment tool designed to support early reading interventions. The data was originally collected by <span class="citation" data-cites="roarpa">Gijbels et al. (<a href="#ref-roarpa" role="doc-biblioref">2024</a>)</span>.</li>
+<li>Trends in International Mathematics and Science Study 2003 (TIMSS; <code>timss03_data</code>, <code>timss03_qmatrix</code>): U.S. sample from the 2003 grade 8 mathematics assessment.</li>
+<li>TIMSS 2007 (<code>timss07_data</code>, <code>timss07_skill_qmatrix</code>, <code>timss07_topic_qmatrix</code>, <code>timss07_domain_qmatrix</code>): U.S. sample from the 2007 grade 4 mathematics assessment. The three Q-matrices reflect different choices about how finely to define the attributes being measured.</li>
+</ul></section><div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
+<p>The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546">R305D210045</a> and <a href="https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075">R305D240032</a> to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the Institute or the U.S. Department of Education.</p>
+<p>Featured photo by <a href="https://unsplash.com/@anna_voss?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Anna Voss</a> on <a href="https://unsplash.com/photos/a-close-up-of-a-pie-on-a-table-vNR5W3eUgDA?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
 
 
 
 </div></section><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
-<div id="ref-dtmr" class="csl-entry" role="listitem">
-Bradshaw, L., Izsák, A., Templin, J., &amp; Jacobson, E. (2014). Diagnosing teachers’ understandings of rational numbers: Building a multidimensional test within the diagnostic classification framework. <em>Educational Measurement: Issues and Practice</em>, <em>33</em>(1), 2–14. <a href="https://doi.org/10.1111/emip.12020">https://doi.org/10.1111/emip.12020</a>
+<div id="ref-irw" class="csl-entry" role="listitem">
+Domingue, B., Braginsky, M., Caffrey-Maffei, L., Gilbert, J. B., Kanopka, K., Kapoor, R., Lee, H., Liu, Y., Nadela, S., Pan, G., Zhang, L., Zhang, S., &amp; Frank, M. C. (2025). An introduction to the <span>Item Response Warehouse (IRW)</span>: A resource for enhancing data usage in psychometrics. <em>Behavior Research Methods</em>, <em>57</em>, Article 276. <a href="https://doi.org/10.3758/s13428-025-02796-y">https://doi.org/10.3758/s13428-025-02796-y</a>
 </div>
-<div id="ref-lcdm-handbook" class="csl-entry" role="listitem">
-Henson, R. A., &amp; Templin, J. L. (2019). Loglinear cognitive diagnostic model (<span>LCDM</span>). In <span class="nocase">M. von Davier &amp; Y.-S. Lee (Eds.)</span>, <em>Handbook of diagnostic classification models</em> (pp. 171–185). Springer International Publishing. <a href="https://doi.org/10.1007/978-3-030-05584-4_8">https://doi.org/10.1007/978-3-030-05584-4_8</a>
+<div id="ref-roarpa" class="csl-entry" role="listitem">
+Gijbels, L., Burkhardt, A., Ma, W. A., &amp; Yeatman, J. D. (2024). Rapid online assessment of reading and phonological awareness <span>(ROAR-PA)</span>. <em>Scientific Reports</em>, <em>14</em>, Article 10249. <a href="https://doi.org/10.1038/s41598-024-60834-9">https://doi.org/10.1038/s41598-024-60834-9</a>
 </div>
-<div id="ref-lcdm" class="csl-entry" role="listitem">
-Henson, R. A., Templin, J. L., &amp; Willse, J. T. (2009). Defining a family of cognitive diagnosis models using log-linear models with latent variables. <em>Psychometrika</em>, <em>74</em>(2), 191–210. <a href="https://doi.org/10.1007/s11336-008-9089-5">https://doi.org/10.1007/s11336-008-9089-5</a>
+<div id="ref-mcmi" class="csl-entry" role="listitem">
+Rossi, G., Elklit, A., &amp; Simonsen, E. (2010). Empirical evidence for a four factor framework of personality disorder organization: Multigroup confirmatory factor analysis of the <span>Millon Clinical Multiaxial Inventory-III</span> personality disorder scale across <span>Belgian</span> and <span>Danish</span> data. <em>Journal of Personality Disorders</em>, <em>24</em>(1), 128–150. <a href="https://doi.org/10.1521/pedi.2010.24.1.128">https://doi.org/10.1521/pedi.2010.24.1.128</a>
 </div>
-<div id="ref-dtmr-strc" class="csl-entry" role="listitem">
-Izsák, A., Jacobson, E., &amp; Bradshaw, L. (2019). Surveying middle-grades teachers’ reasoning about fraction arithmetic in terms of measured quantities. <em>Journal for Research in Mathematics Education</em>, <em>50</em>(2), 156–209. <a href="https://doi.org/10.5951/jresematheduc.50.2.0156">https://doi.org/10.5951/jresematheduc.50.2.0156</a>
+<div id="ref-atlas-maps" class="csl-entry" role="listitem">
+Swinburne Romine, R., Schuster, J., Karvonen, M., Thompson, W. J., Erickson, K., Simmering, V., &amp; Bechard, S. (2025). Learning maps as cognitive models for instruction and assessment. <em>Education Sciences</em>, <em>15</em>(3), Article 365. <a href="https://doi.org/10.3390/educsci15030365">https://doi.org/10.3390/educsci15030365</a>
 </div>
-<div id="ref-mdm" class="csl-entry" role="listitem">
-MacReady, G. B., &amp; Dayton, C. M. (1977). The use of probabilistic models in the assessment of mastery. <em>Journal of Educational Statistics</em>, <em>2</em>(2), 99–120. <a href="https://doi.org/10.2307/1164802">https://doi.org/10.2307/1164802</a>
+<div id="ref-fraction" class="csl-entry" role="listitem">
+Tatsuoka, K. K. (1990). Toward an integration of item-response theory and cognitive error diagnosis. In N. Frederiksen, R. Glaser, A. Lesgold, &amp; M. G. Shafto (Eds.), <em>Diagnosing monitoring of skill and knowledge acquisition</em> (pp. 453–488). Lawrence Erlbaum Associates.
 </div>
 <div id="ref-hdcm" class="csl-entry" role="listitem">
 Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification models: <span>A</span> family of models for estimating and testing attribute hierarchies. <em>Psychometrika</em>, <em>79</em>(2), 317–339. <a href="https://doi.org/10.1007/s11336-013-9362-0">https://doi.org/10.1007/s11336-013-9362-0</a>
 </div>
-<div id="ref-ecpe" class="csl-entry" role="listitem">
-Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model estimates using <span>Mplus</span>. <em>Educational Measurement: Issues and Practice</em>, <em>32</em>(2), 37–50. <a href="https://doi.org/10.1111/emip.12010">https://doi.org/10.1111/emip.12010</a>
-</div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2025,
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2026,
   author = {Thompson, W. Jake},
-  title = {Dcmdata 0.1.0},
-  date = {2025-08-21},
-  url = {https://r-dcm.org/blog/2025-08-dcmdata-0.1.0/},
-  doi = {10.59350/gmy4x-20093},
+  title = {Dcmdata 0.2.0},
+  date = {2026-03-11},
+  url = {https://r-dcm.org/blog/2026-03-dcmdata-0.2.0/},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2025" class="csl-entry quarto-appendix-citeas" role="listitem">
-Thompson, W. J. (2025, August 21). <em>dcmdata 0.1.0</em>. <a href="https://doi.org/10.59350/gmy4x-20093">https://doi.org/10.59350/gmy4x-20093</a>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2026" class="csl-entry quarto-appendix-citeas" role="listitem">
+Thompson, W. J. (2026, March 11). <em>dcmdata 0.2.0</em>. <a href="https://r-dcm.org/blog/2026-03-dcmdata-0.2.0/">https://r-dcm.org/blog/2026-03-dcmdata-0.2.0/</a>
 </div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

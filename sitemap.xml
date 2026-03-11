@@ -10,11 +10,11 @@
   </url>
   <url>
     <loc>https://r-dcm.org/start/specify/index.html</loc>
-    <lastmod>2025-12-17T14:43:08.335Z</lastmod>
+    <lastmod>2026-03-02T20:19:14.534Z</lastmod>
   </url>
   <url>
     <loc>https://r-dcm.org/start/hierarchies/index.html</loc>
-    <lastmod>2025-12-17T14:43:08.329Z</lastmod>
+    <lastmod>2026-03-11T15:48:48.063Z</lastmod>
   </url>
   <url>
     <loc>https://r-dcm.org/start/case-study/index.html</loc>
@@ -29,28 +29,32 @@
     <lastmod>2024-12-16T14:26:02.468Z</lastmod>
   </url>
   <url>
-    <loc>https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/index.html</loc>
-    <lastmod>2026-01-11T17:52:23.980Z</lastmod>
-  </url>
-  <url>
-    <loc>https://r-dcm.org/blog/2024-02-measr-1.0.0/index.html</loc>
-    <lastmod>2025-12-17T16:23:19.876Z</lastmod>
-  </url>
-  <url>
-    <loc>https://r-dcm.org/blog/2023-04-measr-0.2.1/index.html</loc>
-    <lastmod>2024-12-16T14:00:33.713Z</lastmod>
-  </url>
-  <url>
-    <loc>https://r-dcm.org/blog/2023-06-measr-0.3.1/index.html</loc>
-    <lastmod>2024-12-16T15:13:22.239Z</lastmod>
+    <loc>https://r-dcm.org/blog/2026-01-measr-2.0.0/index.html</loc>
+    <lastmod>2026-01-16T19:27:44.588Z</lastmod>
   </url>
   <url>
     <loc>https://r-dcm.org/blog/2025-08-dcmdata-0.1.0/index.html</loc>
     <lastmod>2025-12-17T14:43:08.197Z</lastmod>
   </url>
   <url>
-    <loc>https://r-dcm.org/blog/2026-01-measr-2.0.0/index.html</loc>
-    <lastmod>2026-01-16T16:30:00.926Z</lastmod>
+    <loc>https://r-dcm.org/blog/2023-06-measr-0.3.1/index.html</loc>
+    <lastmod>2024-12-16T15:13:22.239Z</lastmod>
+  </url>
+  <url>
+    <loc>https://r-dcm.org/blog/2023-04-measr-0.2.1/index.html</loc>
+    <lastmod>2024-12-16T14:00:33.713Z</lastmod>
+  </url>
+  <url>
+    <loc>https://r-dcm.org/blog/2024-02-measr-1.0.0/index.html</loc>
+    <lastmod>2025-12-17T16:23:19.876Z</lastmod>
+  </url>
+  <url>
+    <loc>https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/index.html</loc>
+    <lastmod>2026-01-11T17:52:23.980Z</lastmod>
+  </url>
+  <url>
+    <loc>https://r-dcm.org/blog/2026-03-dcmdata-0.2.0/index.html</loc>
+    <lastmod>2026-03-11T01:42:01.121Z</lastmod>
   </url>
   <url>
     <loc>https://r-dcm.org/funding.html</loc>
@@ -58,11 +62,11 @@
   </url>
   <url>
     <loc>https://r-dcm.org/rss.html</loc>
-    <lastmod>2024-12-13T21:31:09.061Z</lastmod>
+    <lastmod>2026-03-11T15:48:02.348Z</lastmod>
   </url>
   <url>
     <loc>https://r-dcm.org/start/evaluate/index.html</loc>
-    <lastmod>2025-12-17T14:43:08.326Z</lastmod>
+    <lastmod>2026-03-03T00:40:17.535Z</lastmod>
   </url>
   <url>
     <loc>https://r-dcm.org/start/index.html</loc>
@@ -74,6 +78,6 @@
   </url>
   <url>
     <loc>https://r-dcm.org/team/index.html</loc>
-    <lastmod>2024-12-16T21:09:06.633Z</lastmod>
+    <lastmod>2026-03-10T17:24:49.804Z</lastmod>
   </url>
 </urlset>

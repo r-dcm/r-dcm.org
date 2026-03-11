@@ -1,0 +1,99 @@
+---
+title: "dcmdata 0.2.0"
+date: 2026-03-11
+subtitle: ""
+description: "Several new data sets, including data from the PIE through-year assessment project."
+image: "featured.jpg"
+image-alt: "Series of filing cabinets"
+title-block-banner: featured.jpg
+twitter-card:
+  image: "featured.jpg"
+open-graph:
+  image: "featured.jpg"
+engine: knitr
+# doi: 10.59350/gmy4x-20093
+citation: true
+# one of: "deep-dive", "learn", "package", or "other" + relevant packages
+categories:
+  - package
+  - dcmdata
+---
+
+We are excited to announce the release of `{dcmdata}` 0.2.0.
+The goal of dcmdata is to provide easy access to data sets that can be used for demonstrating and testing diagnostic classification models (DCM; also called cognitive diagnostic models [CDMs]).
+
+You can install dcmdata from CRAN with:
+
+```r
+install.packages("dcmdata")
+```
+
+This blog post highlights the major changes in this release, which is mainly focused on the addition of several new data sets.
+You can see a full list of changes in the [release notes](https://dcmdata.r-dcm.org/news/index.html#dcmdata-020).
+
+```{r}
+#| label: load
+
+library(dcmdata)
+```
+
+## Pathways for Instructionally Embedded Assessment
+
+The Pathways for Instructionally Embedded Assessment (PIE) project was a proof-of-concept partnership between [ATLAS](https://atlas.ku.edu) at the University of Kansas and the [Missouri Department of Elementary and Secondary Education](https://dese.mo.gov).
+The project explored whether through-year instructionally embedded assessments can be used to both inform instructional decisions and support summative reporting requirements.
+
+The PIE system is built on learning maps, which describe different ways for students to acquire knowledge, skills, and understandings around a learning target [@atlas-maps].
+For PIE, a small map was built around each of the Missouri learning standards included in the project, and a three-level learning pathway that summarizes critical junctures in the learning map that serve as assessment targets.
+The PIE data included in dcmdata comes from a learning pathway aligned to the 5.RA.A.1b learning standard, a grade 5 mathematics standard covering patterns and relationships.
+The three levels of the learning pathway are:
+
+* Level 1: Recognize the order of elements in a repeating pattern.
+* Level 2: Organize two numeric patterns in a table.
+* Level 3: Translate two numeric patterns into ordered pairs.
+
+There are two PIE data sets representing different phases of the project:
+
+* `pie_ft_data` and `pie_ft_qmatrix` contain data from the Spring 2024 field test, where each student responded to items measuring all three levels at a single time point.
+
+* `pie_pilot_data` and `pie_pilot_qmatrix` contain data from the 2024--2025 pilot administration, where assessments were spread across three time points: `baseline` (before instruction, measuring Level 1 only), `midway` (measuring Level 2, and re-assessing Level 1 for students who hadn't yet demonstrated mastery), and `end_of_unit` (measuring Level 3, and re-assessing Level 2 as needed).
+
+```{r}
+#| label: pie-data
+
+pie_ft_data
+
+pie_ft_qmatrix
+```
+
+The pilot data includes a `time` column, which makes it straightforward to filter to a particular assessment window:
+
+```{r}
+#| label: pie-pilot-data
+
+pie_pilot_data
+
+pie_pilot_qmatrix
+```
+
+Because the learning pathway is designed with a hierarchical structure (i.e., Level 1 skills are prerequisite to Level 2, which in turn are prerequisite to Level 3), the PIE data is especially useful for demonstrating attribute hierarchy models such as the hierarchical DCM [@hdcm].
+
+## Item Response Warehouse
+
+We've also added five new data sets from the [Item Response Warehouse](https://itemresponsewarehouse.org/) [@irw], a repository of publicly available item response data sets.
+This release adds data sets spanning educational measurement, clinical psychology, and early reading assessment, reformatted for easy use with r-dcm packages like `{measr}`.
+
+* Fraction subtraction (`fraction_data`, `fraction_qmatrix`): An assessment measuring skills related to fraction subtraction like finding a common denominator, borrowing from a whole number, and reducing answers to simplest form.
+Originally described by @fraction, this data has been widely used in the literature to demonstrate the uses of DCMs.
+* Millon Clinical Multiaxial Inventory-III (MCMI-III; `mcmi_data`, `mcmi_qmatrix`): A psychological and clinical assessment measuring four attributes: anxiety disorder, somatoform disorder, thought disorder, and major depression.
+The data was originally collected by @mcmi.
+* Rapid Online Assessment of Reading and Phonological Awareness (ROAR-PA; `roarpa_data`, `roarpa_qmatrix`): An online assessment tool designed to support early reading interventions.
+The data was originally collected by @roarpa.
+* Trends in International Mathematics and Science Study 2003 (TIMSS; `timss03_data`, `timss03_qmatrix`): U.S. sample from the 2003 grade 8 mathematics assessment.
+* TIMSS 2007 (`timss07_data`, `timss07_skill_qmatrix`, `timss07_topic_qmatrix`, `timss07_domain_qmatrix`): U.S. sample from the 2007 grade 4 mathematics assessment.
+The three Q-matrices reflect different choices about how finely to define the attributes being measured.
+
+## Acknowledgments {.appendix}
+
+The research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants [R305D210045](https://ies.ed.gov/funding/grantsearch/details.asp?ID=4546) and [R305D240032](https://ies.ed.gov/funding/grantsearch/details.asp?ID=6075) to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the Institute or the U.S. Department of Education.
+
+Featured photo by <a href="https://unsplash.com/@anna_voss?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Anna Voss</a> on <a href="https://unsplash.com/photos/a-close-up-of-a-pie-on-a-table-vNR5W3eUgDA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>.

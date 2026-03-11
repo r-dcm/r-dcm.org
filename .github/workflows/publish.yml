@@ -16,18 +16,18 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - uses: r-lib/actions/setup-pandoc@v2
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Set C++ Compiler
-        run: echo "CXX=g++" >> $GITHUB_ENV
 
       - name: Linux system dependencies
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update && sudo apt-get install -y \
-          libcurl4-openssl-dev libv8-dev libglpk-dev libjpeg-dev libpoppler-cpp-dev \
-          libgit2-dev libpng-dev libx11-dev pandoc
+          libcurl4-openssl-dev libv8-dev libglpk-dev libjpeg-dev \
+          libpoppler-cpp-dev libgit2-dev libpng-dev libx11-dev libcairo2-dev \
+          libfontconfig1-dev libfreetype6-dev
       
       - name: Install R
         uses: r-lib/actions/setup-r@v2

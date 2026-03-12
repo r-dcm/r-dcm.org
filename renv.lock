@@ -5842,8 +5842,8 @@
     },
     "rdcmchecks": {
       "Package": "rdcmchecks",
-      "Version": "0.1.0.9000",
-      "Source": "GitHub",
+      "Version": "0.1.1",
+      "Source": "Repository",
       "Title": "Common Argument Checks for 'r-dcm' Packages",
       "Authors@R": "c( person(\"W. Jake\", \"Thompson\", , \"wjakethompson@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0001-7339-0300\")), person(\"University of Kansas\", role = \"cph\"), person(\"Institute of Education Sciences\", role = \"fnd\"), person(\"Accessible Teaching, Learning, and Assessment Systems\", role = \"fnd\") )",
       "Description": "Many packages in the 'r-dcm' family take similar arguments, which are checked for expected structures and values. Rather than duplicating code across several packages, commonly used check functions are included here.  This package can then be imported to access the check functions in other packages.",
@@ -5862,7 +5862,7 @@
         "tidyr"
       ],
       "Suggests": [
-        "dcmdata (>= 0.1.0.9000)",
+        "dcmdata (>= 0.2.0)",
         "spelling",
         "testthat (>= 3.0.0)"
       ],
@@ -5872,17 +5872,11 @@
       "Config/roxylint": "list(linters = roxylint::tidy)",
       "Encoding": "UTF-8",
       "Language": "en-US",
-      "Roxygen": "list(markdown = TRUE, roclets = c(\"namespace\", \"rd\", \"roxylint::roxylint\"))",
       "RoxygenNote": "7.3.3",
+      "NeedsCompilation": "no",
       "Author": "W. Jake Thompson [aut, cre] (ORCID: <https://orcid.org/0000-0001-7339-0300>), University of Kansas [cph], Institute of Education Sciences [fnd], Accessible Teaching, Learning, and Assessment Systems [fnd]",
       "Maintainer": "W. Jake Thompson <wjakethompson@gmail.com>",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "r-dcm",
-      "RemoteRepo": "rdcmchecks",
-      "RemoteRef": "main",
-      "RemoteSha": "23b79103234ecbf8ec9a50a0d4540d0f38c1f19d",
-      "Remotes": "r-dcm/dcmdata"
+      "Repository": "CRAN"
     },
     "reactR": {
       "Package": "reactR",

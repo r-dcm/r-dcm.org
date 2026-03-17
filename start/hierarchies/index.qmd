@@ -36,7 +36,7 @@ One of the most productive places to start when something seems off is the struc
 The structural model controls the assumptions your DCM makes about how attributes relate to each other.
 By default, the unconstrained model makes no assumptions at all and every possible attribute profile is freely estimated.
 That flexibility is a virtue when you have no prior theory about attribute relationships.
-However, if there are profiles with that are rarely observed, attempting to estimate the base rates and item parameters associated with those profiles can result in issues with model fit [@hdcm; @wang2021].
+However, if there are profiles that are rarely observed, attempting to estimate the base rates and item parameters associated with those profiles can result in issues with model fit [@hdcm; @wang2021].
 When there is a theory---when the nature of the domain suggests that proficiency on one skill is required before another can develop---you can encode, and test, that theory directly in the model.
 In this article we'll learn how to do exactly that with attribute hierarchies.
 
@@ -199,7 +199,7 @@ tidy_dagitty(dag) |>
 Two structural models implement attribute hierarchies, and they differ in how strictly they enforce it.
 
 The hierarchical DCM [HDCM\; @hdcm] is strict.
-Profiles that violate the hierarchy are excluded from the model entirely by fixing their their base rates to zero.
+Profiles that violate the hierarchy are excluded from the model entirely by fixing their base rates to zero.
 This is demonstrated in @tbl-hdcm-profiles, where only profiles consistent with the proposed hierarchy are included.
 If a respondent's true profile is theoretically impossible, the model cannot assign them to it.
 Instead, they will be assigned to the nearest valid profile.
@@ -225,9 +225,9 @@ For our PIE hierarchy, we can define the attribute relationships as `"L1 -> L2 -
 We could also write the two relationships separately: `"L1 -> L2; L2 -> L3"`.
 For a simple linear hierarchy, a single chain is the most readable form.
 However, nonlinear hierarchies may require the relationships to be defined as multiple linear relationships that connect together in various ways.
-To see example of different hierarchies and how to specify them using the DAG syntax, check out the [attribute hierarchies vignette](https://dcmstan.r-dcm.org/articles/attribute-hierarchies.html) in the `{dcmstan}` package.
+To see examples of different hierarchies and how to specify them using the DAG syntax, check out the [attribute hierarchies vignette](https://dcmstan.r-dcm.org/articles/attribute-hierarchies.html) in the `{dcmstan}` package.
 
-Our hierarchy string can then been passed to `hdcm()` or `bayesnet()` as the structural model in `dcm_specify()`.
+Our hierarchy string can then be passed to `hdcm()` or `bayesnet()` as the structural model in `dcm_specify()`.
 Both take a `hierarchy` argument where we can define the hierarchy using a DAG-like syntax.
 
 ```{r}
@@ -308,7 +308,7 @@ pie_bayesnet <- dcm_estimate(
 )
 ```
 
-If we look at the respodent proficiency estimates, we see that we still get a proficiency estimate for each student on each attribute (`$attribute_probabilities`), but in the class probabilities, we only see the classes that are allowed by the specification (`$class_probabilities`).
+If we look at the respondent proficiency estimates, we see that we still get a proficiency estimate for each student on each attribute (`$attribute_probabilities`), but in the class probabilities, we only see the classes that are allowed by the specification (`$class_probabilities`).
 
 ```{r}
 #| label: pie-scores
@@ -316,7 +316,7 @@ If we look at the respodent proficiency estimates, we see that we still get a pr
 score(pie_hdcm)
 ```
 
-We can also how the choice of structural model impacts respondent estimates by examining the estimated model base rates.
+We can also see how the choice of structural model impacts respondent estimates by examining the estimated model base rates.
 The base rates represent the proportion of respondents estimated to have each profile.
 For comparison purposes, let's also estimate a model with an unconstrained structural model.
 
@@ -341,7 +341,7 @@ pie_lcdm <- dcm_estimate(
 In @fig-model-base-rates, we see the difference between the HDCM and the BayesNet.
 In the HDCM, the base rate is 0 for any of the profiles that are inconsistent with the defined hierarchy (e.g., [0,1,0]), whereas the BayesNet has non-zero base rates for all profiles.
 However, notice that the base rate for the BayesNet is much lower for the inconsistent profiles than what is seen in the unconstrained model.
-So the BayesNet is pushing respondents toward the profiles that are consistent with our specified attribute relationships, but those profiles are not a strict requirements as with the HDCM.
+So the BayesNet is pushing respondents toward the profiles that are consistent with our specified attribute relationships, but those profiles are not a strict requirement as with the HDCM.
 
 ```{r}
 #| label: fig-model-base-rates
@@ -430,7 +430,7 @@ In @fig-model-base-rates, both the BayesNet and HDCM also have some profiles wit
 Both the BayesNet and HDCM have a reduced structural model.
 That is, the saturated model is overspecified, and the overspecification can result in issues with model fit.
 The alternative models have fewer parameters in their structural model.
-So even though the same number of profiles are possible (in the BayesNet), the structural model is simplified, reducing the overspecfication [@hu2020].
+So even though the same number of profiles are possible (in the BayesNet), the structural model is simplified, reducing the overspecification [@hu2020].
 
 ```{r}
 fit_ppmc(pie_bayesnet, model_fit = "raw_score", return_draws = 2000)
@@ -504,7 +504,7 @@ The defined attribute relationships reduce model complexity without sacrificing 
 If the unconstrained model dominates clearly, the attribute relationships may be too restrictive, and some theoretically "impossible" profiles may actually be present in the data.
 
 Since both the HDCM and BayesNet showed good model fit, we'll just compare the HDCM to the unconstrained model, as the HDCM is the simplest of the two models.
-As we would exepect to see if our theory of a linear hierarchy is correct, unconstrained LCDM and HDCM have similar ELPD values (difference within the standard error).
+As we would expect to see if our theory of a linear hierarchy is correct, unconstrained LCDM and HDCM have similar ELPD values (difference within the standard error).
 
 ```{r}
 #| label: loo-compare

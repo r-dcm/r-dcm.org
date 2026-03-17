@@ -79,6 +79,8 @@ pie_ft_qmatrix
 These skills develop in a natural order: you need to recognize pattern structure before you can organize patterns in a table, and organizing them in a table precedes translating them into coordinate pairs.
 This gives us a clear linear progression: `L1 -> L2 -> L3`.
 
+For more information on the data set, see `?pie` and @pie-ft.
+
 ## When attributes have order
 
 Without any hierarchy, the number of possible attribute profiles grows exponentially with the number of attributes.

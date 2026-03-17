@@ -65,6 +65,7 @@ dtmr_data
 
 Alongside the response data, we also have a Q-matrix that maps items to the `r ncol(dtmr_qmatrix) - 1` attributes measured by the assessment.
 These attributes represent aspects of multiplicative reasoning including and understanding of referent units, partitioning and iterating, appropriateness, and multiplicative comparison.
+For more information on the data set, see `?dtmr` and @dtmr.
 
 ```{r}
 #| label: dtmr-qmatrix

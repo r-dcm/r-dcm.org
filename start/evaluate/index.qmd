@@ -44,11 +44,11 @@ Before reporting results or making decisions based on proficiency classification
 #| label: user-load
 #| message: false
 
-library(measr)    # for model evaluation
+library(measr) # for model evaluation
 
 # Helper packages
-library(dcmdata)  # for example data set
-library(rstan)    # for estimation backend
+library(dcmdata) # for example data set
+library(rstan) # for estimation backend
 ```
 
 ## Diagnosing Teachers' Multiplicative Reasoning (DTMR) data
@@ -387,10 +387,10 @@ This distinction matters because sometimes multiple models may show adequate abs
 In our example, we have one model that fits well and one that doesn't so we don't really need an evaluation of relative model fit to determine which is better.
 However, we'll run comparison to illustrate idea.
 
-We recommend using leave-one-out cross-validation (LOO) estimates for model comparisons.
+We recommend using leave-one-out cross-validation (LOO) estimates for model comparisons [@loo-waic].
 LOO approximates how well the model would predict new, unseen data.
 Higher expected log predictive density (ELPD) values indicate better out-of-sample predictive performance.
-`loo_compare()` directly compares the models, ranking them by ELPD and reporting the difference along with its standard error.
+`loo_compare()` uses the `{loo}` package to directly compare the models, rank them by ELPD and report the difference along with its standard error.
 
 ```{r}
 #| label: loo-compare
@@ -475,7 +475,7 @@ But what do we do if the answer is "no"?
 A good place to start is often examining your structural model and ensuring that attribute relationships are appropriately included.
 That is the focus of the [Define Attribute Relationships](/start/hierarchies/) article.
 
-## Session information {#session-info}
+## Session information {#session-info .appendix}
 
 ```{r}
 #| label: si

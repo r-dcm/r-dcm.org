@@ -4639,7 +4639,7 @@
         "psych",
         "Rcpp (>= 0.12.0)",
         "RcppParallel (>= 5.0.1)",
-        "rdcmchecks (>= 0.1.0.9000)",
+        "rdcmchecks (>= 0.1.1)",
         "rlang (>= 1.1.0)",
         "rstan (>= 2.26.0)",
         "rstantools (>= 2.6.0)",
@@ -4682,12 +4682,11 @@
       "Author": "W. Jake Thompson [aut, cre] (ORCID: <https://orcid.org/0000-0001-7339-0300>), Jeffrey Hoover [aut] (ORCID: <https://orcid.org/0000-0002-0276-0308>), Auburn Jimenez [ctb] (ORCID: <https://orcid.org/0000-0002-7072-2960>), Nathan Jones [ctb] (ORCID: <https://orcid.org/0000-0001-6177-7161>), Matthew Johnson [cph] (Authored code adapted for measrdcm method for `reliability()`), University of Kansas [cph], Institute of Education Sciences [fnd]",
       "Maintainer": "W. Jake Thompson <wjakethompson@gmail.com>",
       "RemoteType": "github",
+      "RemoteHost": "api.github.com",
       "RemoteUsername": "r-dcm",
       "RemoteRepo": "measr",
       "RemoteRef": "main",
-      "RemoteSha": "f0336038ec14c705dc608b337790b021bdb33c5a",
-      "RemoteHost": "api.github.com",
-      "Remotes": "r-dcm/rdcmchecks"
+      "RemoteSha": "475bc5069d52f23c0ecd7fb1b41a67a9ed88772f"
     },
     "memoise": {
       "Package": "memoise",

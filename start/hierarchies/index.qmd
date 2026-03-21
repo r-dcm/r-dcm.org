@@ -275,7 +275,7 @@ Once we create our DCM specification with the hierarchy, we can use that specifi
 Here we'll estimate both an HDCM and a BayesNet model using `{cmdstanr}` and the Pathfinder algorithm [@pathfinder].
 
 ```{r}
-#| label: estimate-hdcm
+#| label: estimate-hierarchies
 
 pie_hdcm <- dcm_estimate(
   dcm_specify(
@@ -290,10 +290,6 @@ pie_hdcm <- dcm_estimate(
   backend = "cmdstanr",
   file = here::here("start", "fits", "pie-lcdm-hdcm-cmds")
 )
-```
-
-```{r}
-#| label: estimate-bayesnet
 
 pie_bayesnet <- dcm_estimate(
   dcm_specify(
@@ -389,23 +385,17 @@ bind_rows(
 pie_lcdm <- add_fit(
   pie_lcdm,
   method = "ppmc",
-  model_fit = "raw_score",
-  return_draws = 2000,
-  overwrite = TRUE
+  model_fit = "raw_score"
 )
 pie_hdcm <- add_fit(
   pie_hdcm,
   method = "ppmc",
-  model_fit = "raw_score",
-  return_draws = 2000,
-  overwrite = TRUE
+  model_fit = "raw_score"
 )
 pie_bayesnet <- add_fit(
   pie_bayesnet,
   method = "ppmc",
-  model_fit = "raw_score",
-  return_draws = 2000,
-  overwrite = TRUE
+  model_fit = "raw_score"
 )
 
 pie_lcdm <- add_criterion(pie_lcdm, criterion = "loo")
@@ -423,7 +413,7 @@ If we use a threshold of .05, we would conclude that the unconstrained model doe
 This is not terribly surprising, as many profiles have very low base rates (@fig-model-base-rates), which can cause model fit problems [@hdcm; @wang2021].
 
 ```{r}
-fit_ppmc(pie_lcdm, model_fit = "raw_score", return_draws = 2000)
+fit_ppmc(pie_lcdm, model_fit = "raw_score")
 ```
 
 Let's look at the fit for the BayesNet and HDCM models.
@@ -435,9 +425,9 @@ The alternative models have fewer parameters in their structural model.
 So even though the same number of profiles are possible (in the BayesNet), the structural model is simplified, reducing the overspecification [@hu2020].
 
 ```{r}
-fit_ppmc(pie_bayesnet, model_fit = "raw_score", return_draws = 2000)
+fit_ppmc(pie_bayesnet, model_fit = "raw_score")
 
-fit_ppmc(pie_hdcm, model_fit = "raw_score", return_draws = 2000)
+fit_ppmc(pie_hdcm, model_fit = "raw_score")
 ```
 
 We can also visualize the PPMCs from each model.

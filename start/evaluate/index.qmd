@@ -143,8 +143,7 @@ dtmr_dina <- dcm_estimate(
 dtmr_lcdm <- add_fit(
   dtmr_lcdm,
   method = c("m2", "ppmc"),
-  model_fit = "raw_score",
-  return_draws = 1000
+  model_fit = "raw_score"
 )
 dtmr_lcdm <- add_reliability(dtmr_lcdm)
 dtmr_lcdm <- add_criterion(dtmr_lcdm, criterion = "loo")
@@ -152,8 +151,7 @@ dtmr_lcdm <- add_criterion(dtmr_lcdm, criterion = "loo")
 dtmr_dina <- add_fit(
   dtmr_dina,
   method = c("m2", "ppmc"),
-  model_fit = "raw_score",
-  return_draws = 1000
+  model_fit = "raw_score"
 )
 dtmr_dina <- add_reliability(dtmr_dina)
 dtmr_dina <- add_criterion(dtmr_dina, criterion = "loo")
@@ -206,11 +204,7 @@ Because PPMCs require draws from the full posterior distribution, they only work
 ```{r}
 #| label: dtmr-ppmc
 
-lcdm_ppmc <- fit_ppmc(
-  dtmr_lcdm,
-  model_fit = "raw_score",
-  return_draws = 1000
-)
+lcdm_ppmc <- fit_ppmc(dtmr_lcdm, model_fit = "raw_score")
 lcdm_ppmc
 ```
 
@@ -218,11 +212,7 @@ lcdm_ppmc
 #| label: calc-dina-ppmc
 #| include: false
 
-dina_ppmc <- fit_ppmc(
-  dtmr_dina,
-  model_fit = "raw_score",
-  return_draws = 1000
-)
+dina_ppmc <- fit_ppmc(dtmr_dina, model_fit = "raw_score")
 ```
 
 The key output is the posterior predictive *p*-value (*ppp*), which is the proportion of replicated datasets that produced a larger fit statistic than our observed data.
@@ -253,8 +243,9 @@ obs_scores <- dtmr_data |>
   count(raw_score) |>
   complete(raw_score = 0:(ncol(dtmr_data) - 1), fill = list(n = 0L))
 
-lcdm_ppmc$ppmc_raw_score |>
-  dplyr::select(rawscore_samples) |>
+fit_ppmc(dtmr_lcdm, model_fit = "raw_score", return_draws = 2000) |>
+  pluck("ppmc_raw_score") |>
+  select(rawscore_samples) |>
   unnest(rawscore_samples) |>
   unnest(raw_scores) |>
   ggplot() +
@@ -316,8 +307,9 @@ In this example, we see that the observed value is toward the middle, which is e
 #|   statistic, which falls near the center of the distribution, indicating
 #|   good model fit.
 
-lcdm_ppmc$ppmc_raw_score |>
-  dplyr::select(chisq_samples) |>
+fit_ppmc(dtmr_lcdm, model_fit = "raw_score", return_draws = 2000) |>
+  pluck("ppmc_raw_score") |>
+  select(chisq_samples) |>
   unnest(chisq_samples) |>
   ggplot(aes(x = chisq_samples)) +
   stat_dots(
@@ -333,6 +325,7 @@ lcdm_ppmc$ppmc_raw_score |>
     color = msr_colors[3],
     linewidth = 1
   ) +
+  coord_cartesian(xlim = c(0, 100)) +
   labs(y = NULL, x = "&chi;^2^<sub>rep</sub>") +
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
 ```
@@ -352,14 +345,9 @@ Accordingly, our *ppp* value is only `r fmt_digits(dina_ppmc$ppmc_raw_score$ppp,
 #|   statistic, which falls near the center of the distribution, indicating
 #|   good model fit.
 
-dina_ppmc <- fit_ppmc(
-  dtmr_dina,
-  model_fit = "raw_score",
-  return_draws = 1000
-)
-
-dina_ppmc$ppmc_raw_score |>
-  dplyr::select(chisq_samples) |>
+fit_ppmc(dtmr_dina, model_fit = "raw_score", return_draws = 2000) |>
+  pluck("ppmc_raw_score") |>
+  select(chisq_samples) |>
   unnest(chisq_samples) |>
   ggplot(aes(x = chisq_samples)) +
   stat_dots(
@@ -371,11 +359,12 @@ dina_ppmc$ppmc_raw_score |>
     na.rm = TRUE
   ) +
   geom_vline(
-    xintercept = dtmr_lcdm@fit$ppmc_raw_score$obs_chisq,
+    xintercept = dtmr_dina@fit$ppmc_raw_score$obs_chisq,
     color = msr_colors[3],
     linewidth = 1
   ) +
-  scale_x_continuous(limits = c(0, 250)) +
+  # scale_x_continuous(limits = c(0, 250)) +
+  coord_cartesian(xlim = c(0, 100)) +
   labs(y = NULL, x = "&chi;^2^<sub>rep</sub>") +
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
 ```

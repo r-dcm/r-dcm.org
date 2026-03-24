@@ -53,33 +53,9 @@ library(dcmdata) # for example data set
 library(cmdstanr) # for estimation backend
 ```
 
-## Pathways for Instructionally Embedded Assessment (PIE) data
+## Examination for the Certificate of Proficiency in English (ECPE) data
 
-We'll use data from the Pathways for Instructionally Embedded Assessment [PIE\; @pie-ft] field test to explore attribute hierarchies.
-The PIE field test data is available in dcmdata, and contains responses to `r ncol(pie_ft_data) - 1` items from `r fmt_count(nrow(pie_ft_data))` respondents.
 
-```{r}
-#| label: pie-data
-
-pie_ft_data
-```
-
-The corresponding Q-matrix maps each item three attributes.
-The three attributes represent successive levels along a Grade 5 mathematics learning pathway for repeating and numeric patterns [@pie-pathways].
-Level 1 (L1) skills relate to recognizing the order of elements in a repeating pattern.
-Level 2 (L2) skills represent organizing two numeric patterns in a table.
-Level 3 (L3) skills are the ability to translate two numeric patterns into ordered pairs and represent the learning target for this pathway.
-
-```{r}
-#| label: pie-qmatrix
-
-pie_ft_qmatrix
-```
-
-These skills develop in a natural order: you need to recognize pattern structure before you can organize patterns in a table, and organizing them in a table precedes translating them into coordinate pairs.
-This gives us a clear linear progression: `L1 -> L2 -> L3`.
-
-For more information on the data set, see `?pie` and @pie-ft.
 
 ## When attributes have order
 
@@ -96,8 +72,8 @@ library(gt)
 
 create_profiles(
   dcm_specify(
-    qmatrix = pie_ft_qmatrix,
-    identifier = "task",
+    qmatrix = ecpe_qmatrix,
+    identifier = "item_id",
     measurement_model = lcdm(),
     structural_model = unconstrained()
   )
@@ -105,26 +81,27 @@ create_profiles(
   mutate(profile = seq_len(n()), .before = 1) |>
   gt() |>
   cols_width(
-    profile ~ px(175),
+    profile ~ px(115),
+    morphosyntactic ~ px(160),
     everything() ~ px(100)
   ) |>
   cols_label(
     profile = "Profile ID",
-    L1 = "Level 1",
-    L2 = "Level 2",
-    L3 = "Level 3"
+    lexical = "Lexical",
+    cohesive = "Cohesive",
+    morphosyntactic = "Morphosyntactic"
   ) |>
   cols_align(align = "center", columns = everything()) |>
   gt_theme_rdcm()
 ```
 
 Some of these profiles may be theoretically impossible given what we know about the domain.
-Consider a respondent who is proficient on Level 3 but not Level 1 skills.
-Under the theory that Level 1 is foundational, this profile shouldn't exist.
-A student cannot translate numeric patterns into ordered pairs without first being able to recognize pattern order.
+Consider a respondent who is proficient on morphosyntactic but not lexical skills.
+Under the theory that lexical skills are foundational, this profile shouldn't exist.
+An individual cannot apply morphosyntactic skills without first being able to apply lexical skills.
 
 A hierarchy lets us encode this constraint.
-The hierarchy reduces the eight unconstrained profiles down to four valid ones: [0,0,0], [1,0,0], [1,1,0] and [1,1,1].
+The hierarchy reduces the eight unconstrained profiles down to four valid ones: [0,0,0], [0,0,1], [0,1,1] and [1,1,1].
 Each valid profile represents a step along a developmental ladder, and no one skips a rung.
 
 ```{r}
@@ -134,23 +111,24 @@ Each valid profile represents a step along a developmental ladder, and no one sk
 
 create_profiles(
   dcm_specify(
-    qmatrix = pie_ft_qmatrix,
-    identifier = "task",
+    qmatrix = ecpe_qmatrix,
+    identifier = "item_id",
     measurement_model = lcdm(),
-    structural_model = hdcm("L1 -> L2 -> L3")
+    structural_model = hdcm("lexical -> cohesive -> morphosyntactic")
   )
 ) |>
-  mutate(profile = c(1L, 2L, 5L, 8L), .before = 1) |>
+  mutate(profile = c(1L, 4L, 7L, 8L), .before = 1) |>
   gt() |>
   cols_width(
-    profile ~ px(175),
+    profile ~ px(115),
+    morphosyntactic ~ px(160),
     everything() ~ px(100)
   ) |>
   cols_label(
     profile = "Profile ID",
-    L1 = "Level 1",
-    L2 = "Level 2",
-    L3 = "Level 3"
+    lexical = "Lexical",
+    cohesive = "Cohesive",
+    morphosyntactic = "Morphosyntactic"
   ) |>
   cols_align(align = "center", columns = everything()) |>
   gt_theme_rdcm()
@@ -161,30 +139,33 @@ We can visualize this structure as a directed acyclic graph (DAG), where an arro
 ```{r}
 #| label: fig-hierarchy-dag
 #| fig-cap: >
-#|   The PIE learning pathway hierarchy as a directed acyclic graph.
+#|   The ECPE hierarchy as a directed acyclic graph.
 #| fig-asp: 0.2
 #| code-fold: true
 #| code-summary: "Plot code"
 #| fig-alt: >
 #|   A directed acyclic graph showing three nodes: L1, L2, and L3, connected
-#|   left to right by arrows indicating the prerequisite ordering of the PIE
-#|   learning pathway.
+#|   left to right by arrows indicating the prerequisite ordering of the ECPE hierarchy.
 
 library(tidyverse)
 library(dagitty)
 library(ggdag)
 
 
-dag <- dagitty("dag { L1 -> L2 -> L3 }")
+dag <- dagitty("dag { Lexical -> Cohesive -> Morphosyntactic }")
 coordinates(dag) <- list(
-  x = c(L1 = 1, L2 = 2, L3 = 3),
-  y = c(L1 = 1, L2 = 1, L3 = 1)
+  x = c(Lexical = 1, Cohesive = 2, Morphosyntactic = 3),
+  y = c(Lexical = 1, Cohesive = 1, Morphosyntactic = 1)
 )
 
 tidy_dagitty(dag) |>
+  mutate(across(
+    c(name, to),
+    ~ str_replace(.x, "Morphosyntactic", "Morpho-\nsyntactic")
+  )) |>
   ggplot(aes(x = x, y = y, xend = xend - 0.06, yend = yend)) +
   geom_dag_node(color = msr_colors[2], size = 30) +
-  geom_dag_text(color = msr_colors[1], size = 7) +
+  geom_dag_text(color = msr_colors[1], size = 4) +
   geom_dag_edges(
     aes(x = x + 0.06),
     edge_color = msr_colors[2],
@@ -223,8 +204,8 @@ The `->` defines parent-child relationships in the hierarchy string.
 Parent attributes are prerequisites for child attributes.
 That is, you must possess or be proficient on the parent before you can acquire the child.
 
-For our PIE hierarchy, we can define the attribute relationships as `"L1 -> L2 -> L3"`.
-We could also write the two relationships separately: `"L1 -> L2; L2 -> L3"`.
+For our ECPE hierarchy, we can define the attribute relationships as `"lexical -> cohesive -> morphosyntactic"`.
+We could also write the two relationships separately: `"lexical -> cohesive; cohesive -> morphosyntactic"`.
 For a simple linear hierarchy, a single chain is the most readable form.
 However, nonlinear hierarchies may require the relationships to be defined as multiple linear relationships that connect together in various ways.
 To see examples of different hierarchies and how to specify them using the DAG syntax, check out the [attribute hierarchies vignette](https://dcmstan.r-dcm.org/articles/attribute-hierarchies.html) in the `{dcmstan}` package.
@@ -236,10 +217,10 @@ Both take a `hierarchy` argument where we can define the hierarchy using a DAG-l
 #| label: example-hierarchy-spec
 
 dcm_specify(
-  qmatrix = pie_ft_qmatrix,
-  identifier = "task",
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
   measurement_model = lcdm(),
-  structural_model = hdcm(hierarchy = "L1 -> L2 -> L3")
+  structural_model = hdcm(hierarchy = "lexical -> cohesive -> morphosyntactic")
 )
 ```
 
@@ -252,20 +233,20 @@ If you specify a cyclical graph or use an unknown attribute name, you'll receive
 #| label: cycle-error
 #| error: true
 
-# A cycle: L1 requires L2, L2 requires L1
+# A cycle: lexical requires cohesive, cohesive requires lexical
 dcm_specify(
-  qmatrix = pie_ft_qmatrix,
-  identifier = "task",
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
   measurement_model = lcdm(),
-  structural_model = hdcm("L1 -> L2 -> L1")
+  structural_model = hdcm("lexical -> cohesive -> lexical")
 )
 
-# Incorrect attribute name: Level 1 instead of L1
+# Incorrect attribute name: "lexical_rules" instead of "lexical"
 dcm_specify(
-  qmatrix = pie_ft_qmatrix,
-  identifier = "task",
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
   measurement_model = lcdm(),
-  structural_model = hdcm("Level1 -> L2 -> L3")
+  structural_model = hdcm("lexical_rules -> cohesive -> morphosyntactic")
 )
 ```
 
@@ -277,41 +258,41 @@ Here we'll estimate both an HDCM and a BayesNet model using `{cmdstanr}` and the
 ```{r}
 #| label: estimate-hierarchies
 
-pie_hdcm <- dcm_estimate(
+ecpe_hdcm <- dcm_estimate(
   dcm_specify(
-    qmatrix = pie_ft_qmatrix,
-    identifier = "task",
+    qmatrix = ecpe_qmatrix,
+    identifier = "item_id",
     measurement_model = lcdm(),
-    structural_model = hdcm("L1 -> L2 -> L3")
+    structural_model = hdcm("lexical -> cohesive -> morphosyntactic")
   ),
-  data = pie_ft_data,
-  identifier = "student",
+  data = ecpe_data,
+  identifier = "resp_id",
   method = "pathfinder",
   backend = "cmdstanr",
-  file = here::here("start", "fits", "pie-lcdm-hdcm-cmds")
+  file = here::here("start", "fits", "ecpe-lcdm-hdcm-cmds")
 )
 
-pie_bayesnet <- dcm_estimate(
+ecpe_bayesnet <- dcm_estimate(
   dcm_specify(
-    qmatrix = pie_ft_qmatrix,
-    identifier = "task",
+    qmatrix = ecpe_qmatrix,
+    identifier = "item_id",
     measurement_model = lcdm(),
-    structural_model = bayesnet("L1 -> L2 -> L3")
+    structural_model = bayesnet("lexical -> cohesive -> morphosyntactic")
   ),
-  data = pie_ft_data,
-  identifier = "student",
+  data = ecpe_data,
+  identifier = "resp_id",
   method = "pathfinder",
   backend = "cmdstanr",
-  file = here::here("start", "fits", "pie-lcdm-bayesnet-cmds")
+  file = here::here("start", "fits", "epce-lcdm-bayesnet-cmds")
 )
 ```
 
 If we look at the respondent proficiency estimates, we see that we still get a proficiency estimate for each student on each attribute (`$attribute_probabilities`), but in the class probabilities, we only see the classes that are allowed by the specification (`$class_probabilities`).
 
 ```{r}
-#| label: pie-scores
+#| label: ecpe-scores
 
-score(pie_hdcm)
+score(ecpe_hdcm)
 ```
 
 We can also see how the choice of structural model impacts respondent estimates by examining the estimated model base rates.
@@ -321,18 +302,18 @@ For comparison purposes, let's also estimate a model with an unconstrained struc
 ```{r}
 #| label: estimate-lcdm
 
-pie_lcdm <- dcm_estimate(
+ecpe_lcdm <- dcm_estimate(
   dcm_specify(
-    qmatrix = pie_ft_qmatrix,
-    identifier = "task",
+    qmatrix = ecpe_qmatrix,
+    identifier = "item_id",
     measurement_model = lcdm(),
     structural_model = unconstrained()
   ),
-  data = pie_ft_data,
-  identifier = "student",
+  data = ecpe_data,
+  identifier = "resp_id",
   method = "pathfinder",
   backend = "cmdstanr",
-  file = here::here("start", "fits", "pie-lcdm-uncst-cmds")
+  file = here::here("start", "fits", "ecpe-lcdm-uncst-cmds")
 )
 ```
 
@@ -353,9 +334,9 @@ So the BayesNet is pushing respondents toward the profiles that are consistent w
 #|   and estimated base rates along the x-axis.
 
 bind_rows(
-  mutate(measr_extract(pie_lcdm, "strc_param"), strc = "Unconstrained"),
-  mutate(measr_extract(pie_bayesnet, "strc_param"), strc = "BayesNet"),
-  mutate(measr_extract(pie_hdcm, "strc_param"), strc = "HDCM"),
+  mutate(measr_extract(ecpe_lcdm, "strc_param"), strc = "Unconstrained"),
+  mutate(measr_extract(ecpe_bayesnet, "strc_param"), strc = "BayesNet"),
+  mutate(measr_extract(ecpe_hdcm, "strc_param"), strc = "HDCM"),
 ) |>
   select(strc, class, estimate) |>
   mutate(
@@ -382,130 +363,49 @@ bind_rows(
 #| label: add-loo
 #| include: false
 
-pie_lcdm <- add_fit(
-  pie_lcdm,
+ecpe_lcdm <- add_fit(
+  ecpe_lcdm,
   method = "ppmc",
   model_fit = "raw_score"
 )
-pie_hdcm <- add_fit(
-  pie_hdcm,
+ecpe_hdcm <- add_fit(
+  ecpe_hdcm,
   method = "ppmc",
   model_fit = "raw_score"
 )
-pie_bayesnet <- add_fit(
-  pie_bayesnet,
+ecpe_bayesnet <- add_fit(
+  ecpe_bayesnet,
   method = "ppmc",
   model_fit = "raw_score"
 )
 
-pie_lcdm <- add_criterion(pie_lcdm, criterion = "loo")
-pie_hdcm <- add_criterion(pie_hdcm, criterion = "loo")
-pie_bayesnet <- add_criterion(pie_bayesnet, criterion = "loo")
+ecpe_lcdm <- add_criterion(ecpe_lcdm, criterion = "loo")
+ecpe_hdcm <- add_criterion(ecpe_hdcm, criterion = "loo")
+ecpe_bayesnet <- add_criterion(ecpe_bayesnet, criterion = "loo")
 ```
 
 To this point, we've focused on how to encode attribute relationships into our DCM specifications.
 However, in the DCM framework, these relationships are also testable hypotheses.
 @dcm-maps demonstrated how we can evaluate a proposed attribute hierarchy using the model fit tools we learned about in the [Evaluate Model Performance](/start/evaluate/) article.
 
-We'll start by looking at absolute model fit.
-First, let's look at the unconstrained model.
-If we use a threshold of .05, we would conclude that the unconstrained model does not fit well.
-This is not terribly surprising, as many profiles have very low base rates (@fig-model-base-rates), which can cause model fit problems [@hdcm; @wang2021].
-
-```{r}
-fit_ppmc(pie_lcdm, model_fit = "raw_score")
-```
-
-Let's look at the fit for the BayesNet and HDCM models.
-Both of these models show good model fit, with posterior predictive *p*-values (*ppp*) further from the extremes of 0 or 1.
-In @fig-model-base-rates, both the BayesNet and HDCM also have some profiles with low base rates, so why isn't model fit affected here?
-Both the BayesNet and HDCM have a reduced structural model.
-That is, the saturated model is overspecified, and the overspecification can result in issues with model fit.
-The alternative models have fewer parameters in their structural model.
-So even though the same number of profiles are possible (in the BayesNet), the structural model is simplified, reducing the overspecification [@hu2020].
-
-```{r}
-fit_ppmc(pie_bayesnet, model_fit = "raw_score")
-
-fit_ppmc(pie_hdcm, model_fit = "raw_score")
-```
-
-We can also visualize the PPMCs from each model.
-As the *ppp* values indicated, the observed &chi;^2^ values for the BayesNet and HDCM are much closer to the central area of the posterior distribution than in the unconstrained model.
-
-```{r}
-#| label: fig-chisq-dist-compare
-#| code-fold: true
-#| code-summary: "Plot code"
-#| fig-cap: Posterior distributions of &chi;^2^ for raw score PPMC
-#| fig-alt: >
-#|   Three side-by-side histograms showing the posterior predictive distribution
-#|   of chi-squared values from a raw score PPMC for the Unconstrained, BayesNet,
-#|   and HDCM structural models. Each histogram shows the distribution of
-#|   posterior samples with a dashed vertical line indicating the observed
-#|   chi-squared value.
-
-mod_fit <- bind_rows(
-  fit_ppmc(pie_lcdm, model_fit = "raw_score", return_draws = 2000) |>
-    pluck("ppmc_raw_score") |>
-    mutate(model = "Unconstrained"),
-  fit_ppmc(pie_bayesnet, model_fit = "raw_score", return_draws = 2000) |>
-    pluck("ppmc_raw_score") |>
-    mutate(model = "BayesNet"),
-  fit_ppmc(pie_hdcm, model_fit = "raw_score", return_draws = 2000) |>
-    pluck("ppmc_raw_score") |>
-    mutate(model = "HDCM")
-) |>
-  mutate(model = factor(model, levels = c("Unconstrained", "BayesNet", "HDCM")))
-
-mod_fit |>
-  unnest(chisq_samples) |>
-  ggplot(aes(x = chisq_samples)) +
-  facet_grid(cols = vars(model), scales = "free") +
-  geom_histogram(
-    aes(color = "Posterior Samples"),
-    binwidth = 3,
-    fill = msr_colors[2]
-  ) +
-  geom_vline(
-    data = mod_fit,
-    aes(xintercept = obs_chisq, color = "Observed Value"),
-    linetype = "dashed"
-  ) +
-  coord_cartesian(xlim = c(0, 100)) +
-  scale_x_continuous(breaks = seq(0, 100, by = 20)) +
-  scale_color_manual(
-    values = c(
-      "Posterior Samples" = msr_colors[2],
-      "Observed Value" = msr_colors[3]
-    ),
-    limits = c("Posterior Samples", "Observed Value"),
-    name = NULL
-  ) +
-  labs(x = "&chi;^2^ value", y = "Posterior samples")
-```
-
-Finally, we can use relative fit comparisons to directly compare the models.
+Specifically, we can use relative fit comparisons to directly compare the models.
 As in our previous case study, we'll use leave-one-out cross validation [LOO\; @loo-waic] for our model comparisons.
 The model with the highest expected log predictive density (ELPD) is listed first.
 A difference that is large relative to its standard error [roughly more than 2.5 times\; @bengio2004] provides strong evidence for preferring one model over another.
 
-If the hierarchical models show comparable ELPD to the unconstrained model, the hierarchy is consistent with the data: the simpler, theoretically motivated model fits as well as the fully flexible one.
+If the hierarchical models show comparable ELPD to the unconstrained model, the hierarchy is consistent with the data: the simpler, theoretically motivated model fits as well as the fully flexible one [@dcm-maps].
 This is the ideal outcome when you have good domain theory.
 The defined attribute relationships reduce model complexity without sacrificing predictive accuracy.
 If the unconstrained model dominates clearly, the attribute relationships may be too restrictive, and some theoretically "impossible" profiles may actually be present in the data.
 
-Since both the HDCM and BayesNet showed good model fit, we'll just compare the HDCM to the unconstrained model, as the HDCM is the simplest of the two models.
-As we would expect to see if our theory of a linear hierarchy is correct, unconstrained LCDM and HDCM have similar ELPD values (difference within the standard error).
+As we would expect to see if our theory of a linear hierarchy is correct, unconstrained LCDM, BayesNet, and HDCM have similar ELPD values (difference within the standard error).
+Because all the model have approximately equal fit, we would probably prefer the HDCM, as that is the simplest of the three models.
 
 ```{r}
 #| label: loo-compare
 
-loo_compare(pie_lcdm, pie_hdcm)
+loo_compare(ecpe_lcdm, ecpe_bayesnet, ecpe_hdcm)
 ```
-
-In total, our constrained HDCM is providing better overall fit (as measured by the raw score PPMC) without sacrificing predictive accuracy (as measured by the LOO).
-Combined, these findings provide strong evidence that our hypothesized linear hierarchy is supported by the assessment data that was collected during the PIE field test.
 
 ## Wrapping up
 

@@ -223,7 +223,9 @@ In this case, our *ppp* values is `r fmt_digits(lcdm_ppmc$ppmc_raw_score$ppp, di
 Let's visualize the PPMC to see how the observed raw score distribution compares to the replicated data.
 
 ```{r}
-#| label: rawscore-dist
+#| label: fig-rawscore-dist
+#| fig-cap: >
+#|   Posterior predictive model check of the raw score distribution.
 #| code-fold: true
 #| code-summary: "Plot code"
 #| fig-asp: 0.618
@@ -297,7 +299,9 @@ The &chi;^2^ is our fit statistic in this PPMC, and the *ppp* value is the propo
 In this example, we see that the observed value is toward the middle, which is exactly what we would expect from a well-fitting model.
 
 ```{r}
-#| label: chisq-dist
+#| label: fig-chisq-dist
+#| fig-cap: >
+#|   Posterior predictive &chi;^2^ distribution for the LCDM.
 #| code-fold: true
 #| code-summary: "Plot code"
 #| fig-asp: 0.618
@@ -335,7 +339,9 @@ For this model, the observed value is further out in the tail of the distributio
 Accordingly, our *ppp* value is only `r fmt_digits(dina_ppmc$ppmc_raw_score$ppp, digits = 3)`.
 
 ```{r}
-#| label: dina-chisq-dist
+#| label: fig-dina-chisq-dist
+#| fig-cap: >
+#|   Posterior predictive &chi;^2^ distribution for the DINA model.
 #| code-fold: true
 #| code-summary: "Plot code"
 #| fig-asp: 0.618

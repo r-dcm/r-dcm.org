@@ -37,7 +37,7 @@ The structural model controls the assumptions your DCM makes about how attribute
 By default, the unconstrained model makes no assumptions at all and every possible attribute profile is freely estimated.
 That flexibility is a virtue when you have no prior theory about attribute relationships.
 However, if there are profiles that are rarely observed, attempting to estimate the base rates and item parameters associated with those profiles can result in issues with model fit [@hdcm; @wang2021].
-When there is a theory---when the nature of the domain suggests that proficiency on one skill is required before another can develop---you can encode, and test, that theory directly in the model.
+When the nature of the domain suggests that proficiency on one skill is required before another can develop, you can encode, and test, that theory directly in the model.
 In this article we'll learn how to do exactly that with attribute hierarchies.
 
 `r article_req_pkgs(pkgs)`
@@ -55,7 +55,31 @@ library(cmdstanr) # for estimation backend
 
 ## Examination for the Certificate of Proficiency in English (ECPE) data
 
+To demonstrate how to specify heirarhcies with measr, we'll use the ECPE data.
+The ECPE data has been widely used in the DCM research literature, and was the inspiration used by @hdcm for their development of the hierarchcial DCM.
+The ECPE data measures three attributes related to rules of the English language.
+In total, the data set contains responses to `r ncol(ecpe_data) - 1` items from `r fmt_count(nrow(ecpe_data))` respondents.
 
+```{r}
+#| label: ecpe-data
+
+ecpe_data
+```
+
+In addition to the response data, we also have a Q-matrix defining which items measure each of the `r ncol(ecpe_qmatrix) - 1` attributes.
+These attributes represent knowledge of differnt rules of the English language: 
+
+* Lexical: vocabulary (e.g., word choices, idioms)
+* Cohesive: connection (e.g., pronouns, conjunctions, transitions)
+* Morphosyntactic: grammar (e.g., prefixes and suffixes, tense, verb conjugations)
+
+```{r}
+#| label: ecpe-qmatrix
+
+ecpe_qmatrix
+```
+
+For more information on the data, see `?ecpe`.
 
 ## When attributes have order
 
@@ -393,7 +417,7 @@ As in our previous case study, we'll use leave-one-out cross validation [LOO\; @
 The model with the highest expected log predictive density (ELPD) is listed first.
 A difference that is large relative to its standard error [roughly more than 2.5 times\; @bengio2004] provides strong evidence for preferring one model over another.
 
-If the hierarchical models show comparable ELPD to the unconstrained model, the hierarchy is consistent with the data: the simpler, theoretically motivated model fits as well as the fully flexible one [@dcm-maps].
+If the hierarchical models show comparable ELPD to the unconstrained model, the hierarchy is consistent with the data: the simpler, theoretically motivated model fits as well as the fully flexible one.
 This is the ideal outcome when you have good domain theory.
 The defined attribute relationships reduce model complexity without sacrificing predictive accuracy.
 If the unconstrained model dominates clearly, the attribute relationships may be too restrictive, and some theoretically "impossible" profiles may actually be present in the data.

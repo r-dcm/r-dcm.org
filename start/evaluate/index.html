@@ -256,7 +256,7 @@ window.Quarto = {
   </ul>
 </li>
   <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping up</a></li>
-  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info">Session information</a></li>
+  
   </ul></nav>
     </div>
 <!-- main -->
@@ -290,11 +290,11 @@ window.Quarto = {
 </ul>
 <p>To use code in this article, you will need to install the following packages: <a href="https://dcmdata.r-dcm.org">dcmdata</a>, <a href="https://measr.r-dcm.org">measr</a>, and <a href="https://mc-stan.org/rstan/">rstan</a>.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://measr.r-dcm.org">measr</a></span><span class="op">)</span>    <span class="co"># for model evaluation</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://measr.r-dcm.org">measr</a></span><span class="op">)</span> <span class="co"># for model evaluation</span></span>
 <span></span>
 <span><span class="co"># Helper packages</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dcmdata.r-dcm.org">dcmdata</a></span><span class="op">)</span>  <span class="co"># for example data set</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstan/">rstan</a></span><span class="op">)</span>    <span class="co"># for estimation backend</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dcmdata.r-dcm.org">dcmdata</a></span><span class="op">)</span> <span class="co"># for example data set</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstan/">rstan</a></span><span class="op">)</span> <span class="co"># for estimation backend</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="diagnosing-teachers-multiplicative-reasoning-dtmr-data" class="level2"><h2 class="anchored" data-anchor-id="diagnosing-teachers-multiplicative-reasoning-dtmr-data">Diagnosing Teachers’ Multiplicative Reasoning (DTMR) data</h2>
 <p>We’ll use data from the DTMR project to demonstrate each of these evaluation tools. The DTMR assessment measures four attributes related to multiplicative reasoning in mathematics teachers. In total, the DTMR data contains responses to 27 items from 990 respondents.</p>
@@ -318,7 +318,7 @@ window.Quarto = {
 <span><span class="co">#&gt; #   `12` &lt;int&gt;, `13` &lt;int&gt;, `14` &lt;int&gt;, `15a` &lt;int&gt;, `15b` &lt;int&gt;, `15c` &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   `16` &lt;int&gt;, `17` &lt;int&gt;, `18` &lt;int&gt;, `21` &lt;int&gt;, `22` &lt;int&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Alongside the response data, we also have a Q-matrix that maps items to the 4 attributes measured by the assessment. These attributes represent aspects of multiplicative reasoning including and understanding of referent units, partitioning and iterating, appropriateness, and multiplicative comparison.</p>
+<p>Alongside the response data, we also have a Q-matrix that maps items to the 4 attributes measured by the assessment. These attributes represent aspects of multiplicative reasoning including and understanding of referent units, partitioning and iterating, appropriateness, and multiplicative comparison. For more information on the data set, see <code><a href="https://dcmdata.r-dcm.org/reference/dtmr.html">?dtmr</a></code> and <span class="citation" data-cites="dtmr">Bradshaw et al. (<a href="#ref-dtmr" role="doc-biblioref">2014</a>)</span>.</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtmr_qmatrix</span></span>
 <span><span class="co">#&gt; # A tibble: 27 × 5</span></span>
@@ -400,25 +400,21 @@ window.Quarto = {
 <span><span class="co">#&gt; # A tibble: 1 × 8</span></span>
 <span><span class="co">#&gt;      m2    df        pval  rmsea ci_lower ci_upper `90% CI`          srmsr</span></span>
 <span><span class="co">#&gt;   &lt;dbl&gt; &lt;int&gt;       &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1  446.   309 0.000000507 0.0212   0.0167   0.0254 [0.0167, 0.0254] 0.0718</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="co">#&gt; 1  452.   309 0.000000203 0.0216   0.0172   0.0258 [0.0172, 0.0258] 0.0719</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="posterior-predictive-model-checks" class="level3"><h3 class="anchored" data-anchor-id="posterior-predictive-model-checks">Posterior predictive model checks</h3>
 <p>Posterior predictive model checks (PPMCs) are a Bayesian approach to evaluating model fit <span class="citation" data-cites="park2015">(<a href="#ref-park2015" role="doc-biblioref">Park et al., 2015</a>)</span>. The idea is to simulate many replicated datasets from the estimated model posterior, then ask: does our observed data look like data the model would generate? If the model is well-specified, the observed data should be indistinguishable from the replicated data.</p>
 <p><code><a href="https://measr.r-dcm.org/reference/fit_ppmc.html">fit_ppmc()</a></code> performs a PPMC based on the raw score distribution. It simulates replicated datasets from the posterior, calculates the distribution of raw scores for each, and compares this distribution to our observed data. Because PPMCs require draws from the full posterior distribution, they only work with model estimated by a method that produces a posterior (i.e., MCMC, variational inference).</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lcdm_ppmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/fit_ppmc.html">fit_ppmc</a></span><span class="op">(</span></span>
-<span>  <span class="va">dtmr_lcdm</span>,</span>
-<span>  model_fit <span class="op">=</span> <span class="st">"raw_score"</span>,</span>
-<span>  return_draws <span class="op">=</span> <span class="fl">1000</span></span>
-<span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lcdm_ppmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/fit_ppmc.html">fit_ppmc</a></span><span class="op">(</span><span class="va">dtmr_lcdm</span>, model_fit <span class="op">=</span> <span class="st">"raw_score"</span><span class="op">)</span></span>
 <span><span class="va">lcdm_ppmc</span></span>
 <span><span class="co">#&gt; $ppmc_raw_score</span></span>
-<span><span class="co">#&gt; # A tibble: 1 × 7</span></span>
-<span><span class="co">#&gt;   obs_chisq ppmc_mean `2.5%` `97.5%` rawscore_samples     chisq_samples   ppp</span></span>
-<span><span class="co">#&gt;       &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;list&gt;               &lt;list&gt;        &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1      35.8      29.0   13.8    56.5 &lt;tibble [1,000 × 1]&gt; &lt;dbl [1,000]&gt; 0.198</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt;   obs_chisq ppmc_mean `2.5%` `97.5%`   ppp</span></span>
+<span><span class="co">#&gt;       &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1      35.6      30.0   13.1    56.8 0.201</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The key output is the posterior predictive <em>p</em>-value (<em>ppp</em>), which is the proportion of replicated datasets that produced a larger fit statistic than our observed data. For a well-fitting model, the observed data should fall in the middle of the replicated distribution, giving a <em>ppp</em> near 0.5. Values near 0 indicate that the observed data produces a fit statistic with a much larger value than expected by replicated datasets; values near 1 would indicate the opposite. In this case, our <em>ppp</em> values is 0.198, indicating that 19.8% of replicated data sets had a larger fit statistic than our observed data.</p>
+<p>The key output is the posterior predictive <em>p</em>-value (<em>ppp</em>), which is the proportion of replicated datasets that produced a larger fit statistic than our observed data. For a well-fitting model, the observed data should fall in the middle of the replicated distribution, giving a <em>ppp</em> near 0.5. Values near 0 indicate that the observed data produces a fit statistic with a much larger value than expected by replicated datasets; values near 1 would indicate the opposite. In this case, our <em>ppp</em> values is 0.201, indicating that 20.1% of replicated data sets had a larger fit statistic than our observed data.</p>
 <p>Let’s visualize the PPMC to see how the observed raw score distribution compares to the replicated data.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold"><summary>Plot code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
@@ -430,8 +426,9 @@ window.Quarto = {
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">raw_score</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html">complete</a></span><span class="op">(</span>raw_score <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">dtmr_data</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">lcdm_ppmc</span><span class="op">$</span><span class="va">ppmc_raw_score</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">rawscore_samples</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="https://measr.r-dcm.org/reference/fit_ppmc.html">fit_ppmc</a></span><span class="op">(</span><span class="va">dtmr_lcdm</span>, model_fit <span class="op">=</span> <span class="st">"raw_score"</span>, return_draws <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck</a></span><span class="op">(</span><span class="st">"ppmc_raw_score"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">rawscore_samples</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">rawscore_samples</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">raw_scores</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -471,17 +468,22 @@ window.Quarto = {
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="index_files/figure-html/rawscore-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Line plot showing the observed number of respondents at each raw score point, superimposed over an interval showing the expected number of respondents at each score point from model-replicated data. The observed line runs through the middle of the credible interval bands, indicating good model fit."></p>
-</figure>
+<div id="fig-rawscore-dist" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Line plot showing the observed number of respondents at each raw score point, superimposed over an interval showing the expected number of respondents at each score point from model-replicated data. The observed line runs through the middle of the credible interval bands, indicating good model fit.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rawscore-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-rawscore-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Line plot showing the observed number of respondents at each raw score point, superimposed over an interval showing the expected number of respondents at each score point from model-replicated data. The observed line runs through the middle of the credible interval bands, indicating good model fit.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rawscore-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Posterior predictive model check of the raw score distribution.
+</figcaption></figure>
 </div>
 </div>
 </div>
 <p>The blue bars show the 50%, 80%, and 95% credible intervals for the expected number of respondents at each score point, based on the model (i.e., the distribution across the replicated data sets). The red line and points show the counts from our observed data set. When the model fits well, the red line threads through the middle of the blue intervals rather than wandering outside them.</p>
 <p>We can also examine the distribution of χ<sup>2</sup>-like statistics calculated from the replicated datasets <span class="citation" data-cites="thompson-bayes">(<a href="#ref-thompson-bayes" role="doc-biblioref">Thompson, 2019</a>)</span>. For each replicated dataset, we compute how much it differs from the expected raw score distribution. This creates a distribution of plausible χ<sup>2</sup> values under the model. The χ<sup>2</sup> is our fit statistic in this PPMC, and the <em>ppp</em> value is the proportion of replicated χ<sup>2</sup> values that exceed the observed value (as indicated by the red line). In this example, we see that the observed value is toward the middle, which is exactly what we would expect from a well-fitting model.</p>
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Plot code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lcdm_ppmc</span><span class="op">$</span><span class="va">ppmc_raw_score</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chisq_samples</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<details class="code-fold"><summary>Plot code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.r-dcm.org/reference/fit_ppmc.html">fit_ppmc</a></span><span class="op">(</span><span class="va">dtmr_lcdm</span>, model_fit <span class="op">=</span> <span class="st">"raw_score"</span>, return_draws <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck</a></span><span class="op">(</span><span class="st">"ppmc_raw_score"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chisq_samples</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">chisq_samples</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">chisq_samples</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://mjskay.github.io/ggdist/reference/stat_dots.html">stat_dots</a></span><span class="op">(</span></span>
@@ -497,25 +499,25 @@ window.Quarto = {
 <span>    color <span class="op">=</span> <span class="va">msr_colors</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
 <span>    linewidth <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span>, x <span class="op">=</span> <span class="st">"&amp;chi;^2^&lt;sub&gt;rep&lt;/sub&gt;"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="index_files/figure-html/chisq-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit."></p>
-</figure>
+<div id="fig-chisq-dist" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-chisq-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Posterior predictive χ<sup>2</sup> distribution for the LCDM.
+</figcaption></figure>
 </div>
 </div>
 </div>
 <p>Compare this to the same χ<sup>2</sup> plot for the DINA model. For this model, the observed value is further out in the tail of the distribution of expected values. Accordingly, our <em>ppp</em> value is only 0.052.</p>
 <div class="cell" data-layout-align="center">
-<details class="code-fold"><summary>Plot code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dina_ppmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/fit_ppmc.html">fit_ppmc</a></span><span class="op">(</span></span>
-<span>  <span class="va">dtmr_dina</span>,</span>
-<span>  model_fit <span class="op">=</span> <span class="st">"raw_score"</span>,</span>
-<span>  return_draws <span class="op">=</span> <span class="fl">1000</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">dina_ppmc</span><span class="op">$</span><span class="va">ppmc_raw_score</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chisq_samples</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<details class="code-fold"><summary>Plot code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.r-dcm.org/reference/fit_ppmc.html">fit_ppmc</a></span><span class="op">(</span><span class="va">dtmr_dina</span>, model_fit <span class="op">=</span> <span class="st">"raw_score"</span>, return_draws <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck</a></span><span class="op">(</span><span class="st">"ppmc_raw_score"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">chisq_samples</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">chisq_samples</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">chisq_samples</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://mjskay.github.io/ggdist/reference/stat_dots.html">stat_dots</a></span><span class="op">(</span></span>
@@ -527,23 +529,28 @@ window.Quarto = {
 <span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span></span>
-<span>    xintercept <span class="op">=</span> <span class="va">dtmr_lcdm</span><span class="op">@</span><span class="va">fit</span><span class="op">$</span><span class="va">ppmc_raw_score</span><span class="op">$</span><span class="va">obs_chisq</span>,</span>
+<span>    xintercept <span class="op">=</span> <span class="va">dtmr_dina</span><span class="op">@</span><span class="va">fit</span><span class="op">$</span><span class="va">ppmc_raw_score</span><span class="op">$</span><span class="va">obs_chisq</span>,</span>
 <span>    color <span class="op">=</span> <span class="va">msr_colors</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,</span>
 <span>    linewidth <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">250</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># scale_x_continuous(limits = c(0, 250)) +</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span>, x <span class="op">=</span> <span class="st">"&amp;chi;^2^&lt;sub&gt;rep&lt;/sub&gt;"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="index_files/figure-html/dina-chisq-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit."></p>
-</figure>
+<div id="fig-dina-chisq-dist" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-dina-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-dina-chisq-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dina-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Posterior predictive χ<sup>2</sup> distribution for the DINA model.
+</figcaption></figure>
 </div>
 </div>
 </div>
 </section></section><section id="relative-model-fit" class="level2"><h2 class="anchored" data-anchor-id="relative-model-fit">Relative model fit</h2>
 <p>Absolute fit asks whether the model fits the data. Relative fit asks a different question: Among several candidate models, which fits better? This distinction matters because sometimes multiple models may show adequate absolute model fit, and we need to choose the best model to implement. In our example, we have one model that fits well and one that doesn’t so we don’t really need an evaluation of relative model fit to determine which is better. However, we’ll run comparison to illustrate idea.</p>
-<p>We recommend using leave-one-out cross-validation (LOO) estimates for model comparisons. LOO approximates how well the model would predict new, unseen data. Higher expected log predictive density (ELPD) values indicate better out-of-sample predictive performance. <code><a href="https://mc-stan.org/loo/reference/loo_compare.html">loo_compare()</a></code> directly compares the models, ranking them by ELPD and reporting the difference along with its standard error.</p>
+<p>We recommend using leave-one-out cross-validation (LOO) estimates for model comparisons <span class="citation" data-cites="loo-waic">(<a href="#ref-loo-waic" role="doc-biblioref">Vehtari et al., 2017</a>)</span>. LOO approximates how well the model would predict new, unseen data. Higher expected log predictive density (ELPD) values indicate better out-of-sample predictive performance. <code><a href="https://mc-stan.org/loo/reference/loo_compare.html">loo_compare()</a></code> uses the <a href="https://mc-stan.org/loo/">loo</a> package to directly compare the models, rank them by ELPD and report the difference along with its standard error.</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://mc-stan.org/loo/reference/loo_compare.html">loo_compare</a></span><span class="op">(</span><span class="va">dtmr_lcdm</span>, <span class="va">dtmr_dina</span><span class="op">)</span></span>
 <span><span class="co">#&gt;           elpd_diff se_diff</span></span>
@@ -559,26 +566,26 @@ window.Quarto = {
 <span><span class="va">lcdm_reliability</span></span>
 <span><span class="co">#&gt; $pattern_reliability</span></span>
 <span><span class="co">#&gt;       p_a       p_c </span></span>
-<span><span class="co">#&gt; 0.7209887 0.6004950 </span></span>
+<span><span class="co">#&gt; 0.7211589 0.6007968 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $map_reliability</span></span>
 <span><span class="co">#&gt; $map_reliability$accuracy</span></span>
 <span><span class="co">#&gt; # A tibble: 4 × 8</span></span>
 <span><span class="co">#&gt;   attribute                   acc lambda_a kappa_a youden_a tetra_a  tp_a  tn_a</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 referent_units            0.926    0.784   0.369    0.828   0.968 0.875 0.952</span></span>
-<span><span class="co">#&gt; 2 partitioning_iterating    0.925    0.847   0.849    0.849   0.972 0.926 0.924</span></span>
-<span><span class="co">#&gt; 3 appropriateness           0.891    0.726   0.734    0.763   0.938 0.926 0.837</span></span>
-<span><span class="co">#&gt; 4 multiplicative_comparison 0.924    0.802   0.146    0.839   0.969 0.938 0.902</span></span>
+<span><span class="co">#&gt; 1 referent_units            0.926    0.785   0.367    0.828   0.968 0.875 0.952</span></span>
+<span><span class="co">#&gt; 2 partitioning_iterating    0.925    0.847   0.849    0.849   0.972 0.924 0.926</span></span>
+<span><span class="co">#&gt; 3 appropriateness           0.891    0.725   0.733    0.764   0.938 0.925 0.838</span></span>
+<span><span class="co">#&gt; 4 multiplicative_comparison 0.924    0.803   0.146    0.840   0.969 0.938 0.902</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $map_reliability$consistency</span></span>
 <span><span class="co">#&gt; # A tibble: 4 × 10</span></span>
 <span><span class="co">#&gt;   attribute         consist lambda_c kappa_c youden_c tetra_c  tp_c  tn_c gammak</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;               &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 referent_units      0.876    0.627   0.664    0.721   0.910 0.813 0.907  0.890</span></span>
-<span><span class="co">#&gt; 2 partitioning_ite…   0.869    0.733   0.849    0.737   0.916 0.871 0.866  0.890</span></span>
-<span><span class="co">#&gt; 3 appropriateness     0.828    0.544   0.681    0.633   0.842 0.862 0.772  0.844</span></span>
-<span><span class="co">#&gt; 4 multiplicative_c…   0.876    0.680   0.756    0.739   0.919 0.899 0.840  0.896</span></span>
+<span><span class="co">#&gt; 1 referent_units      0.875    0.625   0.665    0.719   0.909 0.813 0.907  0.890</span></span>
+<span><span class="co">#&gt; 2 partitioning_ite…   0.868    0.733   0.849    0.736   0.915 0.870 0.866  0.889</span></span>
+<span><span class="co">#&gt; 3 appropriateness     0.828    0.547   0.682    0.635   0.844 0.862 0.773  0.843</span></span>
+<span><span class="co">#&gt; 4 multiplicative_c…   0.877    0.682   0.757    0.741   0.920 0.900 0.841  0.896</span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: pc_prime &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -586,10 +593,10 @@ window.Quarto = {
 <span><span class="co">#&gt; # A tibble: 4 × 5</span></span>
 <span><span class="co">#&gt;   attribute                 rho_pf rho_bs rho_i rho_tb</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 referent_units             0.789  0.755 0.599  0.930</span></span>
+<span><span class="co">#&gt; 1 referent_units             0.787  0.756 0.600  0.930</span></span>
 <span><span class="co">#&gt; 2 partitioning_iterating     0.796  0.779 0.637  0.940</span></span>
-<span><span class="co">#&gt; 3 appropriateness            0.739  0.674 0.564  0.874</span></span>
-<span><span class="co">#&gt; 4 multiplicative_comparison  0.810  0.780 0.632  0.942</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="co">#&gt; 3 appropriateness            0.740  0.673 0.564  0.873</span></span>
+<span><span class="co">#&gt; 4 multiplicative_comparison  0.812  0.781 0.632  0.943</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>measr returns three categories of reliability: pattern reliability, MAP (maximum a posteriori) reliability, and EAP (expected a posteriori) reliability. Each reflects a different way of reporting results, and the most relevant indices depend on how proficiency scores are determined and used. For a comprehensive review of reliability methods for DCMs, see <span class="citation" data-cites="reliability-handbook">Sinharay &amp; Johnson (<a href="#ref-reliability-handbook" role="doc-biblioref">2019</a>)</span>.</p>
 <section id="pattern-reliability" class="level3"><h3 class="anchored" data-anchor-id="pattern-reliability">Pattern reliability</h3>
@@ -602,7 +609,7 @@ window.Quarto = {
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lcdm_reliability</span><span class="op">$</span><span class="va">pattern_reliability</span></span>
 <span><span class="co">#&gt;       p_a       p_c </span></span>
-<span><span class="co">#&gt; 0.7209887 0.6004950</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="co">#&gt; 0.7211589 0.6007968</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="map-reliability" class="level3"><h3 class="anchored" data-anchor-id="map-reliability">MAP reliability</h3>
 <p>MAP reliability evaluates accuracy and consistency at the attribute level, where each attribute is classified separately using a threshold (typically .5) applied to the estimated proficiency probability. <span class="citation" data-cites="johnson2018">Johnson &amp; Sinharay (<a href="#ref-johnson2018" role="doc-biblioref">2018</a>)</span> describe two primary indices, P<sub>ak</sub> (<code>acc</code>) and P<sub>ck</sub> (<code>consist</code>):</p>
@@ -617,19 +624,19 @@ window.Quarto = {
 <span><span class="co">#&gt; # A tibble: 4 × 8</span></span>
 <span><span class="co">#&gt;   attribute                   acc lambda_a kappa_a youden_a tetra_a  tp_a  tn_a</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 referent_units            0.926    0.784   0.369    0.828   0.968 0.875 0.952</span></span>
-<span><span class="co">#&gt; 2 partitioning_iterating    0.925    0.847   0.849    0.849   0.972 0.926 0.924</span></span>
-<span><span class="co">#&gt; 3 appropriateness           0.891    0.726   0.734    0.763   0.938 0.926 0.837</span></span>
-<span><span class="co">#&gt; 4 multiplicative_comparison 0.924    0.802   0.146    0.839   0.969 0.938 0.902</span></span>
+<span><span class="co">#&gt; 1 referent_units            0.926    0.785   0.367    0.828   0.968 0.875 0.952</span></span>
+<span><span class="co">#&gt; 2 partitioning_iterating    0.925    0.847   0.849    0.849   0.972 0.924 0.926</span></span>
+<span><span class="co">#&gt; 3 appropriateness           0.891    0.725   0.733    0.764   0.938 0.925 0.838</span></span>
+<span><span class="co">#&gt; 4 multiplicative_comparison 0.924    0.803   0.146    0.840   0.969 0.938 0.902</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $consistency</span></span>
 <span><span class="co">#&gt; # A tibble: 4 × 10</span></span>
 <span><span class="co">#&gt;   attribute         consist lambda_c kappa_c youden_c tetra_c  tp_c  tn_c gammak</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;               &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 referent_units      0.876    0.627   0.664    0.721   0.910 0.813 0.907  0.890</span></span>
-<span><span class="co">#&gt; 2 partitioning_ite…   0.869    0.733   0.849    0.737   0.916 0.871 0.866  0.890</span></span>
-<span><span class="co">#&gt; 3 appropriateness     0.828    0.544   0.681    0.633   0.842 0.862 0.772  0.844</span></span>
-<span><span class="co">#&gt; 4 multiplicative_c…   0.876    0.680   0.756    0.739   0.919 0.899 0.840  0.896</span></span>
+<span><span class="co">#&gt; 1 referent_units      0.875    0.625   0.665    0.719   0.909 0.813 0.907  0.890</span></span>
+<span><span class="co">#&gt; 2 partitioning_ite…   0.868    0.733   0.849    0.736   0.915 0.870 0.866  0.889</span></span>
+<span><span class="co">#&gt; 3 appropriateness     0.828    0.547   0.682    0.635   0.844 0.862 0.773  0.843</span></span>
+<span><span class="co">#&gt; 4 multiplicative_c…   0.877    0.682   0.757    0.741   0.920 0.900 0.841  0.896</span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: pc_prime &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="eap-reliability" class="level3"><h3 class="anchored" data-anchor-id="eap-reliability">EAP reliability</h3>
@@ -639,20 +646,20 @@ window.Quarto = {
 <span><span class="co">#&gt; # A tibble: 4 × 5</span></span>
 <span><span class="co">#&gt;   attribute                 rho_pf rho_bs rho_i rho_tb</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 referent_units             0.789  0.755 0.599  0.930</span></span>
+<span><span class="co">#&gt; 1 referent_units             0.787  0.756 0.600  0.930</span></span>
 <span><span class="co">#&gt; 2 partitioning_iterating     0.796  0.779 0.637  0.940</span></span>
-<span><span class="co">#&gt; 3 appropriateness            0.739  0.674 0.564  0.874</span></span>
-<span><span class="co">#&gt; 4 multiplicative_comparison  0.810  0.780 0.632  0.942</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="co">#&gt; 3 appropriateness            0.740  0.673 0.564  0.873</span></span>
+<span><span class="co">#&gt; 4 multiplicative_comparison  0.812  0.781 0.632  0.943</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>EAP reliability is typically lower than MAP reliability, because placing a respondent at a specific probability (a continuous scale) is harder than placing them into a binary category. That said, both MAP and EAP reliability can be adequate even when overall model fit is not perfect, which is one reason it’s important to evaluate both fit and reliability.</p>
 </section></section><section id="wrapping-up" class="level2"><h2 class="anchored" data-anchor-id="wrapping-up">Wrapping up</h2>
 <p>So far we’ve discussed various ways we can evaluate whether our model has good fit and provides accurate and reliable results. But what do we do if the answer is “no”? A good place to start is often examining your structural model and ensuring that attribute relationships are appropriately included. That is the focus of the <a href="../../start/hierarchies/">Define Attribute Relationships</a> article.</p>
-</section><section id="session-info" class="level2"><h2 class="anchored" data-anchor-id="session-info">Session information</h2>
+</section><div id="quarto-appendix" class="default"><section id="session-info" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
 <div class="cell" data-layout-align="center">
 <pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
 #&gt;  version      R version 4.5.2 (2025-10-31)
 #&gt;  language     (EN)
-#&gt;  date         2026-03-11
+#&gt;  date         2026-04-04
 #&gt;  pandoc       3.9
 #&gt;  quarto       1.9.24
 #&gt;  Stan (rstan) 2.37.0
@@ -667,7 +674,7 @@ window.Quarto = {
 #&gt;  ggplot2          4.0.2       2026-02-03 CRAN (R 4.5.2)
 #&gt;  loo              2.9.0.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
 #&gt;  lubridate        1.9.5       2026-02-04 CRAN (R 4.5.2)
-#&gt;  measr            2.0.0.9000  2026-03-04 Github (r-dcm/measr@f033603)
+#&gt;  measr            2.0.0.9000  2026-03-21 Github (r-dcm/measr@475bc50)
 #&gt;  posterior        1.6.1.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
 #&gt;  purrr            1.2.1       2026-01-09 CRAN (R 4.5.2)
 #&gt;  readr            2.2.0       2026-02-19 CRAN (R 4.5.2)
@@ -682,7 +689,7 @@ window.Quarto = {
 
 
 
-</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+</div></section><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-dtmr" class="csl-entry" role="listitem">
 Bradshaw, L., Izsák, A., Templin, J., &amp; Jacobson, E. (2014). Diagnosing teachers’ understandings of rational numbers: Building a multidimensional test within the diagnostic classification framework. <em>Educational Measurement: Issues and Practice</em>, <em>33</em>(1), 2–14. <a href="https://doi.org/10.1111/emip.12020">https://doi.org/10.1111/emip.12020</a>
 </div>
@@ -721,6 +728,9 @@ Sinharay, S., &amp; Johnson, M. S. (2019). Measures of agreement: <span>Reliabil
 </div>
 <div id="ref-thompson-bayes" class="csl-entry" role="listitem">
 Thompson, W. J. (2019). <em>Bayesian psychometrics for diagnostic assessments: <span>A</span> proof of concept</em> (Research Report Nos. No. 19-01). <span>University of Kansas; Accessible Teaching, Learning, and Assessment Systems</span>. <a href="https://doi.org/10.35542/osf.io/jzqs8">https://doi.org/10.35542/osf.io/jzqs8</a>
+</div>
+<div id="ref-loo-waic" class="csl-entry" role="listitem">
+Vehtari, A., Gelman, A., &amp; Gabry, J. (2017). Practical <span>Bayesian</span> model evaluation using leave-one-out cross-validation and <span>WAIC</span>. <em>Statistics and Computing</em>, <em>27</em>, 1413–1432. <a href="https://doi.org/10.1007/s11222-016-9696-4">https://doi.org/10.1007/s11222-016-9696-4</a>
 </div>
 </div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -21,7 +21,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -158,6 +213,18 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
 <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#examination-for-the-certificate-of-proficiency-in-english-ecpe-data" id="toc-examination-for-the-certificate-of-proficiency-in-english-ecpe-data" class="nav-link" data-scroll-target="#examination-for-the-certificate-of-proficiency-in-english-ecpe-data">Examination for the Certificate of Proficiency in English (ECPE) data</a></li>
+  <li><a href="#when-attributes-have-order" id="toc-when-attributes-have-order" class="nav-link" data-scroll-target="#when-attributes-have-order">When attributes have order</a></li>
+  <li>
+<a href="#hierarchies-in-structural-models" id="toc-hierarchies-in-structural-models" class="nav-link" data-scroll-target="#hierarchies-in-structural-models">Hierarchies in structural models</a>
+  <ul class="collapse">
+<li><a href="#specifying-a-hierarchical-structural-model" id="toc-specifying-a-hierarchical-structural-model" class="nav-link" data-scroll-target="#specifying-a-hierarchical-structural-model">Specifying a hierarchical structural model</a></li>
+  <li><a href="#estimating-hierarchical-models" id="toc-estimating-hierarchical-models" class="nav-link" data-scroll-target="#estimating-hierarchical-models">Estimating hierarchical models</a></li>
+  </ul>
+</li>
+  <li><a href="#evaluating-hierarchical-structures" id="toc-evaluating-hierarchical-structures" class="nav-link" data-scroll-target="#evaluating-hierarchical-structures">Evaluating hierarchical structures</a></li>
+  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping up</a></li>
+  
   </ul></nav>
     </div>
 <!-- main -->
@@ -182,11 +249,1390 @@ ul.task-list li input[type="checkbox"] {
 
 
 </header><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The third article will focus on identifying and estimating attribute relationships. We will discuss how to identify when a hierarchy might be present in your data and then how to model that hierarchy using different structural model specifications (e.g., <code>hdcm()</code>, <code>bayes_net()</code>).</p>
-<p>We’ll then explore how to compare models with a specified hierarchy to a saturated model to evaluate the impact of the hierarchy on model fit.</p>
+<p>We’ve seen how to specify and estimate a model, and what it looks like when a model doesn’t perform well. One of the most productive places to start when something seems off is the structural model. The structural model controls the assumptions your DCM makes about how attributes relate to each other. By default, the unconstrained model makes no assumptions at all and every possible attribute profile is freely estimated. That flexibility is a virtue when you have no prior theory about attribute relationships. However, if there are profiles that are rarely observed, attempting to estimate the base rates and item parameters associated with those profiles can result in issues with model fit <span class="citation" data-cites="hdcm wang2021">(<a href="#ref-hdcm" role="doc-biblioref">Templin &amp; Bradshaw, 2014</a>; <a href="#ref-wang2021" role="doc-biblioref">Wang &amp; Lu, 2021</a>)</span>. When the nature of the domain suggests that proficiency on one skill is required before another can develop, you can encode, and test, that theory directly in the model. In this article we’ll learn how to do exactly that with attribute hierarchies.</p>
+<p>To use code in this article, you will need to install the following packages: <a href="https://mc-stan.org/cmdstanr/">cmdstanr</a>, <a href="https://dcmdata.r-dcm.org">dcmdata</a>, and <a href="https://measr.r-dcm.org">measr</a>.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://measr.r-dcm.org">measr</a></span><span class="op">)</span> <span class="co"># for model estimation and evaluation</span></span>
+<span></span>
+<span><span class="co"># Helper packages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dcmdata.r-dcm.org">dcmdata</a></span><span class="op">)</span> <span class="co"># for example data set</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/cmdstanr/">cmdstanr</a></span><span class="op">)</span> <span class="co"># for estimation backend</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section><section id="examination-for-the-certificate-of-proficiency-in-english-ecpe-data" class="level2"><h2 class="anchored" data-anchor-id="examination-for-the-certificate-of-proficiency-in-english-ecpe-data">Examination for the Certificate of Proficiency in English (ECPE) data</h2>
+<p>To demonstrate how to specify heirarhcies with measr, we’ll use the ECPE data. The ECPE data has been widely used in the DCM research literature, and was the inspiration used by <span class="citation" data-cites="hdcm">Templin &amp; Bradshaw (<a href="#ref-hdcm" role="doc-biblioref">2014</a>)</span> for their development of the hierarchcial DCM. The ECPE data measures three attributes related to rules of the English language. In total, the data set contains responses to 28 items from 2,922 respondents.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ecpe_data</span></span>
+<span><span class="co">#&gt; # A tibble: 2,922 × 29</span></span>
+<span><span class="co">#&gt;    resp_id    E1    E2    E3    E4    E5    E6    E7    E8    E9   E10   E11</span></span>
+<span><span class="co">#&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1       1     1     1     1     0     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  2       2     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  3       3     1     1     1     1     1     1     0     1     1     1     1</span></span>
+<span><span class="co">#&gt;  4       4     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  5       5     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  6       6     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  7       7     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt;  8       8     0     1     1     1     1     1     0     1     1     1     0</span></span>
+<span><span class="co">#&gt;  9       9     1     1     1     1     1     1     1     1     1     1     1</span></span>
+<span><span class="co">#&gt; 10      10     1     1     1     1     0     0     1     1     1     1     1</span></span>
+<span><span class="co">#&gt; # ℹ 2,912 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 17 more variables: E12 &lt;int&gt;, E13 &lt;int&gt;, E14 &lt;int&gt;, E15 &lt;int&gt;, E16 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   E17 &lt;int&gt;, E18 &lt;int&gt;, E19 &lt;int&gt;, E20 &lt;int&gt;, E21 &lt;int&gt;, E22 &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   E23 &lt;int&gt;, E24 &lt;int&gt;, E25 &lt;int&gt;, E26 &lt;int&gt;, E27 &lt;int&gt;, E28 &lt;int&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In addition to the response data, we also have a Q-matrix defining which items measure each of the 3 attributes. These attributes represent knowledge of differnt rules of the English language:</p>
+<ul>
+<li>Lexical: vocabulary (e.g., word choices, idioms)</li>
+<li>Cohesive: connection (e.g., pronouns, conjunctions, transitions)</li>
+<li>Morphosyntactic: grammar (e.g., prefixes and suffixes, tense, verb conjugations)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ecpe_qmatrix</span></span>
+<span><span class="co">#&gt; # A tibble: 28 × 4</span></span>
+<span><span class="co">#&gt;    item_id morphosyntactic cohesive lexical</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 E1                    1        1       0</span></span>
+<span><span class="co">#&gt;  2 E2                    0        1       0</span></span>
+<span><span class="co">#&gt;  3 E3                    1        0       1</span></span>
+<span><span class="co">#&gt;  4 E4                    0        0       1</span></span>
+<span><span class="co">#&gt;  5 E5                    0        0       1</span></span>
+<span><span class="co">#&gt;  6 E6                    0        0       1</span></span>
+<span><span class="co">#&gt;  7 E7                    1        0       1</span></span>
+<span><span class="co">#&gt;  8 E8                    0        1       0</span></span>
+<span><span class="co">#&gt;  9 E9                    0        0       1</span></span>
+<span><span class="co">#&gt; 10 E10                   1        0       0</span></span>
+<span><span class="co">#&gt; # ℹ 18 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For more information on the data, see <code><a href="https://dcmdata.r-dcm.org/reference/ecpe.html">?ecpe</a></code>.</p>
+</section><section id="when-attributes-have-order" class="level2"><h2 class="anchored" data-anchor-id="when-attributes-have-order">When attributes have order</h2>
+<p>Without any hierarchy, the number of possible attribute profiles grows exponentially with the number of attributes. With three attributes, there are 2<sup>3</sup> = 8 possible profiles that represent every combination of proficiency and non-proficiency across the three attributes.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-unconstrained-profiles" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-unconstrained-profiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: All possible attribute profiles under an unconstrained structural model
+</figcaption><div aria-describedby="tbl-unconstrained-profiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="rwiajevbsk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#rwiajevbsk table {
+  font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#rwiajevbsk thead, #rwiajevbsk tbody, #rwiajevbsk tfoot, #rwiajevbsk tr, #rwiajevbsk td, #rwiajevbsk th {
+  border-style: none;
+}
+
+#rwiajevbsk p {
+  margin: 0;
+  padding: 0;
+}
+
+#rwiajevbsk .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#rwiajevbsk .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#rwiajevbsk .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#rwiajevbsk .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: #FFFFFF;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rwiajevbsk .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rwiajevbsk .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rwiajevbsk .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rwiajevbsk .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rwiajevbsk .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#rwiajevbsk .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#rwiajevbsk .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rwiajevbsk .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#rwiajevbsk .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#rwiajevbsk .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rwiajevbsk .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rwiajevbsk .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#rwiajevbsk .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#rwiajevbsk .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#rwiajevbsk .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rwiajevbsk .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#rwiajevbsk .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rwiajevbsk .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rwiajevbsk .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rwiajevbsk .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 0px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 0px;
+  border-right-color: #D3D3D3;
+}
+
+#rwiajevbsk .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rwiajevbsk .gt_left {
+  text-align: left;
+}
+
+#rwiajevbsk .gt_center {
+  text-align: center;
+}
+
+#rwiajevbsk .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rwiajevbsk .gt_font_normal {
+  font-weight: normal;
+}
+
+#rwiajevbsk .gt_font_bold {
+  font-weight: bold;
+}
+
+#rwiajevbsk .gt_font_italic {
+  font-style: italic;
+}
+
+#rwiajevbsk .gt_super {
+  font-size: 65%;
+}
+
+#rwiajevbsk .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#rwiajevbsk .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#rwiajevbsk .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#rwiajevbsk .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#rwiajevbsk .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#rwiajevbsk .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#rwiajevbsk .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#rwiajevbsk .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#rwiajevbsk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" style="table-layout:fixed;width:0px;" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width:115px;">
+<col style="width:160px;">
+<col style="width:100px;">
+<col style="width:100px;">
+</colgroup>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="profile">Profile ID</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="morphosyntactic">Morphosyntactic</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="cohesive">Cohesive</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="lexical">Lexical</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="profile" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="cohesive" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="lexical" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+</tr>
+<tr>
+<td headers="profile" class="gt_row gt_center" style="background-color: #FFFFFF;">2</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+<td headers="cohesive" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="lexical" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+</tr>
+<tr>
+<td headers="profile" class="gt_row gt_center" style="background-color: #FFFFFF;">3</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="cohesive" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+<td headers="lexical" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+</tr>
+<tr>
+<td headers="profile" class="gt_row gt_center" style="background-color: #FFFFFF;">4</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="cohesive" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="lexical" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+</tr>
+<tr>
+<td headers="profile" class="gt_row gt_center" style="background-color: #FFFFFF;">5</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+<td headers="cohesive" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+<td headers="lexical" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+</tr>
+<tr>
+<td headers="profile" class="gt_row gt_center" style="background-color: #FFFFFF;">6</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+<td headers="cohesive" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="lexical" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+</tr>
+<tr>
+<td headers="profile" class="gt_row gt_center" style="background-color: #FFFFFF;">7</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="cohesive" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+<td headers="lexical" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+</tr>
+<tr>
+<td headers="profile" class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">8</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">1</td>
+<td headers="cohesive" class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">1</td>
+<td headers="lexical" class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Some of these profiles may be theoretically impossible given what we know about the domain. Consider a respondent who is proficient on morphosyntactic but not lexical skills. Under the theory that lexical skills are foundational, this profile shouldn’t exist. An individual cannot apply morphosyntactic skills without first being able to apply lexical skills.</p>
+<p>A hierarchy lets us encode this constraint. The hierarchy reduces the eight unconstrained profiles down to four valid ones: [0,0,0], [0,0,1], [0,1,1] and [1,1,1]. Each valid profile represents a step along a developmental ladder, and no one skips a rung.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-hdcm-profiles" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hdcm-profiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
+</figcaption><div aria-describedby="tbl-hdcm-profiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="uzfjusnfvk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#uzfjusnfvk table {
+  font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#uzfjusnfvk thead, #uzfjusnfvk tbody, #uzfjusnfvk tfoot, #uzfjusnfvk tr, #uzfjusnfvk td, #uzfjusnfvk th {
+  border-style: none;
+}
+
+#uzfjusnfvk p {
+  margin: 0;
+  padding: 0;
+}
+
+#uzfjusnfvk .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#uzfjusnfvk .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#uzfjusnfvk .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#uzfjusnfvk .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: #FFFFFF;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#uzfjusnfvk .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#uzfjusnfvk .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#uzfjusnfvk .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#uzfjusnfvk .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#uzfjusnfvk .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#uzfjusnfvk .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#uzfjusnfvk .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#uzfjusnfvk .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#uzfjusnfvk .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#uzfjusnfvk .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#uzfjusnfvk .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uzfjusnfvk .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#uzfjusnfvk .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#uzfjusnfvk .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#uzfjusnfvk .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uzfjusnfvk .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#uzfjusnfvk .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uzfjusnfvk .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#uzfjusnfvk .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uzfjusnfvk .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 0px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 0px;
+  border-right-color: #D3D3D3;
+}
+
+#uzfjusnfvk .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uzfjusnfvk .gt_left {
+  text-align: left;
+}
+
+#uzfjusnfvk .gt_center {
+  text-align: center;
+}
+
+#uzfjusnfvk .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#uzfjusnfvk .gt_font_normal {
+  font-weight: normal;
+}
+
+#uzfjusnfvk .gt_font_bold {
+  font-weight: bold;
+}
+
+#uzfjusnfvk .gt_font_italic {
+  font-style: italic;
+}
+
+#uzfjusnfvk .gt_super {
+  font-size: 65%;
+}
+
+#uzfjusnfvk .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#uzfjusnfvk .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#uzfjusnfvk .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#uzfjusnfvk .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#uzfjusnfvk .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#uzfjusnfvk .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#uzfjusnfvk .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#uzfjusnfvk .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#uzfjusnfvk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" style="table-layout:fixed;width:0px;" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width:115px;">
+<col style="width:160px;">
+<col style="width:100px;">
+<col style="width:100px;">
+</colgroup>
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="profile">Profile ID</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="morphosyntactic">Morphosyntactic</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="cohesive">Cohesive</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="color: #023047; text-align: center; vertical-align: middle; font-weight: bold; border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: #023047;" scope="col" id="lexical">Lexical</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="profile" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="cohesive" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="lexical" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+</tr>
+<tr>
+<td headers="profile" class="gt_row gt_center" style="background-color: #FFFFFF;">4</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="cohesive" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="lexical" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+</tr>
+<tr>
+<td headers="profile" class="gt_row gt_center" style="background-color: #FFFFFF;">7</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="background-color: #FFFFFF;">0</td>
+<td headers="cohesive" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+<td headers="lexical" class="gt_row gt_center" style="background-color: #FFFFFF;">1</td>
+</tr>
+<tr>
+<td headers="profile" class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">8</td>
+<td headers="morphosyntactic" class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">1</td>
+<td headers="cohesive" class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">1</td>
+<td headers="lexical" class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent; background-color: #FFFFFF;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>We can visualize this structure as a directed acyclic graph (DAG), where an arrow from attribute A to attribute B means that proficiency on A is required before proficiency on B.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Plot code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.dagitty.net">dagitty</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-causal/ggdag">ggdag</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'ggdag'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter</span></span>
+<span></span>
+<span></span>
+<span><span class="va">dag</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/dagitty/man/dagitty.html">dagitty</a></span><span class="op">(</span><span class="st">"dag { Lexical -&gt; Cohesive -&gt; Morphosyntactic }"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/dagitty/man/coordinates.html">coordinates</a></span><span class="op">(</span><span class="va">dag</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>Lexical <span class="op">=</span> <span class="fl">1</span>, Cohesive <span class="op">=</span> <span class="fl">2</span>, Morphosyntactic <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>Lexical <span class="op">=</span> <span class="fl">1</span>, Cohesive <span class="op">=</span> <span class="fl">1</span>, Morphosyntactic <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://r-causal.github.io/ggdag/reference/tidy_dagitty.html">tidy_dagitty</a></span><span class="op">(</span><span class="va">dag</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">to</span><span class="op">)</span>,</span>
+<span>    <span class="op">~</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"Morphosyntactic"</span>, <span class="st">"Morpho-\nsyntactic"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">xend</span> <span class="op">-</span> <span class="fl">0.06</span>, yend <span class="op">=</span> <span class="va">yend</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://r-causal.github.io/ggdag/reference/node_point.html">geom_dag_node</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">msr_colors</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, size <span class="op">=</span> <span class="fl">30</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://r-causal.github.io/ggdag/reference/geom_dag_text.html">geom_dag_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">msr_colors</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://r-causal.github.io/ggdag/reference/geom_dag_edges.html">geom_dag_edges</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="fl">0.06</span><span class="op">)</span>,</span>
+<span>    edge_color <span class="op">=</span> <span class="va">msr_colors</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
+<span>    edge_width <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    arrow_directed <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">7</span>, <span class="st">"pt"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"closed"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
+<div id="fig-hierarchy-dag" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A directed acyclic graph showing three nodes: L1, L2, and L3, connected left to right by arrows indicating the prerequisite ordering of the ECPE hierarchy.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-hierarchy-dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-hierarchy-dag-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="A directed acyclic graph showing three nodes: L1, L2, and L3, connected left to right by arrows indicating the prerequisite ordering of the ECPE hierarchy.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hierarchy-dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The ECPE hierarchy as a directed acyclic graph.
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="hierarchies-in-structural-models" class="level2"><h2 class="anchored" data-anchor-id="hierarchies-in-structural-models">Hierarchies in structural models</h2>
+<p>Two structural models implement attribute hierarchies, and they differ in how strictly they enforce it.</p>
+<p>The hierarchical DCM <span class="citation" data-cites="hdcm">(HDCM; <a href="#ref-hdcm" role="doc-biblioref">Templin &amp; Bradshaw, 2014</a>)</span> is strict. Profiles that violate the hierarchy are excluded from the model entirely by fixing their base rates to zero. This is demonstrated in <a href="#tbl-hdcm-profiles" class="quarto-xref">Table&nbsp;2</a>, where only profiles consistent with the proposed hierarchy are included. If a respondent’s true profile is theoretically impossible, the model cannot assign them to it. Instead, they will be assigned to the nearest valid profile.</p>
+<p>The Bayesian network model <span class="citation" data-cites="bayesnet">(BayesNet; <a href="#ref-bayesnet" role="doc-biblioref">Hu &amp; Templin, 2020</a>)</span> is softer. All profiles remain possible, but profiles that are inconsistent with the hierarchy are estimated to be less likely. Rather than fixing probabilities to zero, the BayesNet structural model uses the hierarchy to inform the prior distribution over profiles. A respondent whose responses look most consistent with an “impossible” profile will still be assigned a non-zero probability for that profile, but the model will push that probability down.</p>
+<p>The choice between them depends on how much you trust your theory. If you’re confident the hierarchy is real and complete, HDCM gives you a parsimonious model that’s easy to interpret. If you want to test the hierarchy rather than assume it, BayesNet lets the data push back.</p>
+<section id="specifying-a-hierarchical-structural-model" class="level3"><h3 class="anchored" data-anchor-id="specifying-a-hierarchical-structural-model">Specifying a hierarchical structural model</h3>
+<p>For measr, hierarchies are specified with a string that describes the attribute relationships using a DAG-like syntax. Attributes are connected using the <code>-&gt;</code> operator. The <code>-&gt;</code> defines parent-child relationships in the hierarchy string. Parent attributes are prerequisites for child attributes. That is, you must possess or be proficient on the parent before you can acquire the child.</p>
+<p>For our ECPE hierarchy, we can define the attribute relationships as <code>"lexical -&gt; cohesive -&gt; morphosyntactic"</code>. We could also write the two relationships separately: <code>"lexical -&gt; cohesive; cohesive -&gt; morphosyntactic"</code>. For a simple linear hierarchy, a single chain is the most readable form. However, nonlinear hierarchies may require the relationships to be defined as multiple linear relationships that connect together in various ways. To see examples of different hierarchies and how to specify them using the DAG syntax, check out the <a href="https://dcmstan.r-dcm.org/articles/attribute-hierarchies.html">attribute hierarchies vignette</a> in the <a href="https://dcmstan.r-dcm.org">dcmstan</a> package.</p>
+<p>Our hierarchy string can then be passed to <code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">hdcm()</a></code> or <code><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">bayesnet()</a></code> as the structural model in <code><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify()</a></code>. Both take a <code>hierarchy</code> argument where we can define the hierarchy using a DAG-like syntax.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
+<span>  qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"item_id"</span>,</span>
+<span>  measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">hdcm</a></span><span class="op">(</span>hierarchy <span class="op">=</span> <span class="st">"lexical -&gt; cohesive -&gt; morphosyntactic"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes</span></span>
+<span><span class="co">#&gt; with 28 items.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Attributes:</span></span>
+<span><span class="co">#&gt; • "morphosyntactic" (13 items)</span></span>
+<span><span class="co">#&gt; • "cohesive" (6 items)</span></span>
+<span><span class="co">#&gt; • "lexical" (18 items)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Attribute structure:</span></span>
+<span><span class="co">#&gt;   Hierarchical diagnostic classification model (HDCM),</span></span>
+<span><span class="co">#&gt;   with structure:</span></span>
+<span><span class="co">#&gt;   lexical -&gt; cohesive -&gt; morphosyntactic</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Prior distributions:</span></span>
+<span><span class="co">#&gt;   intercept ~ normal(0, 2)</span></span>
+<span><span class="co">#&gt;   maineffect ~ lognormal(0, 1)</span></span>
+<span><span class="co">#&gt;   interaction ~ normal(0, 2)</span></span>
+<span><span class="co">#&gt;   `Vc` ~ dirichlet(1, 1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The hierarchy must be a directed <em>acyclic</em> graph. You cannot have a cycle where attribute A is a prerequisite for B, and then B is also a prerequisite for A. All of the attributes in the hierarchy must also match the attribute names in the <code>qmatrix</code>. If you specify a cyclical graph or use an unknown attribute name, you’ll receive an error.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># A cycle: lexical requires cohesive, cohesive requires lexical</span></span>
+<span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
+<span>  qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"item_id"</span>,</span>
+<span>  measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">hdcm</a></span><span class="op">(</span><span class="st">"lexical -&gt; cohesive -&gt; lexical"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `hdcm()`:</span></span>
+<span><span class="co">#&gt; ! `hierarchy` must not be cyclical</span></span>
+<span></span>
+<span><span class="co"># Incorrect attribute name: "lexical_rules" instead of "lexical"</span></span>
+<span><span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
+<span>  qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"item_id"</span>,</span>
+<span>  measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">hdcm</a></span><span class="op">(</span><span class="st">"lexical_rules -&gt; cohesive -&gt; morphosyntactic"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `dcm_specify()`:</span></span>
+<span><span class="co">#&gt; ! `hdcm("lexical_rules -&gt; cohesive -&gt; morphosyntactic")` must</span></span>
+<span><span class="co">#&gt;   only include attributes in a hierarchy present in the Q-matrix</span></span>
+<span><span class="co">#&gt; ℹ Extra attributes: "lexical_rules"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section><section id="estimating-hierarchical-models" class="level3"><h3 class="anchored" data-anchor-id="estimating-hierarchical-models">Estimating hierarchical models</h3>
+<p>Once we create our DCM specification with the hierarchy, we can use that specification within <code><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate()</a></code> just like we normally do. Here we’ll estimate both an HDCM and a BayesNet model using <a href="https://mc-stan.org/cmdstanr/">cmdstanr</a> and the Pathfinder algorithm <span class="citation" data-cites="pathfinder">(<a href="#ref-pathfinder" role="doc-biblioref">Zhang et al., 2022</a>)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ecpe_hdcm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
+<span>    qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
+<span>    identifier <span class="op">=</span> <span class="st">"item_id"</span>,</span>
+<span>    measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">hdcm</a></span><span class="op">(</span><span class="st">"lexical -&gt; cohesive -&gt; morphosyntactic"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">ecpe_data</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"resp_id"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"pathfinder"</span>,</span>
+<span>  backend <span class="op">=</span> <span class="st">"cmdstanr"</span>,</span>
+<span>  file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"fits"</span>, <span class="st">"ecpe-lcdm-hdcm-cmds"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ecpe_bayesnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
+<span>    qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
+<span>    identifier <span class="op">=</span> <span class="st">"item_id"</span>,</span>
+<span>    measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">bayesnet</a></span><span class="op">(</span><span class="st">"lexical -&gt; cohesive -&gt; morphosyntactic"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">ecpe_data</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"resp_id"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"pathfinder"</span>,</span>
+<span>  backend <span class="op">=</span> <span class="st">"cmdstanr"</span>,</span>
+<span>  file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"fits"</span>, <span class="st">"epce-lcdm-bayesnet-cmds"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If we look at the respondent proficiency estimates, we see that we still get a proficiency estimate for each student on each attribute (<code>$attribute_probabilities</code>), but in the class probabilities, we only see the classes that are allowed by the specification (<code>$class_probabilities</code>).</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://measr.r-dcm.org/reference/score.html">score</a></span><span class="op">(</span><span class="va">ecpe_hdcm</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $class_probabilities</span></span>
+<span><span class="co">#&gt; # A tibble: 11,688 × 5</span></span>
+<span><span class="co">#&gt;    resp_id class   probability     `2.5%`    `97.5%`</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 1       [0,0,0]  0.00000803 0.00000664 0.00000951</span></span>
+<span><span class="co">#&gt;  2 1       [0,0,1]  0.00168    0.00154    0.00198   </span></span>
+<span><span class="co">#&gt;  3 1       [0,1,1]  0.00260    0.00215    0.00302   </span></span>
+<span><span class="co">#&gt;  4 1       [1,1,1]  0.996      0.995      0.996     </span></span>
+<span><span class="co">#&gt;  5 2       [0,0,0]  0.00000645 0.00000444 0.00000869</span></span>
+<span><span class="co">#&gt;  6 2       [0,0,1]  0.00498    0.00373    0.00554   </span></span>
+<span><span class="co">#&gt;  7 2       [0,1,1]  0.00259    0.00214    0.00300   </span></span>
+<span><span class="co">#&gt;  8 2       [1,1,1]  0.992      0.992      0.994     </span></span>
+<span><span class="co">#&gt;  9 3       [0,0,0]  0.00000597 0.00000439 0.00000777</span></span>
+<span><span class="co">#&gt; 10 3       [0,0,1]  0.00276    0.00192    0.00374   </span></span>
+<span><span class="co">#&gt; # ℹ 11,678 more rows</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $attribute_probabilities</span></span>
+<span><span class="co">#&gt; # A tibble: 8,766 × 5</span></span>
+<span><span class="co">#&gt;    resp_id attribute       probability `2.5%` `97.5%`</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 1       morphosyntactic       0.996  0.995   0.996</span></span>
+<span><span class="co">#&gt;  2 1       cohesive              0.998  0.998   0.998</span></span>
+<span><span class="co">#&gt;  3 1       lexical               1.000  1.000   1.000</span></span>
+<span><span class="co">#&gt;  4 2       morphosyntactic       0.992  0.992   0.994</span></span>
+<span><span class="co">#&gt;  5 2       cohesive              0.995  0.994   0.996</span></span>
+<span><span class="co">#&gt;  6 2       lexical               1.000  1.000   1.000</span></span>
+<span><span class="co">#&gt;  7 3       morphosyntactic       0.979  0.973   0.985</span></span>
+<span><span class="co">#&gt;  8 3       cohesive              0.997  0.996   0.998</span></span>
+<span><span class="co">#&gt;  9 3       lexical               1.000  1.000   1.000</span></span>
+<span><span class="co">#&gt; 10 4       morphosyntactic       0.997  0.997   0.997</span></span>
+<span><span class="co">#&gt; # ℹ 8,756 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can also see how the choice of structural model impacts respondent estimates by examining the estimated model base rates. The base rates represent the proportion of respondents estimated to have each profile. For comparison purposes, let’s also estimate a model with an unconstrained structural model.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ecpe_lcdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://measr.r-dcm.org/reference/dcm_estimate.html">dcm_estimate</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/dcm_specify.html">dcm_specify</a></span><span class="op">(</span></span>
+<span>    qmatrix <span class="op">=</span> <span class="va">ecpe_qmatrix</span>,</span>
+<span>    identifier <span class="op">=</span> <span class="st">"item_id"</span>,</span>
+<span>    measurement_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/measurement-model.html">lcdm</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    structural_model <span class="op">=</span> <span class="fu"><a href="https://dcmstan.r-dcm.org/reference/structural-model.html">unconstrained</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">ecpe_data</span>,</span>
+<span>  identifier <span class="op">=</span> <span class="st">"resp_id"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"pathfinder"</span>,</span>
+<span>  backend <span class="op">=</span> <span class="st">"cmdstanr"</span>,</span>
+<span>  file <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"start"</span>, <span class="st">"fits"</span>, <span class="st">"ecpe-lcdm-uncst-cmds"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In <a href="#fig-model-base-rates" class="quarto-xref">Figure&nbsp;2</a>, we see the difference between the HDCM and the BayesNet. In the HDCM, the base rate is 0 for any of the profiles that are inconsistent with the defined hierarchy (e.g., [0,1,0]), whereas the BayesNet has non-zero base rates for all profiles. However, notice that the base rate for the BayesNet is much lower for the inconsistent profiles than what is seen in the unconstrained model. So the BayesNet is pushing respondents toward the profiles that are consistent with our specified attribute relationships, but those profiles are not a strict requirement as with the HDCM.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Plot code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://measr.r-dcm.org/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">ecpe_lcdm</span>, <span class="st">"strc_param"</span><span class="op">)</span>, strc <span class="op">=</span> <span class="st">"Unconstrained"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://measr.r-dcm.org/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">ecpe_bayesnet</span>, <span class="st">"strc_param"</span><span class="op">)</span>, strc <span class="op">=</span> <span class="st">"BayesNet"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://measr.r-dcm.org/reference/measr_extract.html">measr_extract</a></span><span class="op">(</span><span class="va">ecpe_hdcm</span>, <span class="st">"strc_param"</span><span class="op">)</span>, strc <span class="op">=</span> <span class="st">"HDCM"</span><span class="op">)</span>,</span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">strc</span>, <span class="va">class</span>, <span class="va">estimate</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    class <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span>,</span>
+<span>    strc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">strc</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Unconstrained"</span>, <span class="st">"BayesNet"</span>, <span class="st">"HDCM"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html">complete</a></span><span class="op">(</span><span class="va">strc</span>, <span class="va">class</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>estimate <span class="op">=</span> <span class="fu">posterior</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/posterior/reference/rvar.html">rvar</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/posterior/reference/rvar-summaries-over-draws.html">E</a></span><span class="op">(</span><span class="va">estimate</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="va">class</span><span class="op">)</span>, fill <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="va">strc</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span></span>
+<span>    position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">position_dodge2</a></span><span class="op">(</span>preserve <span class="op">=</span> <span class="st">"single"</span><span class="op">)</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_okabeito</span><span class="op">(</span></span>
+<span>    order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Unconstrained"</span>, <span class="st">"BayesNet"</span>, <span class="st">"HDCM"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Profile"</span>, x <span class="op">=</span> <span class="st">"Estimated Base Rate"</span>, fill <span class="op">=</span> <span class="st">"Structural Model"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
+<div id="fig-model-base-rates" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A grouped horizontal bar chart showing estimated profile base rates for each of the eight attribute profiles under three structural models: Unconstrained, BayesNet, and HDCM. Profiles are listed along the y-axis and estimated base rates along the x-axis.">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-model-base-rates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-model-base-rates-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="A grouped horizontal bar chart showing estimated profile base rates for each of the eight attribute profiles under three structural models: Unconstrained, BayesNet, and HDCM. Profiles are listed along the y-axis and estimated base rates along the x-axis.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-base-rates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Estimated profile base rates for each structural model
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section></section><section id="evaluating-hierarchical-structures" class="level2"><h2 class="anchored" data-anchor-id="evaluating-hierarchical-structures">Evaluating hierarchical structures</h2>
+<p>To this point, we’ve focused on how to encode attribute relationships into our DCM specifications. However, in the DCM framework, these relationships are also testable hypotheses. <span class="citation" data-cites="dcm-maps">Thompson &amp; Nash (<a href="#ref-dcm-maps" role="doc-biblioref">2022</a>)</span> demonstrated how we can evaluate a proposed attribute hierarchy using the model fit tools we learned about in the <a href="../../start/evaluate/">Evaluate Model Performance</a> article.</p>
+<p>Specifically, we can use relative fit comparisons to directly compare the models. As in our previous case study, we’ll use leave-one-out cross validation <span class="citation" data-cites="loo-waic">(LOO; <a href="#ref-loo-waic" role="doc-biblioref">Vehtari et al., 2017</a>)</span> for our model comparisons. The model with the highest expected log predictive density (ELPD) is listed first. A difference that is large relative to its standard error <span class="citation" data-cites="bengio2004">(roughly more than 2.5 times; <a href="#ref-bengio2004" role="doc-biblioref">Bengio &amp; Brandvalet, 2004</a>)</span> provides strong evidence for preferring one model over another.</p>
+<p>If the hierarchical models show comparable ELPD to the unconstrained model, the hierarchy is consistent with the data: the simpler, theoretically motivated model fits as well as the fully flexible one. This is the ideal outcome when you have good domain theory. The defined attribute relationships reduce model complexity without sacrificing predictive accuracy. If the unconstrained model dominates clearly, the attribute relationships may be too restrictive, and some theoretically “impossible” profiles may actually be present in the data.</p>
+<p>As we would expect to see if our theory of a linear hierarchy is correct, unconstrained LCDM, BayesNet, and HDCM have similar ELPD values (difference within the standard error). Because all the model have approximately equal fit, we would probably prefer the HDCM, as that is the simplest of the three models.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://mc-stan.org/loo/reference/loo_compare.html">loo_compare</a></span><span class="op">(</span><span class="va">ecpe_lcdm</span>, <span class="va">ecpe_bayesnet</span>, <span class="va">ecpe_hdcm</span><span class="op">)</span></span>
+<span><span class="co">#&gt;               elpd_diff se_diff</span></span>
+<span><span class="co">#&gt; ecpe_bayesnet  0.0       0.0   </span></span>
+<span><span class="co">#&gt; ecpe_lcdm     -0.3       6.3   </span></span>
+<span><span class="co">#&gt; ecpe_hdcm     -6.3       8.6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section><section id="wrapping-up" class="level2"><h2 class="anchored" data-anchor-id="wrapping-up">Wrapping up</h2>
+<p>Defining attribute relationships like hierarchies lets you incorporate domain theory directly into the structural model. Rather than leaving the model to estimate all possible profile base rates freely, you can encode what you know about the order in which skills develop. The HDCM enforces that order as a hard constraint; BayesNet encodes it as a prior that the data can weigh against. Comparing hierarchical models to an unconstrained baseline tells you whether your theory is consistent with the data.</p>
+<p>The next article puts everything we’ve learned so far together in a complete <a href="../../start/case-study/">Diagnostic Assessment Case Study</a> from start to finish.</p>
+</section><div id="quarto-appendix" class="default"><section id="session-info" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
+<div class="cell" data-layout-align="center">
+<pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
+#&gt;  version         R version 4.5.2 (2025-10-31)
+#&gt;  language        (EN)
+#&gt;  date            2026-04-04
+#&gt;  pandoc          3.9
+#&gt;  quarto          1.9.24
+#&gt;  Stan (rstan)    2.37.0
+#&gt;  Stan (cmdstanr) 2.38.0
+#&gt; 
+#&gt; ─ Packages ─────────────────────────────────────────────────────────
+#&gt;  package          version     date (UTC) source
+#&gt;  bridgesampling   1.2-1       2025-11-19 CRAN (R 4.5.2)
+#&gt;  cmdstanr         0.9.0       2025-03-30 https://stan-dev.r-universe.dev (R 4.5.2)
+#&gt;  dcmdata          0.2.0       2026-03-10 CRAN (R 4.5.2)
+#&gt;  dcmstan          0.1.0       2025-11-24 CRAN (R 4.5.2)
+#&gt;  dplyr            1.2.0       2026-02-03 CRAN (R 4.5.2)
+#&gt;  forcats          1.0.1       2025-09-25 CRAN (R 4.5.0)
+#&gt;  ggplot2          4.0.2       2026-02-03 CRAN (R 4.5.2)
+#&gt;  loo              2.9.0.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
+#&gt;  lubridate        1.9.5       2026-02-04 CRAN (R 4.5.2)
+#&gt;  measr            2.0.0.9000  2026-03-21 Github (r-dcm/measr@475bc50)
+#&gt;  posterior        1.6.1.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
+#&gt;  purrr            1.2.1       2026-01-09 CRAN (R 4.5.2)
+#&gt;  readr            2.2.0       2026-02-19 CRAN (R 4.5.2)
+#&gt;  rlang            1.1.7       2026-01-09 CRAN (R 4.5.2)
+#&gt;  rstan            2.36.0.9000 2025-09-26 https://stan-dev.r-universe.dev (R 4.5.1)
+#&gt;  stringr          1.6.0       2025-11-04 CRAN (R 4.5.0)
+#&gt;  tibble           3.3.1       2026-01-11 CRAN (R 4.5.2)
+#&gt;  tidyr            1.3.2       2025-12-19 CRAN (R 4.5.2)
+#&gt; 
+#&gt; ────────────────────────────────────────────────────────────────────</code></pre>
+</div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+
+</div></section><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-bengio2004" class="csl-entry" role="listitem">
+Bengio, Y., &amp; Brandvalet, Y. (2004). No unbiased estimator of the variance of k-fold cross-validation. <em>Journal of Machine Learning Research</em>, <em>5</em>, 1089–1105. <a href="https://www.jmlr.org/papers/v5/grandvalet04a.html">https://www.jmlr.org/papers/v5/grandvalet04a.html</a>
+</div>
+<div id="ref-bayesnet" class="csl-entry" role="listitem">
+Hu, B., &amp; Templin, J. (2020). Using diagnostic classification models to validate attribute hierarchies and evaluate model fit in <span>Bayesian</span> networks. <em>Multivariate Behavioral Research</em>, <em>55</em>(2), 300–311. <a href="https://doi.org/10.1080/00273171.2019.1632165">https://doi.org/10.1080/00273171.2019.1632165</a>
+</div>
+<div id="ref-hdcm" class="csl-entry" role="listitem">
+Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification models: <span>A</span> family of models for estimating and testing attribute hierarchies. <em>Psychometrika</em>, <em>79</em>(2), 317–339. <a href="https://doi.org/10.1007/s11336-013-9362-0">https://doi.org/10.1007/s11336-013-9362-0</a>
+</div>
+<div id="ref-dcm-maps" class="csl-entry" role="listitem">
+Thompson, W. J., &amp; Nash, B. (2022). A diagnostic framework for the empirical evaluation of learning maps. <em>Frontiers in Education</em>, <em>6</em>, Article 714736. <a href="https://doi.org/10.3389/feduc.2021.714736">https://doi.org/10.3389/feduc.2021.714736</a>
+</div>
+<div id="ref-loo-waic" class="csl-entry" role="listitem">
+Vehtari, A., Gelman, A., &amp; Gabry, J. (2017). Practical <span>Bayesian</span> model evaluation using leave-one-out cross-validation and <span>WAIC</span>. <em>Statistics and Computing</em>, <em>27</em>, 1413–1432. <a href="https://doi.org/10.1007/s11222-016-9696-4">https://doi.org/10.1007/s11222-016-9696-4</a>
+</div>
+<div id="ref-wang2021" class="csl-entry" role="listitem">
+Wang, C., &amp; Lu, J. (2021). Learning attribute hierarchies from data: Two exploratory approaches. <em>Journal of Educational and Behavioral Statistics</em>, <em>46</em>(1), 58–84. <a href="https://doi.org/10.3102/1076998620931094">https://doi.org/10.3102/1076998620931094</a>
+</div>
+<div id="ref-pathfinder" class="csl-entry" role="listitem">
+Zhang, L., Carpenter, B., Gelman, A., &amp; A., V. (2022). Pathfinder: Parallel quasi-<span>Newton</span> variational inference. <em>Journal of Machine Learning Research</em>, <em>23</em>(306), 1–49. <a href="http://jmlr.org/papers/v23/21-0889.html">http://jmlr.org/papers/v23/21-0889.html</a>
+</div>
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();

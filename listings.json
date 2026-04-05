@@ -18,6 +18,10 @@
   {
     "listing": "/rss.html",
     "items": [
+      "/start/case-study/index.html",
+      "/start/evaluate/index.html",
+      "/start/hierarchies/index.html",
+      "/start/specify/index.html",
       "/blog/2026-03-dcmdata-0.2.0/index.html",
       "/blog/2026-01-measr-2.0.0/index.html",
       "/blog/2025-11-dcmstan-0.1.0/index.html",

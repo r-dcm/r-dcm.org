@@ -1,6 +1,6 @@
 ---
 title: "Define attribute relationships"
-weight: 4
+weight: 3
 description: |
   Include information about how your attributes relate to and interact with each other.
 css: ../styles.css
@@ -10,28 +10,441 @@ link-citations: true
 ```{r}
 #| label: setup
 #| include: false
+#| message: false
+#| warning: false
 
-library(wjake)
-library(showtext)
-library(english)
+source(here::here("common.R"))
+```
 
-set_theme(
-  base_family = "Open Sans",
-  plot_margin = ggplot2::margin(10, 10, 10, 10)
-)
+```{r}
+#| label: load
+#| include: false
+#| message: false
+#| warning: false
 
-font_add_google("Open Sans")
-showtext_auto()
-showtext_opts(dpi = 192)
-
-msr_colors <- c("#8ECAE6", "#023047", "#D7263D")
-
-options(mc.cores = 4, tidyverse.quiet = TRUE)
+library(dcmdata)
+library(dcmstan)
+library(measr)
+library(cmdstanr)
+pkgs <- c("dcmdata", "measr", "cmdstanr")
 ```
 
 ## Introduction
 
-The third article will focus on identifying and estimating attribute relationships.
-We will discuss how to identify when a hierarchy might be present in your data and then how to model that hierarchy using different structural model specifications (e.g., `hdcm()`, `bayes_net()`).
+We've seen how to specify and estimate a model, and what it looks like when a model doesn't perform well.
+One of the most productive places to start when something seems off is the structural model.
+The structural model controls the assumptions your DCM makes about how attributes relate to each other.
+By default, the unconstrained model makes no assumptions at all and every possible attribute profile is freely estimated.
+That flexibility is a virtue when you have no prior theory about attribute relationships.
+However, if there are profiles that are rarely observed, attempting to estimate the base rates and item parameters associated with those profiles can result in issues with model fit [@hdcm; @wang2021].
+When the nature of the domain suggests that proficiency on one skill is required before another can develop, you can encode, and test, that theory directly in the model.
+In this article we'll learn how to do exactly that with attribute hierarchies.
 
-We'll then explore how to compare models with a specified hierarchy to a saturated model to evaluate the impact of the hierarchy on model fit.
+`r article_req_pkgs(pkgs)`
+
+```{r}
+#| label: user-load
+#| message: false
+
+library(measr) # for model estimation and evaluation
+
+# Helper packages
+library(dcmdata) # for example data set
+library(cmdstanr) # for estimation backend
+```
+
+## Examination for the Certificate of Proficiency in English (ECPE) data
+
+To demonstrate how to specify heirarhcies with measr, we'll use the ECPE data.
+The ECPE data has been widely used in the DCM research literature, and was the inspiration used by @hdcm for their development of the hierarchcial DCM.
+The ECPE data measures three attributes related to rules of the English language.
+In total, the data set contains responses to `r ncol(ecpe_data) - 1` items from `r fmt_count(nrow(ecpe_data))` respondents.
+
+```{r}
+#| label: ecpe-data
+
+ecpe_data
+```
+
+In addition to the response data, we also have a Q-matrix defining which items measure each of the `r ncol(ecpe_qmatrix) - 1` attributes.
+These attributes represent knowledge of differnt rules of the English language: 
+
+* Lexical: vocabulary (e.g., word choices, idioms)
+* Cohesive: connection (e.g., pronouns, conjunctions, transitions)
+* Morphosyntactic: grammar (e.g., prefixes and suffixes, tense, verb conjugations)
+
+```{r}
+#| label: ecpe-qmatrix
+
+ecpe_qmatrix
+```
+
+For more information on the data, see `?ecpe`.
+
+## When attributes have order
+
+Without any hierarchy, the number of possible attribute profiles grows exponentially with the number of attributes.
+With three attributes, there are 2^3^ = 8 possible profiles that represent every combination of proficiency and non-proficiency across the three attributes.
+
+```{r}
+#| label: tbl-unconstrained-profiles
+#| tbl-cap: All possible attribute profiles under an unconstrained structural model
+#| echo: false
+
+library(tidyverse)
+library(gt)
+
+create_profiles(
+  dcm_specify(
+    qmatrix = ecpe_qmatrix,
+    identifier = "item_id",
+    measurement_model = lcdm(),
+    structural_model = unconstrained()
+  )
+) |>
+  mutate(profile = seq_len(n()), .before = 1) |>
+  gt() |>
+  cols_width(
+    profile ~ px(115),
+    morphosyntactic ~ px(160),
+    everything() ~ px(100)
+  ) |>
+  cols_label(
+    profile = "Profile ID",
+    lexical = "Lexical",
+    cohesive = "Cohesive",
+    morphosyntactic = "Morphosyntactic"
+  ) |>
+  cols_align(align = "center", columns = everything()) |>
+  gt_theme_rdcm()
+```
+
+Some of these profiles may be theoretically impossible given what we know about the domain.
+Consider a respondent who is proficient on morphosyntactic but not lexical skills.
+Under the theory that lexical skills are foundational, this profile shouldn't exist.
+An individual cannot apply morphosyntactic skills without first being able to apply lexical skills.
+
+A hierarchy lets us encode this constraint.
+The hierarchy reduces the eight unconstrained profiles down to four valid ones: [0,0,0], [0,0,1], [0,1,1] and [1,1,1].
+Each valid profile represents a step along a developmental ladder, and no one skips a rung.
+
+```{r}
+#| label: tbl-hdcm-profiles
+#| tbl-cap: Valid attribute profiles under the hypothesized hierarchy
+#| echo: false
+
+create_profiles(
+  dcm_specify(
+    qmatrix = ecpe_qmatrix,
+    identifier = "item_id",
+    measurement_model = lcdm(),
+    structural_model = hdcm("lexical -> cohesive -> morphosyntactic")
+  )
+) |>
+  mutate(profile = c(1L, 4L, 7L, 8L), .before = 1) |>
+  gt() |>
+  cols_width(
+    profile ~ px(115),
+    morphosyntactic ~ px(160),
+    everything() ~ px(100)
+  ) |>
+  cols_label(
+    profile = "Profile ID",
+    lexical = "Lexical",
+    cohesive = "Cohesive",
+    morphosyntactic = "Morphosyntactic"
+  ) |>
+  cols_align(align = "center", columns = everything()) |>
+  gt_theme_rdcm()
+```
+
+We can visualize this structure as a directed acyclic graph (DAG), where an arrow from attribute A to attribute B means that proficiency on A is required before proficiency on B.
+
+```{r}
+#| label: fig-hierarchy-dag
+#| fig-cap: >
+#|   The ECPE hierarchy as a directed acyclic graph.
+#| fig-asp: 0.2
+#| code-fold: true
+#| code-summary: "Plot code"
+#| fig-alt: >
+#|   A directed acyclic graph showing three nodes: L1, L2, and L3, connected
+#|   left to right by arrows indicating the prerequisite ordering of the ECPE hierarchy.
+
+library(tidyverse)
+library(dagitty)
+library(ggdag)
+
+
+dag <- dagitty("dag { Lexical -> Cohesive -> Morphosyntactic }")
+coordinates(dag) <- list(
+  x = c(Lexical = 1, Cohesive = 2, Morphosyntactic = 3),
+  y = c(Lexical = 1, Cohesive = 1, Morphosyntactic = 1)
+)
+
+tidy_dagitty(dag) |>
+  mutate(across(
+    c(name, to),
+    ~ str_replace(.x, "Morphosyntactic", "Morpho-\nsyntactic")
+  )) |>
+  ggplot(aes(x = x, y = y, xend = xend - 0.06, yend = yend)) +
+  geom_dag_node(color = msr_colors[2], size = 30) +
+  geom_dag_text(color = msr_colors[1], size = 4) +
+  geom_dag_edges(
+    aes(x = x + 0.06),
+    edge_color = msr_colors[2],
+    edge_width = 2,
+    arrow_directed = grid::arrow(length = grid::unit(7, "pt"), type = "closed")
+  ) +
+  scale_y_continuous(expand = FALSE) +
+  theme_void() +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+## Hierarchies in structural models
+
+Two structural models implement attribute hierarchies, and they differ in how strictly they enforce it.
+
+The hierarchical DCM [HDCM\; @hdcm] is strict.
+Profiles that violate the hierarchy are excluded from the model entirely by fixing their base rates to zero.
+This is demonstrated in @tbl-hdcm-profiles, where only profiles consistent with the proposed hierarchy are included.
+If a respondent's true profile is theoretically impossible, the model cannot assign them to it.
+Instead, they will be assigned to the nearest valid profile.
+
+The Bayesian network model [BayesNet\; @bayesnet] is softer.
+All profiles remain possible, but profiles that are inconsistent with the hierarchy are estimated to be less likely.
+Rather than fixing probabilities to zero, the BayesNet structural model uses the hierarchy to inform the prior distribution over profiles.
+A respondent whose responses look most consistent with an "impossible" profile will still be assigned a non-zero probability for that profile, but the model will push that probability down.
+
+The choice between them depends on how much you trust your theory.
+If you're confident the hierarchy is real and complete, HDCM gives you a parsimonious model that's easy to interpret.
+If you want to test the hierarchy rather than assume it, BayesNet lets the data push back.
+
+### Specifying a hierarchical structural model
+
+For measr, hierarchies are specified with a string that describes the attribute relationships using a DAG-like syntax.
+Attributes are connected using the `->` operator.
+The `->` defines parent-child relationships in the hierarchy string.
+Parent attributes are prerequisites for child attributes.
+That is, you must possess or be proficient on the parent before you can acquire the child.
+
+For our ECPE hierarchy, we can define the attribute relationships as `"lexical -> cohesive -> morphosyntactic"`.
+We could also write the two relationships separately: `"lexical -> cohesive; cohesive -> morphosyntactic"`.
+For a simple linear hierarchy, a single chain is the most readable form.
+However, nonlinear hierarchies may require the relationships to be defined as multiple linear relationships that connect together in various ways.
+To see examples of different hierarchies and how to specify them using the DAG syntax, check out the [attribute hierarchies vignette](https://dcmstan.r-dcm.org/articles/attribute-hierarchies.html) in the `{dcmstan}` package.
+
+Our hierarchy string can then be passed to `hdcm()` or `bayesnet()` as the structural model in `dcm_specify()`.
+Both take a `hierarchy` argument where we can define the hierarchy using a DAG-like syntax.
+
+```{r}
+#| label: example-hierarchy-spec
+
+dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(),
+  structural_model = hdcm(hierarchy = "lexical -> cohesive -> morphosyntactic")
+)
+```
+
+The hierarchy must be a directed *acyclic* graph.
+You cannot have a cycle where attribute A is a prerequisite for B, and then B is also a prerequisite for A.
+All of the attributes in the hierarchy must also match the attribute names in the `qmatrix`.
+If you specify a cyclical graph or use an unknown attribute name, you'll receive an error.
+
+```{r}
+#| label: cycle-error
+#| error: true
+
+# A cycle: lexical requires cohesive, cohesive requires lexical
+dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(),
+  structural_model = hdcm("lexical -> cohesive -> lexical")
+)
+
+# Incorrect attribute name: "lexical_rules" instead of "lexical"
+dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(),
+  structural_model = hdcm("lexical_rules -> cohesive -> morphosyntactic")
+)
+```
+
+### Estimating hierarchical models
+
+Once we create our DCM specification with the hierarchy, we can use that specification within `dcm_estimate()` just like we normally do.
+Here we'll estimate both an HDCM and a BayesNet model using `{cmdstanr}` and the Pathfinder algorithm [@pathfinder].
+
+```{r}
+#| label: estimate-hierarchies
+
+ecpe_hdcm <- dcm_estimate(
+  dcm_specify(
+    qmatrix = ecpe_qmatrix,
+    identifier = "item_id",
+    measurement_model = lcdm(),
+    structural_model = hdcm("lexical -> cohesive -> morphosyntactic")
+  ),
+  data = ecpe_data,
+  identifier = "resp_id",
+  method = "pathfinder",
+  backend = "cmdstanr",
+  file = here::here("start", "fits", "ecpe-lcdm-hdcm-cmds")
+)
+
+ecpe_bayesnet <- dcm_estimate(
+  dcm_specify(
+    qmatrix = ecpe_qmatrix,
+    identifier = "item_id",
+    measurement_model = lcdm(),
+    structural_model = bayesnet("lexical -> cohesive -> morphosyntactic")
+  ),
+  data = ecpe_data,
+  identifier = "resp_id",
+  method = "pathfinder",
+  backend = "cmdstanr",
+  file = here::here("start", "fits", "epce-lcdm-bayesnet-cmds")
+)
+```
+
+If we look at the respondent proficiency estimates, we see that we still get a proficiency estimate for each student on each attribute (`$attribute_probabilities`), but in the class probabilities, we only see the classes that are allowed by the specification (`$class_probabilities`).
+
+```{r}
+#| label: ecpe-scores
+
+score(ecpe_hdcm)
+```
+
+We can also see how the choice of structural model impacts respondent estimates by examining the estimated model base rates.
+The base rates represent the proportion of respondents estimated to have each profile.
+For comparison purposes, let's also estimate a model with an unconstrained structural model.
+
+```{r}
+#| label: estimate-lcdm
+
+ecpe_lcdm <- dcm_estimate(
+  dcm_specify(
+    qmatrix = ecpe_qmatrix,
+    identifier = "item_id",
+    measurement_model = lcdm(),
+    structural_model = unconstrained()
+  ),
+  data = ecpe_data,
+  identifier = "resp_id",
+  method = "pathfinder",
+  backend = "cmdstanr",
+  file = here::here("start", "fits", "ecpe-lcdm-uncst-cmds")
+)
+```
+
+In @fig-model-base-rates, we see the difference between the HDCM and the BayesNet.
+In the HDCM, the base rate is 0 for any of the profiles that are inconsistent with the defined hierarchy (e.g., [0,1,0]), whereas the BayesNet has non-zero base rates for all profiles.
+However, notice that the base rate for the BayesNet is much lower for the inconsistent profiles than what is seen in the unconstrained model.
+So the BayesNet is pushing respondents toward the profiles that are consistent with our specified attribute relationships, but those profiles are not a strict requirement as with the HDCM.
+
+```{r}
+#| label: fig-model-base-rates
+#| code-fold: true
+#| code-summary: "Plot code"
+#| fig-cap: Estimated profile base rates for each structural model
+#| fig-alt: >
+#|   A grouped horizontal bar chart showing estimated profile base rates for
+#|   each of the eight attribute profiles under three structural models:
+#|   Unconstrained, BayesNet, and HDCM. Profiles are listed along the y-axis
+#|   and estimated base rates along the x-axis.
+
+bind_rows(
+  mutate(measr_extract(ecpe_lcdm, "strc_param"), strc = "Unconstrained"),
+  mutate(measr_extract(ecpe_bayesnet, "strc_param"), strc = "BayesNet"),
+  mutate(measr_extract(ecpe_hdcm, "strc_param"), strc = "HDCM"),
+) |>
+  select(strc, class, estimate) |>
+  mutate(
+    class = fct_inorder(class),
+    strc = factor(strc, levels = c("Unconstrained", "BayesNet", "HDCM")),
+  ) |>
+  complete(strc, class, fill = list(estimate = posterior::rvar(0))) |>
+  ggplot(aes(x = E(estimate), y = fct_rev(class), fill = fct_rev(strc))) +
+  geom_col(
+    position = position_dodge2(preserve = "single"),
+    width = 0.7,
+    na.rm = TRUE
+  ) +
+  scale_fill_okabeito(
+    order = c(3, 2, 1),
+    breaks = c("Unconstrained", "BayesNet", "HDCM")
+  ) +
+  labs(y = "Profile", x = "Estimated Base Rate", fill = "Structural Model")
+```
+
+## Evaluating hierarchical structures
+
+```{r}
+#| label: add-loo
+#| include: false
+
+ecpe_lcdm <- add_fit(
+  ecpe_lcdm,
+  method = "ppmc",
+  model_fit = "raw_score"
+)
+ecpe_hdcm <- add_fit(
+  ecpe_hdcm,
+  method = "ppmc",
+  model_fit = "raw_score"
+)
+ecpe_bayesnet <- add_fit(
+  ecpe_bayesnet,
+  method = "ppmc",
+  model_fit = "raw_score"
+)
+
+ecpe_lcdm <- add_criterion(ecpe_lcdm, criterion = "loo")
+ecpe_hdcm <- add_criterion(ecpe_hdcm, criterion = "loo")
+ecpe_bayesnet <- add_criterion(ecpe_bayesnet, criterion = "loo")
+```
+
+To this point, we've focused on how to encode attribute relationships into our DCM specifications.
+However, in the DCM framework, these relationships are also testable hypotheses.
+@dcm-maps demonstrated how we can evaluate a proposed attribute hierarchy using the model fit tools we learned about in the [Evaluate Model Performance](/start/evaluate/) article.
+
+Specifically, we can use relative fit comparisons to directly compare the models.
+As in our previous case study, we'll use leave-one-out cross validation [LOO\; @loo-waic] for our model comparisons.
+The model with the highest expected log predictive density (ELPD) is listed first.
+A difference that is large relative to its standard error [roughly more than 2.5 times\; @bengio2004] provides strong evidence for preferring one model over another.
+
+If the hierarchical models show comparable ELPD to the unconstrained model, the hierarchy is consistent with the data: the simpler, theoretically motivated model fits as well as the fully flexible one.
+This is the ideal outcome when you have good domain theory.
+The defined attribute relationships reduce model complexity without sacrificing predictive accuracy.
+If the unconstrained model dominates clearly, the attribute relationships may be too restrictive, and some theoretically "impossible" profiles may actually be present in the data.
+
+As we would expect to see if our theory of a linear hierarchy is correct, unconstrained LCDM, BayesNet, and HDCM have similar ELPD values (difference within the standard error).
+Because all the model have approximately equal fit, we would probably prefer the HDCM, as that is the simplest of the three models.
+
+```{r}
+#| label: loo-compare
+
+loo_compare(ecpe_lcdm, ecpe_bayesnet, ecpe_hdcm)
+```
+
+## Wrapping up
+
+Defining attribute relationships like hierarchies lets you incorporate domain theory directly into the structural model.
+Rather than leaving the model to estimate all possible profile base rates freely, you can encode what you know about the order in which skills develop.
+The HDCM enforces that order as a hard constraint; BayesNet encodes it as a prior that the data can weigh against.
+Comparing hierarchical models to an unconstrained baseline tells you whether your theory is consistent with the data.
+
+The next article puts everything we've learned so far together in a complete [Diagnostic Assessment Case Study](/start/case-study/) from start to finish.
+
+## Session information {#session-info .appendix}
+
+```{r}
+#| label: si
+#| echo: false
+
+small_session(pkgs)
+```

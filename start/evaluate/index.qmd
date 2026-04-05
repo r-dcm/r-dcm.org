@@ -44,11 +44,11 @@ Before reporting results or making decisions based on proficiency classification
 #| label: user-load
 #| message: false
 
-library(measr)    # for model evaluation
+library(measr) # for model evaluation
 
 # Helper packages
-library(dcmdata)  # for example data set
-library(rstan)    # for estimation backend
+library(dcmdata) # for example data set
+library(rstan) # for estimation backend
 ```
 
 ## Diagnosing Teachers' Multiplicative Reasoning (DTMR) data
@@ -65,6 +65,7 @@ dtmr_data
 
 Alongside the response data, we also have a Q-matrix that maps items to the `r ncol(dtmr_qmatrix) - 1` attributes measured by the assessment.
 These attributes represent aspects of multiplicative reasoning including and understanding of referent units, partitioning and iterating, appropriateness, and multiplicative comparison.
+For more information on the data set, see `?dtmr` and @dtmr.
 
 ```{r}
 #| label: dtmr-qmatrix
@@ -142,8 +143,7 @@ dtmr_dina <- dcm_estimate(
 dtmr_lcdm <- add_fit(
   dtmr_lcdm,
   method = c("m2", "ppmc"),
-  model_fit = "raw_score",
-  return_draws = 1000
+  model_fit = "raw_score"
 )
 dtmr_lcdm <- add_reliability(dtmr_lcdm)
 dtmr_lcdm <- add_criterion(dtmr_lcdm, criterion = "loo")
@@ -151,8 +151,7 @@ dtmr_lcdm <- add_criterion(dtmr_lcdm, criterion = "loo")
 dtmr_dina <- add_fit(
   dtmr_dina,
   method = c("m2", "ppmc"),
-  model_fit = "raw_score",
-  return_draws = 1000
+  model_fit = "raw_score"
 )
 dtmr_dina <- add_reliability(dtmr_dina)
 dtmr_dina <- add_criterion(dtmr_dina, criterion = "loo")
@@ -205,11 +204,7 @@ Because PPMCs require draws from the full posterior distribution, they only work
 ```{r}
 #| label: dtmr-ppmc
 
-lcdm_ppmc <- fit_ppmc(
-  dtmr_lcdm,
-  model_fit = "raw_score",
-  return_draws = 1000
-)
+lcdm_ppmc <- fit_ppmc(dtmr_lcdm, model_fit = "raw_score")
 lcdm_ppmc
 ```
 
@@ -217,11 +212,7 @@ lcdm_ppmc
 #| label: calc-dina-ppmc
 #| include: false
 
-dina_ppmc <- fit_ppmc(
-  dtmr_dina,
-  model_fit = "raw_score",
-  return_draws = 1000
-)
+dina_ppmc <- fit_ppmc(dtmr_dina, model_fit = "raw_score")
 ```
 
 The key output is the posterior predictive *p*-value (*ppp*), which is the proportion of replicated datasets that produced a larger fit statistic than our observed data.
@@ -232,7 +223,9 @@ In this case, our *ppp* values is `r fmt_digits(lcdm_ppmc$ppmc_raw_score$ppp, di
 Let's visualize the PPMC to see how the observed raw score distribution compares to the replicated data.
 
 ```{r}
-#| label: rawscore-dist
+#| label: fig-rawscore-dist
+#| fig-cap: >
+#|   Posterior predictive model check of the raw score distribution.
 #| code-fold: true
 #| code-summary: "Plot code"
 #| fig-asp: 0.618
@@ -252,8 +245,9 @@ obs_scores <- dtmr_data |>
   count(raw_score) |>
   complete(raw_score = 0:(ncol(dtmr_data) - 1), fill = list(n = 0L))
 
-lcdm_ppmc$ppmc_raw_score |>
-  dplyr::select(rawscore_samples) |>
+fit_ppmc(dtmr_lcdm, model_fit = "raw_score", return_draws = 2000) |>
+  pluck("ppmc_raw_score") |>
+  select(rawscore_samples) |>
   unnest(rawscore_samples) |>
   unnest(raw_scores) |>
   ggplot() +
@@ -305,7 +299,9 @@ The &chi;^2^ is our fit statistic in this PPMC, and the *ppp* value is the propo
 In this example, we see that the observed value is toward the middle, which is exactly what we would expect from a well-fitting model.
 
 ```{r}
-#| label: chisq-dist
+#| label: fig-chisq-dist
+#| fig-cap: >
+#|   Posterior predictive &chi;^2^ distribution for the LCDM.
 #| code-fold: true
 #| code-summary: "Plot code"
 #| fig-asp: 0.618
@@ -315,8 +311,9 @@ In this example, we see that the observed value is toward the middle, which is e
 #|   statistic, which falls near the center of the distribution, indicating
 #|   good model fit.
 
-lcdm_ppmc$ppmc_raw_score |>
-  dplyr::select(chisq_samples) |>
+fit_ppmc(dtmr_lcdm, model_fit = "raw_score", return_draws = 2000) |>
+  pluck("ppmc_raw_score") |>
+  select(chisq_samples) |>
   unnest(chisq_samples) |>
   ggplot(aes(x = chisq_samples)) +
   stat_dots(
@@ -332,6 +329,7 @@ lcdm_ppmc$ppmc_raw_score |>
     color = msr_colors[3],
     linewidth = 1
   ) +
+  coord_cartesian(xlim = c(0, 100)) +
   labs(y = NULL, x = "&chi;^2^<sub>rep</sub>") +
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
 ```
@@ -341,7 +339,9 @@ For this model, the observed value is further out in the tail of the distributio
 Accordingly, our *ppp* value is only `r fmt_digits(dina_ppmc$ppmc_raw_score$ppp, digits = 3)`.
 
 ```{r}
-#| label: dina-chisq-dist
+#| label: fig-dina-chisq-dist
+#| fig-cap: >
+#|   Posterior predictive &chi;^2^ distribution for the DINA model.
 #| code-fold: true
 #| code-summary: "Plot code"
 #| fig-asp: 0.618
@@ -351,14 +351,9 @@ Accordingly, our *ppp* value is only `r fmt_digits(dina_ppmc$ppmc_raw_score$ppp,
 #|   statistic, which falls near the center of the distribution, indicating
 #|   good model fit.
 
-dina_ppmc <- fit_ppmc(
-  dtmr_dina,
-  model_fit = "raw_score",
-  return_draws = 1000
-)
-
-dina_ppmc$ppmc_raw_score |>
-  dplyr::select(chisq_samples) |>
+fit_ppmc(dtmr_dina, model_fit = "raw_score", return_draws = 2000) |>
+  pluck("ppmc_raw_score") |>
+  select(chisq_samples) |>
   unnest(chisq_samples) |>
   ggplot(aes(x = chisq_samples)) +
   stat_dots(
@@ -370,11 +365,12 @@ dina_ppmc$ppmc_raw_score |>
     na.rm = TRUE
   ) +
   geom_vline(
-    xintercept = dtmr_lcdm@fit$ppmc_raw_score$obs_chisq,
+    xintercept = dtmr_dina@fit$ppmc_raw_score$obs_chisq,
     color = msr_colors[3],
     linewidth = 1
   ) +
-  scale_x_continuous(limits = c(0, 250)) +
+  # scale_x_continuous(limits = c(0, 250)) +
+  coord_cartesian(xlim = c(0, 100)) +
   labs(y = NULL, x = "&chi;^2^<sub>rep</sub>") +
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
 ```
@@ -387,10 +383,10 @@ This distinction matters because sometimes multiple models may show adequate abs
 In our example, we have one model that fits well and one that doesn't so we don't really need an evaluation of relative model fit to determine which is better.
 However, we'll run comparison to illustrate idea.
 
-We recommend using leave-one-out cross-validation (LOO) estimates for model comparisons.
+We recommend using leave-one-out cross-validation (LOO) estimates for model comparisons [@loo-waic].
 LOO approximates how well the model would predict new, unseen data.
 Higher expected log predictive density (ELPD) values indicate better out-of-sample predictive performance.
-`loo_compare()` directly compares the models, ranking them by ELPD and reporting the difference along with its standard error.
+`loo_compare()` uses the `{loo}` package to directly compare the models, rank them by ELPD and report the difference along with its standard error.
 
 ```{r}
 #| label: loo-compare
@@ -475,7 +471,7 @@ But what do we do if the answer is "no"?
 A good place to start is often examining your structural model and ensuring that attribute relationships are appropriately included.
 That is the focus of the [Define Attribute Relationships](/start/hierarchies/) article.
 
-## Session information {#session-info}
+## Session information {#session-info .appendix}
 
 ```{r}
 #| label: si

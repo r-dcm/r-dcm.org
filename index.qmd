@@ -63,9 +63,6 @@ What do you need to know to start using the r-dcm packages?
 
 ## Packages
 
-Some intro text...
-</br>
-
 :::{#pkgs}
 :::
 

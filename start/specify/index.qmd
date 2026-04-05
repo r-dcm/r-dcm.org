@@ -40,11 +40,11 @@ We start with data for building the model, learn how to specify DCMs that make d
 #| label: user-load
 #| message: false
 
-library(measr)     # for model specification and estimation
+library(measr) # for model specification and estimation
 
 # Helper packages
-library(dcmdata)   # for example data set
-library(rstan)     # for estimation backend
+library(dcmdata) # for example data set
+library(rstan) # for estimation backend
 ```
 
 ## Rapid Online Assessment of Reading and Phonological Awareness (ROAR-PA) data
@@ -159,24 +159,24 @@ tibble(
     "`nido()`",
     "`crum()`"
   )
-) |> 
-  gt() |> 
-  fmt_markdown(columns = c(measr)) |> 
+) |>
+  gt() |>
+  fmt_markdown(columns = c(measr)) |>
   cols_width(
     model ~ px(155),
     description ~ px(500),
     measr ~ px(80)
-  ) |> 
+  ) |>
   tab_row_group(
     label = "Non-compensatory",
     rows = 2:4
-  ) |> 
+  ) |>
   tab_row_group(
     label = "Compensatory",
     rows = 5:7
-  ) |> 
-  row_group_order(groups = c(NA, "Non-compensatory", "Compensatory")) |> 
-  gt_theme_rdcm() |> 
+  ) |>
+  row_group_order(groups = c(NA, "Non-compensatory", "Compensatory")) |>
+  gt_theme_rdcm() |>
   tab_style(
     style = list(
       cell_fill(color = msr_colors[2]),
@@ -243,14 +243,14 @@ tibble(
     "`hdcm()`",
     "`bayesnet()`"
   )
-) |> 
-  gt() |> 
-  fmt_markdown(columns = c(measr)) |> 
+) |>
+  gt() |>
+  fmt_markdown(columns = c(measr)) |>
   cols_width(
     model ~ px(130),
     description ~ px(475),
     measr ~ px(150)
-  ) |> 
+  ) |>
   gt_theme_rdcm()
 ```
 
@@ -376,8 +376,8 @@ The choice of threshold matters and can be adjusted based on the intended use of
 
 library(tidyverse)
 
-roarpa_scores$attribute_probabilities |> 
-  mutate(probability = as.integer(probability > .5)) |> 
+roarpa_scores$attribute_probabilities |>
+  mutate(probability = as.integer(probability > .5)) |>
   pivot_wider(names_from = attribute, values_from = probability)
 ```
 
@@ -388,7 +388,7 @@ However, before we report these result it's important to evaluate the quality of
 We need to ensure that the model fits well and provides accurate classifications.
 That is the focus of the [Evaluate Model Performance](/start/evaluate/) article.
 
-## Session information {#session-info}
+## Session information {#session-info .appendix}
 
 ```{r}
 #| label: "si"

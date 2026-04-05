@@ -12,4 +12,6 @@ listing:
   contents:
     - "blog/**/index.qmd"
     - "!blog/index.qmd"
+    - "start/**/index.qmd"
+    - "!start/index.qmd"
 ---

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.24">
+<meta name="generator" content="quarto-1.10.19">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Include information about how your attributes relate to and interact with each other.">
 <title>Define attribute relationships – r-dcm</title>
@@ -10,10 +10,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -87,15 +90,14 @@ div.csl-indent {
 <link href="../../assets/img/favicon-96x96.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b3aaa6997641482631754dbbac2f39fc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7af561f5e3242bb7ad291c7262587aec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0f96150053b5d64986f732095ddb08ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ea5bab6effb13e923c874f1487cb6e32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -312,24 +314,24 @@ div.csl-indent {
 Table&nbsp;1: All possible attribute profiles under an unconstrained structural model
 </figcaption><div aria-describedby="tbl-unconstrained-profiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="rwiajevbsk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="auelkvlyvj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#rwiajevbsk table {
+#auelkvlyvj table {
   font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rwiajevbsk thead, #rwiajevbsk tbody, #rwiajevbsk tfoot, #rwiajevbsk tr, #rwiajevbsk td, #rwiajevbsk th {
+#auelkvlyvj thead, #auelkvlyvj tbody, #auelkvlyvj tfoot, #auelkvlyvj tr, #auelkvlyvj td, #auelkvlyvj th {
   border-style: none;
 }
 
-#rwiajevbsk p {
+#auelkvlyvj p {
   margin: 0;
   padding: 0;
 }
 
-#rwiajevbsk .gt_table {
+#auelkvlyvj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -355,12 +357,12 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-left-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_caption {
+#auelkvlyvj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rwiajevbsk .gt_title {
+#auelkvlyvj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -372,7 +374,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-bottom-width: 0;
 }
 
-#rwiajevbsk .gt_subtitle {
+#auelkvlyvj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -384,7 +386,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-top-width: 0;
 }
 
-#rwiajevbsk .gt_heading {
+#auelkvlyvj .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -396,13 +398,13 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-right-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_bottom_border {
+#auelkvlyvj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_col_headings {
+#auelkvlyvj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FFFFFF;
@@ -417,7 +419,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-right-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_col_heading {
+#auelkvlyvj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -437,7 +439,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   overflow-x: hidden;
 }
 
-#rwiajevbsk .gt_column_spanner_outer {
+#auelkvlyvj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -449,15 +451,15 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 4px;
 }
 
-#rwiajevbsk .gt_column_spanner_outer:first-child {
+#auelkvlyvj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rwiajevbsk .gt_column_spanner_outer:last-child {
+#auelkvlyvj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rwiajevbsk .gt_column_spanner {
+#auelkvlyvj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -469,11 +471,11 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   width: 100%;
 }
 
-#rwiajevbsk .gt_spanner_row {
+#auelkvlyvj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rwiajevbsk .gt_group_heading {
+#auelkvlyvj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -499,7 +501,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   text-align: left;
 }
 
-#rwiajevbsk .gt_empty_group_heading {
+#auelkvlyvj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -514,15 +516,15 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   vertical-align: middle;
 }
 
-#rwiajevbsk .gt_from_md > :first-child {
+#auelkvlyvj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rwiajevbsk .gt_from_md > :last-child {
+#auelkvlyvj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rwiajevbsk .gt_row {
+#auelkvlyvj .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -541,7 +543,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   overflow-x: hidden;
 }
 
-#rwiajevbsk .gt_stub {
+#auelkvlyvj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -554,7 +556,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 5px;
 }
 
-#rwiajevbsk .gt_stub_row_group {
+#auelkvlyvj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -568,15 +570,15 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   vertical-align: top;
 }
 
-#rwiajevbsk .gt_row_group_first td {
+#auelkvlyvj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rwiajevbsk .gt_row_group_first th {
+#auelkvlyvj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rwiajevbsk .gt_summary_row {
+#auelkvlyvj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -586,16 +588,16 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 5px;
 }
 
-#rwiajevbsk .gt_first_summary_row {
+#auelkvlyvj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_first_summary_row.thick {
+#auelkvlyvj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rwiajevbsk .gt_last_summary_row {
+#auelkvlyvj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -605,7 +607,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-bottom-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_grand_summary_row {
+#auelkvlyvj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -615,7 +617,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 5px;
 }
 
-#rwiajevbsk .gt_first_grand_summary_row {
+#auelkvlyvj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -625,7 +627,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-top-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_last_grand_summary_row_top {
+#auelkvlyvj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -635,11 +637,11 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-bottom-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_striped {
+#auelkvlyvj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rwiajevbsk .gt_table_body {
+#auelkvlyvj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -648,7 +650,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-bottom-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_footnotes {
+#auelkvlyvj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -662,7 +664,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-right-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_footnote {
+#auelkvlyvj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -671,7 +673,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 5px;
 }
 
-#rwiajevbsk .gt_sourcenotes {
+#auelkvlyvj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -685,7 +687,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-right-color: #D3D3D3;
 }
 
-#rwiajevbsk .gt_sourcenote {
+#auelkvlyvj .gt_sourcenote {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -693,72 +695,72 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 5px;
 }
 
-#rwiajevbsk .gt_left {
+#auelkvlyvj .gt_left {
   text-align: left;
 }
 
-#rwiajevbsk .gt_center {
+#auelkvlyvj .gt_center {
   text-align: center;
 }
 
-#rwiajevbsk .gt_right {
+#auelkvlyvj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rwiajevbsk .gt_font_normal {
+#auelkvlyvj .gt_font_normal {
   font-weight: normal;
 }
 
-#rwiajevbsk .gt_font_bold {
+#auelkvlyvj .gt_font_bold {
   font-weight: bold;
 }
 
-#rwiajevbsk .gt_font_italic {
+#auelkvlyvj .gt_font_italic {
   font-style: italic;
 }
 
-#rwiajevbsk .gt_super {
+#auelkvlyvj .gt_super {
   font-size: 65%;
 }
 
-#rwiajevbsk .gt_footnote_marks {
+#auelkvlyvj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rwiajevbsk .gt_asterisk {
+#auelkvlyvj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rwiajevbsk .gt_indent_1 {
+#auelkvlyvj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rwiajevbsk .gt_indent_2 {
+#auelkvlyvj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rwiajevbsk .gt_indent_3 {
+#auelkvlyvj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rwiajevbsk .gt_indent_4 {
+#auelkvlyvj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rwiajevbsk .gt_indent_5 {
+#auelkvlyvj .gt_indent_5 {
   text-indent: 25px;
 }
 
-#rwiajevbsk .katex-display {
+#auelkvlyvj .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#rwiajevbsk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#auelkvlyvj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -840,24 +842,24 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
 Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
 </figcaption><div aria-describedby="tbl-hdcm-profiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="uzfjusnfvk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="jiilzigytc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#uzfjusnfvk table {
+#jiilzigytc table {
   font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#uzfjusnfvk thead, #uzfjusnfvk tbody, #uzfjusnfvk tfoot, #uzfjusnfvk tr, #uzfjusnfvk td, #uzfjusnfvk th {
+#jiilzigytc thead, #jiilzigytc tbody, #jiilzigytc tfoot, #jiilzigytc tr, #jiilzigytc td, #jiilzigytc th {
   border-style: none;
 }
 
-#uzfjusnfvk p {
+#jiilzigytc p {
   margin: 0;
   padding: 0;
 }
 
-#uzfjusnfvk .gt_table {
+#jiilzigytc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -883,12 +885,12 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-left-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_caption {
+#jiilzigytc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#uzfjusnfvk .gt_title {
+#jiilzigytc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -900,7 +902,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-bottom-width: 0;
 }
 
-#uzfjusnfvk .gt_subtitle {
+#jiilzigytc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -912,7 +914,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-top-width: 0;
 }
 
-#uzfjusnfvk .gt_heading {
+#jiilzigytc .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -924,13 +926,13 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-right-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_bottom_border {
+#jiilzigytc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_col_headings {
+#jiilzigytc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FFFFFF;
@@ -945,7 +947,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-right-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_col_heading {
+#jiilzigytc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -965,7 +967,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   overflow-x: hidden;
 }
 
-#uzfjusnfvk .gt_column_spanner_outer {
+#jiilzigytc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -977,15 +979,15 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 4px;
 }
 
-#uzfjusnfvk .gt_column_spanner_outer:first-child {
+#jiilzigytc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#uzfjusnfvk .gt_column_spanner_outer:last-child {
+#jiilzigytc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#uzfjusnfvk .gt_column_spanner {
+#jiilzigytc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -997,11 +999,11 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   width: 100%;
 }
 
-#uzfjusnfvk .gt_spanner_row {
+#jiilzigytc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#uzfjusnfvk .gt_group_heading {
+#jiilzigytc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1027,7 +1029,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   text-align: left;
 }
 
-#uzfjusnfvk .gt_empty_group_heading {
+#jiilzigytc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1042,15 +1044,15 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   vertical-align: middle;
 }
 
-#uzfjusnfvk .gt_from_md > :first-child {
+#jiilzigytc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#uzfjusnfvk .gt_from_md > :last-child {
+#jiilzigytc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#uzfjusnfvk .gt_row {
+#jiilzigytc .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -1069,7 +1071,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   overflow-x: hidden;
 }
 
-#uzfjusnfvk .gt_stub {
+#jiilzigytc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1082,7 +1084,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 5px;
 }
 
-#uzfjusnfvk .gt_stub_row_group {
+#jiilzigytc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1096,15 +1098,15 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   vertical-align: top;
 }
 
-#uzfjusnfvk .gt_row_group_first td {
+#jiilzigytc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#uzfjusnfvk .gt_row_group_first th {
+#jiilzigytc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#uzfjusnfvk .gt_summary_row {
+#jiilzigytc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1114,16 +1116,16 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 5px;
 }
 
-#uzfjusnfvk .gt_first_summary_row {
+#jiilzigytc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_first_summary_row.thick {
+#jiilzigytc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#uzfjusnfvk .gt_last_summary_row {
+#jiilzigytc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1133,7 +1135,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-bottom-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_grand_summary_row {
+#jiilzigytc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1143,7 +1145,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 5px;
 }
 
-#uzfjusnfvk .gt_first_grand_summary_row {
+#jiilzigytc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1153,7 +1155,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-top-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_last_grand_summary_row_top {
+#jiilzigytc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1163,11 +1165,11 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-bottom-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_striped {
+#jiilzigytc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#uzfjusnfvk .gt_table_body {
+#jiilzigytc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1176,7 +1178,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-bottom-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_footnotes {
+#jiilzigytc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1190,7 +1192,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-right-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_footnote {
+#jiilzigytc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1199,7 +1201,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 5px;
 }
 
-#uzfjusnfvk .gt_sourcenotes {
+#jiilzigytc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1213,7 +1215,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-right-color: #D3D3D3;
 }
 
-#uzfjusnfvk .gt_sourcenote {
+#jiilzigytc .gt_sourcenote {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -1221,72 +1223,72 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 5px;
 }
 
-#uzfjusnfvk .gt_left {
+#jiilzigytc .gt_left {
   text-align: left;
 }
 
-#uzfjusnfvk .gt_center {
+#jiilzigytc .gt_center {
   text-align: center;
 }
 
-#uzfjusnfvk .gt_right {
+#jiilzigytc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#uzfjusnfvk .gt_font_normal {
+#jiilzigytc .gt_font_normal {
   font-weight: normal;
 }
 
-#uzfjusnfvk .gt_font_bold {
+#jiilzigytc .gt_font_bold {
   font-weight: bold;
 }
 
-#uzfjusnfvk .gt_font_italic {
+#jiilzigytc .gt_font_italic {
   font-style: italic;
 }
 
-#uzfjusnfvk .gt_super {
+#jiilzigytc .gt_super {
   font-size: 65%;
 }
 
-#uzfjusnfvk .gt_footnote_marks {
+#jiilzigytc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#uzfjusnfvk .gt_asterisk {
+#jiilzigytc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#uzfjusnfvk .gt_indent_1 {
+#jiilzigytc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#uzfjusnfvk .gt_indent_2 {
+#jiilzigytc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#uzfjusnfvk .gt_indent_3 {
+#jiilzigytc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#uzfjusnfvk .gt_indent_4 {
+#jiilzigytc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#uzfjusnfvk .gt_indent_5 {
+#jiilzigytc .gt_indent_5 {
   text-indent: 25px;
 }
 
-#uzfjusnfvk .katex-display {
+#jiilzigytc .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#uzfjusnfvk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#jiilzigytc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1372,7 +1374,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
-<div id="fig-hierarchy-dag" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A directed acyclic graph showing three nodes: L1, L2, and L3, connected left to right by arrows indicating the prerequisite ordering of the ECPE hierarchy.">
+<div id="fig-hierarchy-dag" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A directed acyclic graph showing three nodes: L1, L2, and L3, connected left to right by arrows indicating the prerequisite ordering of the ECPE hierarchy." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-hierarchy-dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-hierarchy-dag-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="A directed acyclic graph showing three nodes: L1, L2, and L3, connected left to right by arrows indicating the prerequisite ordering of the ECPE hierarchy.">
 </div>
@@ -1548,7 +1550,7 @@ Figure&nbsp;1: The ECPE hierarchy as a directed acyclic graph.
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Profile"</span>, x <span class="op">=</span> <span class="st">"Estimated Base Rate"</span>, fill <span class="op">=</span> <span class="st">"Structural Model"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
-<div id="fig-model-base-rates" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="A grouped horizontal bar chart showing estimated profile base rates for each of the eight attribute profiles under three structural models: Unconstrained, BayesNet, and HDCM. Profiles are listed along the y-axis and estimated base rates along the x-axis.">
+<div id="fig-model-base-rates" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A grouped horizontal bar chart showing estimated profile base rates for each of the eight attribute profiles under three structural models: Unconstrained, BayesNet, and HDCM. Profiles are listed along the y-axis and estimated base rates along the x-axis." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-model-base-rates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-model-base-rates-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="A grouped horizontal bar chart showing estimated profile base rates for each of the eight attribute profiles under three structural models: Unconstrained, BayesNet, and HDCM. Profiles are listed along the y-axis and estimated base rates along the x-axis.">
 </div>
@@ -1565,10 +1567,14 @@ Figure&nbsp;2: Estimated profile base rates for each structural model
 <p>As we would expect to see if our theory of a linear hierarchy is correct, unconstrained LCDM, BayesNet, and HDCM have similar ELPD values (difference within the standard error). Because all the model have approximately equal fit, we would probably prefer the HDCM, as that is the simplest of the three models.</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://mc-stan.org/loo/reference/loo_compare.html">loo_compare</a></span><span class="op">(</span><span class="va">ecpe_lcdm</span>, <span class="va">ecpe_bayesnet</span>, <span class="va">ecpe_hdcm</span><span class="op">)</span></span>
-<span><span class="co">#&gt;               elpd_diff se_diff</span></span>
-<span><span class="co">#&gt; ecpe_bayesnet  0.0       0.0   </span></span>
-<span><span class="co">#&gt; ecpe_lcdm     -0.3       6.3   </span></span>
-<span><span class="co">#&gt; ecpe_hdcm     -6.3       8.6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="co">#&gt;          model elpd_diff se_diff p_worse       diag_diff         diag_elpd</span></span>
+<span><span class="co">#&gt;  ecpe_bayesnet       0.0     0.0      NA                 2595 k_psis &gt; 0.7</span></span>
+<span><span class="co">#&gt;      ecpe_lcdm      -0.3     6.3    0.52 |elpd_diff| &lt; 4 2525 k_psis &gt; 0.7</span></span>
+<span><span class="co">#&gt;      ecpe_hdcm      -6.3     8.6    0.77                 2309 k_psis &gt; 0.7</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Diagnostic flags present.</span></span>
+<span><span class="co">#&gt; See ?`loo-glossary` (sections `diag_diff` and `diag_elpd`)</span></span>
+<span><span class="co">#&gt; or https://mc-stan.org/loo/reference/loo-glossary.html.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="wrapping-up" class="level2"><h2 class="anchored" data-anchor-id="wrapping-up">Wrapping up</h2>
 <p>Defining attribute relationships like hierarchies lets you incorporate domain theory directly into the structural model. Rather than leaving the model to estimate all possible profile base rates freely, you can encode what you know about the order in which skills develop. The HDCM enforces that order as a hard constraint; BayesNet encodes it as a prior that the data can weigh against. Comparing hierarchical models to an unconstrained baseline tells you whether your theory is consistent with the data.</p>
@@ -1576,34 +1582,34 @@ Figure&nbsp;2: Estimated profile base rates for each structural model
 </section><div id="quarto-appendix" class="default"><section id="session-info" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
 <div class="cell" data-layout-align="center">
 <pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
-#&gt;  version         R version 4.5.2 (2025-10-31)
+#&gt;  version         R version 4.6.1 (2026-06-24)
 #&gt;  language        (EN)
-#&gt;  date            2026-04-04
-#&gt;  pandoc          3.9
-#&gt;  quarto          1.9.24
-#&gt;  Stan (rstan)    2.37.0
-#&gt;  Stan (cmdstanr) 2.38.0
+#&gt;  date            2026-10-13
+#&gt;  pandoc          3.8.3
+#&gt;  quarto          1.10.19
+#&gt;  Stan (rstan)    2.39.0
+#&gt;  Stan (cmdstanr) 2.40.0
 #&gt; 
 #&gt; ─ Packages ─────────────────────────────────────────────────────────
 #&gt;  package          version     date (UTC) source
-#&gt;  bridgesampling   1.2-1       2025-11-19 CRAN (R 4.5.2)
-#&gt;  cmdstanr         0.9.0       2025-03-30 https://stan-dev.r-universe.dev (R 4.5.2)
-#&gt;  dcmdata          0.2.0       2026-03-10 CRAN (R 4.5.2)
-#&gt;  dcmstan          0.1.0       2025-11-24 CRAN (R 4.5.2)
-#&gt;  dplyr            1.2.0       2026-02-03 CRAN (R 4.5.2)
-#&gt;  forcats          1.0.1       2025-09-25 CRAN (R 4.5.0)
-#&gt;  ggplot2          4.0.2       2026-02-03 CRAN (R 4.5.2)
-#&gt;  loo              2.9.0.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
-#&gt;  lubridate        1.9.5       2026-02-04 CRAN (R 4.5.2)
-#&gt;  measr            2.0.0.9000  2026-03-21 Github (r-dcm/measr@475bc50)
-#&gt;  posterior        1.6.1.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
-#&gt;  purrr            1.2.1       2026-01-09 CRAN (R 4.5.2)
-#&gt;  readr            2.2.0       2026-02-19 CRAN (R 4.5.2)
-#&gt;  rlang            1.1.7       2026-01-09 CRAN (R 4.5.2)
-#&gt;  rstan            2.36.0.9000 2025-09-26 https://stan-dev.r-universe.dev (R 4.5.1)
-#&gt;  stringr          1.6.0       2025-11-04 CRAN (R 4.5.0)
-#&gt;  tibble           3.3.1       2026-01-11 CRAN (R 4.5.2)
-#&gt;  tidyr            1.3.2       2025-12-19 CRAN (R 4.5.2)
+#&gt;  bridgesampling   1.2-1       2025-11-19 RSPM
+#&gt;  cmdstanr         0.9.0       2026-10-13 repository (https://github.com/stan-dev/cmdstanr@da99e2b)
+#&gt;  dcmdata          0.2.0       2026-03-10 RSPM
+#&gt;  dcmstan          0.1.0       2025-11-24 RSPM
+#&gt;  dplyr            1.2.1       2026-04-03 RSPM
+#&gt;  forcats          1.0.1       2025-09-25 RSPM
+#&gt;  ggplot2          4.0.3       2026-04-22 RSPM
+#&gt;  loo              2.10.1.9000 2026-10-13 repository (https://github.com/stan-dev/loo@b22ea49)
+#&gt;  lubridate        1.9.5       2026-02-04 RSPM
+#&gt;  measr            2.0.1       2026-03-27 RSPM
+#&gt;  posterior        1.7.1       2026-10-13 repository (https://github.com/stan-dev/posterior@6dd1e12)
+#&gt;  purrr            1.2.2       2026-04-10 RSPM
+#&gt;  readr            2.2.0       2026-02-19 RSPM
+#&gt;  rlang            1.3.0       2026-07-05 RSPM
+#&gt;  rstan            2.39.0.9000 2026-10-13 repository (https://github.com/stan-dev/rstan@81f6125)
+#&gt;  stringr          1.6.0       2025-11-04 RSPM
+#&gt;  tibble           3.3.1       2026-01-11 RSPM
+#&gt;  tidyr            1.3.2       2025-12-19 RSPM
 #&gt; 
 #&gt; ────────────────────────────────────────────────────────────────────</code></pre>
 </div>

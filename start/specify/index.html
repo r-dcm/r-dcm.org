@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.24">
+<meta name="generator" content="quarto-1.10.19">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Get started by learning how to specify and estimate a model using measr.">
 <title>Specify a diagnostic model – r-dcm</title>
@@ -10,10 +10,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -87,15 +90,14 @@ div.csl-indent {
 <link href="../../assets/img/favicon-96x96.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b3aaa6997641482631754dbbac2f39fc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7af561f5e3242bb7ad291c7262587aec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0f96150053b5d64986f732095ddb08ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ea5bab6effb13e923c874f1487cb6e32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -349,24 +351,24 @@ div.csl-indent {
 Table&nbsp;1: Measurement models supported by measr
 </figcaption><div aria-describedby="tbl-meas-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="ojumdzikhq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="pbohfucfas" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#ojumdzikhq table {
+#pbohfucfas table {
   font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ojumdzikhq thead, #ojumdzikhq tbody, #ojumdzikhq tfoot, #ojumdzikhq tr, #ojumdzikhq td, #ojumdzikhq th {
+#pbohfucfas thead, #pbohfucfas tbody, #pbohfucfas tfoot, #pbohfucfas tr, #pbohfucfas td, #pbohfucfas th {
   border-style: none;
 }
 
-#ojumdzikhq p {
+#pbohfucfas p {
   margin: 0;
   padding: 0;
 }
 
-#ojumdzikhq .gt_table {
+#pbohfucfas .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -392,12 +394,12 @@ Table&nbsp;1: Measurement models supported by measr
   border-left-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_caption {
+#pbohfucfas .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ojumdzikhq .gt_title {
+#pbohfucfas .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -409,7 +411,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-width: 0;
 }
 
-#ojumdzikhq .gt_subtitle {
+#pbohfucfas .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -421,7 +423,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-top-width: 0;
 }
 
-#ojumdzikhq .gt_heading {
+#pbohfucfas .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -433,13 +435,13 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_bottom_border {
+#pbohfucfas .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_col_headings {
+#pbohfucfas .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FFFFFF;
@@ -454,7 +456,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_col_heading {
+#pbohfucfas .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -474,7 +476,7 @@ Table&nbsp;1: Measurement models supported by measr
   overflow-x: hidden;
 }
 
-#ojumdzikhq .gt_column_spanner_outer {
+#pbohfucfas .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -486,15 +488,15 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 4px;
 }
 
-#ojumdzikhq .gt_column_spanner_outer:first-child {
+#pbohfucfas .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ojumdzikhq .gt_column_spanner_outer:last-child {
+#pbohfucfas .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ojumdzikhq .gt_column_spanner {
+#pbohfucfas .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -506,11 +508,11 @@ Table&nbsp;1: Measurement models supported by measr
   width: 100%;
 }
 
-#ojumdzikhq .gt_spanner_row {
+#pbohfucfas .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ojumdzikhq .gt_group_heading {
+#pbohfucfas .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -536,7 +538,7 @@ Table&nbsp;1: Measurement models supported by measr
   text-align: left;
 }
 
-#ojumdzikhq .gt_empty_group_heading {
+#pbohfucfas .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -551,15 +553,15 @@ Table&nbsp;1: Measurement models supported by measr
   vertical-align: middle;
 }
 
-#ojumdzikhq .gt_from_md > :first-child {
+#pbohfucfas .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ojumdzikhq .gt_from_md > :last-child {
+#pbohfucfas .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ojumdzikhq .gt_row {
+#pbohfucfas .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -578,7 +580,7 @@ Table&nbsp;1: Measurement models supported by measr
   overflow-x: hidden;
 }
 
-#ojumdzikhq .gt_stub {
+#pbohfucfas .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -591,7 +593,7 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#ojumdzikhq .gt_stub_row_group {
+#pbohfucfas .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -605,15 +607,15 @@ Table&nbsp;1: Measurement models supported by measr
   vertical-align: top;
 }
 
-#ojumdzikhq .gt_row_group_first td {
+#pbohfucfas .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ojumdzikhq .gt_row_group_first th {
+#pbohfucfas .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ojumdzikhq .gt_summary_row {
+#pbohfucfas .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -623,16 +625,16 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#ojumdzikhq .gt_first_summary_row {
+#pbohfucfas .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_first_summary_row.thick {
+#pbohfucfas .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ojumdzikhq .gt_last_summary_row {
+#pbohfucfas .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -642,7 +644,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_grand_summary_row {
+#pbohfucfas .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -652,7 +654,7 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#ojumdzikhq .gt_first_grand_summary_row {
+#pbohfucfas .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -662,7 +664,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-top-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_last_grand_summary_row_top {
+#pbohfucfas .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -672,11 +674,11 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_striped {
+#pbohfucfas .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ojumdzikhq .gt_table_body {
+#pbohfucfas .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -685,7 +687,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_footnotes {
+#pbohfucfas .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -699,7 +701,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_footnote {
+#pbohfucfas .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -708,7 +710,7 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#ojumdzikhq .gt_sourcenotes {
+#pbohfucfas .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -722,7 +724,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#ojumdzikhq .gt_sourcenote {
+#pbohfucfas .gt_sourcenote {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -730,72 +732,72 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#ojumdzikhq .gt_left {
+#pbohfucfas .gt_left {
   text-align: left;
 }
 
-#ojumdzikhq .gt_center {
+#pbohfucfas .gt_center {
   text-align: center;
 }
 
-#ojumdzikhq .gt_right {
+#pbohfucfas .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ojumdzikhq .gt_font_normal {
+#pbohfucfas .gt_font_normal {
   font-weight: normal;
 }
 
-#ojumdzikhq .gt_font_bold {
+#pbohfucfas .gt_font_bold {
   font-weight: bold;
 }
 
-#ojumdzikhq .gt_font_italic {
+#pbohfucfas .gt_font_italic {
   font-style: italic;
 }
 
-#ojumdzikhq .gt_super {
+#pbohfucfas .gt_super {
   font-size: 65%;
 }
 
-#ojumdzikhq .gt_footnote_marks {
+#pbohfucfas .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ojumdzikhq .gt_asterisk {
+#pbohfucfas .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ojumdzikhq .gt_indent_1 {
+#pbohfucfas .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ojumdzikhq .gt_indent_2 {
+#pbohfucfas .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ojumdzikhq .gt_indent_3 {
+#pbohfucfas .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ojumdzikhq .gt_indent_4 {
+#pbohfucfas .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ojumdzikhq .gt_indent_5 {
+#pbohfucfas .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ojumdzikhq .katex-display {
+#pbohfucfas .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ojumdzikhq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#pbohfucfas div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -876,24 +878,24 @@ Table&nbsp;1: Measurement models supported by measr
 Table&nbsp;2: Structural models supported by measr
 </figcaption><div aria-describedby="tbl-strc-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="wdwlwaheej" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="mqyermyzdh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#wdwlwaheej table {
+#mqyermyzdh table {
   font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wdwlwaheej thead, #wdwlwaheej tbody, #wdwlwaheej tfoot, #wdwlwaheej tr, #wdwlwaheej td, #wdwlwaheej th {
+#mqyermyzdh thead, #mqyermyzdh tbody, #mqyermyzdh tfoot, #mqyermyzdh tr, #mqyermyzdh td, #mqyermyzdh th {
   border-style: none;
 }
 
-#wdwlwaheej p {
+#mqyermyzdh p {
   margin: 0;
   padding: 0;
 }
 
-#wdwlwaheej .gt_table {
+#mqyermyzdh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -919,12 +921,12 @@ Table&nbsp;2: Structural models supported by measr
   border-left-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_caption {
+#mqyermyzdh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wdwlwaheej .gt_title {
+#mqyermyzdh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -936,7 +938,7 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-width: 0;
 }
 
-#wdwlwaheej .gt_subtitle {
+#mqyermyzdh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -948,7 +950,7 @@ Table&nbsp;2: Structural models supported by measr
   border-top-width: 0;
 }
 
-#wdwlwaheej .gt_heading {
+#mqyermyzdh .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -960,13 +962,13 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_bottom_border {
+#mqyermyzdh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_col_headings {
+#mqyermyzdh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FFFFFF;
@@ -981,7 +983,7 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_col_heading {
+#mqyermyzdh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1001,7 +1003,7 @@ Table&nbsp;2: Structural models supported by measr
   overflow-x: hidden;
 }
 
-#wdwlwaheej .gt_column_spanner_outer {
+#mqyermyzdh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1013,15 +1015,15 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 4px;
 }
 
-#wdwlwaheej .gt_column_spanner_outer:first-child {
+#mqyermyzdh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wdwlwaheej .gt_column_spanner_outer:last-child {
+#mqyermyzdh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wdwlwaheej .gt_column_spanner {
+#mqyermyzdh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1033,11 +1035,11 @@ Table&nbsp;2: Structural models supported by measr
   width: 100%;
 }
 
-#wdwlwaheej .gt_spanner_row {
+#mqyermyzdh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wdwlwaheej .gt_group_heading {
+#mqyermyzdh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1063,7 +1065,7 @@ Table&nbsp;2: Structural models supported by measr
   text-align: left;
 }
 
-#wdwlwaheej .gt_empty_group_heading {
+#mqyermyzdh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1078,15 +1080,15 @@ Table&nbsp;2: Structural models supported by measr
   vertical-align: middle;
 }
 
-#wdwlwaheej .gt_from_md > :first-child {
+#mqyermyzdh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wdwlwaheej .gt_from_md > :last-child {
+#mqyermyzdh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wdwlwaheej .gt_row {
+#mqyermyzdh .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -1105,7 +1107,7 @@ Table&nbsp;2: Structural models supported by measr
   overflow-x: hidden;
 }
 
-#wdwlwaheej .gt_stub {
+#mqyermyzdh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1118,7 +1120,7 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#wdwlwaheej .gt_stub_row_group {
+#mqyermyzdh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1132,15 +1134,15 @@ Table&nbsp;2: Structural models supported by measr
   vertical-align: top;
 }
 
-#wdwlwaheej .gt_row_group_first td {
+#mqyermyzdh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wdwlwaheej .gt_row_group_first th {
+#mqyermyzdh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wdwlwaheej .gt_summary_row {
+#mqyermyzdh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1150,16 +1152,16 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#wdwlwaheej .gt_first_summary_row {
+#mqyermyzdh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_first_summary_row.thick {
+#mqyermyzdh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wdwlwaheej .gt_last_summary_row {
+#mqyermyzdh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1169,7 +1171,7 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_grand_summary_row {
+#mqyermyzdh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1179,7 +1181,7 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#wdwlwaheej .gt_first_grand_summary_row {
+#mqyermyzdh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1189,7 +1191,7 @@ Table&nbsp;2: Structural models supported by measr
   border-top-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_last_grand_summary_row_top {
+#mqyermyzdh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1199,11 +1201,11 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_striped {
+#mqyermyzdh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wdwlwaheej .gt_table_body {
+#mqyermyzdh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1212,7 +1214,7 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_footnotes {
+#mqyermyzdh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1226,7 +1228,7 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_footnote {
+#mqyermyzdh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1235,7 +1237,7 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#wdwlwaheej .gt_sourcenotes {
+#mqyermyzdh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1249,7 +1251,7 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#wdwlwaheej .gt_sourcenote {
+#mqyermyzdh .gt_sourcenote {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -1257,72 +1259,72 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#wdwlwaheej .gt_left {
+#mqyermyzdh .gt_left {
   text-align: left;
 }
 
-#wdwlwaheej .gt_center {
+#mqyermyzdh .gt_center {
   text-align: center;
 }
 
-#wdwlwaheej .gt_right {
+#mqyermyzdh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wdwlwaheej .gt_font_normal {
+#mqyermyzdh .gt_font_normal {
   font-weight: normal;
 }
 
-#wdwlwaheej .gt_font_bold {
+#mqyermyzdh .gt_font_bold {
   font-weight: bold;
 }
 
-#wdwlwaheej .gt_font_italic {
+#mqyermyzdh .gt_font_italic {
   font-style: italic;
 }
 
-#wdwlwaheej .gt_super {
+#mqyermyzdh .gt_super {
   font-size: 65%;
 }
 
-#wdwlwaheej .gt_footnote_marks {
+#mqyermyzdh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wdwlwaheej .gt_asterisk {
+#mqyermyzdh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wdwlwaheej .gt_indent_1 {
+#mqyermyzdh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wdwlwaheej .gt_indent_2 {
+#mqyermyzdh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wdwlwaheej .gt_indent_3 {
+#mqyermyzdh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wdwlwaheej .gt_indent_4 {
+#mqyermyzdh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wdwlwaheej .gt_indent_5 {
+#mqyermyzdh .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wdwlwaheej .katex-display {
+#mqyermyzdh .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wdwlwaheej div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mqyermyzdh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1547,32 +1549,32 @@ Table&nbsp;2: Structural models supported by measr
 </section><div id="quarto-appendix" class="default"><section id="session-info" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
 <div class="cell" data-layout-align="center">
 <pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
-#&gt;  version      R version 4.5.2 (2025-10-31)
+#&gt;  version      R version 4.6.1 (2026-06-24)
 #&gt;  language     (EN)
-#&gt;  date         2026-04-04
-#&gt;  pandoc       3.9
-#&gt;  quarto       1.9.24
-#&gt;  Stan (rstan) 2.37.0
+#&gt;  date         2026-10-13
+#&gt;  pandoc       3.8.3
+#&gt;  quarto       1.10.19
+#&gt;  Stan (rstan) 2.39.0
 #&gt; 
 #&gt; ─ Packages ─────────────────────────────────────────────────────────
 #&gt;  package          version     date (UTC) source
-#&gt;  bridgesampling   1.2-1       2025-11-19 CRAN (R 4.5.2)
-#&gt;  dcmdata          0.2.0       2026-03-10 CRAN (R 4.5.2)
-#&gt;  dcmstan          0.1.0       2025-11-24 CRAN (R 4.5.2)
-#&gt;  dplyr            1.2.0       2026-02-03 CRAN (R 4.5.2)
-#&gt;  forcats          1.0.1       2025-09-25 CRAN (R 4.5.0)
-#&gt;  ggplot2          4.0.2       2026-02-03 CRAN (R 4.5.2)
-#&gt;  loo              2.9.0.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
-#&gt;  lubridate        1.9.5       2026-02-04 CRAN (R 4.5.2)
-#&gt;  measr            2.0.0.9000  2026-03-21 Github (r-dcm/measr@475bc50)
-#&gt;  posterior        1.6.1.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
-#&gt;  purrr            1.2.1       2026-01-09 CRAN (R 4.5.2)
-#&gt;  readr            2.2.0       2026-02-19 CRAN (R 4.5.2)
-#&gt;  rlang            1.1.7       2026-01-09 CRAN (R 4.5.2)
-#&gt;  rstan            2.36.0.9000 2025-09-26 https://stan-dev.r-universe.dev (R 4.5.1)
-#&gt;  stringr          1.6.0       2025-11-04 CRAN (R 4.5.0)
-#&gt;  tibble           3.3.1       2026-01-11 CRAN (R 4.5.2)
-#&gt;  tidyr            1.3.2       2025-12-19 CRAN (R 4.5.2)
+#&gt;  bridgesampling   1.2-1       2025-11-19 RSPM
+#&gt;  dcmdata          0.2.0       2026-03-10 RSPM
+#&gt;  dcmstan          0.1.0       2025-11-24 RSPM
+#&gt;  dplyr            1.2.1       2026-04-03 RSPM
+#&gt;  forcats          1.0.1       2025-09-25 RSPM
+#&gt;  ggplot2          4.0.3       2026-04-22 RSPM
+#&gt;  loo              2.10.1.9000 2026-10-13 repository (https://github.com/stan-dev/loo@b22ea49)
+#&gt;  lubridate        1.9.5       2026-02-04 RSPM
+#&gt;  measr            2.0.1       2026-03-27 RSPM
+#&gt;  posterior        1.7.1       2026-10-13 repository (https://github.com/stan-dev/posterior@6dd1e12)
+#&gt;  purrr            1.2.2       2026-04-10 RSPM
+#&gt;  readr            2.2.0       2026-02-19 RSPM
+#&gt;  rlang            1.3.0       2026-07-05 RSPM
+#&gt;  rstan            2.39.0.9000 2026-10-13 repository (https://github.com/stan-dev/rstan@81f6125)
+#&gt;  stringr          1.6.0       2025-11-04 RSPM
+#&gt;  tibble           3.3.1       2026-01-11 RSPM
+#&gt;  tidyr            1.3.2       2025-12-19 RSPM
 #&gt; 
 #&gt; ────────────────────────────────────────────────────────────────────</code></pre>
 </div>

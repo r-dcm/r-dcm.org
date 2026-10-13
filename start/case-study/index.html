@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.24">
+<meta name="generator" content="quarto-1.10.19">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Develop a diagnostic model using best practices.">
 <title>A diagnostic assessment case study – r-dcm</title>
@@ -10,10 +10,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -87,15 +90,14 @@ div.csl-indent {
 <link href="../../assets/img/favicon-96x96.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b3aaa6997641482631754dbbac2f39fc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7af561f5e3242bb7ad291c7262587aec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0f96150053b5d64986f732095ddb08ac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ea5bab6effb13e923c874f1487cb6e32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -370,7 +372,7 @@ div.csl-indent {
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Item *p*-value"</span>, y <span class="op">=</span> <span class="st">"Measured attributes"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
-<div id="fig-pvalue-plot" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Scatter plot showing item p-values on the x-axis and attribute combinations from the Q-matrix on the y-axis.">
+<div id="fig-pvalue-plot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatter plot showing item p-values on the x-axis and attribute combinations from the Q-matrix on the y-axis." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pvalue-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-pvalue-plot-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Scatter plot showing item p-values on the x-axis and attribute combinations from the Q-matrix on the y-axis.">
 </div>
@@ -525,7 +527,7 @@ Figure&nbsp;1: Item <em>p</em>-values by pathway level.
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
-<div id="fig-rawscore-dist" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Line plot showing the observed number of students at each raw score point, superimposed over an interval showing the expected number of students at each score point according to the estimated model.">
+<div id="fig-rawscore-dist" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line plot showing the observed number of students at each raw score point, superimposed over an interval showing the expected number of students at each score point according to the estimated model." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rawscore-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-rawscore-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Line plot showing the observed number of students at each raw score point, superimposed over an interval showing the expected number of students at each score point according to the estimated model.">
 </div>
@@ -589,7 +591,7 @@ Figure&nbsp;2: Posterior predictive check for the raw score distribution.
 <span>  <span class="fu">scale_fill_okabeito</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Unconstrained"</span>, <span class="st">"BayesNet"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Base rate"</span>, y <span class="op">=</span> <span class="st">"Profile"</span>, fill <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
-<div id="fig-strc-compare" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar chart showing class base rats on the x-axis and profiles on the y-axis.">
+<div id="fig-strc-compare" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar chart showing class base rats on the x-axis and profiles on the y-axis." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-strc-compare-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-strc-compare-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Bar chart showing class base rats on the x-axis and profiles on the y-axis.">
 </div>
@@ -612,9 +614,13 @@ Figure&nbsp;3: Base rates for the unconstrained and BayesNet structural models.
 <p>We can also use model comparisons and leave-one-out cross validation (LOO) to evaluate the hierarchy imposed by the BayesNet. Here, we see that the BayesNet is the preferred model, although the difference between the models is negligible. This is what we would hope to see. Imposing the hierarchy has not hurt model fit, and the fewer parameters of the BayesNet makes it preferred.</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://mc-stan.org/loo/reference/loo_compare.html">loo_compare</a></span><span class="op">(</span><span class="va">pie_lcdm</span>, <span class="va">pie_bayesnet</span><span class="op">)</span></span>
-<span><span class="co">#&gt;              elpd_diff se_diff</span></span>
-<span><span class="co">#&gt; pie_bayesnet  0.0       0.0   </span></span>
-<span><span class="co">#&gt; pie_lcdm     -1.7       1.4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="co">#&gt;         model elpd_diff se_diff p_worse       diag_diff diag_elpd</span></span>
+<span><span class="co">#&gt;  pie_bayesnet       0.0     0.0      NA                          </span></span>
+<span><span class="co">#&gt;      pie_lcdm      -1.7     1.4    0.89 |elpd_diff| &lt; 4</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Diagnostic flags present.</span></span>
+<span><span class="co">#&gt; See ?`loo-glossary` (sections `diag_diff` and `diag_elpd`)</span></span>
+<span><span class="co">#&gt; or https://mc-stan.org/loo/reference/loo-glossary.html.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finally, we can also examine classification reliability for the BayesNet model. Under the BayesNet hierarchy, all three pathway levels have high levels of both classification accuracy and consistency, indicating that we can have confidence in the classifications made by the model.</p>
 <div class="cell" data-layout-align="center">
@@ -631,32 +637,32 @@ Figure&nbsp;3: Base rates for the unconstrained and BayesNet structural models.
 </section><div id="quarto-appendix" class="default"><section id="session-info" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
 <div class="cell" data-layout-align="center">
 <pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
-#&gt;  version      R version 4.5.2 (2025-10-31)
+#&gt;  version      R version 4.6.1 (2026-06-24)
 #&gt;  language     (EN)
-#&gt;  date         2026-04-04
-#&gt;  pandoc       3.9
-#&gt;  quarto       1.9.24
-#&gt;  Stan (rstan) 2.37.0
+#&gt;  date         2026-10-13
+#&gt;  pandoc       3.8.3
+#&gt;  quarto       1.10.19
+#&gt;  Stan (rstan) 2.39.0
 #&gt; 
 #&gt; ─ Packages ─────────────────────────────────────────────────────────
 #&gt;  package          version     date (UTC) source
-#&gt;  bridgesampling   1.2-1       2025-11-19 CRAN (R 4.5.2)
-#&gt;  dcmdata          0.2.0       2026-03-10 CRAN (R 4.5.2)
-#&gt;  dcmstan          0.1.0       2025-11-24 CRAN (R 4.5.2)
-#&gt;  dplyr            1.2.0       2026-02-03 CRAN (R 4.5.2)
-#&gt;  forcats          1.0.1       2025-09-25 CRAN (R 4.5.0)
-#&gt;  ggplot2          4.0.2       2026-02-03 CRAN (R 4.5.2)
-#&gt;  loo              2.9.0.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
-#&gt;  lubridate        1.9.5       2026-02-04 CRAN (R 4.5.2)
-#&gt;  measr            2.0.0.9000  2026-03-21 Github (r-dcm/measr@475bc50)
-#&gt;  posterior        1.6.1.9000  2025-12-30 https://stan-dev.r-universe.dev (R 4.5.2)
-#&gt;  purrr            1.2.1       2026-01-09 CRAN (R 4.5.2)
-#&gt;  readr            2.2.0       2026-02-19 CRAN (R 4.5.2)
-#&gt;  rlang            1.1.7       2026-01-09 CRAN (R 4.5.2)
-#&gt;  rstan            2.36.0.9000 2025-09-26 https://stan-dev.r-universe.dev (R 4.5.1)
-#&gt;  stringr          1.6.0       2025-11-04 CRAN (R 4.5.0)
-#&gt;  tibble           3.3.1       2026-01-11 CRAN (R 4.5.2)
-#&gt;  tidyr            1.3.2       2025-12-19 CRAN (R 4.5.2)
+#&gt;  bridgesampling   1.2-1       2025-11-19 RSPM
+#&gt;  dcmdata          0.2.0       2026-03-10 RSPM
+#&gt;  dcmstan          0.1.0       2025-11-24 RSPM
+#&gt;  dplyr            1.2.1       2026-04-03 RSPM
+#&gt;  forcats          1.0.1       2025-09-25 RSPM
+#&gt;  ggplot2          4.0.3       2026-04-22 RSPM
+#&gt;  loo              2.10.1.9000 2026-10-13 repository (https://github.com/stan-dev/loo@b22ea49)
+#&gt;  lubridate        1.9.5       2026-02-04 RSPM
+#&gt;  measr            2.0.1       2026-03-27 RSPM
+#&gt;  posterior        1.7.1       2026-10-13 repository (https://github.com/stan-dev/posterior@6dd1e12)
+#&gt;  purrr            1.2.2       2026-04-10 RSPM
+#&gt;  readr            2.2.0       2026-02-19 RSPM
+#&gt;  rlang            1.3.0       2026-07-05 RSPM
+#&gt;  rstan            2.39.0.9000 2026-10-13 repository (https://github.com/stan-dev/rstan@81f6125)
+#&gt;  stringr          1.6.0       2025-11-04 RSPM
+#&gt;  tibble           3.3.1       2026-01-11 RSPM
+#&gt;  tidyr            1.3.2       2025-12-19 RSPM
 #&gt; 
 #&gt; ────────────────────────────────────────────────────────────────────</code></pre>
 </div>

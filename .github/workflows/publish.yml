@@ -29,7 +29,8 @@ jobs:
           libv8-dev libglpk-dev libjpeg-dev libpoppler-cpp-dev libgit2-dev \
           libpng-dev libx11-dev libcairo2-dev libfontconfig1-dev \
           libfreetype6-dev pandoc libsundials-dev \
-          libgfortran-13-dev libblas-dev liblapack-dev
+          libgfortran-13-dev libblas-dev liblapack-dev \
+          libfribidi-dev libharfbuzz-dev libtiff-dev libwebp-dev
       
       - name: Install R
         uses: r-lib/actions/setup-r@v2

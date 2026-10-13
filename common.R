@@ -3,11 +3,14 @@ print(here::here())
 library(wjake)
 library(showtext)
 library(english)
+library(downlit)
 
 # ggplot2 theme-----------------------------------------------------------------
-set_theme(
-  base_family = "Open Sans",
-  plot_margin = ggplot2::margin(10, 10, 10, 10)
+ggplot2::set_theme(
+  wjake::theme_wjake(
+    base_family = "Open Sans",
+    plot.margin = ggplot2::margin(10, 10, 10, 10)
+  )
 )
 
 font_add_google("Open Sans")

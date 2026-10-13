@@ -28,7 +28,7 @@ jobs:
           build-essential pkg-config libcurl4-openssl-dev libssl-dev libxml2-dev \
           libv8-dev libglpk-dev libjpeg-dev libpoppler-cpp-dev libgit2-dev \
           libpng-dev libx11-dev libcairo2-dev libfontconfig1-dev \
-          libfreetype6-dev pandoc libsundials-dev libsundials-serial-dev \
+          libfreetype6-dev pandoc libsundials-dev \
           libgfortran-13-dev libblas-dev liblapack-dev \
           libfribidi-dev libharfbuzz-dev libtiff-dev libwebp-dev
       

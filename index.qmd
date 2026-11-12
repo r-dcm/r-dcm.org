@@ -2,6 +2,16 @@
 pagetitle: "r-dcm"
 image: "https://raw.githubusercontent.com/r-dcm/hex-stickers/refs/heads/main/svg/r-dcm.svg"
 image-alt: "r-dcm hexagon logo"
+open-graph:
+  image: "assets/img/rdcm-social.jpg"
+  image-alt: "A large hexagon overlayed on smaller tessellated hexagons."
+twitter-card:
+  image: "assets/img/rdcm-social.jpg"
+  image-alt: "A large hexagon overlayed on smaller tessellated hexagons."
+  card-style: summary_large_image
+  creator: "@wjakethompson"
+  site: "@atlas4learning"
+
 engine: knitr
 toc: false
 format:

@@ -23,10 +23,10 @@ website:
   site-url: https://r-dcm.org
   repo-url: https://github.com/r-dcm/r-dcm.org
   open-graph:
-    image: "assets/img/rdcm-social.jpg"
+    image: "/assets/img/rdcm-social.jpg"
     image-alt: "A large hexagon overlayed on smaller tessellated hexagons."
   twitter-card:
-    image: "assets/img/rdcm-social.jpg"
+    image: "/assets/img/rdcm-social.jpg"
     image-alt: "A large hexagon overlayed on smaller tessellated hexagons."
     card-style: summary_large_image
     creator: "@wjakethompson"

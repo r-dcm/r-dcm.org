@@ -1,6 +1,7 @@
 ---
 title: "r-dcm blog"
 search: false
+freeze: false
 listing:
   sort: "date desc"
   feed: 

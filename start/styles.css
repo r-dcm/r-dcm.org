@@ -33,3 +33,9 @@ div.sidebar-item-container {
   color: #D7263D;
   /* $theme-red */
 }
+
+/* Hide the published date on start articles. The date stays in the YAML so
+   the articles are included in the RSS feed (rss.qmd). */
+.quarto-title-meta {
+  display: none;
+}

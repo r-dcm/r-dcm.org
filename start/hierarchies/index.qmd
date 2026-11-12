@@ -1,5 +1,6 @@
 ---
 title: "Define attribute relationships"
+date: 2026-03-24
 weight: 3
 description: |
   Include information about how your attributes relate to and interact with each other.

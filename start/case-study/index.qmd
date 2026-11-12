@@ -1,5 +1,6 @@
 ---
 title: "A diagnostic assessment case study"
+date: 2026-04-04
 weight: 4
 description: |
   Develop a diagnostic model using best practices.

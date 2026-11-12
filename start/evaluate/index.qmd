@@ -1,5 +1,6 @@
 ---
 title: "Evaluate model performance"
+date: 2026-03-02
 weight: 2
 description: |
   Measure model performance through fit, comparisons, and reliability.

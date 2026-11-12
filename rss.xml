@@ -10,7 +10,7 @@
 <atom:link href="https://r-dcm.org/rss.xml" rel="self" type="application/rss+xml"/>
 <description>r-dcm blog</description>
 <language>en</language>
-<generator>quarto-1.10.19</generator>
+<generator>quarto-1.11.9</generator>
 <lastBuildDate>Wed, 11 Mar 2026 00:00:00 GMT</lastBuildDate>
 <item>
   <title>dcmdata 0.2.0</title>
@@ -319,7 +319,7 @@ Tatsuoka, K. K. (1990). Toward an integration of item-response theory and cognit
 <div id="ref-hdcm" class="csl-entry">
 Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification models: <span>A</span> family of models for estimating and testing attribute hierarchies. <em>Psychometrika</em>, <em>79</em>(2), 317–339. <a href="https://doi.org/10.1007/s11336-013-9362-0">https://doi.org/10.1007/s11336-013-9362-0</a>
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2026,
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{thompson2026,
   author = {Thompson, W. Jake},
   title = {Dcmdata 0.2.0},
   date = {2026-03-11},
@@ -327,14 +327,14 @@ Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification m
   doi = {10.59350/18f7y-yjv74},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2026" class="csl-entry quarto-appendix-citeas">
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2026" class="csl-entry quarto-appendix-citeas">
 Thompson, W. J. (2026, March 11). <em>dcmdata 0.2.0</em>. <a href="https://doi.org/10.59350/18f7y-yjv74">https://doi.org/10.59350/18f7y-yjv74</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>dcmdata</category>
   <guid>https://r-dcm.org/blog/2026-03-dcmdata-0.2.0/</guid>
   <pubDate>Wed, 11 Mar 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://r-dcm.org/blog/2026-03-dcmdata-0.2.0/featured.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://r-dcm.org/blog/2026-03-dcmdata-0.2.0/featured.jpg" medium="image" type="image/jpeg" height="108" width="144"/>
 </item>
 <item>
   <title>measr 2.0.0</title>
@@ -1152,7 +1152,7 @@ Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification m
 <div id="ref-yenq3" class="csl-entry">
 Yen, W. M. (1984). Effects of local item dependence on the fit and equating performance of the three-parameter logistic model. <em>Applied Psychological Measurement</em>, <em>8</em>(2), 125–145. <a href="https://doi.org/10.1177/014662168400800201">https://doi.org/10.1177/014662168400800201</a>
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2026,
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{thompson2026,
   author = {Thompson, W. Jake},
   title = {Measr 2.0.0},
   date = {2026-01-16},
@@ -1160,14 +1160,14 @@ Yen, W. M. (1984). Effects of local item dependence on the fit and equating perf
   doi = {10.59350/ffe0r-arj02},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2026" class="csl-entry quarto-appendix-citeas">
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2026" class="csl-entry quarto-appendix-citeas">
 Thompson, W. J. (2026, January 16). <em>measr 2.0.0</em>. <a href="https://doi.org/10.59350/ffe0r-arj02">https://doi.org/10.59350/ffe0r-arj02</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>measr</category>
   <guid>https://r-dcm.org/blog/2026-01-measr-2.0.0/</guid>
   <pubDate>Fri, 16 Jan 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://r-dcm.org/blog/2026-01-measr-2.0.0/featured.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://r-dcm.org/blog/2026-01-measr-2.0.0/featured.jpg" medium="image" type="image/jpeg" height="108" width="144"/>
 </item>
 <item>
   <title>dcmstan 0.1.0</title>
@@ -2066,7 +2066,7 @@ Henson, R. A., Templin, J. L., &amp; Willse, J. T. (2009). Defining a family of 
 <div id="ref-ecpe" class="csl-entry">
 Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model estimates using <span>Mplus</span>. <em>Educational Measurement: Issues and Practice</em>, <em>32</em>(2), 37–50. <a href="https://doi.org/10.1111/emip.12010">https://doi.org/10.1111/emip.12010</a>
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2025,
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{thompson2025,
   author = {Thompson, W. Jake},
   title = {Dcmstan 0.1.0},
   date = {2025-11-26},
@@ -2074,14 +2074,14 @@ Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model
   doi = {10.59350/1kz71-zdj91},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2025" class="csl-entry quarto-appendix-citeas">
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2025" class="csl-entry quarto-appendix-citeas">
 Thompson, W. J. (2025, November 26). <em>dcmstan 0.1.0</em>. <a href="https://doi.org/10.59350/1kz71-zdj91">https://doi.org/10.59350/1kz71-zdj91</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>dcmstan</category>
   <guid>https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/</guid>
   <pubDate>Wed, 26 Nov 2025 00:00:00 GMT</pubDate>
-  <media:content url="https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/featured.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://r-dcm.org/blog/2025-11-dcmstan-0.1.0/featured.jpg" medium="image" type="image/jpeg" height="96" width="144"/>
 </item>
 <item>
   <title>dcmdata 0.1.0</title>
@@ -2599,7 +2599,7 @@ Templin, J., &amp; Bradshaw, L. (2014). Hierarchical diagnostic classification m
 <div id="ref-ecpe" class="csl-entry">
 Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model estimates using <span>Mplus</span>. <em>Educational Measurement: Issues and Practice</em>, <em>32</em>(2), 37–50. <a href="https://doi.org/10.1111/emip.12010">https://doi.org/10.1111/emip.12010</a>
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2025,
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{thompson2025,
   author = {Thompson, W. Jake},
   title = {Dcmdata 0.1.0},
   date = {2025-08-21},
@@ -2607,14 +2607,14 @@ Templin, J., &amp; Hoffman, L. (2013). Obtaining diagnostic classification model
   doi = {10.59350/gmy4x-20093},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2025" class="csl-entry quarto-appendix-citeas">
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2025" class="csl-entry quarto-appendix-citeas">
 Thompson, W. J. (2025, August 21). <em>dcmdata 0.1.0</em>. <a href="https://doi.org/10.59350/gmy4x-20093">https://doi.org/10.59350/gmy4x-20093</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>dcmdata</category>
   <guid>https://r-dcm.org/blog/2025-08-dcmdata-0.1.0/</guid>
   <pubDate>Thu, 21 Aug 2025 00:00:00 GMT</pubDate>
-  <media:content url="https://r-dcm.org/blog/2025-08-dcmdata-0.1.0/featured.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://r-dcm.org/blog/2025-08-dcmdata-0.1.0/featured.jpg" medium="image" type="image/jpeg" height="96" width="144"/>
 </item>
 <item>
   <title>measr 1.0.0</title>
@@ -2697,7 +2697,7 @@ Thompson, W. J. (2019). <em>Bayesian psychometrics for diagnostic assessments: <
 <div id="ref-thompson-joss-2023" class="csl-entry">
 Thompson, W. J. (2023). <span class="nocase">measr</span>: <span>Bayesian</span> psychometric measurement using <span>Stan</span>. <em>Journal of Open Source Software</em>, <em>8</em>(91), 5742. <a href="https://doi.org/10.21105/joss.05742">https://doi.org/10.21105/joss.05742</a>
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2024,
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{thompson2024,
   author = {Thompson, W. Jake},
   title = {Measr 1.0.0},
   date = {2024-02-05},
@@ -2705,14 +2705,14 @@ Thompson, W. J. (2023). <span class="nocase">measr</span>: <span>Bayesian</span>
   doi = {10.59350/5f9an-xbn86},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2024" class="csl-entry quarto-appendix-citeas">
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2024" class="csl-entry quarto-appendix-citeas">
 Thompson, W. J. (2024, February 5). <em>measr 1.0.0</em>. <a href="https://doi.org/10.59350/5f9an-xbn86">https://doi.org/10.59350/5f9an-xbn86</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>measr</category>
   <guid>https://r-dcm.org/blog/2024-02-measr-1.0.0/</guid>
   <pubDate>Mon, 05 Feb 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://r-dcm.org/blog/2024-02-measr-1.0.0/featured.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://r-dcm.org/blog/2024-02-measr-1.0.0/featured.jpg" medium="image" type="image/jpeg" height="91" width="144"/>
 </item>
 <item>
   <title>measr 0.3.1</title>
@@ -2993,7 +2993,7 @@ font-style: inherit;">#&gt; ! Prior for parameter `eta[1]` with class `structura
 <p>As always, please <a href="https://github.com/wjakethompson/measr/issues">open an issue</a> with any bugs or feature requests for future development!</p>
 
 
-</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2023,
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{thompson2023,
   author = {Thompson, W. Jake},
   title = {Measr 0.3.1},
   date = {2023-06-06},
@@ -3001,14 +3001,14 @@ font-style: inherit;">#&gt; ! Prior for parameter `eta[1]` with class `structura
   doi = {10.59350/mt80h-8pp67},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2023" class="csl-entry quarto-appendix-citeas">
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2023" class="csl-entry quarto-appendix-citeas">
 Thompson, W. J. (2023, June 6). <em>measr 0.3.1</em>. <a href="https://doi.org/10.59350/mt80h-8pp67">https://doi.org/10.59350/mt80h-8pp67</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>measr</category>
   <guid>https://r-dcm.org/blog/2023-06-measr-0.3.1/</guid>
   <pubDate>Tue, 06 Jun 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://r-dcm.org/blog/2023-06-measr-0.3.1/featured.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://r-dcm.org/blog/2023-06-measr-0.3.1/featured.jpg" medium="image" type="image/jpeg" height="106" width="144"/>
 </item>
 <item>
   <title>measr 0.2.1</title>
@@ -3477,7 +3477,7 @@ font-style: inherit;">#&gt; 3 fractions         0.936       0.882</span></span><
 <p>Featured photo by <a href="https://unsplash.com/@yer_a_wizard?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Fleur</a> on <a href="https://unsplash.com/photos/drafting-instruments-on-top-of-table-dQf7RZhMOJU?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
 
 
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{thompson2023,
+</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{thompson2023,
   author = {Thompson, W. Jake},
   title = {Measr 0.2.1},
   date = {2023-04-10},
@@ -3485,14 +3485,14 @@ font-style: inherit;">#&gt; 3 fractions         0.936       0.882</span></span><
   doi = {10.59350/nyd8q-sh748},
   langid = {en}
 }
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2023" class="csl-entry quarto-appendix-citeas">
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-thompson2023" class="csl-entry quarto-appendix-citeas">
 Thompson, W. J. (2023, April 10). <em>measr 0.2.1</em>. <a href="https://doi.org/10.59350/nyd8q-sh748">https://doi.org/10.59350/nyd8q-sh748</a>
 </div></div></section></div> ]]></description>
   <category>package</category>
   <category>measr</category>
   <guid>https://r-dcm.org/blog/2023-04-measr-0.2.1/</guid>
   <pubDate>Mon, 10 Apr 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://r-dcm.org/blog/2023-04-measr-0.2.1/featured.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://r-dcm.org/blog/2023-04-measr-0.2.1/featured.jpg" medium="image" type="image/jpeg" height="96" width="144"/>
 </item>
 <item>
   <title>A diagnostic assessment case study</title>
@@ -5552,11 +5552,11 @@ font-style: inherit;">#&gt; 3 L3           0.924       0.864</span></span></code
 </section><div id="quarto-appendix" class="default"><section id="session-info" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
 <div class="cell" data-layout-align="center">
 <pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
-#&gt;  version      R version 4.6.1 (2026-06-24)
+#&gt;  version      R version 4.6.2 (2026-10-29)
 #&gt;  language     (EN)
-#&gt;  date         2026-10-13
+#&gt;  date         2026-11-12
 #&gt;  pandoc       3.8.3
-#&gt;  quarto       1.10.19
+#&gt;  quarto       1.11.9
 #&gt;  Stan (rstan) 2.39.0
 #&gt; 
 #&gt; ─ Packages ─────────────────────────────────────────────────────────
@@ -5567,14 +5567,14 @@ font-style: inherit;">#&gt; 3 L3           0.924       0.864</span></span></code
 #&gt;  dplyr            1.2.1       2026-04-03 RSPM
 #&gt;  forcats          1.0.1       2025-09-25 RSPM
 #&gt;  ggplot2          4.0.3       2026-04-22 RSPM
-#&gt;  loo              2.10.1.9000 2026-10-13 repository (https://github.com/stan-dev/loo@b22ea49)
+#&gt;  loo              2.10.1.9000 2026-11-12 repository (https://github.com/stan-dev/loo@b22ea49)
 #&gt;  lubridate        1.9.5       2026-02-04 RSPM
 #&gt;  measr            2.0.1       2026-03-27 RSPM
-#&gt;  posterior        1.7.1       2026-10-13 repository (https://github.com/stan-dev/posterior@6dd1e12)
+#&gt;  posterior        1.7.1       2026-11-12 repository (https://github.com/stan-dev/posterior@6dd1e12)
 #&gt;  purrr            1.2.2       2026-04-10 RSPM
 #&gt;  readr            2.2.0       2026-02-19 RSPM
 #&gt;  rlang            1.3.0       2026-07-05 RSPM
-#&gt;  rstan            2.39.0.9000 2026-10-13 repository (https://github.com/stan-dev/rstan@81f6125)
+#&gt;  rstan            2.39.0.9000 2026-11-12 repository (https://github.com/stan-dev/rstan@81f6125)
 #&gt;  stringr          1.6.0       2025-11-04 RSPM
 #&gt;  tibble           3.3.1       2026-01-11 RSPM
 #&gt;  tidyr            1.3.2       2025-12-19 RSPM
@@ -5611,7 +5611,7 @@ Wang, C., &amp; Lu, J. (2021). Learning attribute hierarchies from data: Two exp
 </div>
 </div></section></div> ]]></description>
   <guid>https://r-dcm.org/start/case-study/</guid>
-  <pubDate>Tue, 13 Oct 2026 16:53:39 GMT</pubDate>
+  <pubDate>Thu, 12 Nov 2026 16:59:18 GMT</pubDate>
 </item>
 <item>
   <title>Evaluate model performance</title>
@@ -6665,7 +6665,7 @@ font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div></div>
 </details><div class="cell-output-display">
-<div id="fig-rawscore-dist" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line plot showing the observed number of respondents at each raw score point, superimposed over an interval showing the expected number of respondents at each score point from model-replicated data. The observed line runs through the middle of the credible interval bands, indicating good model fit." data-fig-align="center">
+<div id="fig-rawscore-dist" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Line plot showing the observed number of respondents at each raw score point, superimposed over an interval showing the expected number of respondents at each score point from model-replicated data. The observed line runs through the middle of the credible interval bands, indicating good model fit.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rawscore-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://r-dcm.org/start/evaluate/index_files/figure-html/fig-rawscore-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Line plot showing the observed number of respondents at each raw score point, superimposed over an interval showing the expected number of respondents at each score point from model-replicated data. The observed line runs through the middle of the credible interval bands, indicating good model fit.">
 </div>
@@ -6906,7 +6906,7 @@ font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div></div>
 </details><div class="cell-output-display">
-<div id="fig-chisq-dist" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit." data-fig-align="center">
+<div id="fig-chisq-dist" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://r-dcm.org/start/evaluate/index_files/figure-html/fig-chisq-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit.">
 </div>
@@ -7149,7 +7149,7 @@ font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span></span></code></pre></div></div>
 </details><div class="cell-output-display">
-<div id="fig-dina-chisq-dist" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit." data-fig-align="center">
+<div id="fig-dina-chisq-dist" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-dina-chisq-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://r-dcm.org/start/evaluate/index_files/figure-html/fig-dina-chisq-dist-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%" alt="Dot plot showing the distribution of chi-square statistics from replicated datasets. A vertical line marks the observed chi-square statistic, which falls near the center of the distribution, indicating good model fit.">
 </div>
@@ -7436,11 +7436,11 @@ font-style: inherit;">#&gt; 4 multiplicative_comparison  0.812  0.781 0.632  0.9
 </section><div id="quarto-appendix" class="default"><section id="session-info" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
 <div class="cell" data-layout-align="center">
 <pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
-#&gt;  version      R version 4.6.1 (2026-06-24)
+#&gt;  version      R version 4.6.2 (2026-10-29)
 #&gt;  language     (EN)
-#&gt;  date         2026-10-13
+#&gt;  date         2026-11-12
 #&gt;  pandoc       3.8.3
-#&gt;  quarto       1.10.19
+#&gt;  quarto       1.11.9
 #&gt;  Stan (rstan) 2.39.0
 #&gt; 
 #&gt; ─ Packages ─────────────────────────────────────────────────────────
@@ -7451,14 +7451,14 @@ font-style: inherit;">#&gt; 4 multiplicative_comparison  0.812  0.781 0.632  0.9
 #&gt;  dplyr            1.2.1       2026-04-03 RSPM
 #&gt;  forcats          1.0.1       2025-09-25 RSPM
 #&gt;  ggplot2          4.0.3       2026-04-22 RSPM
-#&gt;  loo              2.10.1.9000 2026-10-13 repository (https://github.com/stan-dev/loo@b22ea49)
+#&gt;  loo              2.10.1.9000 2026-11-12 repository (https://github.com/stan-dev/loo@b22ea49)
 #&gt;  lubridate        1.9.5       2026-02-04 RSPM
 #&gt;  measr            2.0.1       2026-03-27 RSPM
-#&gt;  posterior        1.7.1       2026-10-13 repository (https://github.com/stan-dev/posterior@6dd1e12)
+#&gt;  posterior        1.7.1       2026-11-12 repository (https://github.com/stan-dev/posterior@6dd1e12)
 #&gt;  purrr            1.2.2       2026-04-10 RSPM
 #&gt;  readr            2.2.0       2026-02-19 RSPM
 #&gt;  rlang            1.3.0       2026-07-05 RSPM
-#&gt;  rstan            2.39.0.9000 2026-10-13 repository (https://github.com/stan-dev/rstan@81f6125)
+#&gt;  rstan            2.39.0.9000 2026-11-12 repository (https://github.com/stan-dev/rstan@81f6125)
 #&gt;  stringr          1.6.0       2025-11-04 RSPM
 #&gt;  tibble           3.3.1       2026-01-11 RSPM
 #&gt;  tidyr            1.3.2       2025-12-19 RSPM
@@ -7513,7 +7513,7 @@ Vehtari, A., Gelman, A., &amp; Gabry, J. (2017). Practical <span>Bayesian</span>
 </div>
 </div></section></div> ]]></description>
   <guid>https://r-dcm.org/start/evaluate/</guid>
-  <pubDate>Tue, 13 Oct 2026 16:53:39 GMT</pubDate>
+  <pubDate>Thu, 12 Nov 2026 16:59:18 GMT</pubDate>
 </item>
 <item>
   <title>Define attribute relationships</title>
@@ -7683,24 +7683,24 @@ font-style: inherit;">#&gt; # ℹ 18 more rows</span></span></code></pre></div><
 Table&nbsp;1: All possible attribute profiles under an unconstrained structural model
 </figcaption><div aria-describedby="tbl-unconstrained-profiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="auelkvlyvj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="rhdypxdffr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#auelkvlyvj table {
+#rhdypxdffr table {
   font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#auelkvlyvj thead, #auelkvlyvj tbody, #auelkvlyvj tfoot, #auelkvlyvj tr, #auelkvlyvj td, #auelkvlyvj th {
+#rhdypxdffr thead, #rhdypxdffr tbody, #rhdypxdffr tfoot, #rhdypxdffr tr, #rhdypxdffr td, #rhdypxdffr th {
   border-style: none;
 }
 
-#auelkvlyvj p {
+#rhdypxdffr p {
   margin: 0;
   padding: 0;
 }
 
-#auelkvlyvj .gt_table {
+#rhdypxdffr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -7726,12 +7726,12 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-left-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_caption {
+#rhdypxdffr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#auelkvlyvj .gt_title {
+#rhdypxdffr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -7743,7 +7743,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-bottom-width: 0;
 }
 
-#auelkvlyvj .gt_subtitle {
+#rhdypxdffr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -7755,7 +7755,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-top-width: 0;
 }
 
-#auelkvlyvj .gt_heading {
+#rhdypxdffr .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -7767,13 +7767,13 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-right-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_bottom_border {
+#rhdypxdffr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_col_headings {
+#rhdypxdffr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FFFFFF;
@@ -7788,7 +7788,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-right-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_col_heading {
+#rhdypxdffr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -7808,7 +7808,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   overflow-x: hidden;
 }
 
-#auelkvlyvj .gt_column_spanner_outer {
+#rhdypxdffr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -7820,15 +7820,15 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 4px;
 }
 
-#auelkvlyvj .gt_column_spanner_outer:first-child {
+#rhdypxdffr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#auelkvlyvj .gt_column_spanner_outer:last-child {
+#rhdypxdffr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#auelkvlyvj .gt_column_spanner {
+#rhdypxdffr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -7840,11 +7840,11 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   width: 100%;
 }
 
-#auelkvlyvj .gt_spanner_row {
+#rhdypxdffr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#auelkvlyvj .gt_group_heading {
+#rhdypxdffr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7870,7 +7870,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   text-align: left;
 }
 
-#auelkvlyvj .gt_empty_group_heading {
+#rhdypxdffr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -7885,15 +7885,15 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   vertical-align: middle;
 }
 
-#auelkvlyvj .gt_from_md > :first-child {
+#rhdypxdffr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#auelkvlyvj .gt_from_md > :last-child {
+#rhdypxdffr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#auelkvlyvj .gt_row {
+#rhdypxdffr .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -7912,7 +7912,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   overflow-x: hidden;
 }
 
-#auelkvlyvj .gt_stub {
+#rhdypxdffr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -7925,7 +7925,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 5px;
 }
 
-#auelkvlyvj .gt_stub_row_group {
+#rhdypxdffr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -7939,15 +7939,15 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   vertical-align: top;
 }
 
-#auelkvlyvj .gt_row_group_first td {
+#rhdypxdffr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#auelkvlyvj .gt_row_group_first th {
+#rhdypxdffr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#auelkvlyvj .gt_summary_row {
+#rhdypxdffr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -7957,16 +7957,16 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 5px;
 }
 
-#auelkvlyvj .gt_first_summary_row {
+#rhdypxdffr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_first_summary_row.thick {
+#rhdypxdffr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#auelkvlyvj .gt_last_summary_row {
+#rhdypxdffr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7976,7 +7976,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-bottom-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_grand_summary_row {
+#rhdypxdffr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -7986,7 +7986,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 5px;
 }
 
-#auelkvlyvj .gt_first_grand_summary_row {
+#rhdypxdffr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -7996,7 +7996,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-top-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_last_grand_summary_row_top {
+#rhdypxdffr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8006,11 +8006,11 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-bottom-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_striped {
+#rhdypxdffr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#auelkvlyvj .gt_table_body {
+#rhdypxdffr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -8019,7 +8019,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-bottom-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_footnotes {
+#rhdypxdffr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -8033,7 +8033,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-right-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_footnote {
+#rhdypxdffr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -8042,7 +8042,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 5px;
 }
 
-#auelkvlyvj .gt_sourcenotes {
+#rhdypxdffr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -8056,7 +8056,7 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   border-right-color: #D3D3D3;
 }
 
-#auelkvlyvj .gt_sourcenote {
+#rhdypxdffr .gt_sourcenote {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -8064,72 +8064,72 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
   padding-right: 5px;
 }
 
-#auelkvlyvj .gt_left {
+#rhdypxdffr .gt_left {
   text-align: left;
 }
 
-#auelkvlyvj .gt_center {
+#rhdypxdffr .gt_center {
   text-align: center;
 }
 
-#auelkvlyvj .gt_right {
+#rhdypxdffr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#auelkvlyvj .gt_font_normal {
+#rhdypxdffr .gt_font_normal {
   font-weight: normal;
 }
 
-#auelkvlyvj .gt_font_bold {
+#rhdypxdffr .gt_font_bold {
   font-weight: bold;
 }
 
-#auelkvlyvj .gt_font_italic {
+#rhdypxdffr .gt_font_italic {
   font-style: italic;
 }
 
-#auelkvlyvj .gt_super {
+#rhdypxdffr .gt_super {
   font-size: 65%;
 }
 
-#auelkvlyvj .gt_footnote_marks {
+#rhdypxdffr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#auelkvlyvj .gt_asterisk {
+#rhdypxdffr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#auelkvlyvj .gt_indent_1 {
+#rhdypxdffr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#auelkvlyvj .gt_indent_2 {
+#rhdypxdffr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#auelkvlyvj .gt_indent_3 {
+#rhdypxdffr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#auelkvlyvj .gt_indent_4 {
+#rhdypxdffr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#auelkvlyvj .gt_indent_5 {
+#rhdypxdffr .gt_indent_5 {
   text-indent: 25px;
 }
 
-#auelkvlyvj .katex-display {
+#rhdypxdffr .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#auelkvlyvj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#rhdypxdffr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -8211,24 +8211,24 @@ Table&nbsp;1: All possible attribute profiles under an unconstrained structural 
 Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
 </figcaption><div aria-describedby="tbl-hdcm-profiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="jiilzigytc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="gcxltendzv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#jiilzigytc table {
+#gcxltendzv table {
   font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jiilzigytc thead, #jiilzigytc tbody, #jiilzigytc tfoot, #jiilzigytc tr, #jiilzigytc td, #jiilzigytc th {
+#gcxltendzv thead, #gcxltendzv tbody, #gcxltendzv tfoot, #gcxltendzv tr, #gcxltendzv td, #gcxltendzv th {
   border-style: none;
 }
 
-#jiilzigytc p {
+#gcxltendzv p {
   margin: 0;
   padding: 0;
 }
 
-#jiilzigytc .gt_table {
+#gcxltendzv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -8254,12 +8254,12 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-left-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_caption {
+#gcxltendzv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jiilzigytc .gt_title {
+#gcxltendzv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -8271,7 +8271,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-bottom-width: 0;
 }
 
-#jiilzigytc .gt_subtitle {
+#gcxltendzv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -8283,7 +8283,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-top-width: 0;
 }
 
-#jiilzigytc .gt_heading {
+#gcxltendzv .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -8295,13 +8295,13 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-right-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_bottom_border {
+#gcxltendzv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_col_headings {
+#gcxltendzv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FFFFFF;
@@ -8316,7 +8316,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-right-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_col_heading {
+#gcxltendzv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -8336,7 +8336,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   overflow-x: hidden;
 }
 
-#jiilzigytc .gt_column_spanner_outer {
+#gcxltendzv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -8348,15 +8348,15 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 4px;
 }
 
-#jiilzigytc .gt_column_spanner_outer:first-child {
+#gcxltendzv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jiilzigytc .gt_column_spanner_outer:last-child {
+#gcxltendzv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jiilzigytc .gt_column_spanner {
+#gcxltendzv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -8368,11 +8368,11 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   width: 100%;
 }
 
-#jiilzigytc .gt_spanner_row {
+#gcxltendzv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jiilzigytc .gt_group_heading {
+#gcxltendzv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8398,7 +8398,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   text-align: left;
 }
 
-#jiilzigytc .gt_empty_group_heading {
+#gcxltendzv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -8413,15 +8413,15 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   vertical-align: middle;
 }
 
-#jiilzigytc .gt_from_md > :first-child {
+#gcxltendzv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jiilzigytc .gt_from_md > :last-child {
+#gcxltendzv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jiilzigytc .gt_row {
+#gcxltendzv .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -8440,7 +8440,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   overflow-x: hidden;
 }
 
-#jiilzigytc .gt_stub {
+#gcxltendzv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -8453,7 +8453,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 5px;
 }
 
-#jiilzigytc .gt_stub_row_group {
+#gcxltendzv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -8467,15 +8467,15 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   vertical-align: top;
 }
 
-#jiilzigytc .gt_row_group_first td {
+#gcxltendzv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jiilzigytc .gt_row_group_first th {
+#gcxltendzv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jiilzigytc .gt_summary_row {
+#gcxltendzv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -8485,16 +8485,16 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 5px;
 }
 
-#jiilzigytc .gt_first_summary_row {
+#gcxltendzv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_first_summary_row.thick {
+#gcxltendzv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jiilzigytc .gt_last_summary_row {
+#gcxltendzv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8504,7 +8504,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-bottom-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_grand_summary_row {
+#gcxltendzv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -8514,7 +8514,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 5px;
 }
 
-#jiilzigytc .gt_first_grand_summary_row {
+#gcxltendzv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8524,7 +8524,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-top-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_last_grand_summary_row_top {
+#gcxltendzv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -8534,11 +8534,11 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-bottom-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_striped {
+#gcxltendzv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jiilzigytc .gt_table_body {
+#gcxltendzv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -8547,7 +8547,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-bottom-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_footnotes {
+#gcxltendzv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -8561,7 +8561,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-right-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_footnote {
+#gcxltendzv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -8570,7 +8570,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 5px;
 }
 
-#jiilzigytc .gt_sourcenotes {
+#gcxltendzv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -8584,7 +8584,7 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   border-right-color: #D3D3D3;
 }
 
-#jiilzigytc .gt_sourcenote {
+#gcxltendzv .gt_sourcenote {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -8592,72 +8592,72 @@ Table&nbsp;2: Valid attribute profiles under the hypothesized hierarchy
   padding-right: 5px;
 }
 
-#jiilzigytc .gt_left {
+#gcxltendzv .gt_left {
   text-align: left;
 }
 
-#jiilzigytc .gt_center {
+#gcxltendzv .gt_center {
   text-align: center;
 }
 
-#jiilzigytc .gt_right {
+#gcxltendzv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jiilzigytc .gt_font_normal {
+#gcxltendzv .gt_font_normal {
   font-weight: normal;
 }
 
-#jiilzigytc .gt_font_bold {
+#gcxltendzv .gt_font_bold {
   font-weight: bold;
 }
 
-#jiilzigytc .gt_font_italic {
+#gcxltendzv .gt_font_italic {
   font-style: italic;
 }
 
-#jiilzigytc .gt_super {
+#gcxltendzv .gt_super {
   font-size: 65%;
 }
 
-#jiilzigytc .gt_footnote_marks {
+#gcxltendzv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jiilzigytc .gt_asterisk {
+#gcxltendzv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jiilzigytc .gt_indent_1 {
+#gcxltendzv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jiilzigytc .gt_indent_2 {
+#gcxltendzv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jiilzigytc .gt_indent_3 {
+#gcxltendzv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jiilzigytc .gt_indent_4 {
+#gcxltendzv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jiilzigytc .gt_indent_5 {
+#gcxltendzv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#jiilzigytc .katex-display {
+#gcxltendzv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#jiilzigytc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gcxltendzv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -10050,31 +10050,31 @@ font-style: inherit;">#&gt; or https://mc-stan.org/loo/reference/loo-glossary.ht
 </section><div id="quarto-appendix" class="default"><section id="session-info" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
 <div class="cell" data-layout-align="center">
 <pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
-#&gt;  version         R version 4.6.1 (2026-06-24)
+#&gt;  version         R version 4.6.2 (2026-10-29)
 #&gt;  language        (EN)
-#&gt;  date            2026-10-13
+#&gt;  date            2026-11-12
 #&gt;  pandoc          3.8.3
-#&gt;  quarto          1.10.19
+#&gt;  quarto          1.11.9
 #&gt;  Stan (rstan)    2.39.0
 #&gt;  Stan (cmdstanr) 2.40.0
 #&gt; 
 #&gt; ─ Packages ─────────────────────────────────────────────────────────
 #&gt;  package          version     date (UTC) source
 #&gt;  bridgesampling   1.2-1       2025-11-19 RSPM
-#&gt;  cmdstanr         0.9.0       2026-10-13 repository (https://github.com/stan-dev/cmdstanr@da99e2b)
+#&gt;  cmdstanr         0.9.0       2026-11-12 repository (https://github.com/stan-dev/cmdstanr@da99e2b)
 #&gt;  dcmdata          0.2.0       2026-03-10 RSPM
 #&gt;  dcmstan          0.1.0       2025-11-24 RSPM
 #&gt;  dplyr            1.2.1       2026-04-03 RSPM
 #&gt;  forcats          1.0.1       2025-09-25 RSPM
 #&gt;  ggplot2          4.0.3       2026-04-22 RSPM
-#&gt;  loo              2.10.1.9000 2026-10-13 repository (https://github.com/stan-dev/loo@b22ea49)
+#&gt;  loo              2.10.1.9000 2026-11-12 repository (https://github.com/stan-dev/loo@b22ea49)
 #&gt;  lubridate        1.9.5       2026-02-04 RSPM
 #&gt;  measr            2.0.1       2026-03-27 RSPM
-#&gt;  posterior        1.7.1       2026-10-13 repository (https://github.com/stan-dev/posterior@6dd1e12)
+#&gt;  posterior        1.7.1       2026-11-12 repository (https://github.com/stan-dev/posterior@6dd1e12)
 #&gt;  purrr            1.2.2       2026-04-10 RSPM
 #&gt;  readr            2.2.0       2026-02-19 RSPM
 #&gt;  rlang            1.3.0       2026-07-05 RSPM
-#&gt;  rstan            2.39.0.9000 2026-10-13 repository (https://github.com/stan-dev/rstan@81f6125)
+#&gt;  rstan            2.39.0.9000 2026-11-12 repository (https://github.com/stan-dev/rstan@81f6125)
 #&gt;  stringr          1.6.0       2025-11-04 RSPM
 #&gt;  tibble           3.3.1       2026-01-11 RSPM
 #&gt;  tidyr            1.3.2       2025-12-19 RSPM
@@ -10108,7 +10108,7 @@ Zhang, L., Carpenter, B., Gelman, A., &amp; A., V. (2022). Pathfinder: Parallel 
 </div>
 </div></section></div> ]]></description>
   <guid>https://r-dcm.org/start/hierarchies/</guid>
-  <pubDate>Tue, 13 Oct 2026 16:53:39 GMT</pubDate>
+  <pubDate>Thu, 12 Nov 2026 16:59:18 GMT</pubDate>
 </item>
 <item>
   <title>Specify a diagnostic model</title>
@@ -10382,24 +10382,24 @@ font-style: inherit;">#&gt;   `Vc` ~ dirichlet(1, 1, 1)</span></span></code></pr
 Table&nbsp;1: Measurement models supported by measr
 </figcaption><div aria-describedby="tbl-meas-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="pbohfucfas" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="lfvnjtlxkb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#pbohfucfas table {
+#lfvnjtlxkb table {
   font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pbohfucfas thead, #pbohfucfas tbody, #pbohfucfas tfoot, #pbohfucfas tr, #pbohfucfas td, #pbohfucfas th {
+#lfvnjtlxkb thead, #lfvnjtlxkb tbody, #lfvnjtlxkb tfoot, #lfvnjtlxkb tr, #lfvnjtlxkb td, #lfvnjtlxkb th {
   border-style: none;
 }
 
-#pbohfucfas p {
+#lfvnjtlxkb p {
   margin: 0;
   padding: 0;
 }
 
-#pbohfucfas .gt_table {
+#lfvnjtlxkb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -10425,12 +10425,12 @@ Table&nbsp;1: Measurement models supported by measr
   border-left-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_caption {
+#lfvnjtlxkb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pbohfucfas .gt_title {
+#lfvnjtlxkb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -10442,7 +10442,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-width: 0;
 }
 
-#pbohfucfas .gt_subtitle {
+#lfvnjtlxkb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -10454,7 +10454,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-top-width: 0;
 }
 
-#pbohfucfas .gt_heading {
+#lfvnjtlxkb .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -10466,13 +10466,13 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_bottom_border {
+#lfvnjtlxkb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_col_headings {
+#lfvnjtlxkb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FFFFFF;
@@ -10487,7 +10487,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_col_heading {
+#lfvnjtlxkb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -10507,7 +10507,7 @@ Table&nbsp;1: Measurement models supported by measr
   overflow-x: hidden;
 }
 
-#pbohfucfas .gt_column_spanner_outer {
+#lfvnjtlxkb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -10519,15 +10519,15 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 4px;
 }
 
-#pbohfucfas .gt_column_spanner_outer:first-child {
+#lfvnjtlxkb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pbohfucfas .gt_column_spanner_outer:last-child {
+#lfvnjtlxkb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pbohfucfas .gt_column_spanner {
+#lfvnjtlxkb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -10539,11 +10539,11 @@ Table&nbsp;1: Measurement models supported by measr
   width: 100%;
 }
 
-#pbohfucfas .gt_spanner_row {
+#lfvnjtlxkb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pbohfucfas .gt_group_heading {
+#lfvnjtlxkb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -10569,7 +10569,7 @@ Table&nbsp;1: Measurement models supported by measr
   text-align: left;
 }
 
-#pbohfucfas .gt_empty_group_heading {
+#lfvnjtlxkb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -10584,15 +10584,15 @@ Table&nbsp;1: Measurement models supported by measr
   vertical-align: middle;
 }
 
-#pbohfucfas .gt_from_md > :first-child {
+#lfvnjtlxkb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pbohfucfas .gt_from_md > :last-child {
+#lfvnjtlxkb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pbohfucfas .gt_row {
+#lfvnjtlxkb .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -10611,7 +10611,7 @@ Table&nbsp;1: Measurement models supported by measr
   overflow-x: hidden;
 }
 
-#pbohfucfas .gt_stub {
+#lfvnjtlxkb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -10624,7 +10624,7 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#pbohfucfas .gt_stub_row_group {
+#lfvnjtlxkb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -10638,15 +10638,15 @@ Table&nbsp;1: Measurement models supported by measr
   vertical-align: top;
 }
 
-#pbohfucfas .gt_row_group_first td {
+#lfvnjtlxkb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pbohfucfas .gt_row_group_first th {
+#lfvnjtlxkb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pbohfucfas .gt_summary_row {
+#lfvnjtlxkb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -10656,16 +10656,16 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#pbohfucfas .gt_first_summary_row {
+#lfvnjtlxkb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_first_summary_row.thick {
+#lfvnjtlxkb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pbohfucfas .gt_last_summary_row {
+#lfvnjtlxkb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -10675,7 +10675,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_grand_summary_row {
+#lfvnjtlxkb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -10685,7 +10685,7 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#pbohfucfas .gt_first_grand_summary_row {
+#lfvnjtlxkb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -10695,7 +10695,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-top-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_last_grand_summary_row_top {
+#lfvnjtlxkb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -10705,11 +10705,11 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_striped {
+#lfvnjtlxkb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pbohfucfas .gt_table_body {
+#lfvnjtlxkb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -10718,7 +10718,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_footnotes {
+#lfvnjtlxkb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -10732,7 +10732,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_footnote {
+#lfvnjtlxkb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -10741,7 +10741,7 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#pbohfucfas .gt_sourcenotes {
+#lfvnjtlxkb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -10755,7 +10755,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_sourcenote {
+#lfvnjtlxkb .gt_sourcenote {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -10763,72 +10763,72 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#pbohfucfas .gt_left {
+#lfvnjtlxkb .gt_left {
   text-align: left;
 }
 
-#pbohfucfas .gt_center {
+#lfvnjtlxkb .gt_center {
   text-align: center;
 }
 
-#pbohfucfas .gt_right {
+#lfvnjtlxkb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pbohfucfas .gt_font_normal {
+#lfvnjtlxkb .gt_font_normal {
   font-weight: normal;
 }
 
-#pbohfucfas .gt_font_bold {
+#lfvnjtlxkb .gt_font_bold {
   font-weight: bold;
 }
 
-#pbohfucfas .gt_font_italic {
+#lfvnjtlxkb .gt_font_italic {
   font-style: italic;
 }
 
-#pbohfucfas .gt_super {
+#lfvnjtlxkb .gt_super {
   font-size: 65%;
 }
 
-#pbohfucfas .gt_footnote_marks {
+#lfvnjtlxkb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pbohfucfas .gt_asterisk {
+#lfvnjtlxkb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pbohfucfas .gt_indent_1 {
+#lfvnjtlxkb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pbohfucfas .gt_indent_2 {
+#lfvnjtlxkb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pbohfucfas .gt_indent_3 {
+#lfvnjtlxkb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pbohfucfas .gt_indent_4 {
+#lfvnjtlxkb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pbohfucfas .gt_indent_5 {
+#lfvnjtlxkb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#pbohfucfas .katex-display {
+#lfvnjtlxkb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#pbohfucfas div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#lfvnjtlxkb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -10909,24 +10909,24 @@ Table&nbsp;1: Measurement models supported by measr
 Table&nbsp;2: Structural models supported by measr
 </figcaption><div aria-describedby="tbl-strc-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="mqyermyzdh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="ymyrpicxov" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#mqyermyzdh table {
+#ymyrpicxov table {
   font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mqyermyzdh thead, #mqyermyzdh tbody, #mqyermyzdh tfoot, #mqyermyzdh tr, #mqyermyzdh td, #mqyermyzdh th {
+#ymyrpicxov thead, #ymyrpicxov tbody, #ymyrpicxov tfoot, #ymyrpicxov tr, #ymyrpicxov td, #ymyrpicxov th {
   border-style: none;
 }
 
-#mqyermyzdh p {
+#ymyrpicxov p {
   margin: 0;
   padding: 0;
 }
 
-#mqyermyzdh .gt_table {
+#ymyrpicxov .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -10952,12 +10952,12 @@ Table&nbsp;2: Structural models supported by measr
   border-left-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_caption {
+#ymyrpicxov .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mqyermyzdh .gt_title {
+#ymyrpicxov .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -10969,7 +10969,7 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-width: 0;
 }
 
-#mqyermyzdh .gt_subtitle {
+#ymyrpicxov .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -10981,7 +10981,7 @@ Table&nbsp;2: Structural models supported by measr
   border-top-width: 0;
 }
 
-#mqyermyzdh .gt_heading {
+#ymyrpicxov .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -10993,13 +10993,13 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_bottom_border {
+#ymyrpicxov .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_col_headings {
+#ymyrpicxov .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FFFFFF;
@@ -11014,7 +11014,7 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_col_heading {
+#ymyrpicxov .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -11034,7 +11034,7 @@ Table&nbsp;2: Structural models supported by measr
   overflow-x: hidden;
 }
 
-#mqyermyzdh .gt_column_spanner_outer {
+#ymyrpicxov .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -11046,15 +11046,15 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 4px;
 }
 
-#mqyermyzdh .gt_column_spanner_outer:first-child {
+#ymyrpicxov .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mqyermyzdh .gt_column_spanner_outer:last-child {
+#ymyrpicxov .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mqyermyzdh .gt_column_spanner {
+#ymyrpicxov .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -11066,11 +11066,11 @@ Table&nbsp;2: Structural models supported by measr
   width: 100%;
 }
 
-#mqyermyzdh .gt_spanner_row {
+#ymyrpicxov .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mqyermyzdh .gt_group_heading {
+#ymyrpicxov .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -11096,7 +11096,7 @@ Table&nbsp;2: Structural models supported by measr
   text-align: left;
 }
 
-#mqyermyzdh .gt_empty_group_heading {
+#ymyrpicxov .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -11111,15 +11111,15 @@ Table&nbsp;2: Structural models supported by measr
   vertical-align: middle;
 }
 
-#mqyermyzdh .gt_from_md > :first-child {
+#ymyrpicxov .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mqyermyzdh .gt_from_md > :last-child {
+#ymyrpicxov .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mqyermyzdh .gt_row {
+#ymyrpicxov .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -11138,7 +11138,7 @@ Table&nbsp;2: Structural models supported by measr
   overflow-x: hidden;
 }
 
-#mqyermyzdh .gt_stub {
+#ymyrpicxov .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -11151,7 +11151,7 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#mqyermyzdh .gt_stub_row_group {
+#ymyrpicxov .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -11165,15 +11165,15 @@ Table&nbsp;2: Structural models supported by measr
   vertical-align: top;
 }
 
-#mqyermyzdh .gt_row_group_first td {
+#ymyrpicxov .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mqyermyzdh .gt_row_group_first th {
+#ymyrpicxov .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mqyermyzdh .gt_summary_row {
+#ymyrpicxov .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -11183,16 +11183,16 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#mqyermyzdh .gt_first_summary_row {
+#ymyrpicxov .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_first_summary_row.thick {
+#ymyrpicxov .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mqyermyzdh .gt_last_summary_row {
+#ymyrpicxov .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -11202,7 +11202,7 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_grand_summary_row {
+#ymyrpicxov .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -11212,7 +11212,7 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#mqyermyzdh .gt_first_grand_summary_row {
+#ymyrpicxov .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -11222,7 +11222,7 @@ Table&nbsp;2: Structural models supported by measr
   border-top-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_last_grand_summary_row_top {
+#ymyrpicxov .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -11232,11 +11232,11 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_striped {
+#ymyrpicxov .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mqyermyzdh .gt_table_body {
+#ymyrpicxov .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -11245,7 +11245,7 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_footnotes {
+#ymyrpicxov .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -11259,7 +11259,7 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_footnote {
+#ymyrpicxov .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -11268,7 +11268,7 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#mqyermyzdh .gt_sourcenotes {
+#ymyrpicxov .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -11282,7 +11282,7 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_sourcenote {
+#ymyrpicxov .gt_sourcenote {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -11290,72 +11290,72 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#mqyermyzdh .gt_left {
+#ymyrpicxov .gt_left {
   text-align: left;
 }
 
-#mqyermyzdh .gt_center {
+#ymyrpicxov .gt_center {
   text-align: center;
 }
 
-#mqyermyzdh .gt_right {
+#ymyrpicxov .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mqyermyzdh .gt_font_normal {
+#ymyrpicxov .gt_font_normal {
   font-weight: normal;
 }
 
-#mqyermyzdh .gt_font_bold {
+#ymyrpicxov .gt_font_bold {
   font-weight: bold;
 }
 
-#mqyermyzdh .gt_font_italic {
+#ymyrpicxov .gt_font_italic {
   font-style: italic;
 }
 
-#mqyermyzdh .gt_super {
+#ymyrpicxov .gt_super {
   font-size: 65%;
 }
 
-#mqyermyzdh .gt_footnote_marks {
+#ymyrpicxov .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mqyermyzdh .gt_asterisk {
+#ymyrpicxov .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mqyermyzdh .gt_indent_1 {
+#ymyrpicxov .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mqyermyzdh .gt_indent_2 {
+#ymyrpicxov .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mqyermyzdh .gt_indent_3 {
+#ymyrpicxov .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mqyermyzdh .gt_indent_4 {
+#ymyrpicxov .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mqyermyzdh .gt_indent_5 {
+#ymyrpicxov .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mqyermyzdh .katex-display {
+#ymyrpicxov .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mqyermyzdh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ymyrpicxov div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -12055,11 +12055,11 @@ font-style: inherit;">#&gt; # ℹ 262 more rows</span></span></code></pre></div>
 </section><div id="quarto-appendix" class="default"><section id="session-info" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
 <div class="cell" data-layout-align="center">
 <pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
-#&gt;  version      R version 4.6.1 (2026-06-24)
+#&gt;  version      R version 4.6.2 (2026-10-29)
 #&gt;  language     (EN)
-#&gt;  date         2026-10-13
+#&gt;  date         2026-11-12
 #&gt;  pandoc       3.8.3
-#&gt;  quarto       1.10.19
+#&gt;  quarto       1.11.9
 #&gt;  Stan (rstan) 2.39.0
 #&gt; 
 #&gt; ─ Packages ─────────────────────────────────────────────────────────
@@ -12070,14 +12070,14 @@ font-style: inherit;">#&gt; # ℹ 262 more rows</span></span></code></pre></div>
 #&gt;  dplyr            1.2.1       2026-04-03 RSPM
 #&gt;  forcats          1.0.1       2025-09-25 RSPM
 #&gt;  ggplot2          4.0.3       2026-04-22 RSPM
-#&gt;  loo              2.10.1.9000 2026-10-13 repository (https://github.com/stan-dev/loo@b22ea49)
+#&gt;  loo              2.10.1.9000 2026-11-12 repository (https://github.com/stan-dev/loo@b22ea49)
 #&gt;  lubridate        1.9.5       2026-02-04 RSPM
 #&gt;  measr            2.0.1       2026-03-27 RSPM
-#&gt;  posterior        1.7.1       2026-10-13 repository (https://github.com/stan-dev/posterior@6dd1e12)
+#&gt;  posterior        1.7.1       2026-11-12 repository (https://github.com/stan-dev/posterior@6dd1e12)
 #&gt;  purrr            1.2.2       2026-04-10 RSPM
 #&gt;  readr            2.2.0       2026-02-19 RSPM
 #&gt;  rlang            1.3.0       2026-07-05 RSPM
-#&gt;  rstan            2.39.0.9000 2026-10-13 repository (https://github.com/stan-dev/rstan@81f6125)
+#&gt;  rstan            2.39.0.9000 2026-11-12 repository (https://github.com/stan-dev/rstan@81f6125)
 #&gt;  stringr          1.6.0       2025-11-04 RSPM
 #&gt;  tibble           3.3.1       2026-01-11 RSPM
 #&gt;  tidyr            1.3.2       2025-12-19 RSPM
@@ -12132,7 +12132,7 @@ Templin, J., &amp; Henson, R. A. (2006). Measurement of psychological disorders 
 </div>
 </div></section></div> ]]></description>
   <guid>https://r-dcm.org/start/specify/</guid>
-  <pubDate>Tue, 13 Oct 2026 16:53:39 GMT</pubDate>
+  <pubDate>Thu, 12 Nov 2026 16:59:18 GMT</pubDate>
 </item>
 </channel>
 </rss>

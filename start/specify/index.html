@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta charset="UTF-8">
+<meta name="generator" content="quarto-1.11.9">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Get started by learning how to specify and estimate a model using measr.">
 <title>Specify a diagnostic model – r-dcm</title>
@@ -90,14 +89,15 @@ div.csl-indent {
 <link href="../../assets/img/favicon-96x96.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7af561f5e3242bb7ad291c7262587aec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-9ae5c72b37dfa155a0c3e107e79de40a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-ea5bab6effb13e923c874f1487cb6e32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6c515ecba9caba9e4e57bde9fbfbe2e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -126,18 +126,31 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script><script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Specify a diagnostic model">
+<meta property="og:description" content="Get started by learning how to specify and estimate a model using measr.">
+<meta property="og:image" content="https://r-dcm.org/assets/img/rdcm-social.jpg">
+<meta property="og:site_name" content="r-dcm">
+<meta property="og:image:alt" content="A large hexagon overlayed on smaller tessellated hexagons.">
+<meta property="og:image:height" content="4489">
+<meta property="og:image:width" content="8979">
+<meta name="twitter:title" content="Specify a diagnostic model">
+<meta name="twitter:description" content="Get started by learning how to specify and estimate a model using measr.">
+<meta name="twitter:image" content="https://r-dcm.org/assets/img/rdcm-social.jpg">
+<meta name="twitter:image:alt" content="A large hexagon overlayed on smaller tessellated hexagons.">
+<meta name="twitter:creator" content="@wjakethompson">
+<meta name="twitter:site" content="@atlas4learning">
+<meta name="twitter:card" content="summary_large_image">
 </head>
-<body class="nav-sidebar floating nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">r-dcm</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -163,18 +176,19 @@ div.csl-indent {
 </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
+            <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
-    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+    </nav><nav class="quarto-secondary-nav" aria-label="Toolbar"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../start/specify/index.html">Specify a diagnostic model</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../start/specify/index.html">Specify a diagnostic model</a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="sidebar-menu-container"> 
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Section"><div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -211,7 +225,7 @@ div.csl-indent {
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
 <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
@@ -235,7 +249,7 @@ div.csl-indent {
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content" tabindex="-1"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Specify a diagnostic model</h1>
 </div>
 
@@ -351,24 +365,24 @@ div.csl-indent {
 Table&nbsp;1: Measurement models supported by measr
 </figcaption><div aria-describedby="tbl-meas-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="pbohfucfas" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="lfvnjtlxkb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#pbohfucfas table {
+#lfvnjtlxkb table {
   font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pbohfucfas thead, #pbohfucfas tbody, #pbohfucfas tfoot, #pbohfucfas tr, #pbohfucfas td, #pbohfucfas th {
+#lfvnjtlxkb thead, #lfvnjtlxkb tbody, #lfvnjtlxkb tfoot, #lfvnjtlxkb tr, #lfvnjtlxkb td, #lfvnjtlxkb th {
   border-style: none;
 }
 
-#pbohfucfas p {
+#lfvnjtlxkb p {
   margin: 0;
   padding: 0;
 }
 
-#pbohfucfas .gt_table {
+#lfvnjtlxkb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -394,12 +408,12 @@ Table&nbsp;1: Measurement models supported by measr
   border-left-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_caption {
+#lfvnjtlxkb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pbohfucfas .gt_title {
+#lfvnjtlxkb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -411,7 +425,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-width: 0;
 }
 
-#pbohfucfas .gt_subtitle {
+#lfvnjtlxkb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -423,7 +437,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-top-width: 0;
 }
 
-#pbohfucfas .gt_heading {
+#lfvnjtlxkb .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -435,13 +449,13 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_bottom_border {
+#lfvnjtlxkb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_col_headings {
+#lfvnjtlxkb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FFFFFF;
@@ -456,7 +470,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_col_heading {
+#lfvnjtlxkb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -476,7 +490,7 @@ Table&nbsp;1: Measurement models supported by measr
   overflow-x: hidden;
 }
 
-#pbohfucfas .gt_column_spanner_outer {
+#lfvnjtlxkb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -488,15 +502,15 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 4px;
 }
 
-#pbohfucfas .gt_column_spanner_outer:first-child {
+#lfvnjtlxkb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pbohfucfas .gt_column_spanner_outer:last-child {
+#lfvnjtlxkb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pbohfucfas .gt_column_spanner {
+#lfvnjtlxkb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -508,11 +522,11 @@ Table&nbsp;1: Measurement models supported by measr
   width: 100%;
 }
 
-#pbohfucfas .gt_spanner_row {
+#lfvnjtlxkb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pbohfucfas .gt_group_heading {
+#lfvnjtlxkb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -538,7 +552,7 @@ Table&nbsp;1: Measurement models supported by measr
   text-align: left;
 }
 
-#pbohfucfas .gt_empty_group_heading {
+#lfvnjtlxkb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -553,15 +567,15 @@ Table&nbsp;1: Measurement models supported by measr
   vertical-align: middle;
 }
 
-#pbohfucfas .gt_from_md > :first-child {
+#lfvnjtlxkb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pbohfucfas .gt_from_md > :last-child {
+#lfvnjtlxkb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pbohfucfas .gt_row {
+#lfvnjtlxkb .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -580,7 +594,7 @@ Table&nbsp;1: Measurement models supported by measr
   overflow-x: hidden;
 }
 
-#pbohfucfas .gt_stub {
+#lfvnjtlxkb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -593,7 +607,7 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#pbohfucfas .gt_stub_row_group {
+#lfvnjtlxkb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -607,15 +621,15 @@ Table&nbsp;1: Measurement models supported by measr
   vertical-align: top;
 }
 
-#pbohfucfas .gt_row_group_first td {
+#lfvnjtlxkb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pbohfucfas .gt_row_group_first th {
+#lfvnjtlxkb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pbohfucfas .gt_summary_row {
+#lfvnjtlxkb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -625,16 +639,16 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#pbohfucfas .gt_first_summary_row {
+#lfvnjtlxkb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_first_summary_row.thick {
+#lfvnjtlxkb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pbohfucfas .gt_last_summary_row {
+#lfvnjtlxkb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -644,7 +658,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_grand_summary_row {
+#lfvnjtlxkb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -654,7 +668,7 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#pbohfucfas .gt_first_grand_summary_row {
+#lfvnjtlxkb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -664,7 +678,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-top-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_last_grand_summary_row_top {
+#lfvnjtlxkb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -674,11 +688,11 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_striped {
+#lfvnjtlxkb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pbohfucfas .gt_table_body {
+#lfvnjtlxkb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -687,7 +701,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_footnotes {
+#lfvnjtlxkb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -701,7 +715,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_footnote {
+#lfvnjtlxkb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -710,7 +724,7 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#pbohfucfas .gt_sourcenotes {
+#lfvnjtlxkb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -724,7 +738,7 @@ Table&nbsp;1: Measurement models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#pbohfucfas .gt_sourcenote {
+#lfvnjtlxkb .gt_sourcenote {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -732,72 +746,72 @@ Table&nbsp;1: Measurement models supported by measr
   padding-right: 5px;
 }
 
-#pbohfucfas .gt_left {
+#lfvnjtlxkb .gt_left {
   text-align: left;
 }
 
-#pbohfucfas .gt_center {
+#lfvnjtlxkb .gt_center {
   text-align: center;
 }
 
-#pbohfucfas .gt_right {
+#lfvnjtlxkb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pbohfucfas .gt_font_normal {
+#lfvnjtlxkb .gt_font_normal {
   font-weight: normal;
 }
 
-#pbohfucfas .gt_font_bold {
+#lfvnjtlxkb .gt_font_bold {
   font-weight: bold;
 }
 
-#pbohfucfas .gt_font_italic {
+#lfvnjtlxkb .gt_font_italic {
   font-style: italic;
 }
 
-#pbohfucfas .gt_super {
+#lfvnjtlxkb .gt_super {
   font-size: 65%;
 }
 
-#pbohfucfas .gt_footnote_marks {
+#lfvnjtlxkb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pbohfucfas .gt_asterisk {
+#lfvnjtlxkb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pbohfucfas .gt_indent_1 {
+#lfvnjtlxkb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pbohfucfas .gt_indent_2 {
+#lfvnjtlxkb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pbohfucfas .gt_indent_3 {
+#lfvnjtlxkb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pbohfucfas .gt_indent_4 {
+#lfvnjtlxkb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pbohfucfas .gt_indent_5 {
+#lfvnjtlxkb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#pbohfucfas .katex-display {
+#lfvnjtlxkb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#pbohfucfas div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#lfvnjtlxkb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -878,24 +892,24 @@ Table&nbsp;1: Measurement models supported by measr
 Table&nbsp;2: Structural models supported by measr
 </figcaption><div aria-describedby="tbl-strc-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="mqyermyzdh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="ymyrpicxov" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#mqyermyzdh table {
+#ymyrpicxov table {
   font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mqyermyzdh thead, #mqyermyzdh tbody, #mqyermyzdh tfoot, #mqyermyzdh tr, #mqyermyzdh td, #mqyermyzdh th {
+#ymyrpicxov thead, #ymyrpicxov tbody, #ymyrpicxov tfoot, #ymyrpicxov tr, #ymyrpicxov td, #ymyrpicxov th {
   border-style: none;
 }
 
-#mqyermyzdh p {
+#ymyrpicxov p {
   margin: 0;
   padding: 0;
 }
 
-#mqyermyzdh .gt_table {
+#ymyrpicxov .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -921,12 +935,12 @@ Table&nbsp;2: Structural models supported by measr
   border-left-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_caption {
+#ymyrpicxov .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mqyermyzdh .gt_title {
+#ymyrpicxov .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -938,7 +952,7 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-width: 0;
 }
 
-#mqyermyzdh .gt_subtitle {
+#ymyrpicxov .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -950,7 +964,7 @@ Table&nbsp;2: Structural models supported by measr
   border-top-width: 0;
 }
 
-#mqyermyzdh .gt_heading {
+#ymyrpicxov .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -962,13 +976,13 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_bottom_border {
+#ymyrpicxov .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_col_headings {
+#ymyrpicxov .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FFFFFF;
@@ -983,7 +997,7 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_col_heading {
+#ymyrpicxov .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1003,7 +1017,7 @@ Table&nbsp;2: Structural models supported by measr
   overflow-x: hidden;
 }
 
-#mqyermyzdh .gt_column_spanner_outer {
+#ymyrpicxov .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1015,15 +1029,15 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 4px;
 }
 
-#mqyermyzdh .gt_column_spanner_outer:first-child {
+#ymyrpicxov .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mqyermyzdh .gt_column_spanner_outer:last-child {
+#ymyrpicxov .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mqyermyzdh .gt_column_spanner {
+#ymyrpicxov .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1035,11 +1049,11 @@ Table&nbsp;2: Structural models supported by measr
   width: 100%;
 }
 
-#mqyermyzdh .gt_spanner_row {
+#ymyrpicxov .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mqyermyzdh .gt_group_heading {
+#ymyrpicxov .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1065,7 +1079,7 @@ Table&nbsp;2: Structural models supported by measr
   text-align: left;
 }
 
-#mqyermyzdh .gt_empty_group_heading {
+#ymyrpicxov .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1080,15 +1094,15 @@ Table&nbsp;2: Structural models supported by measr
   vertical-align: middle;
 }
 
-#mqyermyzdh .gt_from_md > :first-child {
+#ymyrpicxov .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mqyermyzdh .gt_from_md > :last-child {
+#ymyrpicxov .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mqyermyzdh .gt_row {
+#ymyrpicxov .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -1107,7 +1121,7 @@ Table&nbsp;2: Structural models supported by measr
   overflow-x: hidden;
 }
 
-#mqyermyzdh .gt_stub {
+#ymyrpicxov .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1120,7 +1134,7 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#mqyermyzdh .gt_stub_row_group {
+#ymyrpicxov .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1134,15 +1148,15 @@ Table&nbsp;2: Structural models supported by measr
   vertical-align: top;
 }
 
-#mqyermyzdh .gt_row_group_first td {
+#ymyrpicxov .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mqyermyzdh .gt_row_group_first th {
+#ymyrpicxov .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mqyermyzdh .gt_summary_row {
+#ymyrpicxov .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1152,16 +1166,16 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#mqyermyzdh .gt_first_summary_row {
+#ymyrpicxov .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_first_summary_row.thick {
+#ymyrpicxov .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mqyermyzdh .gt_last_summary_row {
+#ymyrpicxov .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1171,7 +1185,7 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_grand_summary_row {
+#ymyrpicxov .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1181,7 +1195,7 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#mqyermyzdh .gt_first_grand_summary_row {
+#ymyrpicxov .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1191,7 +1205,7 @@ Table&nbsp;2: Structural models supported by measr
   border-top-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_last_grand_summary_row_top {
+#ymyrpicxov .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1201,11 +1215,11 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_striped {
+#ymyrpicxov .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mqyermyzdh .gt_table_body {
+#ymyrpicxov .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1214,7 +1228,7 @@ Table&nbsp;2: Structural models supported by measr
   border-bottom-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_footnotes {
+#ymyrpicxov .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1228,7 +1242,7 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_footnote {
+#ymyrpicxov .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1237,7 +1251,7 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#mqyermyzdh .gt_sourcenotes {
+#ymyrpicxov .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1251,7 +1265,7 @@ Table&nbsp;2: Structural models supported by measr
   border-right-color: #D3D3D3;
 }
 
-#mqyermyzdh .gt_sourcenote {
+#ymyrpicxov .gt_sourcenote {
   font-size: 12px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -1259,72 +1273,72 @@ Table&nbsp;2: Structural models supported by measr
   padding-right: 5px;
 }
 
-#mqyermyzdh .gt_left {
+#ymyrpicxov .gt_left {
   text-align: left;
 }
 
-#mqyermyzdh .gt_center {
+#ymyrpicxov .gt_center {
   text-align: center;
 }
 
-#mqyermyzdh .gt_right {
+#ymyrpicxov .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mqyermyzdh .gt_font_normal {
+#ymyrpicxov .gt_font_normal {
   font-weight: normal;
 }
 
-#mqyermyzdh .gt_font_bold {
+#ymyrpicxov .gt_font_bold {
   font-weight: bold;
 }
 
-#mqyermyzdh .gt_font_italic {
+#ymyrpicxov .gt_font_italic {
   font-style: italic;
 }
 
-#mqyermyzdh .gt_super {
+#ymyrpicxov .gt_super {
   font-size: 65%;
 }
 
-#mqyermyzdh .gt_footnote_marks {
+#ymyrpicxov .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mqyermyzdh .gt_asterisk {
+#ymyrpicxov .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mqyermyzdh .gt_indent_1 {
+#ymyrpicxov .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mqyermyzdh .gt_indent_2 {
+#ymyrpicxov .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mqyermyzdh .gt_indent_3 {
+#ymyrpicxov .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mqyermyzdh .gt_indent_4 {
+#ymyrpicxov .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mqyermyzdh .gt_indent_5 {
+#ymyrpicxov .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mqyermyzdh .katex-display {
+#ymyrpicxov .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mqyermyzdh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ymyrpicxov div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1549,11 +1563,11 @@ Table&nbsp;2: Structural models supported by measr
 </section><div id="quarto-appendix" class="default"><section id="session-info" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
 <div class="cell" data-layout-align="center">
 <pre><code>#&gt; ─ Session info ─────────────────────────────────────────────────────
-#&gt;  version      R version 4.6.1 (2026-06-24)
+#&gt;  version      R version 4.6.2 (2026-10-29)
 #&gt;  language     (EN)
-#&gt;  date         2026-10-13
+#&gt;  date         2026-11-12
 #&gt;  pandoc       3.8.3
-#&gt;  quarto       1.10.19
+#&gt;  quarto       1.11.9
 #&gt;  Stan (rstan) 2.39.0
 #&gt; 
 #&gt; ─ Packages ─────────────────────────────────────────────────────────
@@ -1564,14 +1578,14 @@ Table&nbsp;2: Structural models supported by measr
 #&gt;  dplyr            1.2.1       2026-04-03 RSPM
 #&gt;  forcats          1.0.1       2025-09-25 RSPM
 #&gt;  ggplot2          4.0.3       2026-04-22 RSPM
-#&gt;  loo              2.10.1.9000 2026-10-13 repository (https://github.com/stan-dev/loo@b22ea49)
+#&gt;  loo              2.10.1.9000 2026-11-12 repository (https://github.com/stan-dev/loo@b22ea49)
 #&gt;  lubridate        1.9.5       2026-02-04 RSPM
 #&gt;  measr            2.0.1       2026-03-27 RSPM
-#&gt;  posterior        1.7.1       2026-10-13 repository (https://github.com/stan-dev/posterior@6dd1e12)
+#&gt;  posterior        1.7.1       2026-11-12 repository (https://github.com/stan-dev/posterior@6dd1e12)
 #&gt;  purrr            1.2.2       2026-04-10 RSPM
 #&gt;  readr            2.2.0       2026-02-19 RSPM
 #&gt;  rlang            1.3.0       2026-07-05 RSPM
-#&gt;  rstan            2.39.0.9000 2026-10-13 repository (https://github.com/stan-dev/rstan@81f6125)
+#&gt;  rstan            2.39.0.9000 2026-11-12 repository (https://github.com/stan-dev/rstan@81f6125)
 #&gt;  stringr          1.6.0       2025-11-04 RSPM
 #&gt;  tibble           3.3.1       2026-01-11 RSPM
 #&gt;  tidyr            1.3.2       2025-12-19 RSPM
@@ -1702,7 +1716,8 @@ Templin, J., &amp; Henson, R. A. (2006). Measurement of psychological disorders 
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -1711,8 +1726,69 @@ Templin, J., &amp; Henson, R. A. (2006). Measurement of psychological disorders 
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -1726,6 +1802,7 @@ Templin, J., &amp; Henson, R. A. (2006). Measurement of psychological disorders 
         interactiveBorder: 10,
         theme: 'quarto',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -1888,44 +1965,54 @@ Templin, J., &amp; Henson, R. A. (2006). Measurement of psychological disorders 
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -2023,6 +2110,8 @@ Templin, J., &amp; Henson, R. A. (2006). Measurement of psychological disorders 
       }
     }
   });
+  </script><script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
   </script>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">

@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta charset="UTF-8">
+<meta name="generator" content="quarto-1.11.9">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="author" content="">
+<meta name="author" content="W. Jake Thompson">
 <title>Posts – r-dcm</title>
 <style>
 /* Default styles provided by pandoc.
@@ -37,14 +36,15 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7af561f5e3242bb7ad291c7262587aec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-9ae5c72b37dfa155a0c3e107e79de40a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-ea5bab6effb13e923c874f1487cb6e32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6c515ecba9caba9e4e57bde9fbfbe2e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -94,12 +94,6 @@ ul.task-list li input[type="checkbox"] {
       window['quarto-listing-loaded']();
     }
   });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
   </script><script data-goatcounter="https://r-dcm.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><style>
 .cell-output-stdout code {
   word-break: break-wor !important;
@@ -132,18 +126,29 @@ window.Quarto = {
   typesetMath
 };
 </script>
+<meta property="og:title" content="Posts">
+<meta property="og:image" content="https://r-dcm.org/assets/img/rdcm-social.jpg">
+<meta property="og:site_name" content="r-dcm">
+<meta property="og:image:alt" content="A large hexagon overlayed on smaller tessellated hexagons.">
+<meta property="og:image:height" content="4489">
+<meta property="og:image:width" content="8979">
+<meta name="twitter:title" content="Posts">
+<meta name="twitter:image" content="https://r-dcm.org/assets/img/rdcm-social.jpg">
+<meta name="twitter:image:alt" content="A large hexagon overlayed on smaller tessellated hexagons.">
+<meta name="twitter:creator" content="@wjakethompson">
+<meta name="twitter:site" content="@atlas4learning">
+<meta name="twitter:card" content="summary_large_image">
 </head>
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">r-dcm</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -169,6 +174,7 @@ window.Quarto = {
 </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
+            <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
@@ -177,15 +183,30 @@ window.Quarto = {
         
     <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div><div class="category" data-category="ZGNtZGF0YQ==">dcmdata <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZGNtc3Rhbg==">dcmstan <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWVhc3I=">measr <span class="quarto-category-count">(4)</span></div><div class="category" data-category="cGFja2FnZQ==">package <span class="quarto-category-count">(7)</span></div></div></div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content column-page-left" id="quarto-document-content" tabindex="-1"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Posts</h1>
 </div>
 
 
+<div class="quarto-title-meta-author column-page-left">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author"><a href="https://www.wjakethompson.com">W. Jake Thompson</a> <a href="https://orcid.org/0000-0001-7339-0300" class="quarto-title-author-orcid" aria-label="ORCID profile for W. Jake Thompson"> <img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://atlas.ku.edu">
+            ATLAS, University of Kansas
+            </a>
+          </p>
+      </div>
+  </div>
 
 <div class="quarto-title-meta column-page-left">
 
-    
+      
   
     
   </div>
@@ -198,17 +219,14 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-posts_standard">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="cGFja2FnZSUyQ2RjbWRhdGE=" data-listing-date-sort="1773187200000" data-listing-file-modified-sort="1791909957195" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="659">
-<div class="thumbnail"><a href="../blog/2026-03-dcmdata-0.2.0/index.html" class="no-external">
+<div class="quarto-post image-right" data-index="0" data-categories="cGFja2FnZSUyQ2RjbWRhdGE=" data-listing-date-sort="1773187200000" data-listing-file-modified-sort="1794502373196" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="659">
+<div class="thumbnail"><a href="../blog/2026-03-dcmdata-0.2.0/index.html" class="no-external-icon">
 
 <img loading="lazy" src="../blog/2026-03-dcmdata-0.2.0/featured.jpg" class="thumbnail-image" alt="Series of filing cabinets"></a></div>
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="../blog/2026-03-dcmdata-0.2.0/index.html" class="no-external">dcmdata 0.2.0</a>
+<a href="../blog/2026-03-dcmdata-0.2.0/index.html" class="no-external-icon">dcmdata 0.2.0</a>
 </h3>
-<div class="listing-subtitle">
-<a href="../blog/2026-03-dcmdata-0.2.0/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('cGFja2FnZQ=='); return false;">package</div>
@@ -216,12 +234,14 @@ window.Quarto = {
 <div class="listing-category" onclick="window.quartoListingCategory('ZGNtZGF0YQ=='); return false;">dcmdata</div>
 
 </div>
-<div class="delink listing-description"><a href="../blog/2026-03-dcmdata-0.2.0/index.html" class="no-external">
+<div class="listing-description">
+<a href="../blog/2026-03-dcmdata-0.2.0/index.html" class="no-external-icon">
 <p>Several new data sets, including data from the PIE through-year assessment project.</p>
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="../blog/2026-03-dcmdata-0.2.0/index.html" class="no-external">
+<a href="../blog/2026-03-dcmdata-0.2.0/index.html" class="no-external-icon">
 <div class="listing-date">
 March 11, 2026
 </div>
@@ -231,17 +251,14 @@ W. Jake Thompson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1768521600000" data-listing-file-modified-sort="1791909957187" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2046">
-<div class="thumbnail"><a href="../blog/2026-01-measr-2.0.0/index.html" class="no-external">
+<div class="quarto-post image-right" data-index="1" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1768521600000" data-listing-file-modified-sort="1794502373188" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2046">
+<div class="thumbnail"><a href="../blog/2026-01-measr-2.0.0/index.html" class="no-external-icon">
 
 <img loading="lazy" src="../blog/2026-01-measr-2.0.0/featured.jpg" class="thumbnail-image" alt="Sections of rulers and measuring tape."></a></div>
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="../blog/2026-01-measr-2.0.0/index.html" class="no-external">measr 2.0.0</a>
+<a href="../blog/2026-01-measr-2.0.0/index.html" class="no-external-icon">measr 2.0.0</a>
 </h3>
-<div class="listing-subtitle">
-<a href="../blog/2026-01-measr-2.0.0/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('cGFja2FnZQ=='); return false;">package</div>
@@ -249,12 +266,14 @@ W. Jake Thompson
 <div class="listing-category" onclick="window.quartoListingCategory('bWVhc3I='); return false;">measr</div>
 
 </div>
-<div class="delink listing-description"><a href="../blog/2026-01-measr-2.0.0/index.html" class="no-external">
+<div class="listing-description">
+<a href="../blog/2026-01-measr-2.0.0/index.html" class="no-external-icon">
 <p>Major release to introduce new model specifications and evaluation methods.</p>
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="../blog/2026-01-measr-2.0.0/index.html" class="no-external">
+<a href="../blog/2026-01-measr-2.0.0/index.html" class="no-external-icon">
 <div class="listing-date">
 January 16, 2026
 </div>
@@ -264,17 +283,14 @@ W. Jake Thompson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="cGFja2FnZSUyQ2RjbXN0YW4=" data-listing-date-sort="1764115200000" data-listing-file-modified-sort="1791909957155" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="649">
-<div class="thumbnail"><a href="../blog/2025-11-dcmstan-0.1.0/index.html" class="no-external">
+<div class="quarto-post image-right" data-index="2" data-categories="cGFja2FnZSUyQ2RjbXN0YW4=" data-listing-date-sort="1764115200000" data-listing-file-modified-sort="1794502373159" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="649">
+<div class="thumbnail"><a href="../blog/2025-11-dcmstan-0.1.0/index.html" class="no-external-icon">
 
 <img loading="lazy" src="../blog/2025-11-dcmstan-0.1.0/featured.jpg" class="thumbnail-image" alt="Person taking a test"></a></div>
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="../blog/2025-11-dcmstan-0.1.0/index.html" class="no-external">dcmstan 0.1.0</a>
+<a href="../blog/2025-11-dcmstan-0.1.0/index.html" class="no-external-icon">dcmstan 0.1.0</a>
 </h3>
-<div class="listing-subtitle">
-<a href="../blog/2025-11-dcmstan-0.1.0/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('cGFja2FnZQ=='); return false;">package</div>
@@ -282,12 +298,14 @@ W. Jake Thompson
 <div class="listing-category" onclick="window.quartoListingCategory('ZGNtc3Rhbg=='); return false;">dcmstan</div>
 
 </div>
-<div class="delink listing-description"><a href="../blog/2025-11-dcmstan-0.1.0/index.html" class="no-external">
+<div class="listing-description">
+<a href="../blog/2025-11-dcmstan-0.1.0/index.html" class="no-external-icon">
 <p>Initial release of dcmstan for specifying diagnostic models and generating <em>Stan</em> code.</p>
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="../blog/2025-11-dcmstan-0.1.0/index.html" class="no-external">
+<a href="../blog/2025-11-dcmstan-0.1.0/index.html" class="no-external-icon">
 <div class="listing-date">
 November 26, 2025
 </div>
@@ -297,17 +315,14 @@ W. Jake Thompson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="cGFja2FnZSUyQ2RjbWRhdGE=" data-listing-date-sort="1755734400000" data-listing-file-modified-sort="1791909957134" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="599">
-<div class="thumbnail"><a href="../blog/2025-08-dcmdata-0.1.0/index.html" class="no-external">
+<div class="quarto-post image-right" data-index="3" data-categories="cGFja2FnZSUyQ2RjbWRhdGE=" data-listing-date-sort="1755734400000" data-listing-file-modified-sort="1794502373138" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="599">
+<div class="thumbnail"><a href="../blog/2025-08-dcmdata-0.1.0/index.html" class="no-external-icon">
 
 <img loading="lazy" src="../blog/2025-08-dcmdata-0.1.0/featured.jpg" class="thumbnail-image" alt="Person taking a test"></a></div>
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="../blog/2025-08-dcmdata-0.1.0/index.html" class="no-external">dcmdata 0.1.0</a>
+<a href="../blog/2025-08-dcmdata-0.1.0/index.html" class="no-external-icon">dcmdata 0.1.0</a>
 </h3>
-<div class="listing-subtitle">
-<a href="../blog/2025-08-dcmdata-0.1.0/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('cGFja2FnZQ=='); return false;">package</div>
@@ -315,12 +330,14 @@ W. Jake Thompson
 <div class="listing-category" onclick="window.quartoListingCategory('ZGNtZGF0YQ=='); return false;">dcmdata</div>
 
 </div>
-<div class="delink listing-description"><a href="../blog/2025-08-dcmdata-0.1.0/index.html" class="no-external">
+<div class="listing-description">
+<a href="../blog/2025-08-dcmdata-0.1.0/index.html" class="no-external-icon">
 <p>Initial release dcmdata for accessing data from diagnostic assessments.</p>
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="../blog/2025-08-dcmdata-0.1.0/index.html" class="no-external">
+<a href="../blog/2025-08-dcmdata-0.1.0/index.html" class="no-external-icon">
 <div class="listing-date">
 August 21, 2025
 </div>
@@ -330,17 +347,14 @@ W. Jake Thompson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1707091200000" data-listing-file-modified-sort="1791909957117" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="677">
-<div class="thumbnail"><a href="../blog/2024-02-measr-1.0.0/index.html" class="no-external">
+<div class="quarto-post image-right" data-index="4" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1707091200000" data-listing-file-modified-sort="1794502373122" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="677">
+<div class="thumbnail"><a href="../blog/2024-02-measr-1.0.0/index.html" class="no-external-icon">
 
 <img loading="lazy" src="../blog/2024-02-measr-1.0.0/featured.jpg" class="thumbnail-image" alt="Different colored measurement tape"></a></div>
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="../blog/2024-02-measr-1.0.0/index.html" class="no-external">measr 1.0.0</a>
+<a href="../blog/2024-02-measr-1.0.0/index.html" class="no-external-icon">measr 1.0.0</a>
 </h3>
-<div class="listing-subtitle">
-<a href="../blog/2024-02-measr-1.0.0/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('cGFja2FnZQ=='); return false;">package</div>
@@ -348,12 +362,14 @@ W. Jake Thompson
 <div class="listing-category" onclick="window.quartoListingCategory('bWVhc3I='); return false;">measr</div>
 
 </div>
-<div class="delink listing-description"><a href="../blog/2024-02-measr-1.0.0/index.html" class="no-external">
+<div class="listing-description">
+<a href="../blog/2024-02-measr-1.0.0/index.html" class="no-external-icon">
 <p>A major release to reflect development milestones.</p>
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="../blog/2024-02-measr-1.0.0/index.html" class="no-external">
+<a href="../blog/2024-02-measr-1.0.0/index.html" class="no-external-icon">
 <div class="listing-date">
 February 5, 2024
 </div>
@@ -363,17 +379,14 @@ W. Jake Thompson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1686009600000" data-listing-file-modified-sort="1791909957116" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="671">
-<div class="thumbnail"><a href="../blog/2023-06-measr-0.3.1/index.html" class="no-external">
+<div class="quarto-post image-right" data-index="5" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1686009600000" data-listing-file-modified-sort="1794502373121" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="671">
+<div class="thumbnail"><a href="../blog/2023-06-measr-0.3.1/index.html" class="no-external-icon">
 
 <img loading="lazy" src="../blog/2023-06-measr-0.3.1/featured.jpg" class="thumbnail-image" alt="Measurement tools on a desk"></a></div>
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="../blog/2023-06-measr-0.3.1/index.html" class="no-external">measr 0.3.1</a>
+<a href="../blog/2023-06-measr-0.3.1/index.html" class="no-external-icon">measr 0.3.1</a>
 </h3>
-<div class="listing-subtitle">
-<a href="../blog/2023-06-measr-0.3.1/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('cGFja2FnZQ=='); return false;">package</div>
@@ -381,12 +394,14 @@ W. Jake Thompson
 <div class="listing-category" onclick="window.quartoListingCategory('bWVhc3I='); return false;">measr</div>
 
 </div>
-<div class="delink listing-description"><a href="../blog/2023-06-measr-0.3.1/index.html" class="no-external">
+<div class="listing-description">
+<a href="../blog/2023-06-measr-0.3.1/index.html" class="no-external-icon">
 <p>A few updates for specifying models and priors.</p>
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="../blog/2023-06-measr-0.3.1/index.html" class="no-external">
+<a href="../blog/2023-06-measr-0.3.1/index.html" class="no-external-icon">
 <div class="listing-date">
 June 6, 2023
 </div>
@@ -396,17 +411,14 @@ W. Jake Thompson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1681084800000" data-listing-file-modified-sort="1791909957091" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="941">
-<div class="thumbnail"><a href="../blog/2023-04-measr-0.2.1/index.html" class="no-external">
+<div class="quarto-post image-right" data-index="6" data-categories="cGFja2FnZSUyQ21lYXNy" data-listing-date-sort="1681084800000" data-listing-file-modified-sort="1794502373096" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="941">
+<div class="thumbnail"><a href="../blog/2023-04-measr-0.2.1/index.html" class="no-external-icon">
 
 <img loading="lazy" src="../blog/2023-04-measr-0.2.1/featured.jpg" class="thumbnail-image" alt="Measurement tools on a desk"></a></div>
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="../blog/2023-04-measr-0.2.1/index.html" class="no-external">measr 0.2.1</a>
+<a href="../blog/2023-04-measr-0.2.1/index.html" class="no-external-icon">measr 0.2.1</a>
 </h3>
-<div class="listing-subtitle">
-<a href="../blog/2023-04-measr-0.2.1/index.html" class="no-external"></a>
-</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('cGFja2FnZQ=='); return false;">package</div>
@@ -414,12 +426,14 @@ W. Jake Thompson
 <div class="listing-category" onclick="window.quartoListingCategory('bWVhc3I='); return false;">measr</div>
 
 </div>
-<div class="delink listing-description"><a href="../blog/2023-04-measr-0.2.1/index.html" class="no-external">
+<div class="listing-description">
+<a href="../blog/2023-04-measr-0.2.1/index.html" class="no-external-icon">
 <p>Initial release of measr package for estimating and evaluating diagnostic classification models.</p>
-</a></div>
+</a>
+</div>
 </div>
 <div class="metadata">
-<a href="../blog/2023-04-measr-0.2.1/index.html" class="no-external">
+<a href="../blog/2023-04-measr-0.2.1/index.html" class="no-external-icon">
 <div class="listing-date">
 April 10, 2023
 </div>
@@ -509,7 +523,8 @@ W. Jake Thompson
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -518,8 +533,69 @@ W. Jake Thompson
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -533,6 +609,7 @@ W. Jake Thompson
         interactiveBorder: 10,
         theme: 'quarto',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -695,44 +772,54 @@ W. Jake Thompson
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -830,6 +917,8 @@ W. Jake Thompson
       }
     }
   });
+  </script><script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
   </script>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">

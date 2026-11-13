@@ -24,3 +24,12 @@ knitr:
     fig-width: 7.2916667
     out-width: "90%"
     collapse: true
+
+# Default author
+author:
+  - given: W. Jake
+    family: Thompson
+    url: https://www.wjakethompson.com
+    affiliation: ATLAS, University of Kansas
+    affiliation-url: https://atlas.ku.edu
+    orcid: 0000-0001-7339-0300

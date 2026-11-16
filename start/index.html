@@ -225,7 +225,50 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script>
+// Quarto leaves appendix sections (e.g., session information, references,
+// citation) out of the "On this page" menu. Add them to the end of the menu,
+// nested under an "Appendices" entry. This runs before DOMContentLoaded, so
+// Quarto's scroll tracking picks up the new links.
+(function () {
+  const toc = document.querySelector('nav[role="doc-toc"] > ul');
+  const appendix = document.getElementById('quarto-appendix');
+  if (!toc || !appendix) return;
+
+  const sections = appendix.querySelectorAll(':scope > section[id]');
+  if (sections.length === 0) return;
+
+  function tocItem(id, text) {
+    const link = document.createElement('a');
+    link.href = '#' + id;
+    link.id = 'toc-' + id;
+    link.className = 'nav-link';
+    link.setAttribute('data-scroll-target', '#' + id);
+    link.textContent = text;
+
+    const item = document.createElement('li');
+    item.appendChild(link);
+    return item;
+  }
+
+  // Match Quarto's markup for nested TOC entries, so the sub-list expands
+  // and collapses like the other sections.
+  const sublist = document.createElement('ul');
+  sublist.className = 'collapse';
+
+  sections.forEach(function (section) {
+    const heading = section.querySelector(':scope > h2');
+    if (heading) {
+      sublist.appendChild(tocItem(section.id, heading.textContent.trim()));
+    }
+  });
+  if (sublist.children.length === 0) return;
+
+  const parent = tocItem('quarto-appendix', 'Appendices');
+  parent.appendChild(sublist);
+  toc.appendChild(parent);
+})();
+</script><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();

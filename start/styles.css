@@ -34,8 +34,15 @@ div.sidebar-item-container {
   /* $theme-red */
 }
 
-/* Hide the published date on start articles. The date stays in the YAML so
-   the articles are included in the RSS feed (rss.qmd). */
-.quarto-title-meta {
+/* Hide the published date on start articles, but keep other title metadata
+   (e.g., DOI). The date stays in the YAML so the articles are included in the
+   RSS feed (rss.qmd). */
+#title-block-header .quarto-title-meta > div:has(> .quarto-title-meta-contents > p.date) {
+  display: none;
+}
+
+/* Hide the author and affiliation on start articles. The author stays in
+   _metadata.yml so it is still used for the citation and feed metadata. */
+#title-block-header.quarto-title-block .quarto-title-meta-author.quarto-title-meta-author {
   display: none;
 }

@@ -6,6 +6,8 @@ description: |
   Measure model performance through fit, comparisons, and reliability.
 css: ../styles.css
 link-citations: true
+doi: 10.59350/xgezz-vwz15
+citation: true
 ---
 
 ```{r}

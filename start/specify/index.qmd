@@ -6,6 +6,8 @@ description: |
   Get started by learning how to specify and estimate a model using measr.
 css: ../styles.css
 link-citations: true
+doi: 10.59350/ndzv7-y5m02
+citation: true
 ---
 
 ```{r}

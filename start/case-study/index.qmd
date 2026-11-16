@@ -6,6 +6,8 @@ description: |
   Develop a diagnostic model using best practices.
 css: ../styles.css
 link-citations: true
+doi: 10.59350/21vpc-qy663
+citation: true
 ---
 
 ```{r}

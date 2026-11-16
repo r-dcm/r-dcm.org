@@ -6,6 +6,7 @@ format:
   html:
     code-link: true
     html-table-processing: none
+    include-after-body: toc-appendix.html
 
 engine: knitr
 

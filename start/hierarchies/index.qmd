@@ -6,6 +6,8 @@ description: |
   Include information about how your attributes relate to and interact with each other.
 css: ../styles.css
 link-citations: true
+doi: 10.59350/brf2m-rm686
+citation: true
 ---
 
 ```{r}
